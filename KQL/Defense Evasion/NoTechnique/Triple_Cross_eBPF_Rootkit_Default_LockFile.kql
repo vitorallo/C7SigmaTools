@@ -1,0 +1,10 @@
+// Title: Triple Cross eBPF Rootkit Default LockFile
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-07-05
+// Level: high
+// Description: Detects the creation of the file "rootlog" which is used by the TripleCross rootkit as a way to check if the backdoor is already running.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+DeviceFileEvents
+| where FolderPath =~ "/tmp/rootlog"

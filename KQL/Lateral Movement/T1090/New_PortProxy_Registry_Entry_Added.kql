@@ -1,0 +1,10 @@
+// Title: New PortProxy Registry Entry Added
+// Author: Andreas Hunkeler (@Karneades)
+// Date: 2021-06-22
+// Level: medium
+// Description: Detects the modification of the PortProxy registry key which is used for port forwarding.
+// Tags: attack.lateral-movement, attack.defense-evasion, attack.command-and-control, attack.t1090
+// ================================================================== 
+
+DeviceRegistryEvents
+| where RegistryKey endswith "\\Services\\PortProxy\\v4tov4\\tcp*"

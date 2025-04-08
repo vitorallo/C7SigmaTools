@@ -1,0 +1,10 @@
+// Title: Suspicious Binaries and Scripts in Public Folder
+// Author: The DFIR Report
+// Date: 2025-01-23
+// Level: high
+// Description: Detects the creation of a file with a suspicious extension in the public folder, which could indicate potential malicious activity.
+// Tags: attack.execution, attack.t1204
+// ================================================================== 
+
+DeviceFileEvents
+| where FolderPath contains ":\\Users\\Public\\" and (FolderPath endswith ".bat" or FolderPath endswith ".dll" or FolderPath endswith ".exe" or FolderPath endswith ".hta" or FolderPath endswith ".js" or FolderPath endswith ".ps1" or FolderPath endswith ".vbe" or FolderPath endswith ".vbs")

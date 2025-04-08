@@ -1,0 +1,10 @@
+// Title: Outlook Security Settings Updated - Registry
+// Author: frack113
+// Date: 2021-12-28
+// Level: medium
+// Description: Detects changes to the registry values related to outlook security settings
+// Tags: attack.persistence, attack.t1137
+// ================================================================== 
+
+DeviceRegistryEvents
+| where RegistryKey endswith "\\SOFTWARE\\Microsoft\\Office*" and RegistryKey endswith "\\Outlook\\Security*"

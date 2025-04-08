@@ -1,0 +1,12 @@
+// Title: Potentially Suspicious JWT Token Search Via CLI
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-10-25
+// Level: medium
+// Description: Detects possible search for JWT tokens via CLI by looking for the string "eyJ0eX" or "eyJhbG".
+// This string is used as an anchor to look for the start of the JWT token used by microsoft office and similar apps.
+// 
+// Tags: attack.credential-access, attack.t1528
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "eyJ0eXAiOi" or ProcessCommandLine contains "eyJhbGciOi" or ProcessCommandLine contains " eyJ0eX" or ProcessCommandLine contains " \"eyJ0eX\"" or ProcessCommandLine contains " 'eyJ0eX'" or ProcessCommandLine contains " eyJhbG" or ProcessCommandLine contains " \"eyJhbG\"" or ProcessCommandLine contains " 'eyJhbG'"

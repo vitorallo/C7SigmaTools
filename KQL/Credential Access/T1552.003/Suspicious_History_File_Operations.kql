@@ -1,0 +1,10 @@
+// Title: Suspicious History File Operations
+// Author: Mikhail Larin, oscd.community
+// Date: 2020-10-17
+// Level: medium
+// Description: Detects commandline operations on shell history files
+// Tags: attack.credential-access, attack.t1552.003
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains ".bash_history" or ProcessCommandLine contains ".zsh_history" or ProcessCommandLine contains ".zhistory" or ProcessCommandLine contains ".history" or ProcessCommandLine contains ".sh_history" or ProcessCommandLine contains "fish_history"

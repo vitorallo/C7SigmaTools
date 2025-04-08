@@ -1,0 +1,10 @@
+// Title: Windows Registry Trust Record Modification
+// Author: Antonlovesdnb, Trent Liffick (@tliffick)
+// Date: 2020-02-19
+// Level: medium
+// Description: Alerts on trust record modification within the registry, indicating usage of macros
+// Tags: attack.initial-access, attack.t1566.001
+// ================================================================== 
+
+DeviceRegistryEvents
+| where RegistryKey contains "\\Security\\Trusted Documents\\TrustRecords"

@@ -1,0 +1,10 @@
+// Title: Renamed Msdt.EXE Execution
+// Author: pH-T (Nextron Systems)
+// Date: 2022-06-03
+// Level: high
+// Description: Detects the execution of a renamed "Msdt.exe" binary
+// Tags: attack.defense-evasion, attack.t1036.003
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessVersionInfoOriginalFileName =~ "msdt.exe" and (not(FolderPath endswith "\\msdt.exe"))

@@ -1,0 +1,10 @@
+// Title: Linux Doas Tool Execution
+// Author: Sittikorn S, Teoderick Contreras
+// Date: 2022-01-20
+// Level: low
+// Description: Detects the doas tool execution in linux host platform. This utility tool allow standard users to perform tasks as root, the same way sudo does.
+// Tags: attack.privilege-escalation, attack.t1548
+// ================================================================== 
+
+DeviceProcessEvents
+| where FolderPath endswith "/doas"

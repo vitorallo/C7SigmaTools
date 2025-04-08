@@ -1,0 +1,10 @@
+// Title: Cat Sudoers
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-06-20
+// Level: medium
+// Description: Detects the execution of a cat /etc/sudoers to list all users that have sudo rights
+// Tags: attack.reconnaissance, attack.t1592.004
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains " /etc/sudoers" and (FolderPath endswith "/cat" or FolderPath endswith "grep" or FolderPath endswith "/head" or FolderPath endswith "/tail" or FolderPath endswith "/more")

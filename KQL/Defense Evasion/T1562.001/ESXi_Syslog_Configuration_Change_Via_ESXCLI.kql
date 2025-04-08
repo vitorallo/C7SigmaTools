@@ -1,0 +1,10 @@
+// Title: ESXi Syslog Configuration Change Via ESXCLI
+// Author: Cedric Maurugeon
+// Date: 2023-09-04
+// Level: medium
+// Description: Detects changes to the ESXi syslog configuration via "esxcli"
+// Tags: attack.defense-evasion, attack.t1562.001, attack.t1562.003
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains " set" and (ProcessCommandLine contains "system" and ProcessCommandLine contains "syslog" and ProcessCommandLine contains "config") and FolderPath endswith "/esxcli"

@@ -1,0 +1,10 @@
+// Title: ESXi System Information Discovery Via ESXCLI
+// Author: Cedric Maurugeon
+// Date: 2023-09-04
+// Level: medium
+// Description: Detects execution of the "esxcli" command with the "system" flag in order to retrieve information about the different component of the system. Such as accounts, modules, NTP, etc.
+// Tags: attack.discovery, attack.t1033, attack.t1007
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains " get" or ProcessCommandLine contains " list") and (ProcessCommandLine contains "system" and FolderPath endswith "/esxcli")

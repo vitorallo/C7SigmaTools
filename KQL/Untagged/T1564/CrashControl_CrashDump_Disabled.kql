@@ -1,0 +1,10 @@
+// Title: CrashControl CrashDump Disabled
+// Author: Tobias Michalski (Nextron Systems)
+// Date: 2022-02-24
+// Level: medium
+// Description: Detects disabling the CrashDump per registry (as used by HermeticWiper)
+// Tags: attack.t1564, attack.t1112
+// ================================================================== 
+
+DeviceRegistryEvents
+| where RegistryValueData =~ "DWORD (0x00000000)" and RegistryKey contains "SYSTEM\\CurrentControlSet\\Control\\CrashControl"

@@ -1,0 +1,10 @@
+// Title: Launch Agent/Daemon Execution Via Launchctl
+// Author: Pratinav Chandra
+// Date: 2024-05-13
+// Level: medium
+// Description: Detects the execution of programs as Launch Agents or Launch Daemons using launchctl on macOS.
+// Tags: attack.execution, attack.persistence, attack.t1569.001, attack.t1543.001, attack.t1543.004
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains "submit" or ProcessCommandLine contains "load" or ProcessCommandLine contains "start") and FolderPath endswith "/launchctl"

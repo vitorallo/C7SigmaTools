@@ -1,0 +1,10 @@
+// Title: Linux Recon Indicators
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-06-20
+// Level: high
+// Description: Detects events with patterns found in commands used for reconnaissance on linux systems
+// Tags: attack.reconnaissance, attack.t1592.004, attack.credential-access, attack.t1552.001
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains " -name .htpasswd" or ProcessCommandLine contains " -perm -4000 "

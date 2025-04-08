@@ -1,0 +1,10 @@
+// Title: MacOS Scripting Interpreter AppleScript
+// Author: Alejandro Ortuno, oscd.community
+// Date: 2020-10-21
+// Level: medium
+// Description: Detects execution of AppleScript of the macOS scripting language AppleScript.
+// Tags: attack.execution, attack.t1059.002
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains " -e " or ProcessCommandLine contains ".scpt" or ProcessCommandLine contains ".js") and FolderPath endswith "/osascript"

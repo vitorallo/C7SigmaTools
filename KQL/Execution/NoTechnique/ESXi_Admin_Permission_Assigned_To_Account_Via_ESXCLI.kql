@@ -1,0 +1,10 @@
+// Title: ESXi Admin Permission Assigned To Account Via ESXCLI
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-09-04
+// Level: high
+// Description: Detects execution of the "esxcli" command with the "system" and "permission" flags in order to assign admin permissions to an account.
+// Tags: attack.execution
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "system" and (ProcessCommandLine contains " permission " and ProcessCommandLine contains " set" and ProcessCommandLine contains "Admin") and FolderPath endswith "/esxcli"

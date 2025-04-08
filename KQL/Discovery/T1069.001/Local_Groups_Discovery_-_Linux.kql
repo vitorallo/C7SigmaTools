@@ -1,0 +1,10 @@
+// Title: Local Groups Discovery - Linux
+// Author: Ömer Günal, Alejandro Ortuno, oscd.community
+// Date: 2020-10-11
+// Level: low
+// Description: Detects enumeration of local system groups. Adversaries may attempt to find local system groups and permission settings
+// Tags: attack.discovery, attack.t1069.001
+// ================================================================== 
+
+DeviceProcessEvents
+| where FolderPath endswith "/groups" or (ProcessCommandLine contains "/etc/group" and (FolderPath endswith "/cat" or FolderPath endswith "/head" or FolderPath endswith "/tail" or FolderPath endswith "/more"))

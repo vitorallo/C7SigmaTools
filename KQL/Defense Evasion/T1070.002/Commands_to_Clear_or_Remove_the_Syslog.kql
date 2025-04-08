@@ -1,0 +1,10 @@
+// Title: Commands to Clear or Remove the Syslog
+// Author: Max Altgelt (Nextron Systems), Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC
+// Date: 2021-10-15
+// Level: high
+// Description: Detects specific commands commonly used to remove or empty the syslog. Which is often used by attacker as a method to hide their tracks
+// Tags: attack.defense-evasion, attack.t1070.002
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "rm /var/log/syslog" or ProcessCommandLine contains "rm -r /var/log/syslog" or ProcessCommandLine contains "rm -f /var/log/syslog" or ProcessCommandLine contains "rm -rf /var/log/syslog" or ProcessCommandLine contains "unlink /var/log/syslog" or ProcessCommandLine contains "unlink -r /var/log/syslog" or ProcessCommandLine contains "unlink -f /var/log/syslog" or ProcessCommandLine contains "unlink -rf /var/log/syslog" or ProcessCommandLine contains "mv /var/log/syslog" or ProcessCommandLine contains " >/var/log/syslog" or ProcessCommandLine contains " > /var/log/syslog"

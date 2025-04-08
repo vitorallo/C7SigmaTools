@@ -1,0 +1,11 @@
+// Title: Remote Access Tool - AnyDesk Incoming Connection
+// Author: @d4ns4n_ (Wuerth-Phoenix)
+// Date: 2024-09-02
+// Level: medium
+// Description: Detects incoming connections to AnyDesk. This could indicate a potential remote attacker trying to connect to a listening instance of AnyDesk and use it as potential command and control channel.
+// 
+// Tags: attack.persistence, attack.command-and-control, attack.t1219
+// ================================================================== 
+
+DeviceNetworkEvents
+| where InitiatingProcessFolderPath endswith "\\AnyDesk.exe" or InitiatingProcessFolderPath endswith "\\AnyDeskMSI.exe"

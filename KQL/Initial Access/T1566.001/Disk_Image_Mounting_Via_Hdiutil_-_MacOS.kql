@@ -1,0 +1,10 @@
+// Title: Disk Image Mounting Via Hdiutil - MacOS
+// Author: Omar Khaled (@beacon_exe)
+// Date: 2024-08-10
+// Level: medium
+// Description: Detects the execution of the hdiutil utility in order to mount disk images.
+// Tags: attack.initial-access, attack.t1566.001, attack.t1560.001
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains "attach " or ProcessCommandLine contains "mount ") and FolderPath endswith "/hdiutil"

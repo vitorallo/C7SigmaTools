@@ -1,0 +1,11 @@
+// Title: Potential File Extension Spoofing Using Right-to-Left Override
+// Author: Jonathan Peters (Nextron Systems), Florian Roth (Nextron Systems)
+// Date: 2024-11-17
+// Level: high
+// Description: Detects suspicious filenames that contain a right-to-left override character and a potentially spoofed file extensions.
+// 
+// Tags: attack.execution, attack.defense-evasion, attack.t1036.002
+// ================================================================== 
+
+DeviceFileEvents
+| where (FolderPath contains "fpd.." or FolderPath contains "nls.." or FolderPath contains "vsc.." or FolderPath contains "xcod." or FolderPath contains "xslx.") and FolderPath contains "\\u202e"

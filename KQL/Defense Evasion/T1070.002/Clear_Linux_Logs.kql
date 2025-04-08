@@ -1,0 +1,10 @@
+// Title: Clear Linux Logs
+// Author: Ömer Günal, oscd.community
+// Date: 2020-10-07
+// Level: medium
+// Description: Detects attempts to clear logs on the system. Adversaries may clear system logs to hide evidence of an intrusion
+// Tags: attack.defense-evasion, attack.t1070.002
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains "/var/log" or ProcessCommandLine contains "/var/spool/mail") and (FolderPath endswith "/rm" or FolderPath endswith "/shred" or FolderPath endswith "/unlink")

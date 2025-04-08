@@ -1,0 +1,10 @@
+// Title: Disk Image Creation Via Hdiutil - MacOS
+// Author: Omar Khaled (@beacon_exe)
+// Date: 2024-08-10
+// Level: medium
+// Description: Detects the execution of the hdiutil utility in order to create a disk image.
+// Tags: attack.exfiltration
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "create" and FolderPath endswith "/hdiutil"

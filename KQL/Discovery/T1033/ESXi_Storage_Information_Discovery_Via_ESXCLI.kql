@@ -1,0 +1,10 @@
+// Title: ESXi Storage Information Discovery Via ESXCLI
+// Author: Nasreddine Bencherchali (Nextron Systems), Cedric Maurugeon
+// Date: 2023-09-04
+// Level: medium
+// Description: Detects execution of the "esxcli" command with the "storage" flag in order to retrieve information about the storage status and other related information. Seen used by malware such as DarkSide and LockBit.
+// Tags: attack.discovery, attack.t1033, attack.t1007
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains " get" or ProcessCommandLine contains " list") and (ProcessCommandLine contains "storage" and FolderPath endswith "/esxcli")

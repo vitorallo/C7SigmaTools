@@ -1,0 +1,10 @@
+// Title: ESXi Network Configuration Discovery Via ESXCLI
+// Author: Cedric Maurugeon
+// Date: 2023-09-04
+// Level: medium
+// Description: Detects execution of the "esxcli" command with the "network" flag in order to retrieve information about the network configuration.
+// Tags: attack.discovery, attack.t1033, attack.t1007
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains " get" or ProcessCommandLine contains " list") and (ProcessCommandLine contains "network" and FolderPath endswith "/esxcli")

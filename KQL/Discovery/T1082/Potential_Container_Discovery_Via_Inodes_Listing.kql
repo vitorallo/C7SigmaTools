@@ -1,0 +1,10 @@
+// Title: Potential Container Discovery Via Inodes Listing
+// Author: Seth Hanford
+// Date: 2023-08-23
+// Level: low
+// Description: Detects listing of the inodes of the "/" directory to determine if the we are running inside of a container.
+// Tags: attack.discovery, attack.t1082
+// ================================================================== 
+
+DeviceProcessEvents
+| where ((ProcessCommandLine contains " -" and ProcessCommandLine contains "i") and (ProcessCommandLine contains " -" and ProcessCommandLine contains "d")) and ProcessCommandLine endswith " /" and FolderPath endswith "/ls"

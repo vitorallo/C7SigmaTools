@@ -1,0 +1,10 @@
+// Title: Remove Immutable File Attribute
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-09-15
+// Level: medium
+// Description: Detects usage of the 'chattr' utility to remove immutable file attribute.
+// Tags: attack.defense-evasion, attack.t1222.002
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains " -i " and FolderPath endswith "/chattr"

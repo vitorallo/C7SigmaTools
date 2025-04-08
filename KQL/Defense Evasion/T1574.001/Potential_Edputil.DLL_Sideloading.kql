@@ -1,0 +1,10 @@
+// Title: Potential Edputil.DLL Sideloading
+// Author: X__Junior (Nextron Systems)
+// Date: 2023-06-09
+// Level: high
+// Description: Detects potential DLL sideloading of "edputil.dll"
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1574.001, attack.t1574.002
+// ================================================================== 
+
+DeviceImageLoadEvents
+| where FolderPath endswith "\\edputil.dll" and (not((FolderPath startswith "C:\\Windows\\System32\\" or FolderPath startswith "C:\\Windows\\SysWOW64\\" or FolderPath startswith "C\\Windows\\WinSxS\\")))

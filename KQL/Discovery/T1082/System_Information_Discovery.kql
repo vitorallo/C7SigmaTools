@@ -1,0 +1,10 @@
+// Title: System Information Discovery
+// Author: Ömer Günal, oscd.community
+// Date: 2020-10-08
+// Level: informational
+// Description: Detects system information discovery commands
+// Tags: attack.discovery, attack.t1082
+// ================================================================== 
+
+DeviceProcessEvents
+| where FolderPath endswith "/uname" or FolderPath endswith "/hostname" or FolderPath endswith "/uptime" or FolderPath endswith "/lspci" or FolderPath endswith "/dmidecode" or FolderPath endswith "/lscpu" or FolderPath endswith "/lsmod"

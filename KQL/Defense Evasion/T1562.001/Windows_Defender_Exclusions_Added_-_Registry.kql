@@ -1,0 +1,10 @@
+// Title: Windows Defender Exclusions Added - Registry
+// Author: Christian Burkard (Nextron Systems)
+// Date: 2021-07-06
+// Level: medium
+// Description: Detects the Setting of Windows Defender Exclusions
+// Tags: attack.defense-evasion, attack.t1562.001
+// ================================================================== 
+
+DeviceRegistryEvents
+| where RegistryKey contains "\\Microsoft\\Windows Defender\\Exclusions"

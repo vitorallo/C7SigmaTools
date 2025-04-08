@@ -1,0 +1,12 @@
+// Title: Renamed ProcDump Execution
+// Author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+// Date: 2019-11-18
+// Level: high
+// Description: Detects the execution of a renamed ProcDump executable.
+// This often done by attackers or malware in order to evade defensive mechanisms.
+// 
+// Tags: attack.defense-evasion, attack.t1036.003
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessVersionInfoOriginalFileName =~ "procdump" or ((ProcessCommandLine contains " -ma " or ProcessCommandLine contains " /ma " or ProcessCommandLine contains " –ma " or ProcessCommandLine contains " —ma " or ProcessCommandLine contains " ―ma " or ProcessCommandLine contains " -mp " or ProcessCommandLine contains " /mp " or ProcessCommandLine contains " –mp " or ProcessCommandLine contains " —mp " or ProcessCommandLine contains " ―mp ") and (ProcessCommandLine contains " -accepteula" or ProcessCommandLine contains " /accepteula" or ProcessCommandLine contains " –accepteula" or ProcessCommandLine contains " —accepteula" or ProcessCommandLine contains " ―accepteula"))) and (not((FolderPath endswith "\\procdump.exe" or FolderPath endswith "\\procdump64.exe")))

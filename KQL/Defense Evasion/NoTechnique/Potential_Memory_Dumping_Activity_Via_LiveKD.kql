@@ -1,0 +1,10 @@
+// Title: Potential Memory Dumping Activity Via LiveKD
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-05-15
+// Level: medium
+// Description: Detects execution of LiveKD based on PE metadata or image name
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+DeviceProcessEvents
+| where (FolderPath endswith "\\livekd.exe" or FolderPath endswith "\\livekd64.exe") or ProcessVersionInfoOriginalFileName =~ "livekd.exe"

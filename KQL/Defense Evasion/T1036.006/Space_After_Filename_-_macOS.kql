@@ -1,0 +1,10 @@
+// Title: Space After Filename - macOS
+// Author: remotephone
+// Date: 2021-11-20
+// Level: low
+// Description: Detects attempts to masquerade as legitimate files by adding a space to the end of the filename.
+// Tags: attack.defense-evasion, attack.t1036.006
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine endswith " " or FolderPath endswith " "

@@ -1,0 +1,10 @@
+// Title: ESXi Account Creation Via ESXCLI
+// Author: Cedric Maurugeon
+// Date: 2023-08-22
+// Level: medium
+// Description: Detects user account creation on ESXi system via esxcli
+// Tags: attack.persistence, attack.t1136
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains "system " and ProcessCommandLine contains "account " and ProcessCommandLine contains "add ") and FolderPath endswith "/esxcli"

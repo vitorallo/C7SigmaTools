@@ -1,0 +1,10 @@
+// Title: Connection Proxy
+// Author: Ömer Günal
+// Date: 2020-06-17
+// Level: low
+// Description: Detects setting proxy configuration
+// Tags: attack.defense-evasion, attack.t1090
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "http_proxy=" or ProcessCommandLine contains "https_proxy="

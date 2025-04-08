@@ -1,0 +1,10 @@
+// Title: ESXi VM Kill Via ESXCLI
+// Author: Nasreddine Bencherchali (Nextron Systems), Cedric Maurugeon
+// Date: 2023-09-04
+// Level: medium
+// Description: Detects execution of the "esxcli" command with the "vm" and "kill" flag in order to kill/shutdown a specific VM.
+// Tags: attack.execution
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains "vm process" and ProcessCommandLine contains "kill") and FolderPath endswith "/esxcli"

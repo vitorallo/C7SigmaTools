@@ -1,0 +1,10 @@
+// Title: BPFtrace Unsafe Option Usage
+// Author: Andreas Hunkeler (@Karneades)
+// Date: 2022-02-11
+// Level: medium
+// Description: Detects the usage of the unsafe bpftrace option
+// Tags: attack.execution, attack.t1059.004
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "--unsafe" and FolderPath endswith "bpftrace"

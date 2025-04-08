@@ -1,0 +1,10 @@
+// Title: Linux Doas Conf File Creation
+// Author: Sittikorn S, Teoderick Contreras
+// Date: 2022-01-20
+// Level: medium
+// Description: Detects the creation of doas.conf file in linux host platform.
+// Tags: attack.privilege-escalation, attack.t1548
+// ================================================================== 
+
+DeviceFileEvents
+| where FolderPath endswith "/etc/doas.conf"

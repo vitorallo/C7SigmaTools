@@ -1,0 +1,10 @@
+// Title: WMI Persistence - Script Event Consumer
+// Author: Thomas Patzke
+// Date: 2018-03-07
+// Level: medium
+// Description: Detects WMI script event consumers
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1546.003
+// ================================================================== 
+
+DeviceProcessEvents
+| where FolderPath =~ "C:\\WINDOWS\\system32\\wbem\\scrcons.exe" and InitiatingProcessFolderPath =~ "C:\\Windows\\System32\\svchost.exe"

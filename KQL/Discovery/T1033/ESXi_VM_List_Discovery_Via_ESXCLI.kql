@@ -1,0 +1,10 @@
+// Title: ESXi VM List Discovery Via ESXCLI
+// Author: Cedric Maurugeon
+// Date: 2023-09-04
+// Level: medium
+// Description: Detects execution of the "esxcli" command with the "vm" flag in order to retrieve information about the installed VMs.
+// Tags: attack.discovery, attack.t1033, attack.t1007
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "vm process" and ProcessCommandLine endswith " list" and FolderPath endswith "/esxcli"

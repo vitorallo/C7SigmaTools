@@ -1,0 +1,10 @@
+// Title: Setuid and Setgid
+// Author: Ömer Günal
+// Date: 2020-06-16
+// Level: low
+// Description: Detects suspicious change of file privileges with chown and chmod commands
+// Tags: attack.persistence, attack.t1548.001
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains " chmod u+s" or ProcessCommandLine contains " chmod g+s") and ProcessCommandLine contains "chown root"

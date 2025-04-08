@@ -1,0 +1,10 @@
+// Title: Disable Or Stop Services
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-09-15
+// Level: medium
+// Description: Detects the usage of utilities such as 'systemctl', 'service'...etc to stop or disable tools and services
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+DeviceProcessEvents
+| where (ProcessCommandLine contains "stop" or ProcessCommandLine contains "disable") and (FolderPath endswith "/service" or FolderPath endswith "/systemctl" or FolderPath endswith "/chkconfig")

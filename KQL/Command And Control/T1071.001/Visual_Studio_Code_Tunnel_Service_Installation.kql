@@ -1,0 +1,10 @@
+// Title: Visual Studio Code Tunnel Service Installation
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-10-25
+// Level: medium
+// Description: Detects the installation of VsCode tunnel (code-tunnel) as a service.
+// Tags: attack.command-and-control, attack.t1071.001
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "tunnel " and ProcessCommandLine contains "service" and ProcessCommandLine contains "internal-run" and ProcessCommandLine contains "tunnel-service.log"

@@ -1,0 +1,10 @@
+// Title: Gzip Archive Decode Via PowerShell
+// Author: Hieu Tran
+// Date: 2023-03-13
+// Level: medium
+// Description: Detects attempts of decoding encoded Gzip archives via PowerShell.
+// Tags: attack.command-and-control, attack.t1132.001
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "GZipStream" and ProcessCommandLine contains "::Decompress"

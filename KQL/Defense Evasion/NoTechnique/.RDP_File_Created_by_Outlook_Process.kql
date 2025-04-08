@@ -1,0 +1,12 @@
+// Title: .RDP File Created by Outlook Process
+// Author: Florian Roth
+// Date: 2024-11-01
+// Level: high
+// Description: Detects the creation of files with the ".rdp" extensions in the temporary directory that Outlook uses when opening attachments.
+// This can be used to detect spear-phishing campaigns that use RDP files as attachments.
+// 
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+DeviceFileEvents
+| where FolderPath endswith ".rdp" and ((FolderPath contains "\\AppData\\Local\\Packages\\Microsoft.Outlook_" or FolderPath contains "\\AppData\\Local\\Microsoft\\Olk\\Attachments\\") or (FolderPath contains "\\AppData\\Local\\Microsoft\\Windows\\" and FolderPath contains "\\Content.Outlook\\"))

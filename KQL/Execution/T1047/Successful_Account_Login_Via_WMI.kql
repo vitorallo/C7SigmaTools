@@ -1,0 +1,10 @@
+// Title: Successful Account Login Via WMI
+// Author: Thomas Patzke
+// Date: 2019-12-04
+// Level: low
+// Description: Detects successful logon attempts performed with WMI
+// Tags: attack.execution, attack.t1047
+// ================================================================== 
+
+DeviceLogonEvents
+| where InitiatingProcessFolderPath endswith "\\WmiPrvSE.exe"
