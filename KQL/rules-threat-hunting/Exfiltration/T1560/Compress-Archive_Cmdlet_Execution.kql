@@ -1,0 +1,12 @@
+// Title: Compress-Archive Cmdlet Execution
+// Author: Timur Zinniatullin, oscd.community
+// Date: 2019-10-21
+// Level: low
+// Description: Detects PowerShell scripts that make use of the "Compress-Archive" cmdlet in order to compress folders and files.
+// An adversary might compress data (e.g., sensitive documents) that is collected prior to exfiltration in order to make it portable and minimize the amount of data sent over the network.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for Script Block Logging events, ensure that the appropriate data connectors are enabled in Sentinel to collect Windows security event logs.
+// Tags: attack.exfiltration, attack.t1560, detection.threat-hunting
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Compress-Archive"

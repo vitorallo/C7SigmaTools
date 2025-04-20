@@ -1,0 +1,10 @@
+// Title: CreateRemoteThread API and LoadLibrary
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-08-11
+// Level: medium
+// Description: Detects potential use of CreateRemoteThread api and LoadLibrary function to inject DLL into a processThe SecurityEvent table in Microsoft Sentinel contains Windows security events, which can include information about processes creating remote threads. Make sure to have the Windows Security Events data connector enabled in Sentinel to access this table.
+// Tags: attack.defense-evasion, attack.t1055.001, detection.threat-hunting
+// ================================================================== 
+
+SecurityEvent
+| where StartFunction =~ "LoadLibraryA" and StartModule endswith "\\kernel32.dll"

@@ -1,0 +1,10 @@
+// Title: Local Firewall Rules Enumeration Via NetFirewallRule Cmdlet
+// Author: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io
+// Date: 2023-07-13
+// Level: low
+// Description: Detects execution of "Get-NetFirewallRule" or "Show-NetFirewallRule" to enumerate the local firewall rules on a host.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To ensure this table is populated, make sure to have the Windows Security Events connector enabled in your Sentinel workspace.
+// Tags: detection.threat-hunting, attack.discovery, attack.t1518.001, attack.t1016
+// ================================================================== 
+
+SecurityEvent
+| where (ContextInfo contains "Get-NetFirewallRule" or ContextInfo contains "Show-NetFirewallRule") or (Payload contains "Get-NetFirewallRule" or Payload contains "Show-NetFirewallRule")

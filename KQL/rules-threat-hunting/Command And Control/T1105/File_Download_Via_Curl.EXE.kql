@@ -1,0 +1,10 @@
+// Title: File Download Via Curl.EXE
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-07-05
+// Level: medium
+// Description: Detects file download using curl.exe
+// Tags: attack.command-and-control, attack.t1105, detection.threat-hunting
+// ================================================================== 
+
+DeviceProcessEvents
+| where (FolderPath endswith "\\curl.exe" or ProcessVersionInfoProductName =~ "The curl executable") and (ProcessCommandLine contains " -O" or ProcessCommandLine contains "--remote-name" or ProcessCommandLine contains "--output")

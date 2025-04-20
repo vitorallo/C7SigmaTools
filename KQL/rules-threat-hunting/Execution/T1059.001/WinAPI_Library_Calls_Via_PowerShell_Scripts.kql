@@ -1,0 +1,10 @@
+// Title: WinAPI Library Calls Via PowerShell Scripts
+// Author: Nikita Nazarov, oscd.community, Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-07-21
+// Level: medium
+// Description: Detects calls to WinAPI libraries from PowerShell scripts. Attackers can often leverage these APIs to avoid detection based on typical PowerShell function calls. Use this rule as a basis to hunt for interesting scripts.This table contains security-related events, including PowerShell script execution events. Make sure to enable the necessary data connectors in Microsoft Sentinel to ingest Windows security events.
+// Tags: attack.execution, attack.t1059.001, attack.t1106, detection.threat-hunting
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Advapi32.dll" or ScriptBlockText contains "kernel32.dll" or ScriptBlockText contains "KernelBase.dll" or ScriptBlockText contains "ntdll.dll" or ScriptBlockText contains "secur32.dll" or ScriptBlockText contains "user32.dll"

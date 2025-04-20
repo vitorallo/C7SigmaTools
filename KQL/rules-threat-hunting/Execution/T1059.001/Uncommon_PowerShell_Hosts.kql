@@ -1,0 +1,10 @@
+// Title: Uncommon PowerShell Hosts
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-08-11
+// Level: medium
+// Description: Detects alternate PowerShell hosts potentially bypassing detections looking for powershell.exeThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query this table for the given logsource section, ensure that you have the necessary data connectors set up in Sentinel to collect Windows security event logs.
+// Tags: attack.execution, attack.t1059.001, detection.threat-hunting
+// ================================================================== 
+
+SecurityEvent
+| where Data contains "HostApplication=" and (not(((Data contains "HostApplication=" and Data contains ":/Windows/System32/WindowsPowerShell/v1.0/powershell") or (Data contains "HostApplication=" and Data contains ":/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell") or (Data contains "HostApplication=" and Data contains ":\\Windows\\System32\\sdiagnhost.exe") or (Data contains "HostApplication=" and Data contains ":\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell") or (Data contains "HostApplication=" and Data contains ":\\Windows\\SysWOW64\\sdiagnhost.exe") or (Data contains "HostApplication=" and Data contains ":\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell") or Data contains "HostApplication=powershell"))) and (not(Data contains "Citrix\\ConfigSync\\ConfigSync.ps1"))

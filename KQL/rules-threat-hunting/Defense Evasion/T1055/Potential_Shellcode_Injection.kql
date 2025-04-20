@@ -1,0 +1,10 @@
+// Title: Potential Shellcode Injection
+// Author: Bhabesh Raj
+// Date: 2022-03-11
+// Level: medium
+// Description: Detects potential shellcode injection as seen used by tools such as Metasploit's migrate and Empire's psinject.This table contains information about process creation events in Windows. To query this table in Microsoft Sentinel, ensure that you have the necessary connectors or data sources configured to collect process access logs from Windows machines.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1055, detection.threat-hunting
+// ================================================================== 
+
+ProcessCreationEvents
+| where (CallTrace contains "UNKNOWN" and (GrantedAccess in~ ("0x147a", "0x1f3fff"))) and (not((InitiatingProcessFolderPath =~ "C:\\Windows\\System32\\Wbem\\Wmiprvse.exe" and TargetImage =~ "C:\\Windows\\system32\\lsass.exe"))) and (not((((InitiatingProcessFolderPath startswith "C:\\Program Files\\Dell\\" or InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\Dell\\") and (TargetImage startswith "C:\\Program Files\\Dell\\" or TargetImage startswith "C:\\Program Files (x86)\\Dell\\")) or (InitiatingProcessFolderPath =~ "C:\\Program Files (x86)\\Dell\\UpdateService\\ServiceShell.exe" and TargetImage =~ "C:\\Windows\\Explorer.EXE") or (InitiatingProcessFolderPath startswith "C:\\Program Files\\Microsoft Visual Studio\\" and TargetImage startswith "C:\\Program Files\\Microsoft Visual Studio\\"))))

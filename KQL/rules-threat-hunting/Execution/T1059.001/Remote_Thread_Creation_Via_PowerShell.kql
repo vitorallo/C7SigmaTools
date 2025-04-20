@@ -1,0 +1,10 @@
+// Title: Remote Thread Creation Via PowerShell
+// Author: Nikita Nazarov, oscd.community
+// Date: 2020-10-06
+// Level: medium
+// Description: Detects the creation of a remote thread from a Powershell process to another processThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for events related to creating remote threads, you can filter on the EventID field and look for events with EventID 8.
+// Tags: attack.execution, attack.t1059.001, detection.threat-hunting
+// ================================================================== 
+
+SecurityEvent
+| where (InitiatingProcessFolderPath endswith "\\powershell.exe" or InitiatingProcessFolderPath endswith "\\pwsh.exe") and (not(SourceParentImage endswith ":\\Windows\\System32\\CompatTelRunner.exe"))

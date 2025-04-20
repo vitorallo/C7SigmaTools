@@ -1,0 +1,10 @@
+// Title: Dfsvc.EXE Initiated Network Connection Over Uncommon Port
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-06-12
+// Level: high
+// Description: Detects an initiated network connection over uncommon ports from "dfsvc.exe". A utility used to handled ClickOnce applications.The SecurityEvent table in Microsoft Sentinel contains network connection logs for Windows systems. To have this table present, ensure that you have the necessary data connectors and log sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.execution, attack.t1203
+// ================================================================== 
+
+SecurityEvent
+| where (InitiatingProcessFolderPath contains ":\\Windows\\Microsoft.NET\\" and InitiatingProcessFolderPath endswith "\\dfsvc.exe") and (not((RemotePort in~ ("80", "443")))) and (not((DestinationIsIpv6 =~ "true" and RemotePort == 53)))

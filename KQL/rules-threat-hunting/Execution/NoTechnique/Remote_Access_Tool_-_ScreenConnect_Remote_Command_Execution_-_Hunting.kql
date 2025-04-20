@@ -1,0 +1,12 @@
+// Title: Remote Access Tool - ScreenConnect Remote Command Execution - Hunting
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2024-02-23
+// Level: medium
+// Description: Detects remote binary or command execution via the ScreenConnect Service.
+// Use this rule in order to hunt for potentially anomalous executions originating from ScreenConnect
+// 
+// Tags: attack.execution, detection.threat-hunting
+// ================================================================== 
+
+DeviceProcessEvents
+| where InitiatingProcessFolderPath endswith "\\ScreenConnect.ClientService.exe"

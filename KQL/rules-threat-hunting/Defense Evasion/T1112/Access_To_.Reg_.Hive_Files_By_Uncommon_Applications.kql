@@ -1,0 +1,10 @@
+// Title: Access To .Reg/.Hive Files By Uncommon Applications
+// Author: frack113
+// Date: 2023-09-15
+// Level: low
+// Description: Detects file access requests to files ending with either the ".hive"/".reg" extension, usually associated with Windows Registry backups.
+// Tags: attack.t1112, attack.defense-evasion, detection.threat-hunting
+// ================================================================== 
+
+DeviceFileEvents
+| where (FileName endswith ".hive" or FileName endswith ".reg") and (not((InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\" or InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\System32\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\SysWOW64\\")))

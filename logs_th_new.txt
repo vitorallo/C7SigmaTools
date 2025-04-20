@@ -1,0 +1,1245 @@
+Found 118 rule files to process.
+Processing: sigma/rules-threat-hunting/macos/file/file_event/file_event_macos_python_path_configuration_files.yml
+Python Path Configuration File Creation - MacOS ---> KQL Query:
+DeviceFileEvents
+| where FolderPath endswith ".pth" and FolderPath matches regex "(?i)/lib/python3\\.([5-9]|[0-9]{2})/site-packages/"
+
+Unexpected Error processing 'Python Path Configuration File Creation - MacOS' (sigma/rules-threat-hunting/macos/file/file_event/file_event_macos_python_path_configuration_files.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/macos/process_creation/proc_creation_macos_pbpaste_execution.yml
+Clipboard Data Collection Via Pbpaste ---> KQL Query:
+DeviceProcessEvents
+| where FolderPath endswith "/pbpaste"
+
+Unexpected Error processing 'Clipboard Data Collection Via Pbpaste' (sigma/rules-threat-hunting/macos/process_creation/proc_creation_macos_pbpaste_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/web/proxy_generic/proxy_susp_class_extension_request.yml
+Sigma Transformation Error for '.Class Extension URI Ending Request': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for .Class Extension URI Ending Request I will try again with AI :)
+AI is trying to generate KQL for: .Class Extension URI Ending Request
+Logsource section: {'category': 'proxy'}
+AI generated KQL query for sigma/rules-threat-hunting/web/proxy_generic/proxy_susp_class_extension_request.yml:
+ProxyLog
+| where 'c-uri' endswith ".class"
+
+AI generated comments:
+This table contains proxy logs, make sure to have the necessary connectors or data sources configured in Sentinel to collect proxy logs.
+
+.Class Extension URI Ending Request ---> KQL Query:
+ProxyLog
+| where 'c-uri' endswith ".class"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/linux/file/file_event/file_event_lnx_python_path_configuration_files.yml
+Python Path Configuration File Creation - Linux ---> KQL Query:
+DeviceFileEvents
+| where FolderPath endswith ".pth" and FolderPath matches regex "(?i)/lib/python3\\.([5-9]|[0-9]{2})/site-packages/"
+
+Unexpected Error processing 'Python Path Configuration File Creation - Linux' (sigma/rules-threat-hunting/linux/file/file_event/file_event_lnx_python_path_configuration_files.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/linux/process_creation/proc_creation_lnx_susp_running_process_discovery.yml
+Process Discovery ---> KQL Query:
+DeviceProcessEvents
+| where FolderPath endswith "/atop" or FolderPath endswith "/htop" or FolderPath endswith "/pgrep" or FolderPath endswith "/ps" or FolderPath endswith "/pstree" or FolderPath endswith "/top"
+
+Unexpected Error processing 'Process Discovery' (sigma/rules-threat-hunting/linux/process_creation/proc_creation_lnx_susp_running_process_discovery.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/linux/process_creation/proc_creation_lnx_susp_process_termination_via_kill.yml
+Terminate Linux Process Via Kill ---> KQL Query:
+DeviceProcessEvents
+| where FolderPath endswith "/kill" or FolderPath endswith "/killall" or FolderPath endswith "/pkill" or FolderPath endswith "/xkill"
+
+Unexpected Error processing 'Terminate Linux Process Via Kill' (sigma/rules-threat-hunting/linux/process_creation/proc_creation_lnx_susp_process_termination_via_kill.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/cloud/m365/audit/microsoft365_susp_email_forwarding_activity.yml
+Sigma Transformation Error for 'Mail Forwarding/Redirecting Activity In O365': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Mail Forwarding/Redirecting Activity In O365 I will try again with AI :)
+AI is trying to generate KQL for: Mail Forwarding/Redirecting Activity In O365
+Logsource section: {'service': 'audit', 'product': 'm365', 'definition': "Requirements: The 'OperationProperties' and 'Parameters' fields are a list of dict. A correct mapping to the 'Value' field inside is recommended to avoid greedy search"}
+AI generated KQL query for sigma/rules-threat-hunting/cloud/m365/audit/microsoft365_susp_email_forwarding_activity.yml:
+OfficeActivity
+| where ((Operation contains "New-InboxRule" or Operation contains "Set-InboxRule") and (Parameters contains "ForwardAsAttachmentTo" or Parameters contains "ForwardingAddress" or Parameters contains "ForwardingSmtpAddress" or Parameters contains "ForwardTo" or Parameters contains "RedirectTo" or Parameters contains "RedirectToRecipients")) or (Operation contains "Set-Mailbox" and (Parameters contains "ForwardingSmtpAddress" or Parameters contains "ForwardingAddress")) or ((OperationProperties contains "Forward" or OperationProperties contains "Recipients") and Operation contains "UpdateInboxRules")
+
+AI generated comments:
+The 'm365' product in the 'audit' service corresponds to the OfficeActivity table in Microsoft Sentinel. Ensure that the Microsoft 365 Defender connector is installed and properly configured in Sentinel to collect data from this table.
+
+Mail Forwarding/Redirecting Activity In O365 ---> KQL Query:
+OfficeActivity
+| where ((Operation contains "New-InboxRule" or Operation contains "Set-InboxRule") and (Parameters contains "ForwardAsAttachmentTo" or Parameters contains "ForwardingAddress" or Parameters contains "ForwardingSmtpAddress" or Parameters contains "ForwardTo" or Parameters contains "RedirectTo" or Parameters contains "RedirectToRecipients")) or (Operation contains "Set-Mailbox" and (Parameters contains "ForwardingSmtpAddress" or Parameters contains "ForwardingAddress")) or ((OperationProperties contains "Forward" or OperationProperties contains "Recipients") and Operation contains "UpdateInboxRules")
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/cloud/okta/okta_password_health_report_query.yml
+Sigma Transformation Error for 'Okta Password Health Report Query': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Okta Password Health Report Query I will try again with AI :)
+AI is trying to generate KQL for: Okta Password Health Report Query
+Logsource section: {'service': 'okta', 'product': 'okta'}
+AI generated KQL query for sigma/rules-threat-hunting/cloud/okta/okta_password_health_report_query.yml:
+OktaSignInLogs
+| where 'debugContext.debugData.requestUri' contains "/reports/password-health/"
+
+AI generated comments:
+This table contains Okta sign-in logs. To have this table present in Microsoft Sentinel, you need to ensure that Okta logs are being forwarded to Sentinel and that the necessary connectors or data connectors are set up to ingest Okta logs.
+
+Okta Password Health Report Query ---> KQL Query:
+OktaSignInLogs
+| where 'debugContext.debugData.requestUri' contains "/reports/password-health/"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/pipe_created/pipe_created_sysinternals_psexec_default_pipe.yml
+Sigma Transformation Error for 'PsExec Default Named Pipe': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for PsExec Default Named Pipe I will try again with AI :)
+AI is trying to generate KQL for: PsExec Default Named Pipe
+Logsource section: {'category': 'pipe_created', 'product': 'windows', 'definition': 'Note that you have to configure logging for Named Pipe Events in Sysmon config (Event ID 17 and Event ID 18). The basic configuration is in popular sysmon configuration (https://github.com/SwiftOnSecurity/sysmon-config), but it is worth verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config, https://github.com/olafhartong/sysmon-modular. How to test detection? You can check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/pipe_created/pipe_created_sysinternals_psexec_default_pipe.yml:
+SysmonEvent
+| where PipeName =~ "\\PSEXESVC"
+
+AI generated comments:
+This table contains Sysmon events, including Named Pipe Events (Event ID 17 and Event ID 18). To have this table present in Sentinel, you need to have Sysmon installed on your Windows endpoints and configured to log Named Pipe Events.
+
+PsExec Default Named Pipe ---> KQL Query:
+SysmonEvent
+| where PipeName =~ "\\PSEXESVC"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_rename/file_rename_win_non_dll_to_dll_ext.yml
+Sigma Transformation Error for 'Non-DLL Extension File Renamed With DLL Extension': Invalid SigmaDetectionItem field name encountered: SourceFilename. Please use valid fields for the DeviceFileEvents table, or the following fields that have keymappings in this pipeline:
+ActionType, AdditionalFields, AppGuardContainerId, CommandLine, Company, Description, DeviceId, DeviceName, EventType, FileName, FileOriginIP, FileOriginReferrerUrl, FileOriginUrl, FileSize, FolderPath, Hashes, Image, InitiatingProcessAccountDomain, InitiatingProcessAccountName, InitiatingProcessAccountObjectId, InitiatingProcessAccountSid, InitiatingProcessAccountUpn, InitiatingProcessCommandLine, InitiatingProcessCreationTime, InitiatingProcessFileName, InitiatingProcessFileSize, InitiatingProcessFolderPath, InitiatingProcessId, InitiatingProcessIntegrityLevel, InitiatingProcessMD5, InitiatingProcessParentCreationTime, InitiatingProcessParentFileName, InitiatingProcessParentId, InitiatingProcessRemoteSessionDeviceName, InitiatingProcessRemoteSessionIP, InitiatingProcessSHA1, InitiatingProcessSHA256, InitiatingProcessSessionId, InitiatingProcessTokenElevation, InitiatingProcessVersionInfoCompanyName, InitiatingProcessVersionInfoFileDescription, InitiatingProcessVersionInfoInternalFileName, InitiatingProcessVersionInfoOriginalFileName, InitiatingProcessVersionInfoProductName, InitiatingProcessVersionInfoProductVersion, IsAzureInfoProtectionApplied, IsInitiatingProcessRemoteSession, MD5, ObjectName, OriginalFileName, ParentCommandLine, ParentProcessId, PreviousFileName, PreviousFolderPath, ProcessId, ProcessName, Product, ReportId, RequestAccountDomain, RequestAccountName, RequestAccountSid, RequestProtocol, RequestSourceIP, RequestSourcePort, SHA1, SHA256, SensitivityLabel, SensitivitySubLabel, ShareName, SourceImage, TargetFilename, Timestamp, User, md5, sha1, sha256.
+Warning: No KQL query generated for Non-DLL Extension File Renamed With DLL Extension I will try again with AI :)
+AI is trying to generate KQL for: Non-DLL Extension File Renamed With DLL Extension
+Logsource section: {'product': 'windows', 'category': 'file_rename', 'definition': 'Requirements: Microsoft-Windows-Kernel-File Provider with at least the KERNEL_FILE_KEYWORD_RENAME_SETLINK_PATH keyword'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/file/file_rename/file_rename_win_non_dll_to_dll_ext.yml:
+KernelFileEvents
+| where FolderPath endswith ".dll" and (not((SourceFilename endswith ".dll" or SourceFilename =~ "" or (InitiatingProcessFolderPath contains ":\\Program Files (x86)\\" or InitiatingProcessFolderPath contains ":\\Program Files\\") or SourceFilename endswith ".tmp" or isnull(SourceFilename) or (InitiatingProcessFolderPath contains ":\\Windows\\WinSxS\\" and InitiatingProcessFolderPath endswith "\\TiWorker.exe") or (InitiatingProcessFolderPath endswith ":\\Windows\\System32\\wuauclt.exe" or FolderPath contains ":\\$WINDOWS.~BT\\Sources\\")))) and (not(SourceFilename contains "\\SquirrelTemp\\temp"))
+
+AI generated comments:
+This table contains information about file events in the Windows kernel, including file renames. Make sure to have the Microsoft-Windows-Kernel-File provider enabled in your Sentinel environment to populate this table.
+
+Non-DLL Extension File Renamed With DLL Extension ---> KQL Query:
+KernelFileEvents
+| where FolderPath endswith ".dll" and (not((SourceFilename endswith ".dll" or SourceFilename =~ "" or (InitiatingProcessFolderPath contains ":\\Program Files (x86)\\" or InitiatingProcessFolderPath contains ":\\Program Files\\") or SourceFilename endswith ".tmp" or isnull(SourceFilename) or (InitiatingProcessFolderPath contains ":\\Windows\\WinSxS\\" and InitiatingProcessFolderPath endswith "\\TiWorker.exe") or (InitiatingProcessFolderPath endswith ":\\Windows\\System32\\wuauclt.exe" or FolderPath contains ":\\$WINDOWS.~BT\\Sources\\")))) and (not(SourceFilename contains "\\SquirrelTemp\\temp"))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_event/file_event_win_dump_file_creation.yml
+DMP/HDMP File Creation ---> KQL Query:
+DeviceFileEvents
+| where FolderPath endswith ".dmp" or FolderPath endswith ".dump" or FolderPath endswith ".hdmp"
+
+Unexpected Error processing 'DMP/HDMP File Creation' (sigma/rules-threat-hunting/windows/file/file_event/file_event_win_dump_file_creation.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_event/file_event_win_scheduled_task_creation.yml
+Scheduled Task Created - FileCreation ---> KQL Query:
+DeviceFileEvents
+| where FolderPath contains ":\\Windows\\System32\\Tasks\\" or FolderPath contains ":\\Windows\\SysWOW64\\Tasks\\" or FolderPath contains ":\\Windows\\Tasks\\"
+
+Unexpected Error processing 'Scheduled Task Created - FileCreation' (sigma/rules-threat-hunting/windows/file/file_event/file_event_win_scheduled_task_creation.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_event/file_event_win_python_path_configuration_files.yml
+Python Path Configuration File Creation - Windows ---> KQL Query:
+DeviceFileEvents
+| where (FolderPath endswith ".pth" and FolderPath matches regex "(?i)\\\\(venv|python(.+)?)\\\\lib\\\\site-packages\\\\") and (not((InitiatingProcessFolderPath endswith "\\python.exe" and (FolderPath endswith "\\pywin32.pth" or FolderPath endswith "\\distutils-precedence.pth"))))
+
+Unexpected Error processing 'Python Path Configuration File Creation - Windows' (sigma/rules-threat-hunting/windows/file/file_event/file_event_win_python_path_configuration_files.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_event/file_event_win_susp_binary_dropper.yml
+Creation of an Executable by an Executable ---> KQL Query:
+DeviceFileEvents
+| where (InitiatingProcessFolderPath endswith ".exe" and FolderPath endswith ".exe") and (not(((InitiatingProcessFolderPath contains ":\\ProgramData\\Microsoft\\Windows Defender\\" or InitiatingProcessFolderPath contains ":\\Program Files\\Windows Defender\\") or (InitiatingProcessFolderPath contains ":\\Windows\\Microsoft.NET\\Framework" and InitiatingProcessFolderPath endswith "\\mscorsvw.exe" and FolderPath contains ":\\Windows\\assembly") or (InitiatingProcessFolderPath endswith ":\\Windows\\System32\\msiexec.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\system32\\cleanmgr.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\explorer.exe" or InitiatingProcessFolderPath endswith ":\\WINDOWS\\system32\\dxgiadaptercache.exe" or InitiatingProcessFolderPath endswith ":\\WINDOWS\\system32\\Dism.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\System32\\wuauclt.exe") or (InitiatingProcessFolderPath endswith "\\AppData\\Local\\GitHubDesktop\\Update.exe" and FolderPath contains "\\AppData\\Local\\SquirrelTemp\\") or (InitiatingProcessFolderPath contains ":\\Windows\\Microsoft.NET\\Framework\\" and InitiatingProcessFolderPath endswith "\\mscorsvw.exe" and FolderPath contains ":\\Windows\\assembly\\NativeImages_") or ((InitiatingProcessFolderPath contains ":\\Program Files\\" or InitiatingProcessFolderPath contains ":\\Program Files (x86)\\") or (FolderPath contains ":\\Program Files\\" or FolderPath contains ":\\Program Files (x86)\\")) or (InitiatingProcessFolderPath endswith "\\AppData\\Local\\Microsoft\\Teams\\Update.exe" and (FolderPath endswith "\\AppData\\Local\\Microsoft\\Teams\\stage\\Teams.exe" or FolderPath endswith "\\AppData\\Local\\Microsoft\\Teams\\stage\\Squirrel.exe" or FolderPath endswith "\\AppData\\Local\\Microsoft\\SquirrelTemp\\tempb\\")) or (InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\" or FolderPath contains "\\AppData\\Local\\Temp\\") or (InitiatingProcessFolderPath contains ":\\Windows\\WinSxS\\" and InitiatingProcessFolderPath endswith "\\TiWorker.exe") or (InitiatingProcessFolderPath endswith ":\\WINDOWS\\system32\\svchost.exe" and FolderPath contains ":\\Windows\\SoftwareDistribution\\Download\\") or (InitiatingProcessFolderPath endswith ":\\Windows\\system32\\svchost.exe" and (FolderPath contains ":\\WUDownloadCache\\" and FolderPath contains "\\WindowsUpdateBox.exe")) or (InitiatingProcessFolderPath contains "\\AppData\\Local\\" and InitiatingProcessFolderPath endswith "\\Microsoft VS Code\\Code.exe" and FolderPath contains "\\.vscode\\extensions\\") or FolderPath contains "\\AppData\\Local\\Microsoft\\WindowsApps\\" or (InitiatingProcessFolderPath contains ":\\WINDOWS\\TEMP\\" or FolderPath contains ":\\WINDOWS\\TEMP\\") or (InitiatingProcessFolderPath contains ":\\WINDOWS\\SoftwareDistribution\\Download\\" and InitiatingProcessFolderPath endswith "\\WindowsUpdateBox.Exe" and FolderPath contains ":\\$WINDOWS.~BT\\Sources\\")))) and (not(((InitiatingProcessFolderPath endswith "\\ChromeSetup.exe" and FolderPath contains "\\Google") or (InitiatingProcessFolderPath contains "\\Python27\\python.exe" and (FolderPath contains "\\Python27\\Lib\\site-packages\\" or FolderPath contains "\\Python27\\Scripts\\" or FolderPath contains "\\AppData\\Local\\Temp\\")) or (InitiatingProcessFolderPath contains "\\AppData\\Local\\SquirrelTemp\\Update.exe" and FolderPath contains "\\AppData\\Local"))))
+
+Unexpected Error processing 'Creation of an Executable by an Executable' (sigma/rules-threat-hunting/windows/file/file_event/file_event_win_susp_binary_dropper.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_event/file_event_win_vscode_tunnel_indicators.yml
+VsCode Code Tunnel Execution File Indicator ---> KQL Query:
+DeviceFileEvents
+| where FolderPath endswith "\\code_tunnel.json"
+
+Unexpected Error processing 'VsCode Code Tunnel Execution File Indicator' (sigma/rules-threat-hunting/windows/file/file_event/file_event_win_vscode_tunnel_indicators.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_event/file_event_win_webdav_tmpfile_creation.yml
+WebDAV Temporary Local File Creation ---> KQL Query:
+DeviceFileEvents
+| where FolderPath contains "\\AppData\\Local\\Temp\\TfsStore\\Tfs_DAV\\" and (FolderPath endswith ".7z" or FolderPath endswith ".bat" or FolderPath endswith ".dat" or FolderPath endswith ".ico" or FolderPath endswith ".js" or FolderPath endswith ".lnk" or FolderPath endswith ".ps1" or FolderPath endswith ".rar" or FolderPath endswith ".vbe" or FolderPath endswith ".vbs" or FolderPath endswith ".zip")
+
+Unexpected Error processing 'WebDAV Temporary Local File Creation' (sigma/rules-threat-hunting/windows/file/file_event/file_event_win_webdav_tmpfile_creation.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_delete/file_delete_win_zone_identifier_ads.yml
+ADS Zone.Identifier Deleted ---> KQL Query:
+DeviceFileEvents
+| where FolderPath endswith ":Zone.Identifier"
+
+Unexpected Error processing 'ADS Zone.Identifier Deleted' (sigma/rules-threat-hunting/windows/file/file_delete/file_delete_win_zone_identifier_ads.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_access/file_access_win_office_outlook_mail_credential.yml
+Access To Windows Outlook Mail Files By Uncommon Applications ---> KQL Query:
+DeviceFileEvents
+| where (FileName contains "\\AppData\\Local\\Comms\\Unistore\\data" or FileName endswith "\\AppData\\Local\\Comms\\UnistoreDB\\store.vol") and (not(((InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\" or InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\system32\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\SysWOW64\\") or InitiatingProcessFolderPath =~ "System"))) and (not((((InitiatingProcessFolderPath endswith "\\MpCopyAccelerator.exe" or InitiatingProcessFolderPath endswith "\\MsMpEng.exe") and InitiatingProcessFolderPath startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\") or (InitiatingProcessFolderPath endswith "\\thor64.exe" or InitiatingProcessFolderPath endswith "\\thor.exe"))))
+
+Unexpected Error processing 'Access To Windows Outlook Mail Files By Uncommon Applications' (sigma/rules-threat-hunting/windows/file/file_access/file_access_win_office_outlook_mail_credential.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_access/file_access_win_susp_gpo_access_uncommon_process.yml
+Access To Sysvol Policies Share By Uncommon Process ---> KQL Query:
+DeviceFileEvents
+| where ((FileName contains "\\sysvol\\" and FileName contains "\\Policies\\") and FileName startswith "\\") and (not((InitiatingProcessFolderPath contains ":\\Program Files (x86)\\" or InitiatingProcessFolderPath contains ":\\Program Files\\" or InitiatingProcessFolderPath contains ":\\Windows\\explorer.exe" or InitiatingProcessFolderPath contains ":\\Windows\\system32\\" or InitiatingProcessFolderPath contains ":\\Windows\\SysWOW64\\")))
+
+Unexpected Error processing 'Access To Sysvol Policies Share By Uncommon Process' (sigma/rules-threat-hunting/windows/file/file_access/file_access_win_susp_gpo_access_uncommon_process.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_access/file_access_win_browsers_credential.yml
+Access To Browser Credential Files By Uncommon Applications ---> KQL Query:
+DeviceFileEvents
+| where ((FileName contains "\\User Data\\Default\\Login Data" or FileName contains "\\User Data\\Local State") or (FileName endswith "\\cookies.sqlite" or FileName endswith "\\places.sqlite" or FileName endswith "release\\key3.db" or FileName endswith "release\\key4.db" or FileName endswith "release\\logins.json") or FileName endswith "\\Appdata\\Local\\Microsoft\\Windows\\WebCache\\WebCacheV01.dat") and (not(((InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\" or InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\system32\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\SysWOW64\\") or InitiatingProcessFolderPath =~ "System"))) and (not((((InitiatingProcessFolderPath endswith "\\MpCopyAccelerator.exe" or InitiatingProcessFolderPath endswith "\\MsMpEng.exe") and InitiatingProcessFolderPath startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\") or (InitiatingProcessFolderPath endswith "\\thor.exe" or InitiatingProcessFolderPath endswith "\\thor64.exe"))))
+
+Unexpected Error processing 'Access To Browser Credential Files By Uncommon Applications' (sigma/rules-threat-hunting/windows/file/file_access/file_access_win_browsers_credential.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_access/file_access_win_browsers_chromium_sensitive_files.yml
+Access To Chromium Browsers Sensitive Files By Uncommon Applications ---> KQL Query:
+DeviceFileEvents
+| where (FileName contains "\\User Data\\Default\\Cookies" or FileName contains "\\User Data\\Default\\History" or FileName contains "\\User Data\\Default\\Network\\Cookies" or FileName contains "\\User Data\\Default\\Web Data") and (not(((InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\" or InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\system32\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\SysWOW64\\") or InitiatingProcessFolderPath =~ "System"))) and (not(((InitiatingProcessFolderPath endswith "\\MpCopyAccelerator.exe" or InitiatingProcessFolderPath endswith "\\MsMpEng.exe") and InitiatingProcessFolderPath startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\")))
+
+Unexpected Error processing 'Access To Chromium Browsers Sensitive Files By Uncommon Applications' (sigma/rules-threat-hunting/windows/file/file_access/file_access_win_browsers_chromium_sensitive_files.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_access/file_access_win_susp_reg_and_hive.yml
+Access To .Reg/.Hive Files By Uncommon Applications ---> KQL Query:
+DeviceFileEvents
+| where (FileName endswith ".hive" or FileName endswith ".reg") and (not((InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\" or InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\System32\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\SysWOW64\\")))
+
+Unexpected Error processing 'Access To .Reg/.Hive Files By Uncommon Applications' (sigma/rules-threat-hunting/windows/file/file_access/file_access_win_susp_reg_and_hive.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/file/file_access/file_access_win_susp_unattend_xml.yml
+Unattend.XML File Access Attempt ---> KQL Query:
+DeviceFileEvents
+| where FileName endswith "\\Panther\\unattend.xml"
+
+Unexpected Error processing 'Unattend.XML File Access Attempt' (sigma/rules-threat-hunting/windows/file/file_access/file_access_win_susp_unattend_xml.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_classic/posh_pc_alternate_powershell_hosts.yml
+Sigma Transformation Error for 'Uncommon PowerShell Hosts': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Uncommon PowerShell Hosts I will try again with AI :)
+AI is trying to generate KQL for: Uncommon PowerShell Hosts
+Logsource section: {'product': 'windows', 'category': 'ps_classic_start'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_classic/posh_pc_alternate_powershell_hosts.yml:
+SecurityEvent
+| where Data contains "HostApplication=" and (not(((Data contains "HostApplication=" and Data contains ":/Windows/System32/WindowsPowerShell/v1.0/powershell") or (Data contains "HostApplication=" and Data contains ":/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell") or (Data contains "HostApplication=" and Data contains ":\\Windows\\System32\\sdiagnhost.exe") or (Data contains "HostApplication=" and Data contains ":\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell") or (Data contains "HostApplication=" and Data contains ":\\Windows\\SysWOW64\\sdiagnhost.exe") or (Data contains "HostApplication=" and Data contains ":\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell") or Data contains "HostApplication=powershell"))) and (not(Data contains "Citrix\\ConfigSync\\ConfigSync.ps1"))
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query this table for the given logsource section, ensure that you have the necessary data connectors set up in Sentinel to collect Windows security event logs.
+
+Uncommon PowerShell Hosts ---> KQL Query:
+SecurityEvent
+| where Data contains "HostApplication=" and (not(((Data contains "HostApplication=" and Data contains ":/Windows/System32/WindowsPowerShell/v1.0/powershell") or (Data contains "HostApplication=" and Data contains ":/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell") or (Data contains "HostApplication=" and Data contains ":\\Windows\\System32\\sdiagnhost.exe") or (Data contains "HostApplication=" and Data contains ":\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell") or (Data contains "HostApplication=" and Data contains ":\\Windows\\SysWOW64\\sdiagnhost.exe") or (Data contains "HostApplication=" and Data contains ":\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell") or Data contains "HostApplication=powershell"))) and (not(Data contains "Citrix\\ConfigSync\\ConfigSync.ps1"))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_classic/posh_pc_bxor_operator_usage.yml
+Sigma Transformation Error for 'bXOR Operator Usage In PowerShell Command Line - PowerShell Classic': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for bXOR Operator Usage In PowerShell Command Line - PowerShell Classic I will try again with AI :)
+AI is trying to generate KQL for: bXOR Operator Usage In PowerShell Command Line - PowerShell Classic
+Logsource section: {'product': 'windows', 'category': 'ps_classic_start'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_classic/posh_pc_bxor_operator_usage.yml:
+SecurityEvent
+| where Data contains "HostName=ConsoleHost" and Data contains " -bxor "
+
+AI generated comments:
+This table contains Windows security event logs. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to collect these logs.
+
+bXOR Operator Usage In PowerShell Command Line - PowerShell Classic ---> KQL Query:
+SecurityEvent
+| where Data contains "HostName=ConsoleHost" and Data contains " -bxor "
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_mailbox_access.yml
+Sigma Transformation Error for 'Windows Mail App Mailbox Access Via PowerShell Script': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Windows Mail App Mailbox Access Via PowerShell Script I will try again with AI :)
+AI is trying to generate KQL for: Windows Mail App Mailbox Access Via PowerShell Script
+Logsource section: {'product': 'windows', 'category': 'ps_script', 'definition': 'bade5735-5ab0-4aa7-a642-a11be0e40872'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_mailbox_access.yml:
+SecurityEvent
+| where ScriptBlockText contains "\\Comms\\Unistore\\data"
+
+AI generated comments:
+This table contains security event logs from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to have access to this table.
+
+Windows Mail App Mailbox Access Via PowerShell Script ---> KQL Query:
+SecurityEvent
+| where ScriptBlockText contains "\\Comms\\Unistore\\data"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_send_mailmessage.yml
+Sigma Transformation Error for 'Potential Data Exfiltration Over SMTP Via Send-MailMessage Cmdlet': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Potential Data Exfiltration Over SMTP Via Send-MailMessage Cmdlet I will try again with AI :)
+AI is trying to generate KQL for: Potential Data Exfiltration Over SMTP Via Send-MailMessage Cmdlet
+Logsource section: {'product': 'windows', 'category': 'ps_script', 'definition': 'Requirements: Script Block Logging must be enabled'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_send_mailmessage.yml:
+SecurityEvent
+| where ScriptBlockText =~ "*Send-MailMessage*-Attachments*"
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which may include information about PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+
+Potential Data Exfiltration Over SMTP Via Send-MailMessage Cmdlet ---> KQL Query:
+SecurityEvent
+| where ScriptBlockText =~ "*Send-MailMessage*-Attachments*"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_compress_archive_usage.yml
+Sigma Transformation Error for 'Compress-Archive Cmdlet Execution': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Compress-Archive Cmdlet Execution I will try again with AI :)
+AI is trying to generate KQL for: Compress-Archive Cmdlet Execution
+Logsource section: {'product': 'windows', 'category': 'ps_script', 'definition': 'Requirements: Script Block Logging must be enabled'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_compress_archive_usage.yml:
+SecurityEvent
+| where ScriptBlockText contains "Compress-Archive"
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for Script Block Logging events, ensure that the appropriate data connectors are enabled in Sentinel to collect Windows security event logs.
+
+Compress-Archive Cmdlet Execution ---> KQL Query:
+SecurityEvent
+| where ScriptBlockText contains "Compress-Archive"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_registry_reconnaissance.yml
+Sigma Transformation Error for 'Potential Registry Reconnaissance Via PowerShell Script': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Potential Registry Reconnaissance Via PowerShell Script I will try again with AI :)
+AI is trying to generate KQL for: Potential Registry Reconnaissance Via PowerShell Script
+Logsource section: {'product': 'windows', 'category': 'ps_script', 'definition': 'Requirements: Script Block Logging must be enabled'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_registry_reconnaissance.yml:
+SecurityEvent
+| where ScriptBlockText matches regex "(Get-Item|gci|Get-ChildItem).{1,64}-Path.{1,64}\\\\(currentcontrolset\\\\services|CurrentVersion\\\\Policies\\\\Explorer\\\\Run|CurrentVersion\\\\Run|CurrentVersion\\\\ShellServiceObjectDelayLoad|CurrentVersion\\\\Windows\\winlogon)\\\\"
+
+AI generated comments:
+This table contains Windows security event logs, which may include information about script block logging being enabled. Ensure that the Windows Security Events data connector is enabled in Sentinel to query this table.
+
+Potential Registry Reconnaissance Via PowerShell Script ---> KQL Query:
+SecurityEvent
+| where ScriptBlockText matches regex "(Get-Item|gci|Get-ChildItem).{1,64}-Path.{1,64}\\\\(currentcontrolset\\\\services|CurrentVersion\\\\Policies\\\\Explorer\\\\Run|CurrentVersion\\\\Run|CurrentVersion\\\\ShellServiceObjectDelayLoad|CurrentVersion\\\\Windows\\winlogon)\\\\"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_new_smbmapping_quic.yml
+Sigma Transformation Error for 'SMB over QUIC Via PowerShell Script': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for SMB over QUIC Via PowerShell Script I will try again with AI :)
+AI is trying to generate KQL for: SMB over QUIC Via PowerShell Script
+Logsource section: {'product': 'windows', 'category': 'ps_script', 'definition': 'Requirements: Script Block Logging must be enabled'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_new_smbmapping_quic.yml:
+SecurityEvent
+| where ScriptBlockText contains "New-SmbMapping" and ScriptBlockText contains "-TransportType QUIC"
+
+AI generated comments:
+This table contains Windows security event logs, including script block logging events. Enable the Microsoft Monitoring Agent on Windows machines and configure the SecurityEvent data connector in Microsoft Sentinel to collect these logs.
+
+SMB over QUIC Via PowerShell Script ---> KQL Query:
+SecurityEvent
+| where ScriptBlockText contains "New-SmbMapping" and ScriptBlockText contains "-TransportType QUIC"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_remove_item_path.yml
+Sigma Transformation Error for 'Use Of Remove-Item to Delete File - ScriptBlock': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Use Of Remove-Item to Delete File - ScriptBlock I will try again with AI :)
+AI is trying to generate KQL for: Use Of Remove-Item to Delete File - ScriptBlock
+Logsource section: {'product': 'windows', 'category': 'ps_script', 'definition': 'Requirements: Script Block Logging must be enabled'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_remove_item_path.yml:
+SecurityEvent
+| where ScriptBlockText contains "Remove-Item -Path " or ScriptBlockText contains "del -Path " or ScriptBlockText contains "erase -Path " or ScriptBlockText contains "rd -Path " or ScriptBlockText contains "ri -Path " or ScriptBlockText contains "rm -Path " or ScriptBlockText contains "rmdir -Path "
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+
+Use Of Remove-Item to Delete File - ScriptBlock ---> KQL Query:
+SecurityEvent
+| where ScriptBlockText contains "Remove-Item -Path " or ScriptBlockText contains "del -Path " or ScriptBlockText contains "erase -Path " or ScriptBlockText contains "rd -Path " or ScriptBlockText contains "ri -Path " or ScriptBlockText contains "rm -Path " or ScriptBlockText contains "rmdir -Path "
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_new_netfirewallrule_allow.yml
+Sigma Transformation Error for 'New Windows Firewall Rule Added Via New-NetFirewallRule Cmdlet - ScriptBlock': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for New Windows Firewall Rule Added Via New-NetFirewallRule Cmdlet - ScriptBlock I will try again with AI :)
+AI is trying to generate KQL for: New Windows Firewall Rule Added Via New-NetFirewallRule Cmdlet - ScriptBlock
+Logsource section: {'product': 'windows', 'category': 'ps_script', 'definition': 'Requirements: Script Block Logging must be enabled'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_new_netfirewallrule_allow.yml:
+SecurityEvent
+| where ScriptBlockText =~ "*New-NetFirewallRule*-Action*Allow*"
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Make sure to have the necessary connectors and data sources configured in Sentinel to collect Windows security event logs.
+
+New Windows Firewall Rule Added Via New-NetFirewallRule Cmdlet - ScriptBlock ---> KQL Query:
+SecurityEvent
+| where ScriptBlockText =~ "*New-NetFirewallRule*-Action*Allow*"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_win_api_library_access.yml
+Sigma Transformation Error for 'WinAPI Function Calls Via PowerShell Scripts': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for WinAPI Function Calls Via PowerShell Scripts I will try again with AI :)
+AI is trying to generate KQL for: WinAPI Function Calls Via PowerShell Scripts
+Logsource section: {'product': 'windows', 'category': 'ps_script', 'definition': 'Requirements: Script Block Logging must be enabled'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_win_api_library_access.yml:
+SecurityEvent
+| where ScriptBlockText contains "AddSecurityPackage" or ScriptBlockText contains "AdjustTokenPrivileges" or ScriptBlockText contains "CloseHandle" or ScriptBlockText contains "CreateProcessWithToken" or ScriptBlockText contains "CreateRemoteThread" or ScriptBlockText contains "CreateThread" or ScriptBlockText contains "CreateUserThread" or ScriptBlockText contains "DangerousGetHandle" or ScriptBlockText contains "DuplicateTokenEx" or ScriptBlockText contains "EnumerateSecurityPackages" or ScriptBlockText contains "FreeLibrary" or ScriptBlockText contains "GetDelegateForFunctionPointer" or ScriptBlockText contains "GetLogonSessionData" or ScriptBlockText contains "GetModuleHandle" or ScriptBlockText contains "GetProcAddress" or ScriptBlockText contains "GetProcessHandle" or ScriptBlockText contains "GetTokenInformation" or ScriptBlockText contains "ImpersonateLoggedOnUser" or ScriptBlockText contains "LoadLibrary" or ScriptBlockText contains "memcpy" or ScriptBlockText contains "MiniDumpWriteDump" or ScriptBlockText contains "OpenDesktop" or ScriptBlockText contains "OpenProcess" or ScriptBlockText contains "OpenProcessToken" or ScriptBlockText contains "OpenThreadToken" or ScriptBlockText contains "OpenWindowStation" or ScriptBlockText contains "QueueUserApc" or ScriptBlockText contains "ReadProcessMemory" or ScriptBlockText contains "RevertToSelf" or ScriptBlockText contains "RtlCreateUserThread" or ScriptBlockText contains "SetThreadToken" or ScriptBlockText contains "VirtualAlloc" or ScriptBlockText contains "VirtualFree" or ScriptBlockText contains "VirtualProtect" or ScriptBlockText contains "WaitForSingleObject" or ScriptBlockText contains "WriteInt32" or ScriptBlockText contains "WriteProcessMemory" or ScriptBlockText contains "ZeroFreeGlobalAllocUnicode"
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains logs related to security events on Windows machines. To query for Script Block Logging events, ensure that the Microsoft Monitoring Agent (MMA) is installed on the Windows machines and configured to send security event logs to Sentinel.
+
+WinAPI Function Calls Via PowerShell Scripts ---> KQL Query:
+SecurityEvent
+| where ScriptBlockText contains "AddSecurityPackage" or ScriptBlockText contains "AdjustTokenPrivileges" or ScriptBlockText contains "CloseHandle" or ScriptBlockText contains "CreateProcessWithToken" or ScriptBlockText contains "CreateRemoteThread" or ScriptBlockText contains "CreateThread" or ScriptBlockText contains "CreateUserThread" or ScriptBlockText contains "DangerousGetHandle" or ScriptBlockText contains "DuplicateTokenEx" or ScriptBlockText contains "EnumerateSecurityPackages" or ScriptBlockText contains "FreeLibrary" or ScriptBlockText contains "GetDelegateForFunctionPointer" or ScriptBlockText contains "GetLogonSessionData" or ScriptBlockText contains "GetModuleHandle" or ScriptBlockText contains "GetProcAddress" or ScriptBlockText contains "GetProcessHandle" or ScriptBlockText contains "GetTokenInformation" or ScriptBlockText contains "ImpersonateLoggedOnUser" or ScriptBlockText contains "LoadLibrary" or ScriptBlockText contains "memcpy" or ScriptBlockText contains "MiniDumpWriteDump" or ScriptBlockText contains "OpenDesktop" or ScriptBlockText contains "OpenProcess" or ScriptBlockText contains "OpenProcessToken" or ScriptBlockText contains "OpenThreadToken" or ScriptBlockText contains "OpenWindowStation" or ScriptBlockText contains "QueueUserApc" or ScriptBlockText contains "ReadProcessMemory" or ScriptBlockText contains "RevertToSelf" or ScriptBlockText contains "RtlCreateUserThread" or ScriptBlockText contains "SetThreadToken" or ScriptBlockText contains "VirtualAlloc" or ScriptBlockText contains "VirtualFree" or ScriptBlockText contains "VirtualProtect" or ScriptBlockText contains "WaitForSingleObject" or ScriptBlockText contains "WriteInt32" or ScriptBlockText contains "WriteProcessMemory" or ScriptBlockText contains "ZeroFreeGlobalAllocUnicode"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_win_api_functions_access.yml
+Sigma Transformation Error for 'WinAPI Library Calls Via PowerShell Scripts': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for WinAPI Library Calls Via PowerShell Scripts I will try again with AI :)
+AI is trying to generate KQL for: WinAPI Library Calls Via PowerShell Scripts
+Logsource section: {'product': 'windows', 'category': 'ps_script', 'definition': 'Requirements: Script Block Logging must be enabled'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_script/posh_ps_win_api_functions_access.yml:
+SecurityEvent
+| where ScriptBlockText contains "Advapi32.dll" or ScriptBlockText contains "kernel32.dll" or ScriptBlockText contains "KernelBase.dll" or ScriptBlockText contains "ntdll.dll" or ScriptBlockText contains "secur32.dll" or ScriptBlockText contains "user32.dll"
+
+AI generated comments:
+This table contains security-related events, including PowerShell script execution events. Make sure to enable the necessary data connectors in Microsoft Sentinel to ingest Windows security events.
+
+WinAPI Library Calls Via PowerShell Scripts ---> KQL Query:
+SecurityEvent
+| where ScriptBlockText contains "Advapi32.dll" or ScriptBlockText contains "kernel32.dll" or ScriptBlockText contains "KernelBase.dll" or ScriptBlockText contains "ntdll.dll" or ScriptBlockText contains "secur32.dll" or ScriptBlockText contains "user32.dll"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/powershell/powershell_module/posh_pm_susp_netfirewallrule_recon.yml
+Sigma Transformation Error for 'Local Firewall Rules Enumeration Via NetFirewallRule Cmdlet': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Local Firewall Rules Enumeration Via NetFirewallRule Cmdlet I will try again with AI :)
+AI is trying to generate KQL for: Local Firewall Rules Enumeration Via NetFirewallRule Cmdlet
+Logsource section: {'product': 'windows', 'category': 'ps_module', 'definition': '0ad03ef1-f21b-4a79-8ce8-e6900c54b65b'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/powershell/powershell_module/posh_pm_susp_netfirewallrule_recon.yml:
+SecurityEvent
+| where (ContextInfo contains "Get-NetFirewallRule" or ContextInfo contains "Show-NetFirewallRule") or (Payload contains "Get-NetFirewallRule" or Payload contains "Show-NetFirewallRule")
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To ensure this table is populated, make sure to have the Windows Security Events connector enabled in your Sentinel workspace.
+
+Local Firewall Rules Enumeration Via NetFirewallRule Cmdlet ---> KQL Query:
+SecurityEvent
+| where (ContextInfo contains "Get-NetFirewallRule" or ContextInfo contains "Show-NetFirewallRule") or (Payload contains "Get-NetFirewallRule" or Payload contains "Show-NetFirewallRule")
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_access/proc_access_win_lsass_uncommon_access_flag.yml
+Sigma Transformation Error for 'Uncommon GrantedAccess Flags On LSASS': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Uncommon GrantedAccess Flags On LSASS I will try again with AI :)
+AI is trying to generate KQL for: Uncommon GrantedAccess Flags On LSASS
+Logsource section: {'category': 'process_access', 'product': 'windows'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/process_access/proc_access_win_lsass_uncommon_access_flag.yml:
+ProcessCreationEvents
+| where (GrantedAccess endswith "10" and TargetImage endswith "\\lsass.exe") and (not(((InitiatingProcessFolderPath in~ ("C:\\Program Files\\Common Files\\McAfee\\MMSSHost\\MMSSHOST.exe", "C:\\Program Files\\Malwarebytes\\Anti-Malware\\MBAMService.exe", "C:\\Program Files\\Windows Defender\\MsMpEng.exe", "C:\\PROGRAMDATA\\MALWAREBYTES\\MBAMSERVICE\\ctlrupdate\\mbupdatr.exe", "C:\\Windows\\System32\\lsass.exe", "C:\\Windows\\System32\\msiexec.exe", "C:\\WINDOWS\\System32\\perfmon.exe", "C:\\WINDOWS\\system32\\taskhostw.exe", "C:\\WINDOWS\\system32\\taskmgr.exe", "C:\\WINDOWS\\system32\\wbem\\wmiprvse.exe", "C:\\Windows\\SysWOW64\\msiexec.exe", "C:\\Windows\\sysWOW64\\wbem\\wmiprvse.exe")) or (InitiatingProcessFolderPath endswith "\\MsMpEng.exe" and InitiatingProcessFolderPath startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\") or (InitiatingProcessFolderPath endswith "\\GamingServices.exe" and InitiatingProcessFolderPath startswith "C:\\Program Files\\WindowsApps\\") or (InitiatingProcessFolderPath endswith "\\PROCEXP64.EXE" or InitiatingProcessFolderPath endswith "\\PROCEXP.EXE") or (InitiatingProcessFolderPath endswith "\\vmtoolsd.exe" and InitiatingProcessFolderPath startswith "C:\\ProgramData\\VMware\\VMware Tools\\") or (InitiatingProcessFolderPath contains "Antivirus" and (InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\")) or ((GrantedAccess in~ ("0x410", "0x10")) and InitiatingProcessFolderPath contains "\\SteamLibrary\\steamapps\\") or (InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\" or InitiatingProcessFolderPath startswith "C:\\WINDOWS\\system32\\") or ((InitiatingProcessFolderPath contains "C:\\Users\\" and InitiatingProcessFolderPath contains "\\AppData\\Local\\") and (InitiatingProcessFolderPath endswith "\\Microsoft VS Code\\Code.exe" or InitiatingProcessFolderPath endswith "\\software_reporter_tool.exe" or InitiatingProcessFolderPath endswith "\\DropboxUpdate.exe" or InitiatingProcessFolderPath endswith "\\MBAMInstallerService.exe" or InitiatingProcessFolderPath endswith "\\WebEx\\WebexHost.exe" or InitiatingProcessFolderPath endswith "\\Programs\\Microsoft VS Code\\Code.exe" or InitiatingProcessFolderPath endswith "\\JetBrains\\Toolbox\\bin\\jetbrains-toolbox.exe")) or (GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\" and InitiatingProcessFolderPath contains "\\vs_bootstrapper_")) or (InitiatingProcessFolderPath endswith "\\thor64.exe" or InitiatingProcessFolderPath endswith "\\thor.exe" or InitiatingProcessFolderPath endswith "\\aurora-agent-64.exe" or InitiatingProcessFolderPath endswith "\\aurora-agent.exe") or SourceCommandLine =~ "C:\\WINDOWS\\system32\\wermgr.exe -upload" or (GrantedAccess =~ "0x410" and InitiatingProcessFolderPath endswith "\\xampp-control.exe"))))
+
+AI generated comments:
+This table contains information about process creation events in Windows. To have this table present in Microsoft Sentinel, ensure that you have the necessary data connectors set up to collect process access logs from Windows machines.
+
+Uncommon GrantedAccess Flags On LSASS ---> KQL Query:
+ProcessCreationEvents
+| where (GrantedAccess endswith "10" and TargetImage endswith "\\lsass.exe") and (not(((InitiatingProcessFolderPath in~ ("C:\\Program Files\\Common Files\\McAfee\\MMSSHost\\MMSSHOST.exe", "C:\\Program Files\\Malwarebytes\\Anti-Malware\\MBAMService.exe", "C:\\Program Files\\Windows Defender\\MsMpEng.exe", "C:\\PROGRAMDATA\\MALWAREBYTES\\MBAMSERVICE\\ctlrupdate\\mbupdatr.exe", "C:\\Windows\\System32\\lsass.exe", "C:\\Windows\\System32\\msiexec.exe", "C:\\WINDOWS\\System32\\perfmon.exe", "C:\\WINDOWS\\system32\\taskhostw.exe", "C:\\WINDOWS\\system32\\taskmgr.exe", "C:\\WINDOWS\\system32\\wbem\\wmiprvse.exe", "C:\\Windows\\SysWOW64\\msiexec.exe", "C:\\Windows\\sysWOW64\\wbem\\wmiprvse.exe")) or (InitiatingProcessFolderPath endswith "\\MsMpEng.exe" and InitiatingProcessFolderPath startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\") or (InitiatingProcessFolderPath endswith "\\GamingServices.exe" and InitiatingProcessFolderPath startswith "C:\\Program Files\\WindowsApps\\") or (InitiatingProcessFolderPath endswith "\\PROCEXP64.EXE" or InitiatingProcessFolderPath endswith "\\PROCEXP.EXE") or (InitiatingProcessFolderPath endswith "\\vmtoolsd.exe" and InitiatingProcessFolderPath startswith "C:\\ProgramData\\VMware\\VMware Tools\\") or (InitiatingProcessFolderPath contains "Antivirus" and (InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\")) or ((GrantedAccess in~ ("0x410", "0x10")) and InitiatingProcessFolderPath contains "\\SteamLibrary\\steamapps\\") or (InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\" or InitiatingProcessFolderPath startswith "C:\\WINDOWS\\system32\\") or ((InitiatingProcessFolderPath contains "C:\\Users\\" and InitiatingProcessFolderPath contains "\\AppData\\Local\\") and (InitiatingProcessFolderPath endswith "\\Microsoft VS Code\\Code.exe" or InitiatingProcessFolderPath endswith "\\software_reporter_tool.exe" or InitiatingProcessFolderPath endswith "\\DropboxUpdate.exe" or InitiatingProcessFolderPath endswith "\\MBAMInstallerService.exe" or InitiatingProcessFolderPath endswith "\\WebEx\\WebexHost.exe" or InitiatingProcessFolderPath endswith "\\Programs\\Microsoft VS Code\\Code.exe" or InitiatingProcessFolderPath endswith "\\JetBrains\\Toolbox\\bin\\jetbrains-toolbox.exe")) or (GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\" and InitiatingProcessFolderPath contains "\\vs_bootstrapper_")) or (InitiatingProcessFolderPath endswith "\\thor64.exe" or InitiatingProcessFolderPath endswith "\\thor.exe" or InitiatingProcessFolderPath endswith "\\aurora-agent-64.exe" or InitiatingProcessFolderPath endswith "\\aurora-agent.exe") or SourceCommandLine =~ "C:\\WINDOWS\\system32\\wermgr.exe -upload" or (GrantedAccess =~ "0x410" and InitiatingProcessFolderPath endswith "\\xampp-control.exe"))))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_access/proc_access_win_susp_potential_shellcode_injection.yml
+Sigma Transformation Error for 'Potential Shellcode Injection': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Potential Shellcode Injection I will try again with AI :)
+AI is trying to generate KQL for: Potential Shellcode Injection
+Logsource section: {'category': 'process_access', 'product': 'windows'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/process_access/proc_access_win_susp_potential_shellcode_injection.yml:
+ProcessCreationEvents
+| where (CallTrace contains "UNKNOWN" and (GrantedAccess in~ ("0x147a", "0x1f3fff"))) and (not((InitiatingProcessFolderPath =~ "C:\\Windows\\System32\\Wbem\\Wmiprvse.exe" and TargetImage =~ "C:\\Windows\\system32\\lsass.exe"))) and (not((((InitiatingProcessFolderPath startswith "C:\\Program Files\\Dell\\" or InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\Dell\\") and (TargetImage startswith "C:\\Program Files\\Dell\\" or TargetImage startswith "C:\\Program Files (x86)\\Dell\\")) or (InitiatingProcessFolderPath =~ "C:\\Program Files (x86)\\Dell\\UpdateService\\ServiceShell.exe" and TargetImage =~ "C:\\Windows\\Explorer.EXE") or (InitiatingProcessFolderPath startswith "C:\\Program Files\\Microsoft Visual Studio\\" and TargetImage startswith "C:\\Program Files\\Microsoft Visual Studio\\"))))
+
+AI generated comments:
+This table contains information about process creation events in Windows. To query this table in Microsoft Sentinel, ensure that you have the necessary connectors or data sources configured to collect process access logs from Windows machines.
+
+Potential Shellcode Injection ---> KQL Query:
+ProcessCreationEvents
+| where (CallTrace contains "UNKNOWN" and (GrantedAccess in~ ("0x147a", "0x1f3fff"))) and (not((InitiatingProcessFolderPath =~ "C:\\Windows\\System32\\Wbem\\Wmiprvse.exe" and TargetImage =~ "C:\\Windows\\system32\\lsass.exe"))) and (not((((InitiatingProcessFolderPath startswith "C:\\Program Files\\Dell\\" or InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\Dell\\") and (TargetImage startswith "C:\\Program Files\\Dell\\" or TargetImage startswith "C:\\Program Files (x86)\\Dell\\")) or (InitiatingProcessFolderPath =~ "C:\\Program Files (x86)\\Dell\\UpdateService\\ServiceShell.exe" and TargetImage =~ "C:\\Windows\\Explorer.EXE") or (InitiatingProcessFolderPath startswith "C:\\Program Files\\Microsoft Visual Studio\\" and TargetImage startswith "C:\\Program Files\\Microsoft Visual Studio\\"))))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_access/proc_access_win_lsass_powershell_access.yml
+Sigma Transformation Error for 'Potential Credential Dumping Attempt Via PowerShell': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Potential Credential Dumping Attempt Via PowerShell I will try again with AI :)
+AI is trying to generate KQL for: Potential Credential Dumping Attempt Via PowerShell
+Logsource section: {'product': 'windows', 'category': 'process_access'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/process_access/proc_access_win_lsass_powershell_access.yml:
+SecurityEvent
+| where (InitiatingProcessFolderPath endswith "\\powershell.exe" or InitiatingProcessFolderPath endswith "\\pwsh.exe") and TargetImage endswith "\\lsass.exe"
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains process access logs for Windows systems. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+
+Potential Credential Dumping Attempt Via PowerShell ---> KQL Query:
+SecurityEvent
+| where (InitiatingProcessFolderPath endswith "\\powershell.exe" or InitiatingProcessFolderPath endswith "\\pwsh.exe") and TargetImage endswith "\\lsass.exe"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_access/proc_access_win_lsass_susp_source_process.yml
+Sigma Transformation Error for 'LSASS Access From Program In Potentially Suspicious Folder': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for LSASS Access From Program In Potentially Suspicious Folder I will try again with AI :)
+AI is trying to generate KQL for: LSASS Access From Program In Potentially Suspicious Folder
+Logsource section: {'category': 'process_access', 'product': 'windows'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/process_access/proc_access_win_lsass_susp_source_process.yml:
+SecurityEvent
+| where ((GrantedAccess endswith "10" or GrantedAccess endswith "30" or GrantedAccess endswith "50" or GrantedAccess endswith "70" or GrantedAccess endswith "90" or GrantedAccess endswith "B0" or GrantedAccess endswith "D0" or GrantedAccess endswith "F0" or GrantedAccess endswith "18" or GrantedAccess endswith "38" or GrantedAccess endswith "58" or GrantedAccess endswith "78" or GrantedAccess endswith "98" or GrantedAccess endswith "B8" or GrantedAccess endswith "D8" or GrantedAccess endswith "F8" or GrantedAccess endswith "1A" or GrantedAccess endswith "3A" or GrantedAccess endswith "5A" or GrantedAccess endswith "7A" or GrantedAccess endswith "9A" or GrantedAccess endswith "BA" or GrantedAccess endswith "DA" or GrantedAccess endswith "FA" or GrantedAccess endswith "0x14C2" or GrantedAccess endswith "FF") and (InitiatingProcessFolderPath contains "\\Temp\\" or InitiatingProcessFolderPath contains "\\Users\\Public\\" or InitiatingProcessFolderPath contains "\\PerfLogs\\" or InitiatingProcessFolderPath contains "\\AppData\\" or InitiatingProcessFolderPath contains "\\Temporary") and TargetImage endswith "\\lsass.exe") and (not(((GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains ":\\Program Files\\Common Files\\Adobe\\ARM\\" or InitiatingProcessFolderPath contains ":\\Program Files (x86)\\Common Files\\Adobe\\ARM\\") and InitiatingProcessFolderPath endswith "\\AdobeARMHelper.exe") or (GrantedAccess =~ "0x1410" and InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\is-" and InitiatingProcessFolderPath endswith ".tmp\\avira_system_speedup.tmp") or ((GrantedAccess in~ ("0x410", "0x1410")) and InitiatingProcessFolderPath contains ":\\Program Files (x86)\\Google\\Temp\\" and InitiatingProcessFolderPath endswith ".tmp\\GoogleUpdate.exe") or ((GrantedAccess in~ ("0x410", "0x1410")) and InitiatingProcessFolderPath contains ":\\Windows\\Temp\\" and InitiatingProcessFolderPath endswith ".tmp\\DropboxUpdate.exe") or (GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains ":\\Users\\" and InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\") and InitiatingProcessFolderPath endswith ".tmp\\DropboxUpdate.exe") or (GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains ":\\Program Files (x86)\\Dropbox\\" or InitiatingProcessFolderPath contains ":\\Program Files\\Dropbox\\") and InitiatingProcessFolderPath endswith "\\DropboxUpdate.exe") or (GrantedAccess =~ "0x410" and (InitiatingProcessFolderPath contains ":\\Users\\" and InitiatingProcessFolderPath contains "\\AppData\\Local\\") and (InitiatingProcessFolderPath endswith "\\Microsoft VS Code\\Code.exe" or InitiatingProcessFolderPath endswith "\\software_reporter_tool.exe" or InitiatingProcessFolderPath endswith "\\DropboxUpdate.exe" or InitiatingProcessFolderPath endswith "\\MBAMInstallerService.exe" or InitiatingProcessFolderPath endswith "\\WebexMTA.exe" or InitiatingProcessFolderPath endswith "\\Meetings\\WebexMTAV2.exe" or InitiatingProcessFolderPath endswith "\\WebEx\\WebexHost.exe" or InitiatingProcessFolderPath endswith "\\JetBrains\\Toolbox\\bin\\jetbrains-toolbox.exe")) or (GrantedAccess =~ "0x1fffff" and InitiatingProcessFolderPath contains ":\\Users\\" and InitiatingProcessFolderPath endswith "\\AppData\\Local\\Keybase\\keybase.exe") or (GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains ":\\Users\\" and InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\" and InitiatingProcessFolderPath contains "\\vs_bootstrapper_")) or ((GrantedAccess in~ ("0x1fffff", "0x1010", "0x101010")) and (InitiatingProcessFolderPath contains ":\\Windows\\Temp\\asgard2-agent\\" or InitiatingProcessFolderPath contains ":\\Windows\\Temp\\asgard2-agent-sc\\") and (InitiatingProcessFolderPath endswith "\\thor64.exe" or InitiatingProcessFolderPath endswith "\\thor.exe" or InitiatingProcessFolderPath endswith "\\aurora-agent-64.exe" or InitiatingProcessFolderPath endswith "\\aurora-agent.exe")) or (GrantedAccess =~ "0x1fffff" and InitiatingProcessFolderPath contains "\\AppData\\Roaming\\ViberPC\\" and InitiatingProcessFolderPath endswith "\\updater.exe" and TargetImage endswith "\\winlogon.exe"))))
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+
+LSASS Access From Program In Potentially Suspicious Folder ---> KQL Query:
+SecurityEvent
+| where ((GrantedAccess endswith "10" or GrantedAccess endswith "30" or GrantedAccess endswith "50" or GrantedAccess endswith "70" or GrantedAccess endswith "90" or GrantedAccess endswith "B0" or GrantedAccess endswith "D0" or GrantedAccess endswith "F0" or GrantedAccess endswith "18" or GrantedAccess endswith "38" or GrantedAccess endswith "58" or GrantedAccess endswith "78" or GrantedAccess endswith "98" or GrantedAccess endswith "B8" or GrantedAccess endswith "D8" or GrantedAccess endswith "F8" or GrantedAccess endswith "1A" or GrantedAccess endswith "3A" or GrantedAccess endswith "5A" or GrantedAccess endswith "7A" or GrantedAccess endswith "9A" or GrantedAccess endswith "BA" or GrantedAccess endswith "DA" or GrantedAccess endswith "FA" or GrantedAccess endswith "0x14C2" or GrantedAccess endswith "FF") and (InitiatingProcessFolderPath contains "\\Temp\\" or InitiatingProcessFolderPath contains "\\Users\\Public\\" or InitiatingProcessFolderPath contains "\\PerfLogs\\" or InitiatingProcessFolderPath contains "\\AppData\\" or InitiatingProcessFolderPath contains "\\Temporary") and TargetImage endswith "\\lsass.exe") and (not(((GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains ":\\Program Files\\Common Files\\Adobe\\ARM\\" or InitiatingProcessFolderPath contains ":\\Program Files (x86)\\Common Files\\Adobe\\ARM\\") and InitiatingProcessFolderPath endswith "\\AdobeARMHelper.exe") or (GrantedAccess =~ "0x1410" and InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\is-" and InitiatingProcessFolderPath endswith ".tmp\\avira_system_speedup.tmp") or ((GrantedAccess in~ ("0x410", "0x1410")) and InitiatingProcessFolderPath contains ":\\Program Files (x86)\\Google\\Temp\\" and InitiatingProcessFolderPath endswith ".tmp\\GoogleUpdate.exe") or ((GrantedAccess in~ ("0x410", "0x1410")) and InitiatingProcessFolderPath contains ":\\Windows\\Temp\\" and InitiatingProcessFolderPath endswith ".tmp\\DropboxUpdate.exe") or (GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains ":\\Users\\" and InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\") and InitiatingProcessFolderPath endswith ".tmp\\DropboxUpdate.exe") or (GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains ":\\Program Files (x86)\\Dropbox\\" or InitiatingProcessFolderPath contains ":\\Program Files\\Dropbox\\") and InitiatingProcessFolderPath endswith "\\DropboxUpdate.exe") or (GrantedAccess =~ "0x410" and (InitiatingProcessFolderPath contains ":\\Users\\" and InitiatingProcessFolderPath contains "\\AppData\\Local\\") and (InitiatingProcessFolderPath endswith "\\Microsoft VS Code\\Code.exe" or InitiatingProcessFolderPath endswith "\\software_reporter_tool.exe" or InitiatingProcessFolderPath endswith "\\DropboxUpdate.exe" or InitiatingProcessFolderPath endswith "\\MBAMInstallerService.exe" or InitiatingProcessFolderPath endswith "\\WebexMTA.exe" or InitiatingProcessFolderPath endswith "\\Meetings\\WebexMTAV2.exe" or InitiatingProcessFolderPath endswith "\\WebEx\\WebexHost.exe" or InitiatingProcessFolderPath endswith "\\JetBrains\\Toolbox\\bin\\jetbrains-toolbox.exe")) or (GrantedAccess =~ "0x1fffff" and InitiatingProcessFolderPath contains ":\\Users\\" and InitiatingProcessFolderPath endswith "\\AppData\\Local\\Keybase\\keybase.exe") or (GrantedAccess =~ "0x1410" and (InitiatingProcessFolderPath contains ":\\Users\\" and InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\" and InitiatingProcessFolderPath contains "\\vs_bootstrapper_")) or ((GrantedAccess in~ ("0x1fffff", "0x1010", "0x101010")) and (InitiatingProcessFolderPath contains ":\\Windows\\Temp\\asgard2-agent\\" or InitiatingProcessFolderPath contains ":\\Windows\\Temp\\asgard2-agent-sc\\") and (InitiatingProcessFolderPath endswith "\\thor64.exe" or InitiatingProcessFolderPath endswith "\\thor.exe" or InitiatingProcessFolderPath endswith "\\aurora-agent-64.exe" or InitiatingProcessFolderPath endswith "\\aurora-agent.exe")) or (GrantedAccess =~ "0x1fffff" and InitiatingProcessFolderPath contains "\\AppData\\Roaming\\ViberPC\\" and InitiatingProcessFolderPath endswith "\\updater.exe" and TargetImage endswith "\\winlogon.exe"))))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/image_load/image_load_wmi_module_load_by_uncommon_process.yml
+WMI Module Loaded By Uncommon Process ---> KQL Query:
+DeviceImageLoadEvents
+| where (FolderPath endswith "\\fastprox.dll" or FolderPath endswith "\\wbemcomn.dll" or FolderPath endswith "\\wbemprox.dll" or FolderPath endswith "\\wbemsvc.dll" or FolderPath endswith "\\WmiApRpl.dll" or FolderPath endswith "\\wmiclnt.dll" or FolderPath endswith "\\WMINet_Utils.dll" or FolderPath endswith "\\wmiprov.dll" or FolderPath endswith "\\wmiutils.dll") and (not((InitiatingProcessFolderPath contains ":\\Program Files (x86)\\" or InitiatingProcessFolderPath contains ":\\Program Files\\" or InitiatingProcessFolderPath contains ":\\Windows\\explorer.exe" or InitiatingProcessFolderPath contains ":\\Windows\\Microsoft.NET\\Framework\\" or InitiatingProcessFolderPath contains ":\\Windows\\Microsoft.NET\\Framework64\\" or InitiatingProcessFolderPath contains ":\\Windows\\System32\\" or InitiatingProcessFolderPath contains ":\\Windows\\SysWOW64\\"))) and (not((InitiatingProcessFolderPath endswith "\\MsMpEng.exe" or (InitiatingProcessFolderPath endswith "\\WindowsAzureGuestAgent.exe" or InitiatingProcessFolderPath endswith "\\WaAppAgent.exe") or (InitiatingProcessFolderPath endswith ":\\Windows\\Sysmon.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\Sysmon64.exe") or (InitiatingProcessFolderPath contains "\\Microsoft\\Teams\\current\\Teams.exe" or InitiatingProcessFolderPath contains "\\Microsoft\\Teams\\Update.exe") or (InitiatingProcessFolderPath endswith "\\thor.exe" or InitiatingProcessFolderPath endswith "\\thor64.exe"))))
+
+Unexpected Error processing 'WMI Module Loaded By Uncommon Process' (sigma/rules-threat-hunting/windows/image_load/image_load_wmi_module_load_by_uncommon_process.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/image_load/image_load_dll_amsi_uncommon_process.yml
+Amsi.DLL Load By Uncommon Process ---> KQL Query:
+DeviceImageLoadEvents
+| where FolderPath endswith "\\amsi.dll" and (not((((InitiatingProcessFolderPath contains ":\\Windows\\Microsoft.NET\\Framework\\" or InitiatingProcessFolderPath contains ":\\Windows\\Microsoft.NET\\Framework64\\") and InitiatingProcessFolderPath endswith "\\ngentask.exe") or InitiatingProcessFolderPath =~ "" or (InitiatingProcessFolderPath endswith ":\\Windows\\explorer.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\Sysmon64.exe") or (InitiatingProcessFolderPath contains ":\\Program Files (x86)\\" or InitiatingProcessFolderPath contains ":\\Program Files\\" or InitiatingProcessFolderPath contains ":\\Windows\\System32\\" or InitiatingProcessFolderPath contains ":\\Windows\\SysWOW64\\" or InitiatingProcessFolderPath contains ":\\Windows\\WinSxS\\") or isnull(InitiatingProcessFolderPath)))) and (not((InitiatingProcessFolderPath contains ":\\ProgramData\\Microsoft\\Windows Defender\\Platform\\" and InitiatingProcessFolderPath endswith "\\MsMpEng.exe")))
+
+Unexpected Error processing 'Amsi.DLL Load By Uncommon Process' (sigma/rules-threat-hunting/windows/image_load/image_load_dll_amsi_uncommon_process.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/image_load/image_load_office_word_wll_load.yml
+Microsoft Word Add-In Loaded ---> KQL Query:
+DeviceImageLoadEvents
+| where FolderPath endswith ".wll" and InitiatingProcessFolderPath endswith "\\winword.exe"
+
+Unexpected Error processing 'Microsoft Word Add-In Loaded' (sigma/rules-threat-hunting/windows/image_load/image_load_office_word_wll_load.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/image_load/image_load_office_excel_xll_load.yml
+Microsoft Excel Add-In Loaded ---> KQL Query:
+DeviceImageLoadEvents
+| where FolderPath endswith ".xll" and InitiatingProcessFolderPath endswith "\\excel.exe"
+
+Unexpected Error processing 'Microsoft Excel Add-In Loaded' (sigma/rules-threat-hunting/windows/image_load/image_load_office_excel_xll_load.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/image_load/image_load_dll_taskschd_by_process_in_potentially_suspicious_location.yml
+Task Scheduler DLL Loaded By Application Located In Potentially Suspicious Location ---> KQL Query:
+DeviceImageLoadEvents
+| where (FolderPath endswith "\\taskschd.dll" or InitiatingProcessVersionInfoOriginalFileName =~ "taskschd.dll") and (InitiatingProcessFolderPath contains ":\\Temp\\" or InitiatingProcessFolderPath contains ":\\Users\\Public\\" or InitiatingProcessFolderPath contains ":\\Windows\\Temp\\" or InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\" or InitiatingProcessFolderPath contains "\\Desktop\\" or InitiatingProcessFolderPath contains "\\Downloads\\")
+
+Unexpected Error processing 'Task Scheduler DLL Loaded By Application Located In Potentially Suspicious Location' (sigma/rules-threat-hunting/windows/image_load/image_load_dll_taskschd_by_process_in_potentially_suspicious_location.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/image_load/image_load_dll_system_drawing_load.yml
+System Drawing DLL Load ---> KQL Query:
+DeviceImageLoadEvents
+| where FolderPath endswith "\\System.Drawing.ni.dll"
+
+Unexpected Error processing 'System Drawing DLL Load' (sigma/rules-threat-hunting/windows/image_load/image_load_dll_system_drawing_load.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/image_load/image_load_dll_dbghelp_dbgcore_susp_load.yml
+Dbghelp/Dbgcore DLL Loaded By Uncommon/Suspicious Process ---> KQL Query:
+DeviceImageLoadEvents
+| where ((FolderPath endswith "\\dbghelp.dll" or FolderPath endswith "\\dbgcore.dll") and (InitiatingProcessFolderPath endswith "\\bash.exe" or InitiatingProcessFolderPath endswith "\\cmd.exe" or InitiatingProcessFolderPath endswith "\\cscript.exe" or InitiatingProcessFolderPath endswith "\\dnx.exe" or InitiatingProcessFolderPath endswith "\\excel.exe" or InitiatingProcessFolderPath endswith "\\monitoringhost.exe" or InitiatingProcessFolderPath endswith "\\msbuild.exe" or InitiatingProcessFolderPath endswith "\\mshta.exe" or InitiatingProcessFolderPath endswith "\\outlook.exe" or InitiatingProcessFolderPath endswith "\\powerpnt.exe" or InitiatingProcessFolderPath endswith "\\regsvcs.exe" or InitiatingProcessFolderPath endswith "\\rundll32.exe" or InitiatingProcessFolderPath endswith "\\sc.exe" or InitiatingProcessFolderPath endswith "\\scriptrunner.exe" or InitiatingProcessFolderPath endswith "\\winword.exe" or InitiatingProcessFolderPath endswith "\\wmic.exe" or InitiatingProcessFolderPath endswith "\\wscript.exe")) and (not((((InitiatingProcessCommandLine endswith "-k LocalServiceNetworkRestricted" or InitiatingProcessCommandLine endswith "-k WerSvcGroup") and InitiatingProcessFolderPath endswith "\\svchost.exe") or ((InitiatingProcessCommandLine contains "/d srrstr.dll,ExecuteScheduledSPPCreation" or InitiatingProcessCommandLine contains "aepdu.dll,AePduRunUpdate" or InitiatingProcessCommandLine contains "shell32.dll,OpenAs_RunDL" or InitiatingProcessCommandLine contains "Windows.Storage.ApplicationData.dll,CleanupTemporaryState") and InitiatingProcessFolderPath endswith "\\rundll32.exe") or (InitiatingProcessCommandLine endswith "\\TiWorker.exe -Embedding" and InitiatingProcessCommandLine startswith "C:\\WINDOWS\\WinSxS\\"))))
+
+Unexpected Error processing 'Dbghelp/Dbgcore DLL Loaded By Uncommon/Suspicious Process' (sigma/rules-threat-hunting/windows/image_load/image_load_dll_dbghelp_dbgcore_susp_load.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_office_trusted_location.yml
+Microsoft Office Trusted Location Updated ---> KQL Query:
+DeviceRegistryEvents
+| where (RegistryKey contains "Security\\Trusted Locations\\Location" and RegistryKey endswith "\\Path") and (not(((InitiatingProcessFolderPath contains ":\\Program Files\\Microsoft Office\\" or InitiatingProcessFolderPath contains ":\\Program Files (x86)\\Microsoft Office\\") or (InitiatingProcessFolderPath contains ":\\Program Files\\Common Files\\Microsoft Shared\\ClickToRun\\" and InitiatingProcessFolderPath endswith "\\OfficeClickToRun.exe"))))
+
+Unexpected Error processing 'Microsoft Office Trusted Location Updated' (sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_office_trusted_location.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_shell_context_menu_tampering.yml
+Shell Context Menu Command Tampering ---> KQL Query:
+DeviceRegistryEvents
+| where RegistryKey endswith "\\Software\\Classes*" and RegistryKey endswith "\\shell*" and RegistryKey endswith "\\command*"
+
+Unexpected Error processing 'Shell Context Menu Command Tampering' (sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_shell_context_menu_tampering.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_powershell_crypto_namespace.yml
+Registry Set With Crypto-Classes From The "Cryptography" PowerShell Namespace ---> KQL Query:
+DeviceRegistryEvents
+| where (ActionType =~ "RegistryValueSet" and RegistryKey contains "\\Shell\\Open\\Command") and (RegistryValueData contains ".AesCryptoServiceProvider" or RegistryValueData contains ".DESCryptoServiceProvider" or RegistryValueData contains ".DSACryptoServiceProvider" or RegistryValueData contains ".RC2CryptoServiceProvider" or RegistryValueData contains ".Rijndael" or RegistryValueData contains ".RSACryptoServiceProvider" or RegistryValueData contains ".TripleDESCryptoServiceProvider") and (RegistryValueData contains "powershell" or RegistryValueData contains "pwsh") and RegistryValueData contains "System.Security.Cryptography."
+
+Unexpected Error processing 'Registry Set With Crypto-Classes From The "Cryptography" PowerShell Namespace' (sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_powershell_crypto_namespace.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_runmru_command_execution.yml
+Command Executed Via Run Dialog Box - Registry ---> KQL Query:
+DeviceRegistryEvents
+| where RegistryKey contains "\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU" and (not(RegistryKey endswith "\\MRUList")) and (not(((RegistryValueData in~ ("%appdata%\\1", "%localappdata%\\1", "%public%\\1", "%temp%\\1", "calc\\1", "dxdiag\\1", "explorer\\1", "gpedit.msc\\1", "mmc\\1", "notepad\\1", "regedit\\1", "services.msc\\1", "winver\\1")) or RegistryValueData contains "ping")))
+
+Unexpected Error processing 'Command Executed Via Run Dialog Box - Registry' (sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_runmru_command_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_service_image_path_user_controlled_folder.yml
+Service Binary in User Controlled Folder ---> KQL Query:
+DeviceRegistryEvents
+| where ((RegistryValueData contains ":\\ProgramData\\" or RegistryValueData contains "\\AppData\\Local\\" or RegistryValueData contains "\\AppData\\Roaming\\") and (RegistryKey contains "ControlSet" and RegistryKey endswith "\\Services*") and RegistryKey endswith "\\ImagePath") and (not((RegistryValueData contains "C:\\ProgramData\\Microsoft\\Windows Defender\\" and (RegistryKey endswith "\\Services\\WinDefend*" or RegistryKey contains "\\Services\\MpKs")))) and (not((((RegistryValueData contains "C:\\Users\\" and RegistryValueData contains "AppData\\Local\\Temp\\MBAMInstallerService.exe") and RegistryKey contains "\\Services\\MBAMInstallerService") or (RegistryValueData contains "C:\\Program Files\\Common Files\\Zoom\\Support\\CptService.exe" and RegistryKey contains "\\Services\\ZoomCptService"))))
+
+Unexpected Error processing 'Service Binary in User Controlled Folder' (sigma/rules-threat-hunting/windows/registry/registry_set/registry_set_service_image_path_user_controlled_folder.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/registry/registry_event/registry_event_scheduled_task_creation.yml
+Scheduled Task Created - Registry ---> KQL Query:
+DeviceRegistryEvents
+| where RegistryKey endswith "\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\TaskCache\\Tasks*" or RegistryKey endswith "\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\TaskCache\\Tree*"
+
+Unexpected Error processing 'Scheduled Task Created - Registry' (sigma/rules-threat-hunting/windows/registry/registry_event/registry_event_scheduled_task_creation.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/create_remote_thread/create_remote_thread_win_loadlibrary.yml
+Sigma Transformation Error for 'CreateRemoteThread API and LoadLibrary': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for CreateRemoteThread API and LoadLibrary I will try again with AI :)
+AI is trying to generate KQL for: CreateRemoteThread API and LoadLibrary
+Logsource section: {'product': 'windows', 'category': 'create_remote_thread'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/create_remote_thread/create_remote_thread_win_loadlibrary.yml:
+SecurityEvent
+| where StartFunction =~ "LoadLibraryA" and StartModule endswith "\\kernel32.dll"
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security events, which can include information about processes creating remote threads. Make sure to have the Windows Security Events data connector enabled in Sentinel to access this table.
+
+CreateRemoteThread API and LoadLibrary ---> KQL Query:
+SecurityEvent
+| where StartFunction =~ "LoadLibraryA" and StartModule endswith "\\kernel32.dll"
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/create_remote_thread/create_remote_thread_win_powershell_generic.yml
+Sigma Transformation Error for 'Remote Thread Creation Via PowerShell': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Remote Thread Creation Via PowerShell I will try again with AI :)
+AI is trying to generate KQL for: Remote Thread Creation Via PowerShell
+Logsource section: {'product': 'windows', 'category': 'create_remote_thread'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/create_remote_thread/create_remote_thread_win_powershell_generic.yml:
+SecurityEvent
+| where (InitiatingProcessFolderPath endswith "\\powershell.exe" or InitiatingProcessFolderPath endswith "\\pwsh.exe") and (not(SourceParentImage endswith ":\\Windows\\System32\\CompatTelRunner.exe"))
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for events related to creating remote threads, you can filter on the EventID field and look for events with EventID 8.
+
+Remote Thread Creation Via PowerShell ---> KQL Query:
+SecurityEvent
+| where (InitiatingProcessFolderPath endswith "\\powershell.exe" or InitiatingProcessFolderPath endswith "\\pwsh.exe") and (not(SourceParentImage endswith ":\\Windows\\System32\\CompatTelRunner.exe"))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_abnormal_commandline_size.yml
+Unusually Long PowerShell CommandLine ---> KQL Query:
+DeviceProcessEvents
+| where ProcessCommandLine matches regex ".{1000,}" and ((FolderPath endswith "\\powershell.exe" or FolderPath endswith "\\pwsh.exe") or (ProcessVersionInfoOriginalFileName in~ ("PowerShell.EXE", "pwsh.dll")) or ProcessVersionInfoFileDescription =~ "Windows Powershell" or ProcessVersionInfoProductName =~ "PowerShell Core 6")
+
+Unexpected Error processing 'Unusually Long PowerShell CommandLine' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_abnormal_commandline_size.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_regsvr32_dllregisterserver_exec.yml
+Sigma Transformation Error for 'Regsvr32.EXE Calling of DllRegisterServer Export Function Implicitly': Invalid SigmaDetectionItem field name encountered: CurrentDirectory. Please use valid fields for the DeviceProcessEvents table, or the following fields that have keymappings in this pipeline:
+AccountDomain, AccountName, AccountObjectId, AccountSid, AccountUpn, ActionType, AdditionalFields, AppGuardContainerId, CommandLine, Company, CreatedProcessSessionId, Description, DeviceId, DeviceName, EventType, FileName, FileSize, FileVersion, FolderPath, GrandParentImage, Hashes, Image, InitiatingProcessAccountDomain, InitiatingProcessAccountName, InitiatingProcessAccountObjectId, InitiatingProcessAccountSid, InitiatingProcessAccountUpn, InitiatingProcessCommandLine, InitiatingProcessCreationTime, InitiatingProcessFileName, InitiatingProcessFileSize, InitiatingProcessFolderPath, InitiatingProcessId, InitiatingProcessIntegrityLevel, InitiatingProcessLogonId, InitiatingProcessMD5, InitiatingProcessParentCreationTime, InitiatingProcessParentFileName, InitiatingProcessParentId, InitiatingProcessRemoteSessionDeviceName, InitiatingProcessRemoteSessionIP, InitiatingProcessSHA1, InitiatingProcessSHA256, InitiatingProcessSessionId, InitiatingProcessSignatureStatus, InitiatingProcessSignerType, InitiatingProcessTokenElevation, InitiatingProcessVersionInfoCompanyName, InitiatingProcessVersionInfoFileDescription, InitiatingProcessVersionInfoInternalFileName, InitiatingProcessVersionInfoOriginalFileName, InitiatingProcessVersionInfoProductName, InitiatingProcessVersionInfoProductVersion, IntegrityLevel, IsInitiatingProcessRemoteSession, IsProcessRemoteSession, LogonId, MD5, OriginalFileName, ParentCommandLine, ParentImage, ParentProcessId, ParentUser, ProcessCommandLine, ProcessCreationTime, ProcessId, ProcessIntegrityLevel, ProcessName, ProcessRemoteSessionDeviceName, ProcessRemoteSessionIP, ProcessTokenElevation, ProcessVersionInfoCompanyName, ProcessVersionInfoFileDescription, ProcessVersionInfoInternalFileName, ProcessVersionInfoOriginalFileName, ProcessVersionInfoProductName, ProcessVersionInfoProductVersion, Product, ReportId, SHA1, SHA256, SourceImage, Timestamp, User, md5, sha1, sha256.
+Warning: No KQL query generated for Regsvr32.EXE Calling of DllRegisterServer Export Function Implicitly I will try again with AI :)
+AI is trying to generate KQL for: Regsvr32.EXE Calling of DllRegisterServer Export Function Implicitly
+Logsource section: {'category': 'process_creation', 'product': 'windows'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_regsvr32_dllregisterserver_exec.yml:
+ProcessCreationEvents
+| where ((ProcessCommandLine contains " /s " or ProcessCommandLine contains " /e ") and (FolderPath endswith "\\regsvr32.exe" or ProcessVersionInfoOriginalFileName =~ "REGSVR32.EXE")) and (not(((ProcessCommandLine contains " /i:" or ProcessCommandLine contains "/U ") or ((ProcessCommandLine contains ":\\Program Files (x86)" or ProcessCommandLine contains ":\\Program Files\\" or ProcessCommandLine contains ":\\Windows\\System32\\" or ProcessCommandLine contains ":\\Windows\\SysWOW64\\") or (CurrentDirectory contains ":\\Program Files (x86)" or CurrentDirectory contains ":\\Program Files\\" or CurrentDirectory contains ":\\Windows\\System32\\" or CurrentDirectory contains ":\\Windows\\SysWOW64\\")) or (ProcessCommandLine =~ "regsvr32 /s rpcproxy.dll" and InitiatingProcessCommandLine endswith ":\\Windows\\System32\\RpcProxy\\RpcProxy.dll"))))
+
+AI generated comments:
+This table contains process creation events in Microsoft Sentinel. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+
+Regsvr32.EXE Calling of DllRegisterServer Export Function Implicitly ---> KQL Query:
+ProcessCreationEvents
+| where ((ProcessCommandLine contains " /s " or ProcessCommandLine contains " /e ") and (FolderPath endswith "\\regsvr32.exe" or ProcessVersionInfoOriginalFileName =~ "REGSVR32.EXE")) and (not(((ProcessCommandLine contains " /i:" or ProcessCommandLine contains "/U ") or ((ProcessCommandLine contains ":\\Program Files (x86)" or ProcessCommandLine contains ":\\Program Files\\" or ProcessCommandLine contains ":\\Windows\\System32\\" or ProcessCommandLine contains ":\\Windows\\SysWOW64\\") or (CurrentDirectory contains ":\\Program Files (x86)" or CurrentDirectory contains ":\\Program Files\\" or CurrentDirectory contains ":\\Windows\\System32\\" or CurrentDirectory contains ":\\Windows\\SysWOW64\\")) or (ProcessCommandLine =~ "regsvr32 /s rpcproxy.dll" and InitiatingProcessCommandLine endswith ":\\Windows\\System32\\RpcProxy\\RpcProxy.dll"))))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_useragent.yml
+Curl.EXE Execution With Custom UserAgent ---> KQL Query:
+DeviceProcessEvents
+| where (FolderPath endswith "\\curl.exe" or ProcessVersionInfoProductName =~ "The curl executable") and (ProcessCommandLine contains " -A " or ProcessCommandLine contains " --user-agent ")
+
+Unexpected Error processing 'Curl.EXE Execution With Custom UserAgent' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_useragent.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_file_permission_modifications.yml
+File or Folder Permissions Modifications ---> KQL Query:
+DeviceProcessEvents
+| where (((ProcessCommandLine contains "/grant" or ProcessCommandLine contains "/setowner" or ProcessCommandLine contains "/inheritance:r") and (FolderPath endswith "\\cacls.exe" or FolderPath endswith "\\icacls.exe" or FolderPath endswith "\\net.exe" or FolderPath endswith "\\net1.exe")) or (ProcessCommandLine contains "-r" and FolderPath endswith "\\attrib.exe") or FolderPath endswith "\\takeown.exe") and (not(((ProcessCommandLine contains ":\\Program Files (x86)\\Avira" or ProcessCommandLine contains ":\\Program Files\\Avira") or ProcessCommandLine endswith "ICACLS C:\\ProgramData\\dynatrace\\gateway\\config\\connectivity.history /reset" or (ProcessCommandLine contains "ICACLS C:\\ProgramData\\dynatrace\\gateway\\config\\config.properties /grant :r " and ProcessCommandLine contains "S-1-5-19:F") or (ProcessCommandLine contains "\\AppData\\Local\\Programs\\Microsoft VS Code" or ProcessCommandLine contains ":\\Program Files\\Microsoft VS Code"))))
+
+Unexpected Error processing 'File or Folder Permissions Modifications' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_file_permission_modifications.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_import_module.yml
+Import New Module Via PowerShell CommandLine ---> KQL Query:
+DeviceProcessEvents
+| where ((ProcessCommandLine contains "Import-Module " or ProcessCommandLine contains "ipmo ") and ((FolderPath endswith "\\powershell.exe" or FolderPath endswith "\\pwsh.exe") or (ProcessVersionInfoOriginalFileName in~ ("PowerShell.EXE", "pwsh.dll")))) and (not(((ProcessCommandLine contains ":\\Program Files\\Microsoft Visual Studio\\" and ProcessCommandLine contains "Tools\\Microsoft.VisualStudio.DevShell.dll") and (InitiatingProcessFolderPath contains ":\\Program Files\\WindowsApps\\Microsoft.WindowsTerminal_" or InitiatingProcessFolderPath contains ":\\Windows\\System32\\cmd.exe"))))
+
+Unexpected Error processing 'Import New Module Via PowerShell CommandLine' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_import_module.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_action1_code_exec_and_remote_sessions.yml
+Remote Access Tool - Action1 Arbitrary Code Execution and Remote Sessions ---> KQL Query:
+DeviceProcessEvents
+| where (FolderPath contains "\\Windows\\Action1\\package_downloads\\" and InitiatingProcessFolderPath endswith "\\action1_agent.exe") or ((InitiatingProcessCommandLine contains "\\Action1\\scripts\\Run_Command_" or InitiatingProcessCommandLine contains "\\Action1\\scripts\\Run_PowerShell_") and (InitiatingProcessFolderPath endswith "\\cmd.exe" or InitiatingProcessFolderPath endswith "\\powershell.exe")) or FolderPath endswith "\\agent1_remote.exe"
+
+Unexpected Error processing 'Remote Access Tool - Action1 Arbitrary Code Execution and Remote Sessions' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_action1_code_exec_and_remote_sessions.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_schtasks_creation_from_susp_parent.yml
+Scheduled Task Creation From Potential Suspicious Parent Location ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains "/Create " and FolderPath endswith "\\schtasks.exe" and (InitiatingProcessFolderPath contains ":\\Temp\\" or InitiatingProcessFolderPath contains "\\AppData\\Local\\" or InitiatingProcessFolderPath contains "\\AppData\\Roaming\\" or InitiatingProcessFolderPath contains "\\Temporary Internet" or InitiatingProcessFolderPath contains "\\Users\\Public\\" or InitiatingProcessFolderPath contains "\\Windows\\Temp\\")) and (not((ProcessCommandLine contains "update_task.xml" or ProcessCommandLine contains "unattended.ini")))
+
+Unexpected Error processing 'Scheduled Task Creation From Potential Suspicious Parent Location' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_schtasks_creation_from_susp_parent.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_csc_compilation.yml
+Dynamic .NET Compilation Via Csc.EXE - Hunting ---> KQL Query:
+DeviceProcessEvents
+| where ProcessCommandLine contains "/noconfig /fullpaths @" and FolderPath endswith "\\csc.exe"
+
+Unexpected Error processing 'Dynamic .NET Compilation Via Csc.EXE - Hunting' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_csc_compilation.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_execution_from_guid_folder_names.yml
+Potential Suspicious Execution From GUID Like Folder Names ---> KQL Query:
+DeviceProcessEvents
+| where ((ProcessCommandLine contains "\\AppData\\Roaming\\" or ProcessCommandLine contains "\\AppData\\Local\\Temp\\") and (ProcessCommandLine contains "\\{" and ProcessCommandLine contains "}\\")) and (not((FolderPath =~ "C:\\Windows\\System32\\drvinst.exe" or (FolderPath contains "\\{" and FolderPath contains "}\\") or (FolderPath in~ ("C:\\Windows\\System32\\msiexec.exe", "C:\\Windows\\SysWOW64\\msiexec.exe")) or isnull(FolderPath))))
+
+Unexpected Error processing 'Potential Suspicious Execution From GUID Like Folder Names' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_execution_from_guid_folder_names.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_elevated_system_shell.yml
+Elevated System Shell Spawned ---> KQL Query:
+DeviceProcessEvents
+| where ((FolderPath endswith "\\powershell.exe" or FolderPath endswith "\\powershell_ise.exe" or FolderPath endswith "\\pwsh.exe" or FolderPath endswith "\\cmd.exe") or (ProcessVersionInfoOriginalFileName in~ ("PowerShell.EXE", "powershell_ise.EXE", "pwsh.dll", "Cmd.Exe"))) and (LogonId =~ "0x3e7" and (AccountName contains "AUTHORI" or AccountName contains "AUTORI"))
+
+Unexpected Error processing 'Elevated System Shell Spawned' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_elevated_system_shell.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_diskshadow_child_process.yml
+Diskshadow Child Process Spawned ---> KQL Query:
+DeviceProcessEvents
+| where InitiatingProcessFolderPath endswith "\\diskshadow.exe" and (not(FolderPath endswith ":\\Windows\\System32\\WerFault.exe"))
+
+Unexpected Error processing 'Diskshadow Child Process Spawned' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_diskshadow_child_process.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_event_log_query.yml
+EventLog Query Requests By Builtin Utilities ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains "Select" and ProcessCommandLine contains "Win32_NTLogEvent") or ((ProcessCommandLine contains " qe " or ProcessCommandLine contains " query-events ") and (FolderPath endswith "\\wevtutil.exe" or ProcessVersionInfoOriginalFileName =~ "wevtutil.exe")) or (ProcessCommandLine contains " ntevent" and (FolderPath endswith "\\wmic.exe" or ProcessVersionInfoOriginalFileName =~ "wmic.exe")) or (ProcessCommandLine contains "Get-WinEvent " or ProcessCommandLine contains "get-eventlog ")
+
+Unexpected Error processing 'EventLog Query Requests By Builtin Utilities' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_event_log_query.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_sc_query.yml
+SC.EXE Query Execution ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains " query" and (FolderPath endswith "\\sc.exe" and ProcessVersionInfoOriginalFileName =~ "sc.exe")) and (not(ProcessCommandLine =~ "sc query dokan1"))
+
+Unexpected Error processing 'SC.EXE Query Execution' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_sc_query.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_wscript_cscript_script_exec.yml
+WSF/JSE/JS/VBA/VBE File Execution Via Cscript/Wscript ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains ".js" or ProcessCommandLine contains ".jse" or ProcessCommandLine contains ".vba" or ProcessCommandLine contains ".vbe" or ProcessCommandLine contains ".vbs" or ProcessCommandLine contains ".wsf") and ((ProcessVersionInfoOriginalFileName in~ ("wscript.exe", "cscript.exe")) or (FolderPath endswith "\\wscript.exe" or FolderPath endswith "\\cscript.exe"))
+
+Unexpected Error processing 'WSF/JSE/JS/VBA/VBE File Execution Via Cscript/Wscript' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_wscript_cscript_script_exec.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_7zip_password_extraction.yml
+Password Protected Compressed File Extraction Via 7Zip ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessVersionInfoFileDescription contains "7-Zip" or (FolderPath endswith "\\7z.exe" or FolderPath endswith "\\7zr.exe" or FolderPath endswith "\\7za.exe") or (ProcessVersionInfoOriginalFileName in~ ("7z.exe", "7za.exe"))) and (ProcessCommandLine contains " -p" and ProcessCommandLine contains " x " and ProcessCommandLine contains " -o")
+
+Unexpected Error processing 'Password Protected Compressed File Extraction Via 7Zip' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_7zip_password_extraction.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_cli_obfuscation_unicode.yml
+Potential CommandLine Obfuscation Using Unicode Characters ---> KQL Query:
+DeviceProcessEvents
+| where ProcessCommandLine contains "ˣ" or ProcessCommandLine contains "˪" or ProcessCommandLine contains "ˢ" or ProcessCommandLine contains "∕" or ProcessCommandLine contains "⁄" or ProcessCommandLine contains "―" or ProcessCommandLine contains "—" or ProcessCommandLine contains " " or ProcessCommandLine contains "¯" or ProcessCommandLine contains "®" or ProcessCommandLine contains "¶"
+
+Unexpected Error processing 'Potential CommandLine Obfuscation Using Unicode Characters' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_cli_obfuscation_unicode.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_office_svchost_parent.yml
+Suspicious New Instance Of An Office COM Object ---> KQL Query:
+DeviceProcessEvents
+| where (FolderPath endswith "\\eqnedt32.exe" or FolderPath endswith "\\excel.exe" or FolderPath endswith "\\msaccess.exe" or FolderPath endswith "\\mspub.exe" or FolderPath endswith "\\powerpnt.exe" or FolderPath endswith "\\visio.exe" or FolderPath endswith "\\winword.exe") and InitiatingProcessFolderPath endswith "\\svchost.exe"
+
+Unexpected Error processing 'Suspicious New Instance Of An Office COM Object' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_office_svchost_parent.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_exfil_and_tunneling_tool_execution.yml
+Tunneling Tool Execution ---> KQL Query:
+DeviceProcessEvents
+| where FolderPath endswith "\\httptunnel.exe" or FolderPath endswith "\\plink.exe" or FolderPath endswith "\\socat.exe" or FolderPath endswith "\\stunnel.exe"
+
+Unexpected Error processing 'Tunneling Tool Execution' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_exfil_and_tunneling_tool_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_wusa_cab_files_extraction.yml
+Cab File Extraction Via Wusa.EXE ---> KQL Query:
+DeviceProcessEvents
+| where ProcessCommandLine contains "/extract:" and FolderPath endswith "\\wusa.exe"
+
+Unexpected Error processing 'Cab File Extraction Via Wusa.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_wusa_cab_files_extraction.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_dfsvc_child_processes.yml
+ClickOnce Deployment Execution - Dfsvc.EXE Child Process ---> KQL Query:
+DeviceProcessEvents
+| where FolderPath endswith "\\AppData\\Local\\Apps\\2.0\\" and InitiatingProcessFolderPath endswith "\\dfsvc.exe"
+
+Unexpected Error processing 'ClickOnce Deployment Execution - Dfsvc.EXE Child Process' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_dfsvc_child_processes.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_diskshadow_script_mode.yml
+Diskshadow Script Mode Execution ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains "-s " or ProcessCommandLine contains "/s " or ProcessCommandLine contains "–s " or ProcessCommandLine contains "—s " or ProcessCommandLine contains "―s ") and (ProcessVersionInfoOriginalFileName =~ "diskshadow.exe" or FolderPath endswith "\\diskshadow.exe")
+
+Unexpected Error processing 'Diskshadow Script Mode Execution' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_diskshadow_script_mode.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_tasklist_basic_execution.yml
+Suspicious Tasklist Discovery Command ---> KQL Query:
+DeviceProcessEvents
+| where ProcessCommandLine contains "tasklist" or FolderPath endswith "\\tasklist.exe" or ProcessVersionInfoOriginalFileName =~ "tasklist.exe"
+
+Unexpected Error processing 'Suspicious Tasklist Discovery Command' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_tasklist_basic_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_microsoft_workflow_compiler_execution.yml
+Microsoft Workflow Compiler Execution ---> KQL Query:
+DeviceProcessEvents
+| where FolderPath endswith "\\Microsoft.Workflow.Compiler.exe" or ProcessVersionInfoOriginalFileName =~ "Microsoft.Workflow.Compiler.exe"
+
+Unexpected Error processing 'Microsoft Workflow Compiler Execution' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_microsoft_workflow_compiler_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_net_quic.yml
+SMB over QUIC Via Net.EXE ---> KQL Query:
+DeviceProcessEvents
+| where ProcessCommandLine contains "/TRANSPORT:QUIC" and ((FolderPath endswith "\\net.exe" or FolderPath endswith "\\net1.exe") or (ProcessVersionInfoOriginalFileName in~ ("net.exe", "net1.exe")))
+
+Unexpected Error processing 'SMB over QUIC Via Net.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_net_quic.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_compression_params.yml
+Potentially Suspicious Compression Tool Parameters ---> KQL Query:
+DeviceProcessEvents
+| where ((ProcessCommandLine contains " -p" or ProcessCommandLine contains " -ta" or ProcessCommandLine contains " -tb" or ProcessCommandLine contains " -sdel" or ProcessCommandLine contains " -dw" or ProcessCommandLine contains " -hp") and ((ProcessVersionInfoOriginalFileName contains "7z" and ProcessVersionInfoOriginalFileName contains ".exe") or ProcessVersionInfoOriginalFileName endswith "rar.exe" or (ProcessVersionInfoOriginalFileName contains "Command" and ProcessVersionInfoOriginalFileName contains "Line" and ProcessVersionInfoOriginalFileName contains "RAR"))) and (not((InitiatingProcessFolderPath contains ":\\Program Files\\" or InitiatingProcessFolderPath contains ":\\Program Files (x86)\\")))
+
+Unexpected Error processing 'Potentially Suspicious Compression Tool Parameters' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_compression_params.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_ammyy_admin_execution.yml
+Remote Access Tool - Ammy Admin Agent Execution ---> KQL Query:
+DeviceProcessEvents
+| where ProcessCommandLine contains "AMMYY\\aa_nts.dll\",run" and FolderPath endswith "\\rundll32.exe"
+
+Unexpected Error processing 'Remote Access Tool - Ammy Admin Agent Execution' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_ammyy_admin_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_boinc_execution.yml
+Potential BOINC Software Execution (UC-Berkeley Signature) ---> KQL Query:
+DeviceProcessEvents
+| where ProcessVersionInfoFileDescription =~ "University of California, Berkeley"
+
+Unexpected Error processing 'Potential BOINC Software Execution (UC-Berkeley Signature)' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_boinc_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_iexpress_execution.yml
+New Self Extracting Package Created Via IExpress.EXE ---> KQL Query:
+DeviceProcessEvents
+| where ((FolderPath endswith "\\makecab.exe" or ProcessVersionInfoOriginalFileName =~ "makecab.exe") and InitiatingProcessFolderPath endswith "\\iexpress.exe") or (ProcessCommandLine contains " /n " and (FolderPath endswith "\\iexpress.exe" or ProcessVersionInfoOriginalFileName =~ "IEXPRESS.exe"))
+
+Unexpected Error processing 'New Self Extracting Package Created Via IExpress.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_iexpress_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_conhost_headless_execution.yml
+Headless Process Launched Via Conhost.EXE ---> KQL Query:
+DeviceProcessEvents
+| where InitiatingProcessCommandLine contains "--headless" and InitiatingProcessFolderPath endswith "\\conhost.exe"
+
+Unexpected Error processing 'Headless Process Launched Via Conhost.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_conhost_headless_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_cmd_set_prompt_abuse.yml
+Potential File Override/Append Via SET Command ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains "/c set /p=" or ProcessCommandLine contains "\"set /p=" or (ProcessCommandLine contains ">>" and ProcessCommandLine contains "set /p=")) and (FolderPath endswith "\\cmd.exe" or ProcessVersionInfoOriginalFileName =~ "Cmd.Exe")
+
+Unexpected Error processing 'Potential File Override/Append Via SET Command' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_cmd_set_prompt_abuse.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_wmic_recon_system_info.yml
+System Information Discovery Via Wmic.EXE ---> KQL Query:
+DeviceProcessEvents
+| where ((ProcessCommandLine contains "caption" or ProcessCommandLine contains "command" or ProcessCommandLine contains "driverversion" or ProcessCommandLine contains "maxcapacity" or ProcessCommandLine contains "name" or ProcessCommandLine contains "osarchitecture" or ProcessCommandLine contains "product" or ProcessCommandLine contains "size" or ProcessCommandLine contains "smbiosbiosversion" or ProcessCommandLine contains "version" or ProcessCommandLine contains "videomodedescription") and (ProcessCommandLine contains "baseboard" or ProcessCommandLine contains "bios" or ProcessCommandLine contains "cpu" or ProcessCommandLine contains "diskdrive" or ProcessCommandLine contains "logicaldisk" or ProcessCommandLine contains "memphysical" or ProcessCommandLine contains "os" or ProcessCommandLine contains "path" or ProcessCommandLine contains "startup" or ProcessCommandLine contains "win32_videocontroller") and ProcessCommandLine contains "get" and (ProcessVersionInfoFileDescription =~ "WMI Commandline Utility" or ProcessVersionInfoOriginalFileName =~ "wmic.exe" or FolderPath endswith "\\WMIC.exe")) and (not(InitiatingProcessCommandLine contains "\\VMware\\VMware Tools\\serviceDiscovery\\scripts\\"))
+
+Unexpected Error processing 'System Information Discovery Via Wmic.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_wmic_recon_system_info.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_rundll32_by_ordinal.yml
+DLL Call by Ordinal Via Rundll32.EXE ---> KQL Query:
+DeviceProcessEvents
+| where ((ProcessCommandLine contains ",#" or ProcessCommandLine contains ", #" or ProcessCommandLine contains ".dll #" or ProcessCommandLine contains ".ocx #") and (FolderPath endswith "\\rundll32.exe" or ProcessVersionInfoOriginalFileName =~ "RUNDLL32.EXE")) and (not(((ProcessCommandLine contains "EDGEHTML.dll" and ProcessCommandLine contains "#141") or ((ProcessCommandLine contains "\\FileTracker32.dll,#1" or ProcessCommandLine contains "\\FileTracker32.dll\",#1" or ProcessCommandLine contains "\\FileTracker64.dll,#1" or ProcessCommandLine contains "\\FileTracker64.dll\",#1") and (InitiatingProcessFolderPath contains "\\Msbuild\\Current\\Bin\\" or InitiatingProcessFolderPath contains "\\VC\\Tools\\MSVC\\" or InitiatingProcessFolderPath contains "\\Tracker.exe")))))
+
+Unexpected Error processing 'DLL Call by Ordinal Via Rundll32.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_rundll32_by_ordinal.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_download.yml
+File Download Via Curl.EXE ---> KQL Query:
+DeviceProcessEvents
+| where (FolderPath endswith "\\curl.exe" or ProcessVersionInfoProductName =~ "The curl executable") and (ProcessCommandLine contains " -O" or ProcessCommandLine contains "--remote-name" or ProcessCommandLine contains "--output")
+
+Unexpected Error processing 'File Download Via Curl.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_download.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_cmd_redirect.yml
+CMD Shell Output Redirect ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains ">" and (ProcessVersionInfoOriginalFileName =~ "Cmd.Exe" or FolderPath endswith "\\cmd.exe")) and (not((ProcessCommandLine contains "C:\\Program Files (x86)\\Internet Download Manager\\IDMMsgHost.exe" or ProcessCommandLine contains "chrome-extension://" or ProcessCommandLine contains "\\.\\pipe\\chrome.nativeMessaging")))
+
+Unexpected Error processing 'CMD Shell Output Redirect' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_cmd_redirect.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_screenconnect_child_proc.yml
+Remote Access Tool - ScreenConnect Remote Command Execution - Hunting ---> KQL Query:
+DeviceProcessEvents
+| where InitiatingProcessFolderPath endswith "\\ScreenConnect.ClientService.exe"
+
+Unexpected Error processing 'Remote Access Tool - ScreenConnect Remote Command Execution - Hunting' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_screenconnect_child_proc.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_execution.yml
+Curl.EXE Execution ---> KQL Query:
+DeviceProcessEvents
+| where FolderPath endswith "\\curl.exe" or ProcessVersionInfoProductName =~ "The curl executable"
+
+Unexpected Error processing 'Curl.EXE Execution' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_anyviewer_shell_exec.yml
+Remote Access Tool - Cmd.EXE Execution via AnyViewer ---> KQL Query:
+DeviceProcessEvents
+| where FolderPath endswith "\\cmd.exe" and InitiatingProcessCommandLine contains "AVCore.exe\" -d" and InitiatingProcessFolderPath endswith "\\AVCore.exe"
+
+Unexpected Error processing 'Remote Access Tool - Cmd.EXE Execution via AnyViewer' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_remote_access_tools_anyviewer_shell_exec.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_new_netfirewallrule_allow.yml
+New Windows Firewall Rule Added Via New-NetFirewallRule Cmdlet ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains "New-NetFirewallRule " and ProcessCommandLine contains " -Action " and ProcessCommandLine contains "allow") and ((FolderPath endswith "\\powershell.exe" or FolderPath endswith "\\pwsh.exe" or FolderPath endswith "\\powershell_ise.exe") or (ProcessVersionInfoOriginalFileName in~ ("PowerShell.EXE", "pwsh.dll")))
+
+Unexpected Error processing 'New Windows Firewall Rule Added Via New-NetFirewallRule Cmdlet' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_new_netfirewallrule_allow.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_rundll32_dllregisterserver.yml
+Rundll32.EXE Calling DllRegisterServer Export Function Explicitly ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains "DllRegisterServer" and (FolderPath endswith "\\rundll32.exe" or ProcessVersionInfoOriginalFileName =~ "RUNDLL32.EXE")) and (not((ProcessCommandLine contains ":\\Program Files (x86)" or ProcessCommandLine contains ":\\Program Files\\" or ProcessCommandLine contains ":\\Windows\\System32\\" or ProcessCommandLine contains ":\\Windows\\SysWOW64\\")))
+
+Unexpected Error processing 'Rundll32.EXE Calling DllRegisterServer Export Function Explicitly' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_rundll32_dllregisterserver.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_extexport_execution.yml
+Potential DLL Sideloading Activity Via ExtExport.EXE ---> KQL Query:
+DeviceProcessEvents
+| where FolderPath endswith "\\Extexport.exe" or ProcessVersionInfoOriginalFileName =~ "extexport.exe"
+
+Unexpected Error processing 'Potential DLL Sideloading Activity Via ExtExport.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_extexport_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_mode_codepage_change.yml
+CodePage Modification Via MODE.COM ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains " con " and ProcessCommandLine contains " cp " and ProcessCommandLine contains " select=") and (FolderPath endswith "\\mode.com" or ProcessVersionInfoOriginalFileName =~ "MODE.COM")
+
+Unexpected Error processing 'CodePage Modification Via MODE.COM' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_mode_codepage_change.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_wsl_arbitrary_command_execution.yml
+Arbitrary Command Execution Using WSL ---> KQL Query:
+DeviceProcessEvents
+| where ((ProcessCommandLine contains " -e " or ProcessCommandLine contains " --exec" or ProcessCommandLine contains " --system" or ProcessCommandLine contains " --shell-type " or ProcessCommandLine contains " /mnt/c" or ProcessCommandLine contains " --user root" or ProcessCommandLine contains " -u root" or ProcessCommandLine contains "--debug-shell") and (FolderPath endswith "\\wsl.exe" or ProcessVersionInfoOriginalFileName =~ "wsl.exe")) and (not(((ProcessCommandLine contains " -d " and ProcessCommandLine contains " -e kill ") and InitiatingProcessFolderPath endswith "\\cmd.exe")))
+
+Unexpected Error processing 'Arbitrary Command Execution Using WSL' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_wsl_arbitrary_command_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_script_exec_from_compressed_parent.yml
+Manual Execution of Script Inside of a Compressed File ---> KQL Query:
+DeviceProcessEvents
+| where ((ProcessCommandLine =~ "*\\AppData\\local\\temp\\7z*\*" and InitiatingProcessFolderPath =~ "*\\7z*.exe") or ((ProcessCommandLine contains "\\AppData\\local\\temp*.rar\\" or ProcessCommandLine contains "\\AppData\\local\\temp*.zip\\") and InitiatingProcessFolderPath endswith "\\explorer.exe") or (ProcessCommandLine =~ "*\\AppData\\local\\temp\\rar*\*" and InitiatingProcessFolderPath endswith "\\winrar.exe")) and ((ProcessCommandLine endswith ".hta" or ProcessCommandLine endswith ".js" or ProcessCommandLine endswith ".jse" or ProcessCommandLine endswith ".ps1" or ProcessCommandLine endswith ".vbe" or ProcessCommandLine endswith ".vbs" or ProcessCommandLine endswith ".wsf" or ProcessCommandLine endswith ".wsh") and (FolderPath endswith "\\cscript.exe" or FolderPath endswith "\\mshta.exe" or FolderPath endswith "\\powershell.exe" or FolderPath endswith "\\pwsh.exe" or FolderPath endswith "\\wscript.exe"))
+
+Unexpected Error processing 'Manual Execution of Script Inside of a Compressed File' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_script_exec_from_compressed_parent.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_susp_child_processes.yml
+Potentially Suspicious PowerShell Child Processes ---> KQL Query:
+DeviceProcessEvents
+| where ((FolderPath endswith "\\bash.exe" or FolderPath endswith "\\bitsadmin.exe" or FolderPath endswith "\\certutil.exe" or FolderPath endswith "\\cscript.exe" or FolderPath endswith "\\forfiles.exe" or FolderPath endswith "\\hh.exe" or FolderPath endswith "\\mshta.exe" or FolderPath endswith "\\regsvr32.exe" or FolderPath endswith "\\rundll32.exe" or FolderPath endswith "\\schtasks.exe" or FolderPath endswith "\\scrcons.exe" or FolderPath endswith "\\scriptrunner.exe" or FolderPath endswith "\\sh.exe" or FolderPath endswith "\\wmic.exe" or FolderPath endswith "\\wscript.exe") and (InitiatingProcessFolderPath endswith "\\powershell_ise.exe" or InitiatingProcessFolderPath endswith "\\powershell.exe" or InitiatingProcessFolderPath endswith "\\pwsh.exe")) and (not(((ProcessCommandLine contains "-verifystore " and FolderPath endswith "\\certutil.exe") or ((ProcessCommandLine contains "qfe list" or ProcessCommandLine contains "diskdrive " or ProcessCommandLine contains "csproduct " or ProcessCommandLine contains "computersystem " or ProcessCommandLine contains " os " or ProcessCommandLine startswith "") and FolderPath endswith "\\wmic.exe")))) and (not((ProcessCommandLine contains "\\Program Files\\Amazon\\WorkspacesConfig\\Scripts\\" and InitiatingProcessCommandLine contains "\\Program Files\\Amazon\\WorkspacesConfig\\Scripts\\")))
+
+Unexpected Error processing 'Potentially Suspicious PowerShell Child Processes' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_susp_child_processes.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_taskkill_execution.yml
+Process Terminated Via Taskkill ---> KQL Query:
+DeviceProcessEvents
+| where ((ProcessCommandLine contains " -im " or ProcessCommandLine contains " /im " or ProcessCommandLine contains " –im " or ProcessCommandLine contains " —im " or ProcessCommandLine contains " ―im " or ProcessCommandLine contains " -pid " or ProcessCommandLine contains " /pid " or ProcessCommandLine contains " –pid " or ProcessCommandLine contains " —pid " or ProcessCommandLine contains " ―pid ") and (ProcessCommandLine contains " -f " or ProcessCommandLine contains " /f " or ProcessCommandLine contains " –f " or ProcessCommandLine contains " —f " or ProcessCommandLine contains " ―f " or ProcessCommandLine endswith " -f" or ProcessCommandLine endswith " /f" or ProcessCommandLine endswith " –f" or ProcessCommandLine endswith " —f" or ProcessCommandLine endswith " ―f") and (FolderPath endswith "\\taskkill.exe" or ProcessVersionInfoOriginalFileName =~ "taskkill.exe")) and (not(((InitiatingProcessFolderPath contains "\\AppData\\Local\\Temp\\" or InitiatingProcessFolderPath contains ":\\Windows\\Temp") and InitiatingProcessFolderPath endswith ".tmp")))
+
+Unexpected Error processing 'Process Terminated Via Taskkill' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_taskkill_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_execution_path_webserver.yml
+Execution From Webserver Root Folder ---> KQL Query:
+DeviceProcessEvents
+| where (FolderPath contains "\\wwwroot\\" or FolderPath contains "\\wmpub\\" or FolderPath contains "\\htdocs\\") and (not(((FolderPath contains "bin\\" or FolderPath contains "\\Tools\\" or FolderPath contains "\\SMSComponent\\") and InitiatingProcessFolderPath endswith "\\services.exe")))
+
+Unexpected Error processing 'Execution From Webserver Root Folder' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_susp_execution_path_webserver.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_attrib_system.yml
+Set Files as System Files Using Attrib.EXE ---> KQL Query:
+DeviceProcessEvents
+| where ProcessCommandLine contains " +s " and (FolderPath endswith "\\attrib.exe" or ProcessVersionInfoOriginalFileName =~ "ATTRIB.EXE")
+
+Unexpected Error processing 'Set Files as System Files Using Attrib.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_attrib_system.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_explorer_child_of_shell_process.yml
+Potential Proxy Execution Via Explorer.EXE From Shell Process ---> KQL Query:
+DeviceProcessEvents
+| where ProcessCommandLine contains "explorer.exe" and FolderPath endswith "\\explorer.exe" and (InitiatingProcessFolderPath endswith "\\cmd.exe" or InitiatingProcessFolderPath endswith "\\powershell.exe" or InitiatingProcessFolderPath endswith "\\pwsh.exe")
+
+Unexpected Error processing 'Potential Proxy Execution Via Explorer.EXE From Shell Process' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_explorer_child_of_shell_process.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_net_execution.yml
+Net.EXE Execution ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains " accounts" or ProcessCommandLine contains " group" or ProcessCommandLine contains " localgroup" or ProcessCommandLine contains " share" or ProcessCommandLine contains " start" or ProcessCommandLine contains " stop " or ProcessCommandLine contains " user" or ProcessCommandLine contains " view") and ((FolderPath endswith "\\net.exe" or FolderPath endswith "\\net1.exe") or (ProcessVersionInfoOriginalFileName in~ ("net.exe", "net1.exe")))
+
+Unexpected Error processing 'Net.EXE Execution' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_net_execution.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_fileupload.yml
+Potential Data Exfiltration Via Curl.EXE ---> KQL Query:
+DeviceProcessEvents
+| where (((ProcessCommandLine contains " --form" or ProcessCommandLine contains " --upload-file " or ProcessCommandLine contains " --data " or ProcessCommandLine contains " --data-") or ProcessCommandLine matches regex "\\s-[FTd]\\s") and (FolderPath endswith "\\curl.exe" or ProcessVersionInfoProductName =~ "The curl executable")) and (not((ProcessCommandLine contains "://localhost" or ProcessCommandLine contains "://127.0.0.1")))
+
+Unexpected Error processing 'Potential Data Exfiltration Via Curl.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_curl_fileupload.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_crypto_namespace.yml
+Invocation Of Crypto-Classes From The "Cryptography" PowerShell Namespace ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains ".AesCryptoServiceProvider" or ProcessCommandLine contains ".DESCryptoServiceProvider" or ProcessCommandLine contains ".DSACryptoServiceProvider" or ProcessCommandLine contains ".RC2CryptoServiceProvider" or ProcessCommandLine contains ".Rijndael" or ProcessCommandLine contains ".RSACryptoServiceProvider" or ProcessCommandLine contains ".TripleDESCryptoServiceProvider") and ProcessCommandLine contains "System.Security.Cryptography." and ((FolderPath endswith "\\powershell.exe" or FolderPath endswith "\\pwsh.exe") or (ProcessVersionInfoOriginalFileName in~ ("PowerShell.EXE", "pwsh.dll")))
+
+Unexpected Error processing 'Invocation Of Crypto-Classes From The "Cryptography" PowerShell Namespace' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_powershell_crypto_namespace.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_findstr_password_recon.yml
+Potential Password Reconnaissance Via Findstr.EXE ---> KQL Query:
+DeviceProcessEvents
+| where (ProcessCommandLine contains "contraseña" or ProcessCommandLine contains "hasło" or ProcessCommandLine contains "heslo" or ProcessCommandLine contains "parola" or ProcessCommandLine contains "passe" or ProcessCommandLine contains "passw" or ProcessCommandLine contains "senha" or ProcessCommandLine contains "senord" or ProcessCommandLine contains "密碼") and (FolderPath endswith "\\findstr.exe" or ProcessVersionInfoOriginalFileName =~ "FINDSTR.EXE")
+
+Unexpected Error processing 'Potential Password Reconnaissance Via Findstr.EXE' (sigma/rules-threat-hunting/windows/process_creation/proc_creation_win_findstr_password_recon.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/builtin/firewall_as/win_firewall_as_change_rule.yml
+Sigma Transformation Error for 'Firewall Rule Modified In The Windows Firewall Exception List': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Firewall Rule Modified In The Windows Firewall Exception List I will try again with AI :)
+AI is trying to generate KQL for: Firewall Rule Modified In The Windows Firewall Exception List
+Logsource section: {'product': 'windows', 'service': 'firewall-as'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/builtin/firewall_as/win_firewall_as_change_rule.yml:
+SecurityEvent
+| where not(((ApplicationPath contains ":\\Users\\" and ApplicationPath contains "\\AppData\\Local\\BraveSoftware\\Brave-Browser\\Application\\brave.exe") or ApplicationPath endswith "\\AppData\\Local\\Keybase\\keybase.exe" or ApplicationPath endswith "\\AppData\\Local\\Programs\\Messenger\\Messenger.exe" or (ApplicationPath contains ":\\Users\\" and ApplicationPath contains "\\AppData\\Local\\Programs\\Opera\\" and ApplicationPath contains "\\opera.exe") or ApplicationPath endswith "\\AppData\\local\\microsoft\\teams\\current\\teams.exe"))
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Event logs are being collected and ingested into Sentinel to query this table.
+
+Firewall Rule Modified In The Windows Firewall Exception List ---> KQL Query:
+SecurityEvent
+| where not(((ApplicationPath contains ":\\Users\\" and ApplicationPath contains "\\AppData\\Local\\BraveSoftware\\Brave-Browser\\Application\\brave.exe") or ApplicationPath endswith "\\AppData\\Local\\Keybase\\keybase.exe" or ApplicationPath endswith "\\AppData\\Local\\Programs\\Messenger\\Messenger.exe" or (ApplicationPath contains ":\\Users\\" and ApplicationPath contains "\\AppData\\Local\\Programs\\Opera\\" and ApplicationPath contains "\\opera.exe") or ApplicationPath endswith "\\AppData\\local\\microsoft\\teams\\current\\teams.exe"))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/builtin/security/win_security_file_access_browser_credential.yml
+Sigma Transformation Error for 'Access To Browser Credential Files By Uncommon Applications - Security': Invalid SigmaDetectionItem field name encountered: FileName. Please use valid fields for the DeviceRegistryEvents table, or the following fields that have keymappings in this pipeline:
+ActionType, AppGuardContainerId, CommandLine, Company, Description, Details, DeviceId, DeviceName, EventType, Hashes, Image, InitiatingProcessAccountDomain, InitiatingProcessAccountName, InitiatingProcessAccountObjectId, InitiatingProcessAccountSid, InitiatingProcessAccountUpn, InitiatingProcessCommandLine, InitiatingProcessCreationTime, InitiatingProcessFileName, InitiatingProcessFileSize, InitiatingProcessFolderPath, InitiatingProcessId, InitiatingProcessIntegrityLevel, InitiatingProcessMD5, InitiatingProcessParentCreationTime, InitiatingProcessParentFileName, InitiatingProcessParentId, InitiatingProcessRemoteSessionDeviceName, InitiatingProcessRemoteSessionIP, InitiatingProcessSHA1, InitiatingProcessSHA256, InitiatingProcessSessionId, InitiatingProcessTokenElevation, InitiatingProcessVersionInfoCompanyName, InitiatingProcessVersionInfoFileDescription, InitiatingProcessVersionInfoInternalFileName, InitiatingProcessVersionInfoOriginalFileName, InitiatingProcessVersionInfoProductName, InitiatingProcessVersionInfoProductVersion, IsInitiatingProcessRemoteSession, ObjectName, OriginalFileName, ParentCommandLine, ParentProcessId, PreviousRegistryKey, PreviousRegistryValueData, PreviousRegistryValueName, ProcessId, ProcessName, Product, RegistryKey, RegistryValueData, RegistryValueName, RegistryValueType, ReportId, SourceImage, TargetObject, Timestamp, User, md5, sha1, sha256.
+Warning: No KQL query generated for Access To Browser Credential Files By Uncommon Applications - Security I will try again with AI :)
+AI is trying to generate KQL for: Access To Browser Credential Files By Uncommon Applications - Security
+Logsource section: {'product': 'windows', 'service': 'security', 'definition': 'Requirements: Audit File System subcategory must be enabled. Additionally, each listed ObjectName must have "List folder/read data" auditing enabled.'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/builtin/security/win_security_file_access_browser_credential.yml:
+SecurityEvent
+| where AccessMask =~ "0x1" and ((RegistryKey contains "\\User Data\\Default\\Login Data" or RegistryKey contains "\\User Data\\Local State" or RegistryKey contains "\\User Data\\Default\\Network\\Cookies") or (FileName endswith "\\cookies.sqlite" or FileName endswith "\\places.sqlite" or FileName endswith "release\\key3.db" or FileName endswith "release\\key4.db" or FileName endswith "release\\logins.json")) and (not(((InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\" or InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\system32\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\SysWOW64\\") or InitiatingProcessFolderPath =~ "System"))) and (not(((InitiatingProcessFolderPath endswith "\\MpCopyAccelerator.exe" or InitiatingProcessFolderPath endswith "\\MsMpEng.exe") and InitiatingProcessFolderPath startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\")))
+
+AI generated comments:
+This table contains security-related events, including file system auditing events. Make sure to enable the necessary data connectors in Microsoft Sentinel to collect Windows security event logs.
+
+Access To Browser Credential Files By Uncommon Applications - Security ---> KQL Query:
+SecurityEvent
+| where AccessMask =~ "0x1" and ((RegistryKey contains "\\User Data\\Default\\Login Data" or RegistryKey contains "\\User Data\\Local State" or RegistryKey contains "\\User Data\\Default\\Network\\Cookies") or (FileName endswith "\\cookies.sqlite" or FileName endswith "\\places.sqlite" or FileName endswith "release\\key3.db" or FileName endswith "release\\key4.db" or FileName endswith "release\\logins.json")) and (not(((InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\" or InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\system32\\" or InitiatingProcessFolderPath startswith "C:\\Windows\\SysWOW64\\") or InitiatingProcessFolderPath =~ "System"))) and (not(((InitiatingProcessFolderPath endswith "\\MpCopyAccelerator.exe" or InitiatingProcessFolderPath endswith "\\MsMpEng.exe") and InitiatingProcessFolderPath startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\")))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/builtin/security/win_security_scheduled_task_deletion.yml
+Sigma Transformation Error for 'Scheduled Task Deletion': Unable to determine table name from rule.  The query table is determined in the following order of priority:
+  1) The value provided to processing pipeline's query_table parameter, if using a Python script.
+  2) If the query_table is already set in the pipeline state, such as from a custom user-defined pipeline if using sigma-cli.
+  3) If the rule's logsource category is present in the pipeline's category_to_table_mappings dictionary in mappings.py, use that value.
+  4) If the rule has an EventID, use the table name from the pipeline's eventid_to_table_mappings dictionary in mappings.py.
+For more details, see https://github.com/AttackIQ/pySigma-backend-kusto/blob/main/README.md#%EF%B8%8F-custom-table-names-new-in-030-beta..
+Warning: No KQL query generated for Scheduled Task Deletion I will try again with AI :)
+AI is trying to generate KQL for: Scheduled Task Deletion
+Logsource section: {'product': 'windows', 'service': 'security', 'definition': 'Requirements: The Advanced Audit Policy setting Object Access > Audit Other Object Access Events has to be configured to allow this detection. We also recommend extracting the Command field from the embedded XML in the event data.'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/builtin/security/win_security_scheduled_task_deletion.yml:
+SecurityEvent
+| where not((TaskName in~ ("\\Microsoft\\Windows\\RemovalTools\\MRT_ERROR_HB") or TaskName contains "\\Mozilla\\Firefox Default Browser Agent "))
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To query for the Command field from the embedded XML in the event data, you may need to enable the Advanced Audit Policy setting Object Access > Audit Other Object Access Events on the Windows machines and ensure that the necessary logs are being collected and sent to Sentinel.
+
+Scheduled Task Deletion ---> KQL Query:
+SecurityEvent
+| where not((TaskName in~ ("\\Microsoft\\Windows\\RemovalTools\\MRT_ERROR_HB") or TaskName contains "\\Mozilla\\Firefox Default Browser Agent "))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/builtin/security/account_management/win_security_scrcons_remote_wmi_scripteventconsumer.yml
+Sigma Transformation Error for 'Potential Remote WMI ActiveScriptEventConsumers Activity': Invalid SigmaDetectionItem field name encountered: TargetLogonId. Please use valid fields for the DeviceLogonEvents table, or the following fields that have keymappings in this pipeline:
+AccountDomain, AccountName, AccountSid, ActionType, AdditionalFields, AppGuardContainerId, CommandLine, Company, Description, DeviceId, DeviceName, EventType, FailureReason, Hashes, Image, InitiatingProcessAccountDomain, InitiatingProcessAccountName, InitiatingProcessAccountObjectId, InitiatingProcessAccountSid, InitiatingProcessAccountUpn, InitiatingProcessCommandLine, InitiatingProcessCreationTime, InitiatingProcessFileName, InitiatingProcessFileSize, InitiatingProcessFolderPath, InitiatingProcessId, InitiatingProcessIntegrityLevel, InitiatingProcessMD5, InitiatingProcessParentCreationTime, InitiatingProcessParentFileName, InitiatingProcessParentId, InitiatingProcessRemoteSessionDeviceName, InitiatingProcessRemoteSessionIP, InitiatingProcessSHA1, InitiatingProcessSHA256, InitiatingProcessSessionId, InitiatingProcessTokenElevation, InitiatingProcessVersionInfoCompanyName, InitiatingProcessVersionInfoFileDescription, InitiatingProcessVersionInfoInternalFileName, InitiatingProcessVersionInfoOriginalFileName, InitiatingProcessVersionInfoProductName, InitiatingProcessVersionInfoProductVersion, IsInitiatingProcessRemoteSession, IsLocalAdmin, LogonId, LogonType, OriginalFileName, ParentCommandLine, ParentProcessId, ProcessId, ProcessName, Product, Protocol, RemoteDeviceName, RemoteIP, RemoteIPType, RemotePort, ReportId, SourceImage, Timestamp, User, md5, sha1, sha256.
+Warning: No KQL query generated for Potential Remote WMI ActiveScriptEventConsumers Activity I will try again with AI :)
+AI is trying to generate KQL for: Potential Remote WMI ActiveScriptEventConsumers Activity
+Logsource section: {'product': 'windows', 'service': 'security'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/builtin/security/account_management/win_security_scrcons_remote_wmi_scripteventconsumer.yml:
+SecurityEvent
+| where (LogonType == 3 and InitiatingProcessFolderPath endswith "scrcons.exe") and (not(TargetLogonId =~ "0x3e7"))
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the Microsoft Monitoring Agent (MMA) installed on your Windows machines and properly configured to send security event logs to Sentinel.
+
+Potential Remote WMI ActiveScriptEventConsumers Activity ---> KQL Query:
+SecurityEvent
+| where (LogonType == 3 and InitiatingProcessFolderPath endswith "scrcons.exe") and (not(TargetLogonId =~ "0x3e7"))
+
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/network_connection/net_connection_win_hh_http_connection.yml
+HH.EXE Initiated HTTP Network Connection ---> KQL Query:
+DeviceNetworkEvents
+| where (RemotePort in~ ("80", "443")) and InitiatingProcessFolderPath endswith "\\hh.exe"
+
+Unexpected Error processing 'HH.EXE Initiated HTTP Network Connection' (sigma/rules-threat-hunting/windows/network_connection/net_connection_win_hh_http_connection.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/network_connection/net_connection_win_dllhost_non_local_ip.yml
+Dllhost.EXE Initiated Network Connection To Non-Local IP Address ---> KQL Query:
+DeviceNetworkEvents
+| where InitiatingProcessFolderPath endswith "\\dllhost.exe" and (not(((ipv4_is_in_range(RemoteIP, "::1/128") or ipv4_is_in_range(RemoteIP, "10.0.0.0/8") or ipv4_is_in_range(RemoteIP, "127.0.0.0/8") or ipv4_is_in_range(RemoteIP, "172.16.0.0/12") or ipv4_is_in_range(RemoteIP, "192.168.0.0/16") or ipv4_is_in_range(RemoteIP, "169.254.0.0/16") or ipv4_is_in_range(RemoteIP, "fc00::/7") or ipv4_is_in_range(RemoteIP, "fe80::/10")) or (ipv4_is_in_range(RemoteIP, "20.184.0.0/13") or ipv4_is_in_range(RemoteIP, "20.192.0.0/10") or ipv4_is_in_range(RemoteIP, "23.72.0.0/13") or ipv4_is_in_range(RemoteIP, "51.10.0.0/15") or ipv4_is_in_range(RemoteIP, "51.103.0.0/16") or ipv4_is_in_range(RemoteIP, "51.104.0.0/15") or ipv4_is_in_range(RemoteIP, "52.224.0.0/11") or ipv4_is_in_range(RemoteIP, "150.171.0.0/19") or ipv4_is_in_range(RemoteIP, "204.79.197.0/24")))))
+
+Unexpected Error processing 'Dllhost.EXE Initiated Network Connection To Non-Local IP Address' (sigma/rules-threat-hunting/windows/network_connection/net_connection_win_dllhost_non_local_ip.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/network_connection/net_connection_win_susp_azurefd_connection.yml
+Potentially Suspicious Azure Front Door Connection ---> KQL Query:
+DeviceNetworkEvents
+| where RemoteUrl contains "azurefd.net" and (not((InitiatingProcessFolderPath endswith "searchapp.exe" or (RemoteUrl contains "afdxtest.z01.azurefd.net" or RemoteUrl contains "fp-afd.azurefd.net" or RemoteUrl contains "fp-afdx-bpdee4gtg6frejfd.z01.azurefd.net" or RemoteUrl contains "roxy.azurefd.net" or RemoteUrl contains "powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net" or RemoteUrl contains "storage-explorer-publishing-feapcgfgbzc2cjek.b01.azurefd.net" or RemoteUrl contains "graph.azurefd.net") or (InitiatingProcessFolderPath endswith "brave.exe" or InitiatingProcessFolderPath endswith "chrome.exe" or InitiatingProcessFolderPath endswith "chromium.exe" or InitiatingProcessFolderPath endswith "firefox.exe" or InitiatingProcessFolderPath endswith "msedge.exe" or InitiatingProcessFolderPath endswith "msedgewebview2.exe" or InitiatingProcessFolderPath endswith "opera.exe" or InitiatingProcessFolderPath endswith "vivaldi.exe"))))
+
+Unexpected Error processing 'Potentially Suspicious Azure Front Door Connection' (sigma/rules-threat-hunting/windows/network_connection/net_connection_win_susp_azurefd_connection.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/network_connection/net_connection_win_msiexec_http.yml
+Msiexec.EXE Initiated Network Connection Over HTTP ---> KQL Query:
+DeviceNetworkEvents
+| where (RemotePort in~ ("80", "443")) and InitiatingProcessFolderPath endswith "\\msiexec.exe"
+
+Unexpected Error processing 'Msiexec.EXE Initiated Network Connection Over HTTP' (sigma/rules-threat-hunting/windows/network_connection/net_connection_win_msiexec_http.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/network_connection/net_connection_win_powershell_network_connection.yml
+Network Connection Initiated By PowerShell Process ---> KQL Query:
+DeviceNetworkEvents
+| where (InitiatingProcessFolderPath endswith "\\powershell.exe" or InitiatingProcessFolderPath endswith "\\pwsh.exe") and (not((((ipv4_is_in_range(RemoteIP, "127.0.0.0/8") or ipv4_is_in_range(RemoteIP, "10.0.0.0/8") or ipv4_is_in_range(RemoteIP, "169.254.0.0/16") or ipv4_is_in_range(RemoteIP, "172.16.0.0/12") or ipv4_is_in_range(RemoteIP, "192.168.0.0/16") or ipv4_is_in_range(RemoteIP, "::1/128") or ipv4_is_in_range(RemoteIP, "fe80::/10") or ipv4_is_in_range(RemoteIP, "fc00::/7")) and (InitiatingProcessAccountName contains "AUTHORI" or InitiatingProcessAccountName contains "AUTORI")) or (ipv4_is_in_range(RemoteIP, "20.184.0.0/13") or ipv4_is_in_range(RemoteIP, "51.103.210.0/23")))))
+
+Unexpected Error processing 'Network Connection Initiated By PowerShell Process' (sigma/rules-threat-hunting/windows/network_connection/net_connection_win_powershell_network_connection.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/network_connection/net_connection_win_dfsvc_non_local_ip.yml
+Dfsvc.EXE Network Connection To Non-Local IPs ---> KQL Query:
+DeviceNetworkEvents
+| where InitiatingProcessFolderPath endswith "\\dfsvc.exe" and (not((ipv4_is_in_range(RemoteIP, "127.0.0.0/8") or ipv4_is_in_range(RemoteIP, "10.0.0.0/8") or ipv4_is_in_range(RemoteIP, "169.254.0.0/16") or ipv4_is_in_range(RemoteIP, "172.16.0.0/12") or ipv4_is_in_range(RemoteIP, "192.168.0.0/16") or ipv4_is_in_range(RemoteIP, "::1/128") or ipv4_is_in_range(RemoteIP, "fe80::/10") or ipv4_is_in_range(RemoteIP, "fc00::/7"))))
+
+Unexpected Error processing 'Dfsvc.EXE Network Connection To Non-Local IPs' (sigma/rules-threat-hunting/windows/network_connection/net_connection_win_dfsvc_non_local_ip.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/network_connection/net_connection_win_susp_initaited_public_folder.yml
+Network Connection Initiated From Users\Public Folder ---> KQL Query:
+DeviceNetworkEvents
+| where InitiatingProcessFolderPath contains ":\\Users\\Public\\" and (not(InitiatingProcessFolderPath contains ":\\Users\\Public\\IBM\\ClientSolutions\\Start_Programs\\"))
+
+Unexpected Error processing 'Network Connection Initiated From Users\Public Folder' (sigma/rules-threat-hunting/windows/network_connection/net_connection_win_susp_initaited_public_folder.yml): cannot access local variable 'comments' where it is not associated with a value. Skipping.
+----------------------------------------
+Processing: sigma/rules-threat-hunting/windows/network_connection/net_connection_win_dfsvc_uncommon_ports.yml
+Sigma Transformation Error for 'Dfsvc.EXE Initiated Network Connection Over Uncommon Port': Invalid SigmaDetectionItem field name encountered: DestinationIsIpv6. Please use valid fields for the DeviceNetworkEvents table, or the following fields that have keymappings in this pipeline:
+ActionType, AdditionalFields, AppGuardContainerId, CommandLine, Company, Description, DestinationHostname, DestinationIp, DestinationPort, DeviceId, DeviceName, EventType, Hashes, Image, InitiatingProcessAccountDomain, InitiatingProcessAccountName, InitiatingProcessAccountObjectId, InitiatingProcessAccountSid, InitiatingProcessAccountUpn, InitiatingProcessCommandLine, InitiatingProcessCreationTime, InitiatingProcessFileName, InitiatingProcessFileSize, InitiatingProcessFolderPath, InitiatingProcessId, InitiatingProcessIntegrityLevel, InitiatingProcessMD5, InitiatingProcessParentCreationTime, InitiatingProcessParentFileName, InitiatingProcessParentId, InitiatingProcessRemoteSessionDeviceName, InitiatingProcessRemoteSessionIP, InitiatingProcessSHA1, InitiatingProcessSHA256, InitiatingProcessSessionId, InitiatingProcessTokenElevation, InitiatingProcessVersionInfoCompanyName, InitiatingProcessVersionInfoFileDescription, InitiatingProcessVersionInfoInternalFileName, InitiatingProcessVersionInfoOriginalFileName, InitiatingProcessVersionInfoProductName, InitiatingProcessVersionInfoProductVersion, IsInitiatingProcessRemoteSession, LocalIP, LocalIPType, LocalPort, OriginalFileName, ParentCommandLine, ParentProcessId, ProcessId, ProcessName, Product, Protocol, RemoteIP, RemoteIPType, RemotePort, RemoteUrl, ReportId, SourceHostname, SourceImage, SourceIp, SourcePort, Timestamp, User, md5, sha1, sha256.
+Warning: No KQL query generated for Dfsvc.EXE Initiated Network Connection Over Uncommon Port I will try again with AI :)
+AI is trying to generate KQL for: Dfsvc.EXE Initiated Network Connection Over Uncommon Port
+Logsource section: {'category': 'network_connection', 'product': 'windows'}
+AI generated KQL query for sigma/rules-threat-hunting/windows/network_connection/net_connection_win_dfsvc_uncommon_ports.yml:
+SecurityEvent
+| where (InitiatingProcessFolderPath contains ":\\Windows\\Microsoft.NET\\" and InitiatingProcessFolderPath endswith "\\dfsvc.exe") and (not((RemotePort in~ ("80", "443")))) and (not((DestinationIsIpv6 =~ "true" and RemotePort == 53)))
+
+AI generated comments:
+The SecurityEvent table in Microsoft Sentinel contains network connection logs for Windows systems. To have this table present, ensure that you have the necessary data connectors and log sources configured in Sentinel to collect Windows security event logs.
+
+Dfsvc.EXE Initiated Network Connection Over Uncommon Port ---> KQL Query:
+SecurityEvent
+| where (InitiatingProcessFolderPath contains ":\\Windows\\Microsoft.NET\\" and InitiatingProcessFolderPath endswith "\\dfsvc.exe") and (not((RemotePort in~ ("80", "443")))) and (not((DestinationIsIpv6 =~ "true" and RemotePort == 53)))
+
+----------------------------------------
+Successfully wrote KQL total of: 29/118
+
+Processing complete.

@@ -1,0 +1,10 @@
+// Title: Curl.EXE Execution With Custom UserAgent
+// Author: frack113
+// Date: 2022-01-23
+// Level: medium
+// Description: Detects execution of curl.exe with custom useragent options
+// Tags: attack.command-and-control, attack.t1071.001, detection.threat-hunting
+// ================================================================== 
+
+DeviceProcessEvents
+| where (FolderPath endswith "\\curl.exe" or ProcessVersionInfoProductName =~ "The curl executable") and (ProcessCommandLine contains " -A " or ProcessCommandLine contains " --user-agent ")

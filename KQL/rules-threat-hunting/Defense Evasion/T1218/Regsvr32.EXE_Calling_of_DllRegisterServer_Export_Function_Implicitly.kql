@@ -1,0 +1,12 @@
+// Title: Regsvr32.EXE Calling of DllRegisterServer Export Function Implicitly
+// Author: Andreas Braathen (mnemonic.io), Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-10-17
+// Level: medium
+// Description: Detects execution of regsvr32 with the silent flag and no other flags on a DLL located in an uncommon or potentially suspicious location.
+// When Regsvr32 is called in such a way, it implicitly calls the DLL export function 'DllRegisterServer'.
+// This table contains process creation events in Microsoft Sentinel. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1218, detection.threat-hunting
+// ================================================================== 
+
+ProcessCreationEvents
+| where ((ProcessCommandLine contains " /s " or ProcessCommandLine contains " /e ") and (FolderPath endswith "\\regsvr32.exe" or ProcessVersionInfoOriginalFileName =~ "REGSVR32.EXE")) and (not(((ProcessCommandLine contains " /i:" or ProcessCommandLine contains "/U ") or ((ProcessCommandLine contains ":\\Program Files (x86)" or ProcessCommandLine contains ":\\Program Files\\" or ProcessCommandLine contains ":\\Windows\\System32\\" or ProcessCommandLine contains ":\\Windows\\SysWOW64\\") or (CurrentDirectory contains ":\\Program Files (x86)" or CurrentDirectory contains ":\\Program Files\\" or CurrentDirectory contains ":\\Windows\\System32\\" or CurrentDirectory contains ":\\Windows\\SysWOW64\\")) or (ProcessCommandLine =~ "regsvr32 /s rpcproxy.dll" and InitiatingProcessCommandLine endswith ":\\Windows\\System32\\RpcProxy\\RpcProxy.dll"))))

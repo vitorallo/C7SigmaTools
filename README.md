@@ -17,6 +17,7 @@ The converted rules can be generated in two formats:
 *   Organizes `.kql` files based on MITRE ATT&CK tactics and techniques.
 *   Alternatively, outputs rules and metadata into a structured SQLite database (`rules.db`).
 *   Includes the Sigma rules from this repository: https://github.com/SigmaHQ/sigma/tree/master. You might consider updating it before running the scripts.
+*   Use OPEAN AI to eventually figure out proper table when table mapping from microsoft-xdr-pipeline fails
 
 ## Prerequisites
 
@@ -53,9 +54,9 @@ There are two main scripts provided:
 1.  **Generate KQL Files:**
     To convert Sigma rules and generate individual `.kql` files organized by MITRE ATT&CK tactics/techniques in the `KQL/` directory, run:
     ```bash
-    python trySigmaConversion.py
+    python trySigmaConversion.py <optional: folder inside sigma where to fetch rules, default "rules">
     ```
-    This script will process all `.yml` files found within the `sigma/rules/` directory structure.
+    This script will process all `.yml` files found within the `sigma/<specified folder>/` directory structure.
 
 2.  **Populate SQLite Database:**
     To convert Sigma rules and populate the `rules.db` SQLite database with rule metadata and KQL queries, run:

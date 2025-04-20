@@ -1,0 +1,10 @@
+// Title: Use Of Remove-Item to Delete File - ScriptBlock
+// Author: frack113
+// Date: 2022-01-15
+// Level: low
+// Description: PowerShell Remove-Item  with -Path to delete a file or a folder with "-Recurse"The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1070.004, detection.threat-hunting
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Remove-Item -Path " or ScriptBlockText contains "del -Path " or ScriptBlockText contains "erase -Path " or ScriptBlockText contains "rd -Path " or ScriptBlockText contains "ri -Path " or ScriptBlockText contains "rm -Path " or ScriptBlockText contains "rmdir -Path "

@@ -1,0 +1,10 @@
+// Title: Mail Forwarding/Redirecting Activity In O365
+// Author: RedCanary Team (idea), Harjot Singh @cyb3rjy0t
+// Date: 2023-10-11
+// Level: medium
+// Description: Detects email forwarding or redirecting acitivty in O365 Audit logs.The 'm365' product in the 'audit' service corresponds to the OfficeActivity table in Microsoft Sentinel. Ensure that the Microsoft 365 Defender data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.exfiltration, attack.t1020, detection.threat-hunting
+// ================================================================== 
+
+OfficeActivity
+| where ((Operation contains "New-InboxRule" or Operation contains "Set-InboxRule") and (Parameters contains "ForwardAsAttachmentTo" or Parameters contains "ForwardingAddress" or Parameters contains "ForwardingSmtpAddress" or Parameters contains "ForwardTo" or Parameters contains "RedirectTo" or Parameters contains "RedirectToRecipients")) or (Operation contains "Set-Mailbox" and (Parameters contains "ForwardingSmtpAddress" or Parameters contains "ForwardingAddress")) or ((OperationProperties contains "Forward" or OperationProperties contains "Recipients") and Operation contains "UpdateInboxRules")

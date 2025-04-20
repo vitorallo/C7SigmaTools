@@ -1,0 +1,12 @@
+// Title: Potential Remote WMI ActiveScriptEventConsumers Activity
+// Author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+// Date: 2020-09-02
+// Level: medium
+// Description: Detect potential adversaries leveraging WMI ActiveScriptEventConsumers remotely to move laterally in a network.
+// This event is best correlated and used as an enrichment to determine the potential lateral movement activity.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the Microsoft Monitoring Agent (MMA) installed on your Windows machines and properly configured to send security event logs to Sentinel.
+// Tags: attack.lateral-movement, attack.privilege-escalation, detection.threat-hunting, attack.persistence, attack.t1546.003
+// ================================================================== 
+
+SecurityEvent
+| where (LogonType == 3 and InitiatingProcessFolderPath endswith "scrcons.exe") and (not(TargetLogonId =~ "0x3e7"))

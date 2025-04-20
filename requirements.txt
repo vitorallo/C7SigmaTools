@@ -1,3 +1,5 @@
 PyYAML
 pysigma
 pySigma-backend-kusto
+dotenv
+openai

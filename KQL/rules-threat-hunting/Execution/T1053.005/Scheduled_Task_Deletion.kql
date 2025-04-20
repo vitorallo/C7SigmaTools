@@ -1,0 +1,10 @@
+// Title: Scheduled Task Deletion
+// Author: David Strassegger, Tim Shelton
+// Date: 2021-01-22
+// Level: low
+// Description: Detects scheduled task deletion events. Scheduled tasks are likely to be deleted if not used for persistence. Malicious Software often creates tasks directly under the root node e.g. \TASKNAMEThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To query for the Command field from the embedded XML in the event data, you may need to enable the Advanced Audit Policy setting Object Access > Audit Other Object Access Events on the Windows machines and ensure that the necessary logs are being collected and sent to Sentinel.
+// Tags: attack.execution, attack.privilege-escalation, car.2013-08-001, attack.t1053.005, detection.threat-hunting
+// ================================================================== 
+
+SecurityEvent
+| where not((TaskName in~ ("\\Microsoft\\Windows\\RemovalTools\\MRT_ERROR_HB") or TaskName contains "\\Mozilla\\Firefox Default Browser Agent "))

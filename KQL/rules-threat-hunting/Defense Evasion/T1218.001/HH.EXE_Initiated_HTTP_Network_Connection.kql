@@ -1,0 +1,11 @@
+// Title: HH.EXE Initiated HTTP Network Connection
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-10-05
+// Level: medium
+// Description: Detects a network connection initiated by the "hh.exe" process to HTTP destination ports, which could indicate the execution/download of remotely hosted .chm files.
+// 
+// Tags: attack.defense-evasion, attack.t1218.001, detection.threat-hunting
+// ================================================================== 
+
+DeviceNetworkEvents
+| where (RemotePort in~ ("80", "443")) and InitiatingProcessFolderPath endswith "\\hh.exe"

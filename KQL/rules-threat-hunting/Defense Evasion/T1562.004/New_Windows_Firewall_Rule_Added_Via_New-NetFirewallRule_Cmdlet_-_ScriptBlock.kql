@@ -1,0 +1,11 @@
+// Title: New Windows Firewall Rule Added Via New-NetFirewallRule Cmdlet - ScriptBlock
+// Author: frack113
+// Date: 2024-05-10
+// Level: low
+// Description: Detects when a powershell script contains calls to the "New-NetFirewallRule" cmdlet in order to add a new firewall rule with an "Allow" action.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Make sure to have the necessary connectors and data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1562.004, detection.threat-hunting
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText =~ "*New-NetFirewallRule*-Action*Allow*"

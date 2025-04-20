@@ -1,0 +1,10 @@
+// Title: Remote Access Tool - Ammy Admin Agent Execution
+// Author: @kostastsale
+// Date: 2024-08-05
+// Level: medium
+// Description: Detects the execution of the Ammy Admin RMM agent for remote management.
+// Tags: attack.execution, attack.persistence, detection.threat-hunting
+// ================================================================== 
+
+DeviceProcessEvents
+| where ProcessCommandLine contains "AMMYY\\aa_nts.dll\",run" and FolderPath endswith "\\rundll32.exe"

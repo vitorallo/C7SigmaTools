@@ -1,0 +1,10 @@
+// Title: SMB over QUIC Via PowerShell Script
+// Author: frack113
+// Date: 2023-07-21
+// Level: medium
+// Description: Detects the mounting of Windows SMB shares over QUIC, which can be an unexpected event in some enterprise environmentsThis table contains Windows security event logs, including script block logging events. Enable the Microsoft Monitoring Agent on Windows machines and configure the SecurityEvent data connector in Microsoft Sentinel to collect these logs.
+// Tags: attack.lateral-movement, attack.t1570, detection.threat-hunting
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "New-SmbMapping" and ScriptBlockText contains "-TransportType QUIC"
