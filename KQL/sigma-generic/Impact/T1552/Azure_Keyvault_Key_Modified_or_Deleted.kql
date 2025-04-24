@@ -1,0 +1,10 @@
+// Title: Azure Keyvault Key Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-16
+// Level: medium
+// Description: Identifies when a Keyvault Key is modified or deleted in Azure.This table contains Azure activity logs. Ensure that Azure Activity Logs are being collected and ingested into Microsoft Sentinel for this table to be available.
+// Tags: attack.impact, attack.credential-access, attack.t1552, attack.t1552.001
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.KEYVAULT/VAULTS/KEYS/UPDATE/ACTION", "MICROSOFT.KEYVAULT/VAULTS/KEYS/CREATE", "MICROSOFT.KEYVAULT/VAULTS/KEYS/CREATE/ACTION", "MICROSOFT.KEYVAULT/VAULTS/KEYS/IMPORT/ACTION", "MICROSOFT.KEYVAULT/VAULTS/KEYS/RECOVER/ACTION", "MICROSOFT.KEYVAULT/VAULTS/KEYS/RESTORE/ACTION", "MICROSOFT.KEYVAULT/VAULTS/KEYS/DELETE", "MICROSOFT.KEYVAULT/VAULTS/KEYS/BACKUP/ACTION", "MICROSOFT.KEYVAULT/VAULTS/KEYS/PURGE/ACTION")

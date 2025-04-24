@@ -1,0 +1,10 @@
+// Title: Bitlocker Key Retrieval
+// Author: Michael Epping, '@mepples21'
+// Date: 2022-06-28
+// Level: medium
+// Description: Monitor and alert for Bitlocker key retrieval.The AzureActivity table in Microsoft Sentinel contains Azure audit logs. Ensure that Azure Monitor logs are connected to Sentinel and the necessary permissions are set up to query this table.
+// Tags: attack.defense-evasion, attack.t1078.004
+// ================================================================== 
+
+AzureActivity
+| where Category =~ "KeyManagement" and OperationName =~ "Read BitLocker key"

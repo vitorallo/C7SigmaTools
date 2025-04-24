@@ -1,0 +1,10 @@
+// Description: 'Shows dormant accounts (not active in the last 180 days) that connect from a country for the first time and the country is uncommon in the tenant or is the first time the ISP is used.'
+// Required Connectors: BehaviorAnalytics (Types: BehaviorAnalytics)
+
+BehaviorAnalytics
+| where UsersInsights.IsDormantAccount == True
+| where ActivityInsights.FirstTimeUserConnectedFromCountry == True
+| where ActivityInsights.CountryUncommonlyConnectedFromInTenant == True 
+  or ActivityInsights.FirstTimeConnectionViaISPInTenant == True
+| extend AadUserId = UsersInsights.AccountObjectID
+| extend Account_0_AadUserId = AadUserId

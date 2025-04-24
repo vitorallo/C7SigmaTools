@@ -1,0 +1,10 @@
+// Title: Okta Admin Role Assignment Created
+// Author: Nikita Khalimonenkov
+// Date: 2023-01-19
+// Level: medium
+// Description: Detects when a new admin role assignment is created. Which could be a sign of privilege escalation or persistenceThis table contains Okta sign-in logs. To have this table present in Microsoft Sentinel, you need to ensure that the Okta connector is set up and configured to collect sign-in logs from the Okta service.
+// Tags: attack.persistence
+// ================================================================== 
+
+OktaSignInLogs
+| where eventtype =~ "iam.resourceset.bindings.add"

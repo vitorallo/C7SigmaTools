@@ -1,0 +1,10 @@
+// Title: SCM Database Handle Failure
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-08-12
+// Level: medium
+// Description: Detects non-system users failing to get a handle of the SCM database.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the Microsoft Sentinel agent installed on the Windows machines and that they are sending security event logs to your Sentinel workspace.
+// Tags: attack.discovery, attack.t1010
+// ================================================================== 
+
+SecurityEvent
+| where (AccessMask =~ "0xf003f" and RegistryKey =~ "ServicesActive") and (not(SubjectLogonId =~ "0x3e4"))

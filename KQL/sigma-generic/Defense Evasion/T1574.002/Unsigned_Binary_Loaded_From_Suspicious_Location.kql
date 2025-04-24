@@ -1,0 +1,10 @@
+// Title: Unsigned Binary Loaded From Suspicious Location
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-08-03
+// Level: high
+// Description: Detects Code Integrity (CI) engine blocking processes from loading unsigned DLLs residing in suspicious locationsThe SecurityEvent table in Microsoft Sentinel contains security-related events and logs from various sources, including Windows security events. To ensure that the SecurityEvent table is populated with data from the 'windows' product and 'security-mitigations' service, make sure to have the necessary data connectors and log sources configured in Sentinel for Windows security events and security mitigations.
+// Tags: attack.defense-evasion, attack.t1574.002
+// ================================================================== 
+
+SecurityEvent
+| where ImageName contains "\\Users\\Public\\" or ImageName contains "\\PerfLogs\\" or ImageName contains "\\Desktop\\" or ImageName contains "\\Downloads\\" or ImageName contains "\\AppData\\Local\\Temp\\" or ImageName contains "C:\\Windows\\TEMP\\"

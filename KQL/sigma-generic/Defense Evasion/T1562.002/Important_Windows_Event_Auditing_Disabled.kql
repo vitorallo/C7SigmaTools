@@ -1,0 +1,10 @@
+// Title: Important Windows Event Auditing Disabled
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-06-20
+// Level: high
+// Description: Detects scenarios where system auditing for important events such as "Process Creation" or "Logon" events is disabled.This table contains security-related events from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to populate this table.
+// Tags: attack.defense-evasion, attack.t1562.002
+// ================================================================== 
+
+SecurityEvent
+| where ((AuditPolicyChanges contains "%%8448" or AuditPolicyChanges contains "%%8450") and (SubcategoryGuid in~ ("{0CCE9210-69AE-11D9-BED3-505054503030}", "{0CCE9211-69AE-11D9-BED3-505054503030}", "{0CCE9212-69AE-11D9-BED3-505054503030}", "{0CCE9215-69AE-11D9-BED3-505054503030}", "{0CCE921B-69AE-11D9-BED3-505054503030}", "{0CCE922B-69AE-11D9-BED3-505054503030}", "{0CCE922F-69AE-11D9-BED3-505054503030}", "{0CCE9230-69AE-11D9-BED3-505054503030}", "{0CCE9235-69AE-11D9-BED3-505054503030}", "{0CCE9236-69AE-11D9-BED3-505054503030}", "{0CCE9237-69AE-11D9-BED3-505054503030}", "{0CCE923F-69AE-11D9-BED3-505054503030}", "{0CCE9240-69AE-11D9-BED3-505054503030}", "{0CCE9242-69AE-11D9-BED3-505054503030}"))) or (AuditPolicyChanges contains "%%8448" and SubcategoryGuid =~ "{0CCE9217-69AE-11D9-BED3-505054503030}")

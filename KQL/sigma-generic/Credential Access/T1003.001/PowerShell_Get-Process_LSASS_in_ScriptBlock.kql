@@ -1,0 +1,10 @@
+// Title: PowerShell Get-Process LSASS in ScriptBlock
+// Author: Florian Roth (Nextron Systems)
+// Date: 2021-04-23
+// Level: high
+// Description: Detects a Get-Process command on lsass process, which is in almost all cases a sign of malicious activityThis table contains security-related events, including PowerShell script block logging. Ensure that the appropriate data connectors are set up in Sentinel to collect Windows security event logs.
+// Tags: attack.credential-access, attack.t1003.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Get-Process lsass"

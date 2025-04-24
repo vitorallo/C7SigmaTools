@@ -1,0 +1,10 @@
+// Title: New CA Policy by Non-approved Actor
+// Author: Corissa Koopmans, '@corissalea'
+// Date: 2022-07-18
+// Level: medium
+// Description: Monitor and alert on conditional access changes.This table contains Azure activity logs, which includes audit logs. Ensure that Azure Monitor logs are enabled for the Azure service in question and that the necessary connectors are set up in Microsoft Sentinel to collect the data.
+// Tags: attack.defense-evasion, attack.t1548
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' =~ "Add conditional access policy"

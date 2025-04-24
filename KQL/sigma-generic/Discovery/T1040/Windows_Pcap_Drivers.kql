@@ -1,0 +1,10 @@
+// Title: Windows Pcap Drivers
+// Author: Cian Heasley
+// Date: 2020-06-10
+// Level: medium
+// Description: Detects Windows Pcap driver installation based on a list of associated .sys files.This table contains security-related events, including event ID 4697. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to query this table.
+// Tags: attack.discovery, attack.credential-access, attack.t1040
+// ================================================================== 
+
+SecurityEvent
+| where ServiceFileName contains "pcap" or ServiceFileName contains "npcap" or ServiceFileName contains "npf" or ServiceFileName contains "nm3" or ServiceFileName contains "ndiscap" or ServiceFileName contains "nmnt" or ServiceFileName contains "windivert" or ServiceFileName contains "USBPcap" or ServiceFileName contains "pktmon"

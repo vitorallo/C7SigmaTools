@@ -1,0 +1,10 @@
+// Title: Remote PowerShell Session (PS Module)
+// Author: Roberto Rodriguez @Cyb3rWard0g, Tim Shelton
+// Date: 2019-08-10
+// Level: high
+// Description: Detects remote PowerShell sessionsThis table contains security event logs from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to collect these logs.
+// Tags: attack.execution, attack.t1059.001, attack.lateral-movement, attack.t1021.006
+// ================================================================== 
+
+SecurityEvent
+| where (ContextInfo contains " = ServerRemoteHost " and ContextInfo contains "wsmprovhost.exe") and (not(ContextInfo contains "\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules\\Microsoft.PowerShell.Archive\\Microsoft.PowerShell.Archive.psm1"))

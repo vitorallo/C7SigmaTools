@@ -1,0 +1,10 @@
+// Title: Suspicious Scripting in a WMI Consumer
+// Author: Florian Roth (Nextron Systems), Jonhnathan Ribeiro
+// Date: 2019-04-15
+// Level: high
+// Description: Detects suspicious commands that are related to scripting/powershell in WMI Event ConsumersThis table contains Windows Management Instrumentation (WMI) events. To query this table in Microsoft Sentinel, ensure that the Windows Security Events data connector is enabled and collecting WMI events from the Windows machines.
+// Tags: attack.execution, attack.t1059.005
+// ================================================================== 
+
+WmiEvent
+| where (Destination contains "new-object" and Destination contains "net.webclient" and Destination contains ".downloadstring") or (Destination contains "new-object" and Destination contains "net.webclient" and Destination contains ".downloadfile") or (Destination contains " iex(" or Destination contains " -nop " or Destination contains " -noprofile " or Destination contains " -decode " or Destination contains " -enc " or Destination contains "WScript.Shell" or Destination contains "System.Security.Cryptography.FromBase64Transform")

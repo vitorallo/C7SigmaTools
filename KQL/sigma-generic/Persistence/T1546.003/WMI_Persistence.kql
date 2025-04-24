@@ -1,0 +1,10 @@
+// Title: WMI Persistence
+// Author: Florian Roth (Nextron Systems), Gleb Sukhodolskiy, Timur Zinniatullin oscd.community
+// Date: 2017-08-22
+// Level: medium
+// Description: Detects suspicious WMI event filter and command line event consumer based on WMI and Security Logs.This table contains security-related events, including EventID 5861 and 5859. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to access this table.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1546.003
+// ================================================================== 
+
+SecurityEvent
+| where ("ActiveScriptEventConsumer" or "CommandLineEventConsumer" or "CommandLineTemplate") and (not((PossibleCause =~ "Permanent" and Provider =~ "SCM Event Provider" and Query =~ "select * from MSFT_SCMEventLogEvent" and InitiatingProcessAccountName =~ "S-1-5-32-544")))

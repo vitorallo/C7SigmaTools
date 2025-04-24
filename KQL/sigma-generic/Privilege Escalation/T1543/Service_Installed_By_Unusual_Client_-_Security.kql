@@ -1,0 +1,10 @@
+// Title: Service Installed By Unusual Client - Security
+// Author: Tim Rauch (Nextron Systems), Elastic (idea)
+// Date: 2022-09-15
+// Level: high
+// Description: Detects a service installed by a client which has PID 0 or whose parent has PID 0This table contains security event logs from Windows machines. Ensure that the Microsoft Monitoring Agent is installed on the Windows machines and configured to send security event logs to Microsoft Sentinel.
+// Tags: attack.privilege-escalation, attack.t1543
+// ================================================================== 
+
+SecurityEvent
+| where ClientProcessId == 0 or InitiatingProcessParentId == 0

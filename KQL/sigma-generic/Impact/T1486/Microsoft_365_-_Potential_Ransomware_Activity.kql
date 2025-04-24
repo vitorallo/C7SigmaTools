@@ -1,0 +1,10 @@
+// Title: Microsoft 365 - Potential Ransomware Activity
+// Author: austinsonger
+// Date: 2021-08-19
+// Level: medium
+// Description: Detects when a Microsoft Cloud App Security reported when a user uploads files to the cloud that might be infected with ransomware.This table contains threat intelligence indicators, including indicators from Microsoft 365 Defender. To have this table present in Microsoft Sentinel, ensure that Microsoft 365 Defender logs are being ingested and processed.
+// Tags: attack.impact, attack.t1486
+// ================================================================== 
+
+ThreatIntelligenceIndicator
+| where eventName =~ "Potential ransomware activity" and eventSource =~ "SecurityComplianceCenter" and status =~ "success"

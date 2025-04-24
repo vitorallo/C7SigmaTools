@@ -1,0 +1,19 @@
+// Description: 'Identifies failed attempts to sign in to disabled accounts across multiple Azure Applications.
+// Default threshold for Azure Applications attempted to sign in to is 3.
+// References: https://docs.microsoft.com/azure/active-directory/reports-monitoring/reference-sign-ins-error-codes
+// 50057 - User account is disabled. The account has been disabled by an administrator.'
+// Required Connectors: AzureActiveDirectory (Types: SigninLogs); AzureActiveDirectory (Types: AADNonInteractiveUserSignInLogs)
+
+let threshold = 3;
+let aadFunc = (tableName:string){
+table(tableName)
+| where ResultType == "50057"
+| where ResultDescription =~ "User account is disabled. The account has been disabled by an administrator."
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), applicationCount = dcount(AppDisplayName),
+applicationSet = make_set(AppDisplayName), count() by UserPrincipalName, IPAddress, Type
+| where applicationCount >= threshold
+| extend Name = tostring(split(UserPrincipalName,'@',0)[0]), UPNSuffix = tostring(split(UserPrincipalName,'@',1)[0])
+};
+let aadSignin = aadFunc("SigninLogs");
+let aadNonInt = aadFunc("AADNonInteractiveUserSignInLogs");
+union isfuzzy=true aadSignin, aadNonInt

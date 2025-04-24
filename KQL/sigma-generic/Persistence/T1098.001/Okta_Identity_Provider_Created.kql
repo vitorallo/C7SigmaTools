@@ -1,0 +1,10 @@
+// Title: Okta Identity Provider Created
+// Author: kelnage
+// Date: 2023-09-07
+// Level: medium
+// Description: Detects when a new identity provider is created for Okta.This table contains sign-in logs from Okta. Ensure that the Okta connector is set up in Microsoft Sentinel to collect data from Okta service.
+// Tags: attack.persistence, attack.t1098.001
+// ================================================================== 
+
+OktaSignInLogs
+| where eventtype =~ "system.idp.lifecycle.create"

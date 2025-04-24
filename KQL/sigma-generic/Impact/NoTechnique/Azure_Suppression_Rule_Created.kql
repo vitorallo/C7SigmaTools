@@ -1,0 +1,10 @@
+// Title: Azure Suppression Rule Created
+// Author: Austin Songer
+// Date: 2021-08-16
+// Level: medium
+// Description: Identifies when a suppression rule is created in Azure. Adversary's could attempt this to evade detection.This table contains Azure Activity Logs data. Ensure that Azure Activity Logs are being collected and ingested into Microsoft Sentinel to query this table.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName =~ "MICROSOFT.SECURITY/ALERTSSUPPRESSIONRULES/WRITE"

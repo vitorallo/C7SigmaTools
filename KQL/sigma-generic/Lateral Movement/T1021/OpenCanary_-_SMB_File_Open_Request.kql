@@ -1,0 +1,10 @@
+// Title: OpenCanary - SMB File Open Request
+// Author: Security Onion Solutions
+// Date: 2024-03-08
+// Level: high
+// Description: Detects instances where an SMB service on an OpenCanary node has had a file open request.This table contains logs related to the Opencanary application. To have this table present in Microsoft Sentinel, ensure that Opencanary logs are being collected and sent to Sentinel for analysis.
+// Tags: attack.lateral-movement, attack.collection, attack.t1021, attack.t1005
+// ================================================================== 
+
+OpencanaryLogs
+| where logtype == 5000

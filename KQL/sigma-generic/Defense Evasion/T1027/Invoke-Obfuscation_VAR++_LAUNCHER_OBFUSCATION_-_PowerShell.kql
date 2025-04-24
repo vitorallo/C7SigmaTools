@@ -1,0 +1,10 @@
+// Title: Invoke-Obfuscation VAR++ LAUNCHER OBFUSCATION - PowerShell
+// Author: Timur Zinniatullin, oscd.community
+// Date: 2020-10-13
+// Level: high
+// Description: Detects Obfuscated Powershell via VAR++ LAUNCHERThis table contains Windows security event logs, including script block logging events. Enable the necessary data connectors in Microsoft Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1027, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText matches regex "(?i)&&set.*(\\{\\d\\}){2,}\\\\"\\s+?-f.*&&.*cmd.*/c"

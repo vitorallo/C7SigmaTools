@@ -1,0 +1,10 @@
+// Title: SCM Database Privileged Operation
+// Author: Roberto Rodriguez @Cyb3rWard0g, Tim Shelton
+// Date: 2019-08-15
+// Level: medium
+// Description: Detects non-system users performing privileged operation os the SCM databaseThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that the Windows Security events are being collected and sent to Sentinel.
+// Tags: attack.privilege-escalation, attack.t1548
+// ================================================================== 
+
+SecurityEvent
+| where (ObjectName =~ "servicesactive" and PrivilegeList =~ "SeTakeOwnershipPrivilege") and (not((InitiatingProcessFolderPath endswith ":\\Windows\\System32\\services.exe" and SubjectLogonId =~ "0x3e4")))

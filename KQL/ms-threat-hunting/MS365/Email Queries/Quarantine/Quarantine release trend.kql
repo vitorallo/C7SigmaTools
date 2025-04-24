@@ -1,0 +1,8 @@
+// Description: This query helps reviewing quarantine release trend in Defender for Office 365
+// Required Connectors: MicrosoftThreatProtection (Types: CloudAppEvents)
+
+CloudAppEvents
+| where ActionType == "QuarantineReleaseMessage"
+| summarize count() by bin(Timestamp, 1d)
+| project-rename Releases = count_
+| render timechart with (title="Qurantine Releases by Day")

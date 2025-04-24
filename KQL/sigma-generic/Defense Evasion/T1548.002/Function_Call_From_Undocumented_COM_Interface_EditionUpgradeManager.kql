@@ -1,0 +1,10 @@
+// Title: Function Call From Undocumented COM Interface EditionUpgradeManager
+// Author: oscd.community, Dmitry Uchakin
+// Date: 2020-10-07
+// Level: medium
+// Description: Detects function calls from the EditionUpgradeManager COM interface. Which is an interface that is not used by standard executables.This table contains information about process creation events in Windows. To query this table in Microsoft Sentinel, ensure that you have the necessary data connectors set up to collect process creation events from Windows machines.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1548.002
+// ================================================================== 
+
+ProcessCreationEvents
+| where CallTrace contains "editionupgrademanagerobj.dll"

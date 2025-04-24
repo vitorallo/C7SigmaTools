@@ -1,0 +1,10 @@
+// Title: Alternate PowerShell Hosts - PowerShell Module
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-08-11
+// Level: medium
+// Description: Detects alternate PowerShell hosts potentially bypassing detections looking for powershell.exeThis table contains security event logs from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to collect these logs.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ContextInfo startswith "" and (not((ContextInfo contains "C:\\Windows\\system32\\dsac.exe" or ContextInfo contains "ConfigSyncRun.exe" or (Payload contains "Update-Help" or Payload contains "Failed to update Help for the module") or (ContextInfo contains "= powershell" or ContextInfo contains "= C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell" or ContextInfo contains "= C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell" or ContextInfo contains "= C:/Windows/System32/WindowsPowerShell/v1.0/powershell" or ContextInfo contains "= C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell") or ContextInfo contains "= C:\\WINDOWS\\System32\\sdiagnhost.exe -Embedding" or ContextInfo contains "C:\\Windows\\system32\\wsmprovhost.exe -Embedding")))

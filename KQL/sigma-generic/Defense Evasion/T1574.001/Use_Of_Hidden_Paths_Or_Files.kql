@@ -1,0 +1,10 @@
+// Title: Use Of Hidden Paths Or Files
+// Author: David Burkett, @signalblur
+// Date: 2022-12-30
+// Level: low
+// Description: Detects calls to hidden files or files located in hidden directories in NIX systems.This table contains Linux audit logs. To have this table present in Microsoft Sentinel, ensure that the Linux machines are onboarded and sending audit logs to Sentinel. Additionally, make sure that the Linux data connector is properly configured to collect and ingest audit logs.
+// Tags: attack.defense-evasion, attack.t1574.001
+// ================================================================== 
+
+LinuxAuditLogs
+| where (name contains "/." and type =~ "PATH") and (not((name contains "/.cache/" or name contains "/.config/" or name contains "/.pyenv/" or name contains "/.rustup/toolchains")))

@@ -1,0 +1,10 @@
+// Title: Service Installation in Suspicious Folder
+// Author: pH-T (Nextron Systems)
+// Date: 2022-03-18
+// Level: medium
+// Description: Detects service installation in suspicious folder appdataThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events are being collected and forwarded to Sentinel for this table to be populated.
+// Tags: attack.persistence, attack.privilege-escalation, car.2013-09-005, attack.t1543.003
+// ================================================================== 
+
+SecurityEvent
+| where ((ImagePath contains "\\AppData\\" or ImagePath contains "\\\\127.0.0.1" or ImagePath contains "\\\\localhost") and Provider_Name =~ "Service Control Manager") and (not((ImagePath contains ":\\Program Files\\Common Files\\Zoom\\Support\\CptService.exe" and ServiceName =~ "Zoom Sharing Service")))

@@ -1,0 +1,10 @@
+// Title: Delete Volume Shadow Copies Via WMI With PowerShell
+// Author: frack113
+// Date: 2021-06-03
+// Level: high
+// Description: Shadow Copies deletion using operating systems utilities via PowerShellThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Make sure to have the Windows Security Events connector enabled in Sentinel to collect these logs.
+// Tags: attack.impact, attack.t1490
+// ================================================================== 
+
+SecurityEvent
+| where (Data contains "Delete()" or Data contains "Remove-WmiObject") and (Data contains "Get-WmiObject" and Data contains "Win32_ShadowCopy")

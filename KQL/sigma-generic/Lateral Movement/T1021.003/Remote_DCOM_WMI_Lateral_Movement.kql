@@ -1,0 +1,10 @@
+// Title: Remote DCOM/WMI Lateral Movement
+// Author: Sagie Dulce, Dekel Paz
+// Date: 2022-01-01
+// Level: high
+// Description: Detects remote RPC calls that performs remote DCOM operations. These could be abused for lateral movement via DCOM or WMI.This table contains logs related to the RPC Firewall application. To have this table present in Microsoft Sentinel, ensure that the RPC Firewall application is properly configured and sending logs to Sentinel.
+// Tags: attack.lateral-movement, attack.t1021.003, attack.t1047
+// ================================================================== 
+
+rpc_firewall_logs
+| where EventLog =~ "RPCFW" and (InterfaceUuid in~ ("4d9f4ab8-7d1c-11cf-861e-0020af6e7c57", "99fcfec4-5260-101b-bbcb-00aa0021347a", "000001a0-0000-0000-c000-000000000046", "00000131-0000-0000-c000-000000000046", "00000143-0000-0000-c000-000000000046", "00000000-0000-0000-c000-000000000046"))

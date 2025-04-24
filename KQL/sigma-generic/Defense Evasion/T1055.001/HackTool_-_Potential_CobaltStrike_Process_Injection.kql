@@ -1,0 +1,10 @@
+// Title: HackTool - Potential CobaltStrike Process Injection
+// Author: Olaf Hartong, Florian Roth (Nextron Systems), Aleksey Potapov, oscd.community
+// Date: 2018-11-30
+// Level: high
+// Description: Detects a potential remote threat creation with certain characteristics which are typical for Cobalt Strike beaconsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for events related to creating remote threads, you can filter on the EventID associated with remote thread creation events.
+// Tags: attack.defense-evasion, attack.t1055.001
+// ================================================================== 
+
+SecurityEvent
+| where StartAddress endswith "0B80" or StartAddress endswith "0C7C" or StartAddress endswith "0C88"

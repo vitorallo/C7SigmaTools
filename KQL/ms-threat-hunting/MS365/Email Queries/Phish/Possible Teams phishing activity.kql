@@ -1,0 +1,19 @@
+// Description: This query looks for possible Teams phishing activity.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents, CloudAppEvents)
+
+let suspiciousUpns = DeviceProcessEvents
+| where DeviceId == "alertedMachine"
+| where isnotempty(InitiatingProcessAccountUpn)
+| project InitiatingProcessAccountUpn;
+CloudAppEvents
+| where Application == "Microsoft Teams"
+| where ActionType == "ChatCreated"
+| where isempty(AccountObjectId)
+| where RawEventData.ParticipantInfo.HasForeignTenantUsers == true
+| where RawEventData.CommunicationType == "OneonOne"
+| where RawEventData.ParticipantInfo.HasGuestUsers == false
+| where RawEventData.ParticipantInfo.HasOtherGuestUsers == false
+| where RawEventData.Members[0].DisplayName in ("Microsoft  Security", "Help Desk", "Help Desk Team", "Help Desk IT", "Microsoft Security", "office")
+| where AccountId has "@"
+| extend TargetUPN = tolower(tostring(RawEventData.Members[1].UPN))
+| where TargetUPN in (suspiciousUpns)

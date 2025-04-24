@@ -1,0 +1,7 @@
+// Description: This query helps reviewing zero day threats via URL and file detonations
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents 
+| where Timestamp > ago(30d) 
+| where DetectionMethods has "URL Detonation" or DetectionMethods has "File Detonation" 
+| count

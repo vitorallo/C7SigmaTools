@@ -1,0 +1,11 @@
+// Title: New Network ACL Entry Added
+// Author: jamesc-grafana
+// Date: 2024-07-11
+// Level: low
+// Description: Detects that network ACL entries have been added to a route table which could indicate that new attack vectors have been opened up in the AWS account.
+// The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To have this table present in Sentinel, you need to ensure that the AWS CloudTrail connector is set up and configured to send logs to Sentinel.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "CreateNetworkAclEntry" and eventSource =~ "ec2.amazonaws.com"

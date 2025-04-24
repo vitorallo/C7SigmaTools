@@ -1,0 +1,10 @@
+// Title: Commands to Clear or Remove the Syslog - Builtin
+// Author: Max Altgelt (Nextron Systems)
+// Date: 2021-09-10
+// Level: high
+// Description: Detects specific commands commonly used to remove or empty the syslogThis table contains Linux audit logs, which can be queried in Microsoft Sentinel. Make sure to have the Linux agent installed on the Linux machines to collect these logs.
+// Tags: attack.impact, attack.t1565.001
+// ================================================================== 
+
+LinuxAuditLogs
+| where ("rm /var/log/syslog" or "rm -r /var/log/syslog" or "rm -f /var/log/syslog" or "rm -rf /var/log/syslog" or "mv /var/log/syslog" or " >/var/log/syslog" or " > /var/log/syslog") and (not("/syslog."))

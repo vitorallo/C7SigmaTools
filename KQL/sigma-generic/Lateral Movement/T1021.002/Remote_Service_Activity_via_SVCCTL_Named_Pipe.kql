@@ -1,0 +1,10 @@
+// Title: Remote Service Activity via SVCCTL Named Pipe
+// Author: Samir Bousseaden
+// Date: 2019-04-03
+// Level: medium
+// Description: Detects remote service activity via remote access to the svcctl named pipeThe SecurityEvent table in Microsoft Sentinel contains detailed security events from Windows machines. To query this table, ensure that you have the necessary connectors set up to collect security events from Windows machines in your environment.
+// Tags: attack.lateral-movement, attack.persistence, attack.t1021.002
+// ================================================================== 
+
+SecurityEvent
+| where AccessList contains "WriteData" and RelativeTargetName =~ "svcctl" and ShareName =~ "\\\\*\\IPC$"

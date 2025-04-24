@@ -1,0 +1,12 @@
+// Title: Unsigned DLL Loaded by Windows Utility
+// Author: Swachchhanda Shrawan Poudel
+// Date: 2024-02-28
+// Level: medium
+// Description: Detects windows utilities loading an unsigned or untrusted DLL.
+// Adversaries often abuse those programs to proxy execution of malicious code.
+// This table contains information about image load events on Windows systems. Ensure that the Microsoft Defender for Endpoint data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.t1218.011, attack.t1218.010, attack.defense-evasion
+// ================================================================== 
+
+ImageLoadEvents
+| where (InitiatingProcessFolderPath endswith "\\InstallUtil.exe" or InitiatingProcessFolderPath endswith "\\RegAsm.exe" or InitiatingProcessFolderPath endswith "\\RegSvcs.exe" or InitiatingProcessFolderPath endswith "\\regsvr32.exe" or InitiatingProcessFolderPath endswith "\\rundll32.exe") and (not(((SignatureStatus in~ ("errorChaining", "errorCode_endpoint", "errorExpired", "trusted")) or (SignatureStatus in~ ("", "-")) or isnull(SignatureStatus) or Signed =~ "true" or (Signed in~ ("", "-")) or isnull(Signed))))

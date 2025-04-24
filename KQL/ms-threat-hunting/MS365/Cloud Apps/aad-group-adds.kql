@@ -1,0 +1,4 @@
+// Description: This query looks for Entra ID group adds identified by Microsoft Defender for Cloud Apps. It will require an corresponding app connector in Microsoft Defender for Cloud Apps.
+// Required Connectors: MicrosoftThreatProtection (Types: CloudAppEvents)
+
+let LookBack = 7d; CloudAppEvents | where ActionType in ("Add member to group.") and AccountType == "Regular" and Timestamp > ago(LookBack) | extend SecondElement = RawEventData.ModifiedProperties[1] | extend UserAddedId = RawEventData.ObjectId | extend GroupName = SecondElement.NewValue | project Timestamp, ActionType,UserAddedId,PerformedBy = AccountDisplayName,GroupName

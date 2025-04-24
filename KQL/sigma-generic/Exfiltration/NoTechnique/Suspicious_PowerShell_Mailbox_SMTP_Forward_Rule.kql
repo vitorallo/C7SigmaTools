@@ -1,0 +1,10 @@
+// Title: Suspicious PowerShell Mailbox SMTP Forward Rule
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-10-26
+// Level: medium
+// Description: Detects usage of the powerShell Set-Mailbox Cmdlet to set-up an SMTP forwarding rule.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for Script Block Logging events, you can filter on the EventID associated with script block logging events (e.g., EventID == 4104). Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.exfiltration
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Set-Mailbox " and ScriptBlockText contains " -DeliverToMailboxAndForward " and ScriptBlockText contains " -ForwardingSmtpAddress "

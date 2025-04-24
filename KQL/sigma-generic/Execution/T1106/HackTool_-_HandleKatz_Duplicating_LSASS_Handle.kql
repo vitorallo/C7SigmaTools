@@ -1,0 +1,10 @@
+// Title: HackTool - HandleKatz Duplicating LSASS Handle
+// Author: Bhabesh Raj (rule), @thefLinkk
+// Date: 2022-06-27
+// Level: high
+// Description: Detects HandleKatz opening LSASS to duplicate its handle to later dump the memory without opening any new handlesThis table contains information about process creation events in Windows. To have this table present in Microsoft Sentinel, ensure that the Windows Security Events data connector is enabled and properly configured to collect process creation events.
+// Tags: attack.execution, attack.t1106, attack.defense-evasion, attack.t1003.001
+// ================================================================== 
+
+ProcessCreationEvents
+| where CallTrace contains "|UNKNOWN(" and CallTrace endswith ")" and CallTrace startswith "C:\\Windows\\System32\\ntdll.dll+" and GrantedAccess =~ "0x1440" and TargetImage endswith "\\lsass.exe"

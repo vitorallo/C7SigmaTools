@@ -1,0 +1,10 @@
+// Title: Invoke-Obfuscation Via Use MSHTA - PowerShell
+// Author: Nikita Nazarov, oscd.community
+// Date: 2020-10-08
+// Level: high
+// Description: Detects Obfuscated Powershell via use MSHTA in ScriptsThis table contains security-related events, including PowerShell script execution events. Make sure to enable the necessary data connectors in Sentinel to ingest Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1027, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "set" and ScriptBlockText contains "&&" and ScriptBlockText contains "mshta" and ScriptBlockText contains "vbscript:createobject" and ScriptBlockText contains ".run" and ScriptBlockText contains "(window.close)"

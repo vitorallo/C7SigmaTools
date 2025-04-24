@@ -1,0 +1,5 @@
+// Description: This query looks for file download events identified by Microsoft Defender for Cloud Apps. It will require an corresponding app connector in Microsoft Defender for Cloud Apps.
+// Reference - https://learn.microsoft.com/defender-cloud-apps/enable-instant-visibility-protection-and-governance-actions-for-your-apps
+// Required Connectors: MicrosoftThreatProtection (Types: CloudAppEvents)
+
+let LookBack = 7d; CloudAppEvents | where ActionType == "FileDownloaded" and Timestamp > ago(LookBack) | extend FileName = RawEventData.SourceFileName | extend Site = RawEventData.SiteUrl | extend FileLabel = RawEventData.SensitivityLabelId | extend SiteLabel = RawEventData.SiteSensitivityLabelId | project Timestamp,AccountObjectId,AccountDisplayName,ActionType,Application,FileName,Site,FileLabel,SiteLabel

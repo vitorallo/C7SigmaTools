@@ -1,0 +1,12 @@
+// Description: 'This query identifies matches based on domain IOCs related to KNOTWEED against Microsoft Defender for Endpoint device network connections'
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceNetworkEvents)
+
+// c2 domains
+let c2domains = dynamic(["acrobatrelay[.]com","finconsult[.]cc","realmetaldns[.]com"]);
+let iocs = print c2domains
+| mv-expand domains=print_0
+| extend domainioc = replace_string(tostring(domains),"[.]",".")
+| distinct domainioc;
+DeviceNetworkEvents
+| where Timestamp > ago(1d)
+| where RemoteUrl has_any(iocs)

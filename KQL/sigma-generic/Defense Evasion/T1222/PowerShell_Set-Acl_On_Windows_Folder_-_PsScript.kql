@@ -1,0 +1,10 @@
+// Title: PowerShell Set-Acl On Windows Folder - PsScript
+// Author: frack113, Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-07-18
+// Level: high
+// Description: Detects PowerShell scripts to set the ACL to a file in the Windows folderThis table contains security event logs from Windows machines. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1222
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Set-Acl " and ScriptBlockText contains "-AclObject ") and (ScriptBlockText contains "-Path \"C:\\Windows" or ScriptBlockText contains "-Path \"C:/Windows" or ScriptBlockText contains "-Path 'C:\\Windows" or ScriptBlockText contains "-Path 'C:/Windows" or ScriptBlockText contains "-Path C:\\Windows" or ScriptBlockText contains "-Path C:/Windows" or ScriptBlockText contains "-Path $env:windir" or ScriptBlockText contains "-Path \"$env:windir" or ScriptBlockText contains "-Path '$env:windir") and (ScriptBlockText contains "FullControl" or ScriptBlockText contains "Allow")

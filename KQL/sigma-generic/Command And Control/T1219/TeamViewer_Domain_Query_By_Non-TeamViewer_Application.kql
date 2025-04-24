@@ -1,0 +1,10 @@
+// Title: TeamViewer Domain Query By Non-TeamViewer Application
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-01-30
+// Level: medium
+// Description: Detects DNS queries to a TeamViewer domain only resolved by a TeamViewer client by an image that isn't named TeamViewer (sometimes used by threat actors for obfuscation)The DnsEvents table in Microsoft Sentinel contains DNS query logs. To have this table present, ensure that you have the necessary connectors or data sources configured in Sentinel to collect DNS query logs from Windows machines.
+// Tags: attack.command-and-control, attack.t1219
+// ================================================================== 
+
+DnsEvents
+| where (QueryName in~ ("taf.teamviewer.com", "udp.ping.teamviewer.com")) and (not(InitiatingProcessFolderPath contains "TeamViewer"))

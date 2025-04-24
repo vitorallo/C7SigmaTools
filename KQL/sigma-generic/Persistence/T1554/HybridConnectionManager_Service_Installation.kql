@@ -1,0 +1,10 @@
+// Title: HybridConnectionManager Service Installation
+// Author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+// Date: 2021-04-12
+// Level: high
+// Description: Rule to detect the Hybrid Connection Manager service installation.This table contains security-related events, including event ID 4697. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1554
+// ================================================================== 
+
+SecurityEvent
+| where ServiceFileName contains "HybridConnectionManager" and ServiceName =~ "HybridConnectionManager"

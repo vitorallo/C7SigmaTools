@@ -1,0 +1,16 @@
+// Description: 'Some top level domains (TLDs) are more commonly associated with malware for a range of 
+// reasons - including how easy domains on these TLDs are to obtain. Many of these may be undesirable 
+// from an enterprise policy perspective. You can update and extend the list of TLD's  you wish to search for.
+// The NameCount column provides an initial insight into how widespread the domain usage is across the environment.'
+// Required Connectors: DNS (Types: DnsEvents)
+
+// Add additional TLDs to this list are required.
+let abusedTLD = dynamic(["click", "club", "download",  "xxx", "xyz"]);
+DnsEvents
+| where Name has "." 
+| extend tld = tostring(split(Name, ".")[-1])
+| where tld in~ (abusedTLD)
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), NameCount = count() by Name, ClientIP, tld
+| order by NameCount desc
+| extend DNS_0_DomainName = Name
+| extend IP_0_Address = ClientIP

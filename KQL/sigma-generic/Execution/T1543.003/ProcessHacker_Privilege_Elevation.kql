@@ -1,0 +1,10 @@
+// Title: ProcessHacker Privilege Elevation
+// Author: Florian Roth (Nextron Systems)
+// Date: 2021-05-27
+// Level: high
+// Description: Detects a ProcessHacker tool that elevated privileges to a very high levelThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events are being collected and ingested into Sentinel for this table to be available.
+// Tags: attack.execution, attack.privilege-escalation, attack.t1543.003, attack.t1569.002
+// ================================================================== 
+
+SecurityEvent
+| where AccountName =~ "LocalSystem" and Provider_Name =~ "Service Control Manager" and ServiceName startswith "ProcessHacker"

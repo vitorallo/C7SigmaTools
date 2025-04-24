@@ -1,0 +1,6 @@
+// Description: This query was originally published by PWC Security Research Team.
+// BPFDoor is custom backdoor malware used by Red Menshen. The BPFDoor allows an adversary to backdoor a system and remotely execute codes without opening any new network ports or firewall rules.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where InitiatingProcessCommandLine  has ("/dev/shm/kdmtmpflush") or FileName has_any ("haldrund.pid", "kdevrund.pid")

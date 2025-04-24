@@ -1,0 +1,7 @@
+// Description: This query provides the commonality of operating systems seen in the inventory
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceInfo)
+
+//
+DeviceInfo
+| summarize arg_max(Timestamp, *) by DeviceId
+| summarize dcount(DeviceId) by OSDistribution

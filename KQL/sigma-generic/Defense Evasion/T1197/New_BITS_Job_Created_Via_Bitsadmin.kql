@@ -1,0 +1,10 @@
+// Title: New BITS Job Created Via Bitsadmin
+// Author: frack113
+// Date: 2022-03-01
+// Level: low
+// Description: Detects the creation of a new bits job by BitsadminThe WindowsEvent table in Microsoft Sentinel contains logs from Windows operating systems. To query logs related to the 'bits-client' service, you can filter on the 'EventData' column for the specific service name.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1197
+// ================================================================== 
+
+WindowsEvent
+| where processPath endswith "\\bitsadmin.exe"

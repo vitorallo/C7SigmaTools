@@ -1,0 +1,10 @@
+// Title: MSI Installation From Web
+// Author: Stamatis Chatzimangou
+// Date: 2022-10-23
+// Level: medium
+// Description: Detects installation of a remote msi file from web.This table contains Windows event logs, which can be queried for application-related events. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1218, attack.t1218.007
+// ================================================================== 
+
+WindowsEvent
+| where Data contains "://" and Provider_Name =~ "MsiInstaller"

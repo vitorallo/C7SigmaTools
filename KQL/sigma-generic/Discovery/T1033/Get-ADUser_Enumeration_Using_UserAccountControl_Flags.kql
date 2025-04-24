@@ -1,0 +1,10 @@
+// Title: Get-ADUser Enumeration Using UserAccountControl Flags
+// Author: frack113
+// Date: 2022-03-17
+// Level: medium
+// Description: Detects AS-REP roasting is an attack that is often-overlooked. It is not very common as you have to explicitly set accounts that do not require pre-authentication.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.discovery, attack.t1033
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Get-ADUser" and ScriptBlockText contains "-Filter" and ScriptBlockText contains "useraccountcontrol" and ScriptBlockText contains "-band" and ScriptBlockText contains "4194304"

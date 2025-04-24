@@ -1,0 +1,10 @@
+// Title: User Added To Group With CA Policy Modification Access
+// Author: Mark Morowczynski '@markmorow', Thomas Detzner '@tdetzner'
+// Date: 2022-08-04
+// Level: medium
+// Description: Monitor and alert on group membership additions of groups that have CA policy modification accessThis table contains Azure activity logs, including audit logs. Ensure that Azure Diagnostics logs are enabled and streaming to Log Analytics workspace in Sentinel to have this table available.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1548, attack.t1556
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' =~ "Add member from group"

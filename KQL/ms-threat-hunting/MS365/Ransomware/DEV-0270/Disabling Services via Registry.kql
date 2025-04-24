@@ -1,0 +1,7 @@
+// Description: Search for processes modifying the registry to disable security features.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where InitiatingProcessCommandLine has_all(@'"reg"', 'add', @'"HKLM\SOFTWARE\Policies\', '/v','/t', 'REG_DWORD', '/d', '/f')
+  and InitiatingProcessCommandLine has_any('DisableRealtimeMonitoring', 'UseTPMKey', 'UseTPMKeyPIN', 'UseAdvancedStartup', 
+  'EnableBDEWithNoTPM', 'RecoveryKeyMessageSource')

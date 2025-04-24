@@ -1,0 +1,10 @@
+// Title: Powershell Sensitive File Discovery
+// Author: frack113
+// Date: 2022-09-16
+// Level: medium
+// Description: Detect adversaries enumerate sensitive filesThis table contains security-related events, including PowerShell script execution events. Enable the necessary data connectors in Sentinel to ingest Windows security event logs.
+// Tags: attack.discovery, attack.t1083
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "ls" or ScriptBlockText contains "get-childitem" or ScriptBlockText contains "gci") and (ScriptBlockText contains ".pass" or ScriptBlockText contains ".kdbx" or ScriptBlockText contains ".kdb") and ScriptBlockText contains "-recurse"

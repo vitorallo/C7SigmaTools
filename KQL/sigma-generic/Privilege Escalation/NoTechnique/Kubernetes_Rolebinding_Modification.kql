@@ -1,0 +1,11 @@
+// Title: Kubernetes Rolebinding Modification
+// Author: kelnage
+// Date: 2024-07-11
+// Level: medium
+// Description: Detects when a Kubernetes Rolebinding is created or modified.
+// The KubeEvents table in Microsoft Sentinel contains Kubernetes audit logs. To have this table present, ensure that the Kubernetes Connector is set up and configured in Sentinel to collect audit logs from the Kubernetes cluster.
+// Tags: attack.privilege-escalation
+// ================================================================== 
+
+KubeEvents
+| where 'objectRef.apiGroup' =~ "rbac.authorization.k8s.io" and ('objectRef.resource' in~ ("clusterrolebindings", "rolebindings")) and (verb in~ ("create", "delete", "patch", "replace", "update"))

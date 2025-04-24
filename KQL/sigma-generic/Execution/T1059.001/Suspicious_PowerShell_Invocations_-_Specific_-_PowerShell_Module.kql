@@ -1,0 +1,10 @@
+// Title: Suspicious PowerShell Invocations - Specific - PowerShell Module
+// Author: Florian Roth (Nextron Systems), Jonhnathan Ribeiro
+// Date: 2017-03-05
+// Level: high
+// Description: Detects suspicious PowerShell invocation command parametersThis table contains security event logs from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to collect these logs.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ((ContextInfo contains "-nop" and ContextInfo contains " -w " and ContextInfo contains "hidden" and ContextInfo contains " -c " and ContextInfo contains "[Convert]::FromBase64String") or (ContextInfo contains " -w " and ContextInfo contains "hidden" and ContextInfo contains "-ep" and ContextInfo contains "bypass" and ContextInfo contains "-Enc") or (ContextInfo contains " -w " and ContextInfo contains "hidden" and ContextInfo contains "-noni" and ContextInfo contains "-nop" and ContextInfo contains " -c " and ContextInfo contains "iex" and ContextInfo contains "New-Object") or (ContextInfo contains "iex" and ContextInfo contains "New-Object" and ContextInfo contains "Net.WebClient" and ContextInfo contains ".Download") or (ContextInfo contains "powershell" and ContextInfo contains "reg" and ContextInfo contains "add" and ContextInfo contains "HKCU\\software\\microsoft\\windows\\currentversion\\run") or (ContextInfo contains "bypass" and ContextInfo contains "-noprofile" and ContextInfo contains "-windowstyle" and ContextInfo contains "hidden" and ContextInfo contains "new-object" and ContextInfo contains "system.net.webclient" and ContextInfo contains ".download")) and (not((ContextInfo contains "(New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1" or ContextInfo contains "Write-ChocolateyWarning")))

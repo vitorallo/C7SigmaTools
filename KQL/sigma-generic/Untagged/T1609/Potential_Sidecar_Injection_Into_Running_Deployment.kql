@@ -1,0 +1,14 @@
+// Title: Potential Sidecar Injection Into Running Deployment
+// Author: Leo Tsaousis (@laripping)
+// Date: 2024-03-26
+// Level: medium
+// Description: Detects attempts to inject a sidecar container into a running deployment.
+// A sidecar container is an additional container within a pod, that resides alongside the main container.
+// One way to add containers to running resources like Deployments/DeamonSets/StatefulSets, is via a "kubectl patch" operation.
+// By injecting a new container within a legitimate pod, an attacker can run their code and hide their activity, instead of running their own separated pod in the cluster.
+// The KubeEvents table in Microsoft Sentinel contains Kubernetes audit logs. To have this table present, ensure that you have the necessary connectors or data sources configured to collect Kubernetes audit logs.
+// Tags: attack.t1609
+// ================================================================== 
+
+KubeEvents
+| where apiGroup =~ "apps" and 'objectRef.resource' =~ "deployments" and verb =~ "patch"

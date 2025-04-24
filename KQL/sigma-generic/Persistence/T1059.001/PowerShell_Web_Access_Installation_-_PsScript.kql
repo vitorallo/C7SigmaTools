@@ -1,0 +1,10 @@
+// Title: PowerShell Web Access Installation - PsScript
+// Author: Michael Haag
+// Date: 2024-09-03
+// Level: high
+// Description: Detects the installation and configuration of PowerShell Web Access, which could be used for remote access and potential abuseThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script block logging. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Add-PswaAuthorizationRule" and ScriptBlockText contains "-UserName " and ScriptBlockText contains "-ComputerName ") or ScriptBlockText contains "Install-PswaWebApplication" or ScriptBlockText contains "Install-WindowsFeature WindowsPowerShellWebAccess"

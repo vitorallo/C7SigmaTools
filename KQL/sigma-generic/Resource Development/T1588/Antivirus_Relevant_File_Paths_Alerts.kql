@@ -1,0 +1,12 @@
+// Title: Antivirus Relevant File Paths Alerts
+// Author: Florian Roth (Nextron Systems), Arnim Rupp
+// Date: 2018-09-09
+// Level: high
+// Description: Detects an Antivirus alert in a highly relevant file path or with a relevant file name.
+// This event must not be ignored just because the AV has blocked the malware but investigate, how it came there in the first place.
+// The AntivirusEvents table in Microsoft Sentinel contains antivirus related events. To have this table present, ensure that you have the necessary antivirus solution integrated with Sentinel and sending logs to the appropriate data connector.
+// Tags: attack.resource-development, attack.t1588
+// ================================================================== 
+
+AntivirusEvents
+| where (Filename endswith ".asax" or Filename endswith ".ashx" or Filename endswith ".asmx" or Filename endswith ".asp" or Filename endswith ".aspx" or Filename endswith ".bat" or Filename endswith ".cfm" or Filename endswith ".cgi" or Filename endswith ".chm" or Filename endswith ".cmd" or Filename endswith ".dat" or Filename endswith ".ear" or Filename endswith ".gif" or Filename endswith ".hta" or Filename endswith ".jpeg" or Filename endswith ".jpg" or Filename endswith ".jsp" or Filename endswith ".jspx" or Filename endswith ".lnk" or Filename endswith ".msc" or Filename endswith ".php" or Filename endswith ".pl" or Filename endswith ".png" or Filename endswith ".ps1" or Filename endswith ".psm1" or Filename endswith ".py" or Filename endswith ".pyc" or Filename endswith ".rb" or Filename endswith ".scf" or Filename endswith ".sct" or Filename endswith ".sh" or Filename endswith ".svg" or Filename endswith ".txt" or Filename endswith ".vbe" or Filename endswith ".vbs" or Filename endswith ".war" or Filename endswith ".wll" or Filename endswith ".wsf" or Filename endswith ".wsh" or Filename endswith ".xll" or Filename endswith ".xml") or (Filename contains ":\\PerfLogs\\" or Filename contains ":\\Temp\\" or Filename contains ":\\Users\\Default\\" or Filename contains ":\\Users\\Public\\" or Filename contains ":\\Windows\\" or Filename contains "/www/" or Filename contains "\\inetpub\\" or Filename contains "\\tsclient\\" or Filename contains "apache" or Filename contains "nginx" or Filename contains "tomcat" or Filename contains "weblogic")

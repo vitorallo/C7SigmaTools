@@ -1,0 +1,10 @@
+// Description: In this query, we hunt for inbound emails delivered having URLs from QR codes
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, EmailUrlInfo)
+
+EmailEvents
+| where Timestamp > ago(30d)
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Delivered"
+| join EmailUrlInfo on NetworkMessageId
+| where UrlLocation == "QRCode"
+| project Timestamp, NetworkMessageId, SenderFromAddress, Subject, Url, UrlDomain, UrlLocation,RecipientEmailAddress

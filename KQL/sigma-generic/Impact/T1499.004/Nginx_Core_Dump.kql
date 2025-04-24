@@ -1,0 +1,10 @@
+// Title: Nginx Core Dump
+// Author: Florian Roth (Nextron Systems)
+// Date: 2021-05-31
+// Level: high
+// Description: Detects a core dump of a crashing Nginx worker process, which could be a signal of a serious problem or exploitation attempts.This table contains logs from the Nginx service. To have this table present in Microsoft Sentinel, ensure that the Nginx logs are being collected and sent to Sentinel for analysis.
+// Tags: attack.impact, attack.t1499.004
+// ================================================================== 
+
+NginxAccessLogs
+| where "exited on signal 6 (core dumped)"

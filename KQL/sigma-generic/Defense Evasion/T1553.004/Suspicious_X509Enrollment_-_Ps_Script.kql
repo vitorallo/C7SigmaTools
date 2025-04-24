@@ -1,0 +1,10 @@
+// Title: Suspicious X509Enrollment - Ps Script
+// Author: frack113
+// Date: 2022-12-23
+// Level: medium
+// Description: Detect use of X509EnrollmentThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the necessary data connectors are set up in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1553.004
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "X509Enrollment.CBinaryConverter" or ScriptBlockText contains "884e2002-217d-11da-b2a4-000e7bbb2b09"

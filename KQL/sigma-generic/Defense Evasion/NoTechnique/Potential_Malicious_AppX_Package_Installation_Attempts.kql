@@ -1,0 +1,10 @@
+// Title: Potential Malicious AppX Package Installation Attempts
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-11
+// Level: medium
+// Description: Detects potential installation or installation attempts of known malicious appx packagesThe equivalent table in Microsoft Sentinel for appxdeployment-server logs. Ensure that the WindowsDefender data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+AppxPackageInventory
+| where PackageFullName contains "3669e262-ec02-4e9d-bcb4-3d008b4afac9"

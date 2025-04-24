@@ -1,0 +1,10 @@
+// Title: User Removed From Group With CA Policy Modification Access
+// Author: Mark Morowczynski '@markmorow', Thomas Detzner '@tdetzner'
+// Date: 2022-08-04
+// Level: medium
+// Description: Monitor and alert on group membership removal of groups that have CA policy modification accessThis table contains Azure audit logs. To query this table in Microsoft Sentinel, ensure that you have the Azure Monitor data connector enabled and configured to collect Azure activity logs.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1548, attack.t1556
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' =~ "Remove member from group"

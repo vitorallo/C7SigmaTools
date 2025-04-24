@@ -1,0 +1,7 @@
+// Description: This query helps reviewing malicious clicks where user was allowed to proceed through malicious URL page.
+// Required Connectors: MicrosoftThreatProtection (Types: UrlClickEvents)
+
+UrlClickEvents 
+| where ActionType == "ClickAllowed" or IsClickedThrough !="0" 
+| where ThreatTypes has "Phish" 
+| summarize by ReportId, IsClickedThrough, AccountUpn, NetworkMessageId, ThreatTypes

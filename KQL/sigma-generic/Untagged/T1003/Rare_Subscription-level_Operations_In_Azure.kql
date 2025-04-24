@@ -1,0 +1,10 @@
+// Title: Rare Subscription-level Operations In Azure
+// Author: sawwinnnaung
+// Date: 2020-05-07
+// Level: medium
+// Description: Identifies IPs from which users grant access to other users on azure resources and alerts when a previously unseen source IP address is used.This table contains Azure Activity Logs data. Ensure that Azure Activity Logs are being collected and ingested into Microsoft Sentinel for this table to be available.
+// Tags: attack.t1003
+// ================================================================== 
+
+AzureActivityLogs
+| where "Microsoft.DocumentDB/databaseAccounts/listKeys/action" or "Microsoft.Maps/accounts/listKeys/action" or "Microsoft.Media/mediaservices/listKeys/action" or "Microsoft.CognitiveServices/accounts/listKeys/action" or "Microsoft.Storage/storageAccounts/listKeys/action" or "Microsoft.Compute/snapshots/write" or "Microsoft.Network/networkSecurityGroups/write"

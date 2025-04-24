@@ -1,0 +1,10 @@
+// Title: Cisco LDP Authentication Failures
+// Author: Tim Brown
+// Date: 2023-01-09
+// Level: low
+// Description: Detects LDP failures which may be indicative of brute force attacks to manipulate MPLS labelsTable name for querying Cisco LDP logs in Microsoft Sentinel.
+// Tags: attack.initial-access, attack.persistence, attack.privilege-escalation, attack.defense-evasion, attack.credential-access, attack.collection, attack.t1078, attack.t1110, attack.t1557
+// ================================================================== 
+
+CiscoLDP
+| where "LDP" and ("SOCKET_TCP_PACKET_MD5_AUTHEN_FAIL" or "TCPMD5AuthenFail")

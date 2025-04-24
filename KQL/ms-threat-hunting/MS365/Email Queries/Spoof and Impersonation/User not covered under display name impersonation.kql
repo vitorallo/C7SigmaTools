@@ -1,0 +1,14 @@
+// Description: This query helps to find threats using display name impersonation for users not already protected with User Impersonation
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, IdentityInfo)
+
+let display_names = 
+IdentityInfo 
+  | summarize by AccountDisplayName 
+  | project-rename  SenderDisplayName = AccountDisplayName; 
+EmailEvents 
+  | where EmailDirection == "Inbound" 
+  | where ThreatNames != "" 
+  | where ThreatNames !contains "Impersonation User" 
+  | lookup kind=inner (display_names) on SenderDisplayName, $left.SenderDisplayName == $right.SenderDisplayName 
+  | where SenderDisplayName != "" 
+  | summarize by SenderDisplayName

@@ -1,0 +1,10 @@
+// Title: Linux Network Service Scanning - Auditd
+// Author: Alejandro Ortuno, oscd.community
+// Date: 2020-10-21
+// Level: low
+// Description: Detects enumeration of local or remote network services.This table contains audit logs from Linux machines. To have this table present in Microsoft Sentinel, ensure that the Linux machines are onboarded to Sentinel and the Linux audit logs are being collected and forwarded to Sentinel.
+// Tags: attack.discovery, attack.t1046
+// ================================================================== 
+
+LinuxAuditLogs
+| where (exe endswith "/telnet" or exe endswith "/nmap" or exe endswith "/netcat" or exe endswith "/nc" or exe endswith "/ncat" or exe endswith "/nc.openbsd") and key =~ "network_connect_4" and type =~ "SYSCALL"

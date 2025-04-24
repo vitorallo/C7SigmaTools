@@ -1,0 +1,13 @@
+// Title: Suspicious Get Local Groups Information
+// Author: frack113
+// Date: 2021-12-12
+// Level: low
+// Description: Adversaries may attempt to find local system groups and permission settings.
+// The knowledge of local system permission groups can help adversaries determine which groups exist and which users belong to a particular group.
+// Adversaries may use this information to determine which users have elevated permissions, such as the users found within the local administrators group.
+// This table contains security event logs from Windows systems. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.discovery, attack.t1069.001
+// ================================================================== 
+
+SecurityEvent
+| where ((Payload contains "get-localgroup" or Payload contains "Get-LocalGroupMember") or (ContextInfo contains "get-localgroup" or ContextInfo contains "Get-LocalGroupMember")) or ((Payload contains "Get-WMIObject" and Payload contains "Win32_Group") or (ContextInfo contains "Get-WMIObject" and ContextInfo contains "Win32_Group"))

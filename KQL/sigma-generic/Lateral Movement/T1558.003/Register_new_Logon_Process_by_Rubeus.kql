@@ -1,0 +1,10 @@
+// Title: Register new Logon Process by Rubeus
+// Author: Roberto Rodriguez (source), Ilyas Ochkov (rule), oscd.community
+// Date: 2019-10-24
+// Level: high
+// Description: Detects potential use of Rubeus via registered new trusted logon processThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Make sure to have the Windows Security Events connector enabled in Sentinel to populate this table.
+// Tags: attack.lateral-movement, attack.privilege-escalation, attack.credential-access, attack.t1558.003
+// ================================================================== 
+
+SecurityEvent
+| where LogonProcessName =~ "User32LogonProcesss"

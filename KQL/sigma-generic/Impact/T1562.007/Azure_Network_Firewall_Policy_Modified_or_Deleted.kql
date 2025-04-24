@@ -1,0 +1,10 @@
+// Title: Azure Network Firewall Policy Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-09-02
+// Level: medium
+// Description: Identifies when a Firewall Policy is Modified or Deleted.This table contains Azure activity logs. Ensure that Azure Activity Logs are being collected and sent to Microsoft Sentinel for this table to be populated.
+// Tags: attack.impact, attack.defense-evasion, attack.t1562.007
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.NETWORK/FIREWALLPOLICIES/WRITE", "MICROSOFT.NETWORK/FIREWALLPOLICIES/JOIN/ACTION", "MICROSOFT.NETWORK/FIREWALLPOLICIES/CERTIFICATES/ACTION", "MICROSOFT.NETWORK/FIREWALLPOLICIES/DELETE")

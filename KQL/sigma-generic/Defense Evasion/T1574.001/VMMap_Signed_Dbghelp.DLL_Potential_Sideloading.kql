@@ -1,0 +1,10 @@
+// Title: VMMap Signed Dbghelp.DLL Potential Sideloading
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-09-05
+// Level: medium
+// Description: Detects potential DLL sideloading of a signed dbghelp.dll by the Sysinternals VMMap.This table contains information about image loading events on Windows systems. Make sure to have the Microsoft-Windows-Sysmon/Operational log source enabled in Sentinel to populate this table.
+// Tags: attack.defense-evasion, attack.persistence, attack.privilege-escalation, attack.t1574.001, attack.t1574.002
+// ================================================================== 
+
+ImageLoadEvents
+| where FolderPath contains "C:\\Debuggers\\dbghelp.dll" and (InitiatingProcessFolderPath endswith "\\vmmap.exe" or InitiatingProcessFolderPath endswith "\\vmmap64.exe") and Signed =~ "true"

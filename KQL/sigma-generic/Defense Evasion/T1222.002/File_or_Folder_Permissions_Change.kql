@@ -1,0 +1,10 @@
+// Title: File or Folder Permissions Change
+// Author: Jakob Weinzettl, oscd.community
+// Date: 2019-09-23
+// Level: low
+// Description: Detects file and folder permission changes.The SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including audit logs. To ensure that audit logs from Linux systems are available in the SecurityEvent table, you need to onboard the Linux machines to Sentinel and configure the necessary data connectors to collect and ingest the audit logs.
+// Tags: attack.defense-evasion, attack.t1222.002
+// ================================================================== 
+
+SecurityEvent
+| where (a0 contains "chmod" or a0 contains "chown") and type =~ "EXECVE"

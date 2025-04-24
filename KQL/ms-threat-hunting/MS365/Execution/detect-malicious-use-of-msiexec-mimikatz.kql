@@ -1,0 +1,13 @@
+// Description: This query was originally published in the threat analytics report, Msiexec abuse.
+// Msiexec.exe is a Windows component that installs files with the .msi extension. These kinds of files are Windows installer packages, and are used by a wide array of legitimate software. However, malicious actors can re-purpose msiexec.exe for living-off-the-land attacks, where they use legitimate system binaries on the compromised device to perform attacks.
+// The following query detects activity associated with misuse of msiexec.exe, particularly alongside mimikatz, a common credential dumper and privilege escalation tool.
+// Reference - https://www.varonis.com/blog/what-is-mimikatz/
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where Timestamp > ago(7d)
+| where InitiatingProcessFileName =~ "msiexec.exe"
+//Mimikatz commands
+and (ProcessCommandLine contains "privilege::" 
+or ProcessCommandLine has "sekurlsa" 
+or ProcessCommandLine contains "token::")

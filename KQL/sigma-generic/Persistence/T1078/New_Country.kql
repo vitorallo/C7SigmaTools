@@ -1,0 +1,10 @@
+// Title: New Country
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-03
+// Level: high
+// Description: Detects sign-ins from new countries. The detection considers past activity locations to determine new and infrequent locations.The AzureActivity table in Microsoft Sentinel contains logs related to Azure activity, including risk detection events. Ensure that Azure Monitor logs are enabled and collecting data from the Azure subscription where the risk detection service is being used.
+// Tags: attack.t1078, attack.persistence, attack.defense-evasion, attack.privilege-escalation, attack.initial-access
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "newCountry"

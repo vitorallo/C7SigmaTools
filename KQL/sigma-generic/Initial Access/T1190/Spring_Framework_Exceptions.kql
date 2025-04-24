@@ -1,0 +1,10 @@
+// Title: Spring Framework Exceptions
+// Author: Thomas Patzke
+// Date: 2017-08-06
+// Level: medium
+// Description: Detects suspicious Spring framework exceptions that could indicate exploitation attemptsThis table contains application events. Ensure that the necessary connectors or data sources are set up in Sentinel to collect logs from applications, such as Spring, to populate this table.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+AppEvents
+| where "AccessDeniedException" or "CsrfException" or "InvalidCsrfTokenException" or "MissingCsrfTokenException" or "CookieTheftException" or "InvalidCookieException" or "RequestRejectedException"

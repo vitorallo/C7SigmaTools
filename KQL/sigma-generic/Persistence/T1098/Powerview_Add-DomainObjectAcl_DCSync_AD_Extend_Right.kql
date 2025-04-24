@@ -1,0 +1,10 @@
+// Title: Powerview Add-DomainObjectAcl DCSync AD Extend Right
+// Author: Samir Bousseaden, Roberto Rodriguez @Cyb3rWard0g, oscd.community, Tim Shelton, Maxence Fossat
+// Date: 2019-04-03
+// Level: high
+// Description: Backdooring domain object to grant the rights associated with DCSync to a regular user or machine account using Powerview\Add-DomainObjectAcl DCSync Extended Right cmdlet, will allow to re-obtain the pwd hashes of any user/computerThis table contains security-related events, including the event ids mentioned in the logsource section. Make sure to enable the Windows Security Events connector in Microsoft Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1098
+// ================================================================== 
+
+SecurityEvent
+| where (AttributeLDAPDisplayName =~ "ntSecurityDescriptor" and (AttributeValue contains "1131f6ad-9c07-11d1-f79f-00c04fc2dcd2" or AttributeValue contains "1131f6aa-9c07-11d1-f79f-00c04fc2dcd2" or AttributeValue contains "89e95b76-444d-4c62-991a-0facbeda640c")) and (not((ObjectClass in~ ("dnsNode", "dnsZoneScope", "dnsZone"))))

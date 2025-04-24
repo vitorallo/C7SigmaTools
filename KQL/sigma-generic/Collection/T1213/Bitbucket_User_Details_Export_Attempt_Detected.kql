@@ -1,0 +1,10 @@
+// Title: Bitbucket User Details Export Attempt Detected
+// Author: Muhammad Faisal (@faisalusuf)
+// Date: 2024-02-25
+// Level: medium
+// Description: Detects user data export activity.This table contains audit logs for various services including Bitbucket. Ensure that the necessary connectors are set up to collect audit logs from Bitbucket service.
+// Tags: attack.collection, attack.reconnaissance, attack.discovery, attack.t1213, attack.t1082, attack.t1591.004
+// ================================================================== 
+
+AuditLogs
+| where ('auditType.action' in~ ("User permissions export failed", "User permissions export started", "User permissions exported")) and 'auditType.category' =~ "Users and groups"

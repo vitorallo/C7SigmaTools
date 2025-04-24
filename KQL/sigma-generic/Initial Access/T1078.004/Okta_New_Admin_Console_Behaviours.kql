@@ -1,0 +1,10 @@
+// Title: Okta New Admin Console Behaviours
+// Author: kelnage
+// Date: 2023-09-07
+// Level: high
+// Description: Detects when Okta identifies new activity in the Admin Console.This table contains Okta sign-in logs. To have this table present in Microsoft Sentinel, you need to ensure that Okta logs are being forwarded to Sentinel and that the Okta connector is properly configured.
+// Tags: attack.initial-access, attack.t1078.004
+// ================================================================== 
+
+OktaSignInLogs
+| where (eventtype =~ "policy.evaluate_sign_on" and 'target.displayname' =~ "Okta Admin Console") and ('debugcontext.debugdata.behaviors' contains "POSITIVE" or 'debugcontext.debugdata.logonlysecuritydata' contains "POSITIVE")

@@ -1,0 +1,10 @@
+// Title: Github Repository/Organization Transferred
+// Author: Romain Gaillard (@romain-gaillard)
+// Date: 2024-07-29
+// Level: medium
+// Description: Detects when a repository or an organization is being transferred to another location.This table contains audit logs for GitHub activity. To have this table present in Microsoft Sentinel, you need to ensure that the GitHub connector is installed and configured to collect audit logs.
+// Tags: attack.persistence, attack.t1020, attack.t1537
+// ================================================================== 
+
+GitHubAuditLogs
+| where action in~ ("migration.create", "org.transfer_outgoing", "org.transfer", "repo.transfer_outgoing")

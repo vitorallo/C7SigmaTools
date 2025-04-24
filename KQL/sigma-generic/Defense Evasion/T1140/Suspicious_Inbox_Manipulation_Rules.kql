@@ -1,0 +1,10 @@
+// Title: Suspicious Inbox Manipulation Rules
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-03
+// Level: high
+// Description: Detects suspicious rules that delete or move messages or folders are set on a user's inbox.The AzureActivity table in Microsoft Sentinel contains logs related to Azure activity, including risk detection events. To ensure this table is populated, make sure to have the Azure Monitor logs solution installed in Sentinel and properly configured to collect Azure activity logs.
+// Tags: attack.t1140, attack.defense-evasion
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "mcasSuspiciousInboxManipulationRules"

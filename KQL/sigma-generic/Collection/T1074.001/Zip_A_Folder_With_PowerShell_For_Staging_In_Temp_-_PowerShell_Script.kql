@@ -1,0 +1,12 @@
+// Title: Zip A Folder With PowerShell For Staging In Temp - PowerShell Script
+// Author: Nasreddine Bencherchali (Nextron Systems), frack113
+// Date: 2021-07-20
+// Level: medium
+// Description: Detects PowerShell scripts that make use of the "Compress-Archive" Cmdlet in order to compress folders and files where the output is stored in a potentially suspicious location that is used often by malware for exfiltration.
+// An adversary might compress data (e.g., sensitive documents) that is collected prior to exfiltration in order to make it portable and minimize the amount of data sent over the network.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which may include information about PowerShell script block logging. Ensure that the Windows Security events data connector is enabled in Sentinel to query this table.
+// Tags: attack.collection, attack.t1074.001
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Compress-Archive -Path" and ScriptBlockText contains "-DestinationPath $env:TEMP") or (ScriptBlockText contains "Compress-Archive -Path" and ScriptBlockText contains "-DestinationPath" and ScriptBlockText contains "\\AppData\\Local\\Temp\\") or (ScriptBlockText contains "Compress-Archive -Path" and ScriptBlockText contains "-DestinationPath" and ScriptBlockText contains ":\\Windows\\Temp\\")

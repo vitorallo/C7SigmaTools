@@ -1,0 +1,10 @@
+// Title: Important Windows Eventlog Cleared
+// Author: Florian Roth (Nextron Systems), Tim Shelton, Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-05-17
+// Level: high
+// Description: Detects the clearing of one of the Windows Core Eventlogs. e.g. caused by "wevtutil cl" command executionThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.defense-evasion, attack.t1070.001, car.2016-04-002
+// ================================================================== 
+
+SecurityEvent
+| where (Channel in~ ("Microsoft-Windows-PowerShell/Operational", "Microsoft-Windows-Sysmon/Operational", "PowerShellCore/Operational", "Security", "System", "Windows PowerShell")) and Provider_Name =~ "Microsoft-Windows-Eventlog"

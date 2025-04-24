@@ -1,0 +1,10 @@
+// Title: Ntdsutil Abuse
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-08-14
+// Level: medium
+// Description: Detects potential abuse of ntdsutil to dump ntds.dit databaseThe WindowsEvent table in Microsoft Sentinel contains logs related to Windows events. To ensure this table is present, make sure to have the necessary connectors or data sources configured in Sentinel to collect Windows event logs.
+// Tags: attack.credential-access, attack.t1003.003
+// ================================================================== 
+
+WindowsEvent
+| where Data contains "ntds.dit" and Provider_Name =~ "ESENT"

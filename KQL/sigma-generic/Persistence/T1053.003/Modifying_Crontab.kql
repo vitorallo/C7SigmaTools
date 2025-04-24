@@ -1,0 +1,10 @@
+// Title: Modifying Crontab
+// Author: Pawel Mazur
+// Date: 2022-04-16
+// Level: medium
+// Description: Detects suspicious modification of crontab file.The Syslog table in Microsoft Sentinel contains logs from various sources including Linux systems. Ensure that you have the necessary connectors or data sources configured in Sentinel to collect syslog data from Linux systems.
+// Tags: attack.persistence, attack.t1053.003
+// ================================================================== 
+
+Syslog
+| where "REPLACE"

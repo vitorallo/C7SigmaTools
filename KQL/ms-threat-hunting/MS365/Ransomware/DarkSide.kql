@@ -1,0 +1,5 @@
+// Description: Use this query to look for running DarkSide ransomware behavior in the environment
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where FileName =~ "rundll32.exe" | where ProcessCommandLine matches regex @".dll,#(?:1|3) worker[0-9]\sjob[0-9]-[0-9]{4,}"

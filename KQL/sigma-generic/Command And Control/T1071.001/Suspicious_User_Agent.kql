@@ -1,0 +1,10 @@
+// Title: Suspicious User Agent
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-07-08
+// Level: high
+// Description: Detects suspicious malformed user agent strings in proxy logsThis table contains proxy logs, typically from a proxy server. Ensure that the necessary connectors or data sources are configured in Sentinel to collect and ingest proxy logs into this table.
+// Tags: attack.command-and-control, attack.t1071.001
+// ================================================================== 
+
+ProxyLog
+| where ((''c-useragent'' startswith "user-agent" or ''c-useragent'' startswith "Mozilla/3.0 " or ''c-useragent'' startswith "Mozilla/2.0 " or ''c-useragent'' startswith "Mozilla/1.0 " or ''c-useragent'' startswith "Mozilla " or ''c-useragent'' startswith " Mozilla/" or ''c-useragent'' startswith "Mozila/" or ''c-useragent'' startswith "Mozilla/4.0 (compatible; MSIE 6.0; MS Web Services Client Protocol") or (''c-useragent'' contains " (compatible;MSIE " or ''c-useragent'' contains ".0;Windows NT " or ''c-useragent'' contains "loader") or ('c-useragent' in~ ("_", "CertUtil URL Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0)", "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0", "HTTPS", "Erbium-UA-4ce7c27cb4be9d32e333bf032c88235a", "x", "xxx"))) and (not(('c-useragent' =~ "Mozilla/3.0 * Acrobat *" or (''cs-host'' endswith ".acrobat.com" or ''cs-host'' endswith ".adobe.com" or ''cs-host'' endswith ".adobe.io"))))

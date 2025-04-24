@@ -1,0 +1,8 @@
+// Description: This query identifies use of wmic.exe to delete shadow copy snapshots prior to encryption.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where FileName =~ "wmic.exe"
+| where ProcessCommandLine has "shadowcopy" and ProcessCommandLine has "delete"
+| project DeviceId, Timestamp, InitiatingProcessFileName, FileName,
+ProcessCommandLine, InitiatingProcessIntegrityLevel, InitiatingProcessParentFileName

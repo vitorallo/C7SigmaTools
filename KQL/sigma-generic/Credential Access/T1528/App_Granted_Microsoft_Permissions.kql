@@ -1,0 +1,10 @@
+// Title: App Granted Microsoft Permissions
+// Author: Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'
+// Date: 2022-07-10
+// Level: high
+// Description: Detects when an application is granted delegated or app role permissions for Microsoft Graph, Exchange, Sharepoint, or Azure ADThe AzureActivity table in Microsoft Sentinel contains Azure audit logs. Ensure that the Azure Monitor solution is connected to your Azure subscription and that the appropriate logs are being collected and ingested into Sentinel.
+// Tags: attack.credential-access, attack.t1528
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' in~ ("Add delegated permission grant", "Add app role assignment to service principal")

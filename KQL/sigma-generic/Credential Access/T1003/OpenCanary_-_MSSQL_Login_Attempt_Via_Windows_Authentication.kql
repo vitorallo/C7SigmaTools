@@ -1,0 +1,11 @@
+// Title: OpenCanary - MSSQL Login Attempt Via Windows Authentication
+// Author: Security Onion Solutions
+// Date: 2024-03-08
+// Level: high
+// Description: Detects instances where an MSSQL service on an OpenCanary node has had a login attempt using Windows Authentication.
+// Opencanary logs are stored in the OpencanaryLogs table in Microsoft Sentinel. Make sure to have the Opencanary connector or integration set up in Sentinel to collect and store Opencanary logs in this table.
+// Tags: attack.credential-access, attack.collection, attack.t1003, attack.t1213
+// ================================================================== 
+
+OpencanaryLogs
+| where logtype == 9002

@@ -1,0 +1,12 @@
+// Title: Masquerading as Linux Crond Process
+// Author: Timur Zinniatullin, oscd.community
+// Date: 2019-10-21
+// Level: medium
+// Description: Masquerading occurs when the name or location of an executable, legitimate or malicious, is manipulated or abused for the sake of evading defenses and observation.
+// Several different variations of this technique have been observed.
+// The LinuxAudit table in Microsoft Sentinel contains audit logs from Linux systems. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs.
+// Tags: attack.defense-evasion, attack.t1036.003
+// ================================================================== 
+
+LinuxAudit
+| where a0 =~ "cp" and a1 =~ "/bin/sh" and a2 endswith "/crond" and type =~ "execve"

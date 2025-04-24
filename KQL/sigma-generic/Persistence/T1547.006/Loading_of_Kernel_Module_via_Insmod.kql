@@ -1,0 +1,13 @@
+// Title: Loading of Kernel Module via Insmod
+// Author: Pawel Mazur
+// Date: 2021-11-02
+// Level: high
+// Description: Detects loading of kernel modules with insmod command.
+// Loadable Kernel Modules (LKMs) are pieces of code that can be loaded and unloaded into the kernel upon demand.
+// Adversaries may use LKMs to obtain persistence within the system or elevate the privileges.
+// The equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the Linux agent is configured to forward audit logs to Sentinel.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1547.006
+// ================================================================== 
+
+LinuxAuditLogs
+| where comm =~ "insmod" and exe =~ "/usr/bin/kmod" and type =~ "SYSCALL"

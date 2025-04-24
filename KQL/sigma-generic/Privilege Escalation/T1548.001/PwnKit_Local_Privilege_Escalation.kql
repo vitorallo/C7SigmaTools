@@ -1,0 +1,10 @@
+// Title: PwnKit Local Privilege Escalation
+// Author: Sreeman
+// Date: 2022-01-26
+// Level: high
+// Description: Detects potential PwnKit exploitation CVE-2021-4034 in auth logsThe Syslog table in Microsoft Sentinel contains logs from Linux systems, including authentication logs. To ensure that the Syslog table is populated with data from Linux systems, you need to have the appropriate data connectors or agents set up to collect syslog data from the Linux machines.
+// Tags: attack.privilege-escalation, attack.t1548.001
+// ================================================================== 
+
+Syslog
+| where "pkexec" and "The value for environment variable XAUTHORITY contains suspicious content" and "[USER=root] [TTY=/dev/pts/0]"

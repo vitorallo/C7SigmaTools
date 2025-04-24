@@ -1,0 +1,25 @@
+// Description: 'Query identifies hosts with WMI command runs, absent in last 7 days and filters for Impacket wmiexec arguments. Impacket filters can be adjusted for targeted hunting.'
+// Required Connectors: SecurityEvents (Types: SecurityEvent); WindowsSecurityEvents (Types: SecurityEvent)
+
+// Remove items from the artifacts list in order to expand hunting
+  let impacket_artifacts = dynamic(["cmd.exe", "/c", "2>&1", "127.0.0.1\\ADMIN$"]);
+  let starttime = todatetime('{{StartTimeISO}}');
+  let endtime = todatetime('{{EndTimeISO}}');
+  let lookback = starttime - 7d;
+  let wmi_hosts = (SecurityEvent
+  | where TimeGenerated between(lookback..starttime)
+  | where EventID == 4688
+  | where ParentProcessName endswith "wmiprvse.exe"
+  | where CommandLine has_all (impacket_artifacts)
+  | summarize by Computer);
+  SecurityEvent
+  | where TimeGenerated between(starttime..endtime)
+  | where EventID == 4688
+  | where Computer !in (wmi_hosts)
+  | where ParentProcessName endswith "wmiprvse.exe"
+  | where CommandLine has_all (impacket_artifacts)
+  | project-reorder TimeGenerated, Computer, CommandLine, Account
+  | extend NTDomain = tostring(split(Account,'\\',0)[0]), Name = tostring(split(Account,'\\',1)[0])
+  | extend Account_0_Name = Name
+  | extend Account_0_NTDomain = NTDomain
+  | extend Host_0_HostName = Computer

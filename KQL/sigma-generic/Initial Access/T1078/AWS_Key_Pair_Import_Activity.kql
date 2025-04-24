@@ -1,0 +1,11 @@
+// Title: AWS Key Pair Import Activity
+// Author: Ivan Saakov
+// Date: 2024-12-19
+// Level: medium
+// Description: Detects the import of SSH key pairs into AWS EC2, which may indicate an attacker attempting to gain unauthorized access to instances. This activity could lead to initial access, persistence, or privilege escalation, potentially compromising sensitive data and operations.
+// The equivalent table in Microsoft Sentinel for AWS CloudTrail logs. Ensure that the AWS CloudTrail connector is set up in Sentinel to collect and ingest these logs.
+// Tags: attack.initial-access, attack.t1078, attack.persistence, attack.privilege-escalation
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "ImportKeyPair" and eventSource =~ "ec2.amazonaws.com"

@@ -1,0 +1,10 @@
+// Title: VMGuestLib DLL Sideload
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-12-01
+// Level: medium
+// Description: Detects DLL sideloading of VMGuestLib.dll by the WmiApSrv service.This table contains information about image loading events on Windows systems. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.persistence, attack.privilege-escalation, attack.t1574.001, attack.t1574.002
+// ================================================================== 
+
+ImageLoadEvents
+| where ((FolderPath contains "\\VMware\\VMware Tools\\vmStatsProvider\\win32" and FolderPath contains "\\vmGuestLib.dll") and InitiatingProcessFolderPath endswith "\\Windows\\System32\\wbem\\WmiApSrv.exe") and (not(Signed =~ "true"))

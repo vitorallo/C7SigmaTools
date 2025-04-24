@@ -1,0 +1,10 @@
+// Title: Privileged User Has Been Created
+// Author: Pawel Mazur
+// Date: 2022-12-21
+// Level: high
+// Description: Detects the addition of a new user to a privileged group such as "root" or "sudo"The Syslog table in Microsoft Sentinel contains syslog data from various sources, including Linux systems. Ensure that syslog data from the specified log paths is being collected and sent to Sentinel for this table to be populated.
+// Tags: attack.persistence, attack.t1136.001, attack.t1098
+// ================================================================== 
+
+Syslog
+| where "new user" and ("GID=0," or "UID=0," or "GID=10," or "GID=27,")

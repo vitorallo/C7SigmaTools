@@ -1,0 +1,10 @@
+// Title: Remote Access Tool - ScreenConnect Command Execution
+// Author: Ali Alwashali
+// Date: 2023-10-10
+// Level: low
+// Description: Detects command execution via ScreenConnect RMMThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1059.003
+// ================================================================== 
+
+SecurityEvent
+| where Data contains "Executed command of length" and Provider_Name =~ "ScreenConnect"

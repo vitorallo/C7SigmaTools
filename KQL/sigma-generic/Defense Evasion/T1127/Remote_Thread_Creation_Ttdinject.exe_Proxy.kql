@@ -1,0 +1,10 @@
+// Title: Remote Thread Creation Ttdinject.exe Proxy
+// Author: frack113
+// Date: 2022-05-16
+// Level: high
+// Description: Detects a remote thread creation of Ttdinject.exe used as proxyThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which can include events related to creating remote threads. Make sure to have the Windows Security Events connector enabled in Sentinel to populate this table.
+// Tags: attack.defense-evasion, attack.t1127
+// ================================================================== 
+
+SecurityEvent
+| where InitiatingProcessFolderPath endswith "\\ttdinject.exe"

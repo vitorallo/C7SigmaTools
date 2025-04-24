@@ -1,0 +1,12 @@
+// Title: Bitbucket User Login Failure Via SSH
+// Author: Muhammad Faisal (@faisalusuf)
+// Date: 2024-02-25
+// Level: medium
+// Description: Detects SSH user login access failures.
+// Please note that this rule can be noisy and is recommended to use with correlation based on "author.name" field.
+// This table contains audit events for various services, including Bitbucket. Ensure that the necessary connectors are set up to collect Bitbucket audit logs in Sentinel.
+// Tags: attack.t1021.004, attack.t1110
+// ================================================================== 
+
+AuditLogs
+| where 'auditType.action' =~ "User login failed(SSH)" and 'auditType.category' =~ "Authentication"

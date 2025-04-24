@@ -1,0 +1,10 @@
+// Title: Silence.EDA Detection
+// Author: Alina Stepchenkova, Group-IB, oscd.community
+// Date: 2019-11-01
+// Level: critical
+// Description: Detects Silence EmpireDNSAgent as described in the Group-IP reportThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1059.001, attack.command-and-control, attack.t1071.004, attack.t1572, attack.impact, attack.t1529, attack.g0091, attack.s0363
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "System.Diagnostics.Process" and ScriptBlockText contains "Stop-Computer" and ScriptBlockText contains "Restart-Computer" and ScriptBlockText contains "Exception in execution" and ScriptBlockText contains "$cmdargs" and ScriptBlockText contains "Close-Dnscat2Tunnel") and (ScriptBlockText contains "set type=$LookupType`nserver" and ScriptBlockText contains "$Command | nslookup 2>&1 | Out-String" and ScriptBlockText contains "New-RandomDNSField" and ScriptBlockText contains "[Convert]::ToString($SYNOptions, 16)" and ScriptBlockText contains "$Session.Dead = $True" and ScriptBlockText contains "$Session[\"Driver\"] -eq")

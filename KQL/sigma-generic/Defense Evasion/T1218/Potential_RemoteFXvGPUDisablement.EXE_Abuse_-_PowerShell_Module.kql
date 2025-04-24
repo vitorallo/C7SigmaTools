@@ -1,0 +1,10 @@
+// Title: Potential RemoteFXvGPUDisablement.EXE Abuse - PowerShell Module
+// Author: Nasreddine Bencherchali (Nextron Systems), frack113
+// Date: 2021-07-13
+// Level: high
+// Description: Detects PowerShell module creation where the module Contents are set to "function Get-VMRemoteFXPhysicalVideoAdapter". This could be a sign of potential abuse of the "RemoteFXvGPUDisablement.exe" binary which is known to be vulnerable to module load-order hijacking.This table contains security event logs from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to collect this data.
+// Tags: attack.defense-evasion, attack.t1218
+// ================================================================== 
+
+SecurityEvent
+| where Payload contains "ModuleContents=function Get-VMRemoteFXPhysicalVideoAdapter {"

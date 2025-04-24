@@ -1,0 +1,10 @@
+// Title: Tap Driver Installation
+// Author: Daniil Yugoslavskiy, Ian Davis, oscd.community
+// Date: 2019-10-24
+// Level: medium
+// Description: Well-known TAP software installation. Possible preparation for data exfiltration using tunnelling techniquesThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.exfiltration, attack.t1048
+// ================================================================== 
+
+SecurityEvent
+| where ImagePath contains "tap0901" and Provider_Name =~ "Service Control Manager"

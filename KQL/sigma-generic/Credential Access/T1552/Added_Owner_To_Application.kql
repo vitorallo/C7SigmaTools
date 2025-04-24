@@ -1,0 +1,10 @@
+// Title: Added Owner To Application
+// Author: Mark Morowczynski '@markmorow', Bailey Bercik '@baileybercik'
+// Date: 2022-06-02
+// Level: medium
+// Description: Detects when a new owner is added to an application. This gives that account privileges to make modifications and configuration changes to the application.This table contains Azure activity logs, which includes audit logs. Ensure that Azure Monitor logs are enabled for the Azure service being monitored in order to have this table available in Microsoft Sentinel.
+// Tags: attack.t1552, attack.credential-access
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' =~ "Add owner to application"

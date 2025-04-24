@@ -1,0 +1,11 @@
+// Title: DNS Query Request By QuickAssist.EXE
+// Author: Muhammad Faisal (@faisalusuf)
+// Date: 2024-12-19
+// Level: low
+// Description: Detects DNS queries initiated by "QuickAssist.exe" to Microsoft Quick Assist primary endpoint that is used to establish a session.
+// The DnsEvents table in Microsoft Sentinel contains DNS query logs. Ensure that the Windows DNS events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.initial-access, attack.t1071.001, attack.t1210
+// ================================================================== 
+
+DnsEvents
+| where InitiatingProcessFolderPath endswith "\\QuickAssist.exe" and QueryName endswith "remoteassistance.support.services.microsoft.com"

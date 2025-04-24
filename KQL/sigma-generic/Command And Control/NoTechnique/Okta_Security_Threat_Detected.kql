@@ -1,0 +1,10 @@
+// Title: Okta Security Threat Detected
+// Author: Austin Songer @austinsonger
+// Date: 2021-09-12
+// Level: medium
+// Description: Detects when an security threat is detected in Okta.This table contains sign-in logs for users in Okta. To have this table present in Sentinel, ensure that you have the Okta connector configured and collecting data from the Okta service.
+// Tags: attack.command-and-control
+// ================================================================== 
+
+SigninLogs
+| where eventtype =~ "security.threat.detected"

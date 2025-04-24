@@ -1,0 +1,10 @@
+// Title: Suspicious PsExec Execution
+// Author: Samir Bousseaden
+// Date: 2019-04-03
+// Level: high
+// Description: detects execution of psexec or paexec with renamed service name, this rule helps to filter out the noise if psexec is used for legit purposes or if attacker uses a different psexec client other than sysinternal oneThe SecurityEvent table in Microsoft Sentinel contains security-related events, including detailed file share access events. Make sure to have the necessary connectors and data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.lateral-movement, attack.t1021.002
+// ================================================================== 
+
+SecurityEvent
+| where ((RelativeTargetName endswith "-stdin" or RelativeTargetName endswith "-stdout" or RelativeTargetName endswith "-stderr") and ShareName =~ "\\\\*\\IPC$") and (not(RelativeTargetName startswith "PSEXESVC"))

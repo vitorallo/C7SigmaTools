@@ -1,0 +1,10 @@
+// Title: Google Cloud Storage Buckets Enumeration
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-14
+// Level: low
+// Description: Detects when storage bucket is enumerated in Google Cloud.This table contains GCP audit logs. To have this table present in Microsoft Sentinel, ensure that the GCP connector is set up and configured to ingest GCP audit logs.
+// Tags: attack.discovery
+// ================================================================== 
+
+GCPAuditLogs
+| where 'gcp.audit.method_name' in~ ("storage.buckets.list", "storage.buckets.listChannels")

@@ -1,0 +1,10 @@
+// Title: Registry Persistence Mechanisms in Recycle Bin
+// Author: frack113
+// Date: 2021-11-18
+// Level: high
+// Description: Detects persistence registry keys for Recycle BinThis table contains information about registry events in Windows. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1547
+// ================================================================== 
+
+RegistryEvents
+| where ((ActionType in~ ("RegistryValueSet", "RegistryKeyCreated")) and NewName contains "\\CLSID\\{645FF040-5081-101B-9F08-00AA002F954E}\\shell\\open") or (ActionType =~ "RegistryValueSet" and RegistryKey contains "\\CLSID\\{645FF040-5081-101B-9F08-00AA002F954E}\\shell\\open\\command\\(Default)")

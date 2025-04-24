@@ -1,0 +1,10 @@
+// Title: Granting Of Permissions To An Account
+// Author: sawwinnnaung
+// Date: 2020-05-07
+// Level: medium
+// Description: Identifies IPs from which users grant access to other users on azure resources and alerts when a previously unseen source IP address is used.This table contains Azure Activity Logs data. Ensure that the Azure Monitor solution is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1098.003
+// ================================================================== 
+
+AzureActivityLogs
+| where "Microsoft.Authorization/roleAssignments/write"

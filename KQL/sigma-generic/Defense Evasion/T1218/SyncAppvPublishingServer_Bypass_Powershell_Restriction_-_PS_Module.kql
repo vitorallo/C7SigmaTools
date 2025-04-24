@@ -1,0 +1,10 @@
+// Title: SyncAppvPublishingServer Bypass Powershell Restriction - PS Module
+// Author: Ensar Şamil, @sblmsrsn, OSCD Community
+// Date: 2020-10-05
+// Level: medium
+// Description: Detects SyncAppvPublishingServer process execution which usually utilized by adversaries to bypass PowerShell execution restrictions.This table contains security event logs from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to collect these logs.
+// Tags: attack.defense-evasion, attack.t1218
+// ================================================================== 
+
+SecurityEvent
+| where ContextInfo contains "SyncAppvPublishingServer.exe"

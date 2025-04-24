@@ -1,0 +1,10 @@
+// Title: Okta API Token Created
+// Author: Austin Songer @austinsonger
+// Date: 2021-09-12
+// Level: medium
+// Description: Detects when a API token is createdThis table contains Okta sign-in logs. To have this table present in Microsoft Sentinel, ensure that the Okta connector is set up and configured to collect sign-in logs from Okta.
+// Tags: attack.persistence
+// ================================================================== 
+
+OktaSignInLogs
+| where eventtype =~ "system.api_token.create"

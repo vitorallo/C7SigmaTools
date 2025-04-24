@@ -1,0 +1,10 @@
+// Title: First Time Seen Remote Named Pipe - Zeek
+// Author: Samir Bousseaden, @neu5ron, Tim Shelton
+// Date: 2020-04-02
+// Level: high
+// Description: This detection excludes known namped pipes accessible remotely and notify on newly observed ones, may help to detect lateral movement and remote exec using named pipesThe equivalent table in Microsoft Sentinel for SMB file activity. Ensure that the Zeek logs are ingested into Sentinel to have this table available.
+// Tags: attack.lateral-movement, attack.t1021.002
+// ================================================================== 
+
+SMBFiles
+| where path =~ "\\\\*\\IPC$" and (not(("samr" or "lsarpc" or "winreg" or "netlogon" or "srvsvc" or "protected_storage" or "wkssvc" or "browser" or "netdfs" or "svcctl" or "spoolss" or "ntsvcs" or "LSM_API_service" or "HydraLsPipe" or "TermSrv_API_service" or "MsFteWds")))

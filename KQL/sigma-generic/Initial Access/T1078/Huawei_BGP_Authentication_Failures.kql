@@ -1,0 +1,10 @@
+// Title: Huawei BGP Authentication Failures
+// Author: Tim Brown
+// Date: 2023-01-09
+// Level: low
+// Description: Detects BGP failures which may be indicative of brute force attacks to manipulate routing.This table may not be readily available in Microsoft Sentinel. Additional configuration and log ingestion rules may need to be set up to enable collection of Huawei BGP logs.
+// Tags: attack.initial-access, attack.persistence, attack.privilege-escalation, attack.defense-evasion, attack.credential-access, attack.collection, attack.t1078, attack.t1110, attack.t1557
+// ================================================================== 
+
+HuaweiBgpLogs
+| where ":179" and "BGP_AUTH_FAILED"

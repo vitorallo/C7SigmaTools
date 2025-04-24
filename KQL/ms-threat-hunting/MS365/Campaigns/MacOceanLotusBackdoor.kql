@@ -1,0 +1,10 @@
+// Description: Backdoor processes associated with OceanLotus Mac Malware Backdoor.
+// References:.
+// Https://blog.trendmicro.com/trendlabs-security-intelligence/new-macos-backdoor-linked-to-oceanlotus-found/.
+// OS platforms: Macintosh.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where Timestamp > ago(14d)
+| where FileName in~ ("screenassistantd","spellagentd")
+| top 100 by Timestamp

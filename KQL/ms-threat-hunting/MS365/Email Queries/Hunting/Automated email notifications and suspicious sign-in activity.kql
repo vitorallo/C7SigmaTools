@@ -1,0 +1,10 @@
+// Description: This query helps hunting for Automated email notifications and suspicious sign-in activity
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, AADSignInEventsBeta)
+
+let usersWithSuspiciousEmails = EmailEvents
+| where SenderFromAddress in ("no-reply@notify.microsoft.com", "no-reply@dropbox.com") or InternetMessageId startswith "<OneTimePasscode"
+| where isnotempty(RecipientObjectId)
+| distinct RecipientObjectId;
+AADSignInEventsBeta
+| where AccountObjectId in (usersWithSuspiciousEmails)
+| where RiskLevelDuringSignIn == 100

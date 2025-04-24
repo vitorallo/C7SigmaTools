@@ -1,0 +1,10 @@
+// Description: This query helps in reviewing group Quarantine released messages by detection type. Useful to see what is leading to the largest number of messages being released.
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, CloudAppEvents)
+
+CloudAppEvents 
+| where ActionType == "QuarantineReleaseMessage"
+| extend parsed=parse_json(RawEventData)
+| extend NetworkMessageId = tostring(parsed.NetworkMessageId)
+| join EmailEvents on NetworkMessageId
+| summarize count() by DetectionMethods
+| order by count_ desc

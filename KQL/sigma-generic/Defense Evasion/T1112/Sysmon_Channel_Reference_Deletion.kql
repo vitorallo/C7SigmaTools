@@ -1,0 +1,10 @@
+// Title: Sysmon Channel Reference Deletion
+// Author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+// Date: 2020-07-14
+// Level: high
+// Description: Potential threat actor tampering with Sysmon manifest and eventually disabling itThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Make sure to have the Windows Security Events connector enabled in Sentinel to populate this table.
+// Tags: attack.defense-evasion, attack.t1112
+// ================================================================== 
+
+SecurityEvent
+| where (NewValue == 0 and (RegistryKey contains "WINEVT\\Publishers\\{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" or RegistryKey contains "WINEVT\\Channels\\Microsoft-Windows-Sysmon/Operational") and ObjectValueName =~ "Enabled") or (AccessMask == 65536 and (RegistryKey contains "WINEVT\\Publishers\\{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" or RegistryKey contains "WINEVT\\Channels\\Microsoft-Windows-Sysmon/Operational"))

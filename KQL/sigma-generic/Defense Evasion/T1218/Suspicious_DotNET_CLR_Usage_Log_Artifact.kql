@@ -1,0 +1,10 @@
+// Title: Suspicious DotNET CLR Usage Log Artifact
+// Author: frack113, omkar72, oscd.community, Wojciech Lesicki
+// Date: 2022-11-18
+// Level: high
+// Description: Detects the creation of Usage Log files by the CLR (clr.dll). These files are named after the executing process once the assembly is finished executing for the first time in the (user) session context.This table should be present in the Microsoft Sentinel workspace. Ensure that Sysmon is properly configured to monitor the UsageLogs folder on Windows systems.
+// Tags: attack.defense-evasion, attack.t1218
+// ================================================================== 
+
+UsageLogs
+| where (FolderPath endswith "\\UsageLogs\\cmstp.exe.log" or FolderPath endswith "\\UsageLogs\\cscript.exe.log" or FolderPath endswith "\\UsageLogs\\mshta.exe.log" or FolderPath endswith "\\UsageLogs\\msxsl.exe.log" or FolderPath endswith "\\UsageLogs\\regsvr32.exe.log" or FolderPath endswith "\\UsageLogs\\rundll32.exe.log" or FolderPath endswith "\\UsageLogs\\svchost.exe.log" or FolderPath endswith "\\UsageLogs\\wscript.exe.log" or FolderPath endswith "\\UsageLogs\\wmic.exe.log") and (not(((InitiatingProcessCommandLine contains "Temp" and InitiatingProcessCommandLine contains "zzzzInvokeManagedCustomActionOutOfProc") and InitiatingProcessFolderPath endswith "\\rundll32.exe" and InitiatingProcessParentCommandLine contains " -Embedding" and InitiatingProcessParentFileName =~ "MsiExec.exe")))

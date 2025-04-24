@@ -1,0 +1,28 @@
+// Description: This query looks for signs of impacket atexec module. Should work with others using similar technique.
+// Author: Jouni Mikkola
+// More info: https://threathunt.blog/impacket-part-3/
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceEvents, DeviceRegistryEvents, DeviceProcessEvents)
+
+let lookuptime = 30d;
+DeviceEvents
+| where Timestamp >ago(lookuptime)
+| where ActionType == 'NamedPipeEvent' 
+| where AdditionalFields contains "atsvc"
+| project DeviceName, Timestamp, DeviceId, RemoteIP, PipeName = extractjson("$.PipeName", AdditionalFields, typeof(string)), RemoteClientsAccess = extractjson("$.RemoteClientsAccess", AdditionalFields, typeof(string)), ShareName = extractjson("$.ShareName", AdditionalFields, typeof(string))
+| join (
+DeviceRegistryEvents
+| where Timestamp >ago(lookuptime)
+| where ActionType == 'RegistryKeyCreated' 
+| where RegistryKey contains @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\"
+| project RegTimestamp = Timestamp, DeviceName, DeviceId, RegistryKey, RegistryValueData, RegistryValueName, RegistryValueType, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessId, InitiatingProcessCreationTime
+) on DeviceName, DeviceId
+| where RegTimestamp between ((Timestamp - 2m) .. (Timestamp + 2m))
+| join (
+DeviceProcessEvents
+| where Timestamp >ago(lookuptime)
+| where InitiatingProcessFileName =~ "svchost.exe"
+| where InitiatingProcessCommandLine contains "Schedule"
+| project DeviceId, DeviceName, FileName, ProcessCommandLine, ProcessId, ProcessStartTimestamp = Timestamp, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessId, InitiatingProcessCreationTime
+) on DeviceName, DeviceId, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessId, InitiatingProcessCreationTime
+| where ProcessStartTimestamp between ( Timestamp .. (Timestamp +2m))
+| project DeviceName, Timestamp, StartedProcess = FileName, StartedProcessCommandLine = ProcessCommandLine, StartedProcessId = ProcessId, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessId, InitiatingProcessCreationTime, RegistryKey, RemoteIP, PipeName

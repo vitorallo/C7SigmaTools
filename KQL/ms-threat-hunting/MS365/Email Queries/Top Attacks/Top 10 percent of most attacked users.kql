@@ -1,0 +1,12 @@
+// Description: This query helps reviewing the list of top 10% of most attacked users
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+let topTargeted = toscalar( EmailEvents 
+| where DetectionMethods != "" 
+| summarize total=count() by RecipientEmailAddress 
+| summarize percentiles(total,90)); 
+EmailEvents 
+| where DetectionMethods != "" 
+| summarize total=count() by RecipientEmailAddress 
+| where total >= topTargeted 
+| order by total desc

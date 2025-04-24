@@ -1,0 +1,13 @@
+// Title: Certificate Use With No Strong Mapping
+// Author: @br4dy5
+// Date: 2023-10-09
+// Level: medium
+// Description: Detects a user certificate that was valid but could not be mapped to a user in a strong way (such as via explicit mapping, key trust mapping, or a SID)
+// This could be a sign of exploitation of the elevation of privilege vulnerabilities (CVE-2022-34691, CVE-2022-26931, CVE-2022-26923) that can occur when the KDC allows certificate spoofing by not requiring a strong mapping.
+// Events where the AccountName and CN of the Subject do not match, or where the CN ends in a dollar sign indicating a machine, may indicate certificate spoofing.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.privilege-escalation
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Kerberos-Key-Distribution-Center"

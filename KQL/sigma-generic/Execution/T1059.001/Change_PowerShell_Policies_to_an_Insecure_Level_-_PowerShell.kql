@@ -1,0 +1,10 @@
+// Title: Change PowerShell Policies to an Insecure Level - PowerShell
+// Author: frack113
+// Date: 2021-10-20
+// Level: medium
+// Description: Detects changing the PowerShell script execution policy to a potentially insecure level using the "Set-ExecutionPolicy" cmdlet.This table contains Windows security event logs, including script block logging events. Make sure to enable the appropriate data connectors in Microsoft Sentinel to collect Windows security event logs.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Set-ExecutionPolicy" and (ScriptBlockText contains "Unrestricted" or ScriptBlockText contains "bypass")) and (not((ScriptBlockText contains "(New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')" or ScriptBlockText contains "(New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')")))

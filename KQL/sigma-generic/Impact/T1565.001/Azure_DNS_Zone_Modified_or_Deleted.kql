@@ -1,0 +1,10 @@
+// Title: Azure DNS Zone Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-08
+// Level: medium
+// Description: Identifies when DNS zone is modified or deleted.This table contains Azure Activity Logs data. Ensure that Azure Activity Logs are being collected and ingested into Microsoft Sentinel to query this table.
+// Tags: attack.impact, attack.t1565.001
+// ================================================================== 
+
+AzureActivityLogs
+| where (operationName endswith "/WRITE" or operationName endswith "/DELETE") and operationName startswith "MICROSOFT.NETWORK/DNSZONES"

@@ -1,0 +1,17 @@
+// Description: This query helps hunting for good emails from senders with bad patterns
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+//Good emails from senders with bad patterns
+let PctPhishThreshold = 50;
+let LookbackWindow = 1d;
+ EmailEvents
+| where Timestamp > ago (LookbackWindow) and EmailDirection == "Inbound"
+| extend PhishMethods=tostring(parse_json(DetectionMethods).Phish)
+| where PhishMethods contains ("File") or PhishMethods contains ("URL") or PhishMethods contains ("Filter")
+| summarize PhishCount=count() by SenderMailFromAddress,AuthenticationDetails,PhishMethods
+| join kind=inner (EmailEvents | where Timestamp > ago (LookbackWindow) and EmailDirection == "Inbound"
+| summarize TotalCount=count() by SenderMailFromAddress,AuthenticationDetails) on SenderMailFromAddress,AuthenticationDetails
+| project-away SenderMailFromAddress1,AuthenticationDetails1
+| extend PctPhish = (PhishCount*100 / TotalCount)
+| where PctPhish < 100 and PctPhish>= PctPhishThreshold
+| join kind=inner (EmailEvents | where Timestamp > ago (LookbackWindow) and EmailDirection == "Inbound" and DeliveryLocation<> "Quarantine") on SenderMailFromAddress,AuthenticationDetails

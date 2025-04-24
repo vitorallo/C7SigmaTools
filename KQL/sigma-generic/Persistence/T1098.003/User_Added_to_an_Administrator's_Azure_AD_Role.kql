@@ -1,0 +1,10 @@
+// Title: User Added to an Administrator's Azure AD Role
+// Author: Raphaël CALVET, @MetallicHack
+// Date: 2021-10-04
+// Level: medium
+// Description: User Added to an Administrator's Azure AD RoleThis table contains Azure Activity Logs data. Ensure that Azure Activity Logs are being collected and ingested into Microsoft Sentinel to query this table.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1098.003, attack.t1078
+// ================================================================== 
+
+AzureActivityLogs
+| where (''ModifiedProperties{}.NewValue'' endswith "Admins" or ''ModifiedProperties{}.NewValue'' endswith "Administrator") and Operation =~ "Add member to role." and Workload =~ "AzureActiveDirectory"

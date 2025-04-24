@@ -1,0 +1,13 @@
+// Title: Antivirus Web Shell Detection
+// Author: Florian Roth (Nextron Systems), Arnim Rupp
+// Date: 2018-09-09
+// Level: high
+// Description: Detects a highly relevant Antivirus alert that reports a web shell.
+// It's highly recommended to tune this rule to the specific strings used by your anti virus solution by downloading a big WebShell repository from e.g. github and checking the matches.
+// This event must not be ignored just because the AV has blocked the malware but investigate, how it came there in the first place.
+// The AntivirusEvents table in Microsoft Sentinel contains logs related to antivirus activities. To have this table present, ensure that you have the necessary antivirus solution integrated with Sentinel and sending logs to the appropriate data connector.
+// Tags: attack.persistence, attack.t1505.003
+// ================================================================== 
+
+AntivirusEvents
+| where (Signature startswith "ASP." or Signature startswith "IIS/BackDoor" or Signature startswith "JAVA/Backdoor" or Signature startswith "JSP." or Signature startswith "Perl." or Signature startswith "PHP." or Signature startswith "Troj/ASP" or Signature startswith "Troj/JSP" or Signature startswith "Troj/PHP" or Signature startswith "VBS/Uxor") or (Signature contains "ASP_" or Signature contains "ASP:" or Signature contains "ASP.Agent" or Signature contains "ASP/" or Signature contains "Aspdoor" or Signature contains "ASPXSpy" or Signature contains "Backdoor.ASP" or Signature contains "Backdoor.Java" or Signature contains "Backdoor.JSP" or Signature contains "Backdoor.PHP" or Signature contains "Backdoor.VBS" or Signature contains "Backdoor/ASP" or Signature contains "Backdoor/Java" or Signature contains "Backdoor/JSP" or Signature contains "Backdoor/PHP" or Signature contains "Backdoor/VBS" or Signature contains "C99shell" or Signature contains "Chopper" or Signature contains "filebrowser" or Signature contains "JSP_" or Signature contains "JSP:" or Signature contains "JSP.Agent" or Signature contains "JSP/" or Signature contains "Perl:" or Signature contains "Perl/" or Signature contains "PHP_" or Signature contains "PHP:" or Signature contains "PHP.Agent" or Signature contains "PHP/" or Signature contains "PHPShell" or Signature contains "PShlSpy" or Signature contains "SinoChoper" or Signature contains "Trojan.ASP" or Signature contains "Trojan.JSP" or Signature contains "Trojan.PHP" or Signature contains "Trojan.VBS" or Signature contains "VBS.Agent" or Signature contains "VBS/Agent" or Signature contains "Webshell")

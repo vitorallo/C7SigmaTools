@@ -1,0 +1,10 @@
+// Title: Certificate-Based Authentication Enabled
+// Author: Harjot Shah Singh, '@cyb3rjy0t'
+// Date: 2024-03-26
+// Level: medium
+// Description: Detects when certificate based authentication has been enabled in an Azure Active Directory tenant.This table contains Azure audit logs. Make sure to have the Azure Monitor solution installed in Microsoft Sentinel to access this table.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1556
+// ================================================================== 
+
+AzureActivity
+| where OperationName =~ "Authentication Methods Policy Update" and 'TargetResources.modifiedProperties' contains "AuthenticationMethodsPolicy"

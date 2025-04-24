@@ -1,0 +1,12 @@
+// Title: RDS Database Security Group Modification
+// Author: jamesc-grafana
+// Date: 2024-07-11
+// Level: medium
+// Description: Detects changes to the security group entries for RDS databases.
+// This can indicate that a misconfiguration has occurred which potentially exposes the database to the public internet, a wider audience within the VPC or that removal of valid rules has occurred which could impact the availability of the database to legitimate services and users.
+// The equivalent table in Microsoft Sentinel for AWS CloudTrail logs. Ensure that the AWS CloudTrail connector is set up and collecting logs in Sentinel to have this table available.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+CloudTrail
+| where (eventName in~ ("AuthorizeDBSecurityGroupIngress", "CreateDBSecurityGroup", "DeleteDBSecurityGroup", "RevokeDBSecurityGroupIngress")) and eventSource =~ "rds.amazonaws.com"

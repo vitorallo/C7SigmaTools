@@ -1,0 +1,5 @@
+// Description: This query helps hunting for Emails containing links to IP addresses
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailUrlInfo
+| where Url matches regex @"file://(?:[0-9]{1,3}\.){3}[0-9]{1,3}"

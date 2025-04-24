@@ -1,0 +1,7 @@
+// Description: This query helps in reviewing malicious emails allowed due to admin overrides
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents
+| where DeliveryLocation == "Inbox/folder" 
+| where isnotempty(ThreatTypes) and OrgLevelAction == "Allow" 
+| count

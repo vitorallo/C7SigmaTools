@@ -1,0 +1,10 @@
+// Title: NTFS Alternate Data Stream
+// Author: Sami Ruohonen
+// Date: 2018-07-24
+// Level: high
+// Description: Detects writing data into NTFS alternate data streams from powershell. Needs Script Block Logging.This table contains security-related events, including PowerShell script execution events. Ensure that the required data connectors are enabled to ingest Windows security event logs into Sentinel.
+// Tags: attack.defense-evasion, attack.t1564.004, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "set-content" or ScriptBlockText contains "add-content") and ScriptBlockText contains "-stream"

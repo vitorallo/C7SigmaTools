@@ -1,0 +1,10 @@
+// Title: Okta Suspicious Activity Reported by End-user
+// Author: kelnage
+// Date: 2023-09-07
+// Level: high
+// Description: Detects when an Okta end-user reports activity by their account as being potentially suspicious.This table contains Okta sign-in logs. To have this table present in Microsoft Sentinel, you need to ensure that Okta logs are being forwarded to Sentinel and that the Okta connector is properly configured.
+// Tags: attack.resource-development, attack.t1586.003
+// ================================================================== 
+
+OktaSignInLogs
+| where eventtype =~ "user.account.report_suspicious_activity_by_enduser"

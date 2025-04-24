@@ -1,0 +1,10 @@
+// Title: New Firewall Rule Added In Windows Firewall Exception List For Potential Suspicious Application
+// Author: frack113
+// Date: 2023-02-26
+// Level: high
+// Description: Detects the addition of a new rule to the Windows Firewall exception list for an application located in a potentially suspicious location.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include firewall events from the 'firewall-as' service on Windows machines. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1562.004
+// ================================================================== 
+
+SecurityEvent
+| where (ApplicationPath contains ":\\PerfLogs\\" or ApplicationPath contains ":\\Temp\\" or ApplicationPath contains ":\\Tmp\\" or ApplicationPath contains ":\\Users\\Public\\" or ApplicationPath contains ":\\Windows\\Tasks\\" or ApplicationPath contains ":\\Windows\\Temp\\" or ApplicationPath contains "\\AppData\\Local\\Temp\\") and (not(Action == 2))

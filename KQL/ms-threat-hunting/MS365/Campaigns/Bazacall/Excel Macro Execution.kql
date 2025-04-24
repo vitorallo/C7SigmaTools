@@ -1,0 +1,6 @@
+// Description: Bazacall uses malicious macro-enabled Excel documents to execute their payload.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where InitiatingProcessFileName =~ "excel.exe"
+    and ProcessCommandLine has_all('mkdir', '&& copy', 'certutil.exe')

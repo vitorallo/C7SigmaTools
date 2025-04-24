@@ -1,0 +1,11 @@
+// Title: HTTP Request to Low Reputation TLD or Suspicious File Extension
+// Author: @signalblur, Corelight
+// Date: 2025-02-26
+// Level: medium
+// Description: Detects HTTP requests to low reputation TLDs (e.g. .xyz, .top, .ru) or ending in suspicious file extensions (.exe, .dll, .hta), which may indicate malicious activity.
+// This table contains HTTP request data captured by Zeek. To query this table in Microsoft Sentinel, ensure that you have Zeek logs ingested and mapped to the appropriate schema in your workspace.
+// Tags: attack.initial-access, attack.command-and-control
+// ================================================================== 
+
+ZeekHttpRequests
+| where (host endswith ".bid" or host endswith ".by" or host endswith ".cf" or host endswith ".click" or host endswith ".cm" or host endswith ".ga" or host endswith ".gq" or host endswith ".ir" or host endswith ".kp" or host endswith ".loan" or host endswith ".ml" or host endswith ".mm" or host endswith ".party" or host endswith ".pw" or host endswith ".ru" or host endswith ".su" or host endswith ".sy" or host endswith ".tk" or host endswith ".top" or host endswith ".tv" or host endswith ".ve" or host endswith ".work" or host endswith ".xyz") and ((uri endswith ".bat" or uri endswith ".bin" or uri endswith ".cmd" or uri endswith ".cpl" or uri endswith ".dll" or uri endswith ".dylib" or uri endswith ".elf" or uri endswith ".exe" or uri endswith ".hta" or uri endswith ".iso" or uri endswith ".jar" or uri endswith ".js" or uri endswith ".lnk" or uri endswith ".msi" or uri endswith ".pif" or uri endswith ".ps1" or uri endswith ".py" or uri endswith ".reg" or uri endswith ".scr" or uri endswith ".sh" or uri endswith ".so" or uri endswith ".vbs" or uri endswith ".wsf") or (resp_mime_types in~ ("application/vnd.microsoft.portable-executable", "application/x-bat", "application/x-dosexec", "application/x-elf", "application/x-iso9660-image", "application/x-java-archive", "application/x-ms-shortcut", "application/x-msdos-program", "application/x-msdownload", "application/x-python-code", "application/x-sh")))

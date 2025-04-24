@@ -1,0 +1,10 @@
+// Title: Azure Kubernetes Pods Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-07-24
+// Level: medium
+// Description: Identifies the deletion of Azure Kubernetes Pods.This table contains Azure activity logs data.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName =~ "MICROSOFT.KUBERNETES/CONNECTEDCLUSTERS/PODS/DELETE"

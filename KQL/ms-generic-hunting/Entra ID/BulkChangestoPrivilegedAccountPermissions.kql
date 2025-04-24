@@ -1,0 +1,34 @@
+// Description: 'Identifies when changes to multiple users permissions are changed at once. Investigate immediately if not a planned change. This setting could enable an attacker access to Azure subscriptions in your environment.
+// Ref : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-privileged-identity-management'
+// Required Connectors: AzureActiveDirectory (Types: AuditLogs)
+
+let AdminRecords = AuditLogs
+| where Category =~ "RoleManagement"
+| where ActivityDisplayName has_any ("Add eligible member to role", "Add member to role")
+| mv-apply TargetResource = TargetResources on 
+  (
+      where TargetResource.type =~ "User"
+      | extend TargetUserPrincipalName = tostring(TargetResource.userPrincipalName),
+               props = TargetResource.modifiedProperties
+  )
+| mv-apply Property = props on 
+  (
+      where Property.displayName =~ "Role.DisplayName"
+      | extend RoleName = trim('"',tostring(Property.newValue))
+  )
+| where RoleName contains "Admin";
+AdminRecords
+| summarize dcount(TargetUserPrincipalName) by bin(TimeGenerated, 1h)
+| where dcount_TargetUserPrincipalName > 9
+| join kind=rightsemi  (
+  AdminRecords
+  | extend TimeWindow = bin(TimeGenerated, 1h)
+) on $left.TimeGenerated == $right.TimeWindow
+| extend InitiatedByUser = iff(isnotempty(InitiatedBy.user.userPrincipalName), tostring(InitiatedBy.user.userPrincipalName), "")
+| extend InitiatingAppName = tostring(InitiatedBy.app.displayName)
+| extend InitiatingAppServicePrincipalId = tostring(InitiatedBy.app.servicePrincipalId)
+| extend InitiatingUserPrincipalName = tostring(InitiatedBy.user.userPrincipalName)
+| extend InitiatingAadUserId = tostring(InitiatedBy.user.id)
+| extend InitiatingIpAddress = tostring(iff(isnotempty(InitiatedBy.user.ipAddress), InitiatedBy.user.ipAddress, InitiatedBy.app.ipAddress))
+| extend TargetName = tostring(split(TargetUserPrincipalName,'@',0)[0]), TargetUPNSuffix = tostring(split(TargetUserPrincipalName,'@',1)[0])
+| extend InitiatingAccountName = tostring(split(InitiatingUserPrincipalName, "@")[0]), InitiatingAccountUPNSuffix = tostring(split(InitiatingUserPrincipalName, "@")[1])

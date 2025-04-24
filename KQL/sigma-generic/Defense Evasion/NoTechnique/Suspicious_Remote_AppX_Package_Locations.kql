@@ -1,0 +1,11 @@
+// Title: Suspicious Remote AppX Package Locations
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-11
+// Level: high
+// Description: Detects an appx package added to the pipeline of the "to be processed" packages which was downloaded from a suspicious domain.
+// This table contains information about installed Appx packages on Windows devices. To query this table in Microsoft Sentinel, ensure that the Microsoft-Windows-AppXDeploymentServer/Operational log source is enabled and sending data to Sentinel.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+AppxPackageInventory
+| where Path contains ".githubusercontent.com" or Path contains "anonfiles.com" or Path contains "cdn.discordapp.com" or Path contains "ddns.net" or Path contains "dl.dropboxusercontent.com" or Path contains "ghostbin.co" or Path contains "glitch.me" or Path contains "gofile.io" or Path contains "hastebin.com" or Path contains "mediafire.com" or Path contains "mega.nz" or Path contains "onrender.com" or Path contains "pages.dev" or Path contains "paste.ee" or Path contains "pastebin.com" or Path contains "pastebin.pl" or Path contains "pastetext.net" or Path contains "privatlab.com" or Path contains "privatlab.net" or Path contains "send.exploit.in" or Path contains "sendspace.com" or Path contains "storage.googleapis.com" or Path contains "storjshare.io" or Path contains "supabase.co" or Path contains "temp.sh" or Path contains "transfer.sh" or Path contains "trycloudflare.com" or Path contains "ufile.io" or Path contains "w3spaces.com" or Path contains "workers.dev"

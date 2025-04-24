@@ -1,0 +1,12 @@
+// Title: AWS Console GetSigninToken Potential Abuse
+// Author: Chester Le Bron (@123Le_Bron)
+// Date: 2024-02-26
+// Level: medium
+// Description: Detects potentially suspicious events involving "GetSigninToken".
+// An adversary using the "aws_consoler" tool can leverage this console API to create temporary federated credential that help obfuscate which AWS credential is compromised (the original access key) and enables the adversary to pivot from the AWS CLI to console sessions without the need for MFA using the new access key issued in this request.
+// The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail events. To have this table present in Sentinel, ensure that the AWS connector is properly configured and collecting CloudTrail logs.
+// Tags: attack.lateral-movement, attack.t1021.007, attack.t1550.001
+// ================================================================== 
+
+CloudTrail
+| where (eventName =~ "GetSigninToken" and eventSource =~ "signin.amazonaws.com") and (not(userAgent contains "Jersey/${project.version}"))

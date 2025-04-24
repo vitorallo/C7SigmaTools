@@ -1,0 +1,10 @@
+// Title: Suspicious Hyper-V Cmdlets
+// Author: frack113
+// Date: 2022-04-09
+// Level: medium
+// Description: Adversaries may carry out malicious operations using a virtual instance to avoid detectionThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events connector is enabled in Sentinel to collect these logs.
+// Tags: attack.defense-evasion, attack.t1564.006
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "New-VM" or ScriptBlockText contains "Set-VMFirmware" or ScriptBlockText contains "Start-VM"

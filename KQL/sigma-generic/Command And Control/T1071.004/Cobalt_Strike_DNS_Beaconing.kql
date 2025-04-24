@@ -1,0 +1,10 @@
+// Title: Cobalt Strike DNS Beaconing
+// Author: Florian Roth (Nextron Systems)
+// Date: 2018-05-10
+// Level: critical
+// Description: Detects suspicious DNS queries known from Cobalt Strike beaconsThis table contains DNS events and can be queried in Microsoft Sentinel. Ensure that DNS events are being collected and sent to Sentinel for this table to be populated.
+// Tags: attack.command-and-control, attack.t1071.004
+// ================================================================== 
+
+DnsEvents
+| where (query startswith "aaa.stage." or query startswith "post.1") or query contains ".stage.123456."

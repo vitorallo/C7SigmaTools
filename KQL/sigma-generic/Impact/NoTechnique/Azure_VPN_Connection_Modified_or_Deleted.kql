@@ -1,0 +1,10 @@
+// Title: Azure VPN Connection Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-08
+// Level: medium
+// Description: Identifies when a VPN connection is modified or deleted.This table contains Azure activity logs. Ensure that the Azure Monitor solution is deployed in Microsoft Sentinel to have access to this table.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.NETWORK/VPNGATEWAYS/VPNCONNECTIONS/WRITE", "MICROSOFT.NETWORK/VPNGATEWAYS/VPNCONNECTIONS/DELETE")

@@ -1,0 +1,10 @@
+// Title: Potential Suspicious PowerShell Keywords
+// Author: Florian Roth (Nextron Systems), Perez Diego (@darkquassar), Tuan Le (NCSGroup)
+// Date: 2019-02-11
+// Level: medium
+// Description: Detects potentially suspicious keywords that could indicate the use of a PowerShell exploitation frameworkThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script block logging. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "System.Reflection.Assembly.Load($" or ScriptBlockText contains "[System.Reflection.Assembly]::Load($" or ScriptBlockText contains "[Reflection.Assembly]::Load($" or ScriptBlockText contains "System.Reflection.AssemblyName" or ScriptBlockText contains "Reflection.Emit.AssemblyBuilderAccess" or ScriptBlockText contains "Reflection.Emit.CustomAttributeBuilder" or ScriptBlockText contains "Runtime.InteropServices.UnmanagedType" or ScriptBlockText contains "Runtime.InteropServices.DllImportAttribute" or ScriptBlockText contains "SuspendThread" or ScriptBlockText contains "rundll32"

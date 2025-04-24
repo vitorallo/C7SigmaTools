@@ -1,0 +1,10 @@
+// Title: Active Directory Replication from Non Machine Account
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-07-26
+// Level: critical
+// Description: Detects potential abuse of Active Directory Replication Service (ADRS) from a non machine account to request credentials.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that the Windows Security events are being collected and sent to Sentinel. This may require configuring the appropriate data connectors or agents on the Windows machines.
+// Tags: attack.credential-access, attack.t1003.006
+// ================================================================== 
+
+SecurityEvent
+| where (AccessMask =~ "0x100" and (Properties contains "1131f6aa-9c07-11d1-f79f-00c04fc2dcd2" or Properties contains "1131f6ad-9c07-11d1-f79f-00c04fc2dcd2" or Properties contains "89e95b76-444d-4c62-991a-0facbeda640c")) and (not((SubjectUserName endswith "$" or SubjectUserName startswith "MSOL_")))

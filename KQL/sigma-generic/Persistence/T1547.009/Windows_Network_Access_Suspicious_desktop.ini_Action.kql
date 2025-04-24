@@ -1,0 +1,10 @@
+// Title: Windows Network Access Suspicious desktop.ini Action
+// Author: Tim Shelton (HAWK.IO)
+// Date: 2021-12-06
+// Level: medium
+// Description: Detects unusual processes accessing desktop.ini remotely over network share, which can be leveraged to alter how Explorer displays a folder's content (i.e. renaming files) without changing them on disk.This table contains security-related events on Windows systems. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1547.009
+// ================================================================== 
+
+SecurityEvent
+| where (AccessList contains "WriteData" or AccessList contains "DELETE" or AccessList contains "WriteDAC" or AccessList contains "AppendData" or AccessList contains "AddSubdirectory") and RelativeTargetName endswith "\\desktop.ini"

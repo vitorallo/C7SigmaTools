@@ -1,0 +1,10 @@
+// Title: File Time Attribute Change - Linux
+// Author: Igor Fits, oscd.community
+// Date: 2020-10-15
+// Level: medium
+// Description: Detect file time attribute change to hide new or changes to existing files.The SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including audit logs. To have auditd logs from Linux systems available in the SecurityEvent table, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect auditd logs.
+// Tags: attack.defense-evasion, attack.t1070.006
+// ================================================================== 
+
+SecurityEvent
+| where type =~ "EXECVE" and "touch" and ("-t" or "-acmr" or "-d" or "-r")

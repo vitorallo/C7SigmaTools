@@ -1,0 +1,7 @@
+// Description: This query helps reviewing top 100 senders in your organization in last 30 days
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents 
+| where Timestamp > ago(30d)
+| summarize mailCountBySender = count() by SenderMailFromAddress 
+| top 100 by mailCountBySender

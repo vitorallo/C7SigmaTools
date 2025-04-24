@@ -1,0 +1,10 @@
+// Title: Google Full Network Traffic Packet Capture
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-13
+// Level: medium
+// Description: Identifies potential full network packet capture in gcp. This feature can potentially be abused to read sensitive data from unencrypted internal traffic.This table contains GCP audit logs. To have access to this table in Microsoft Sentinel, ensure that the GCP connector is set up and configured to ingest GCP audit logs.
+// Tags: attack.collection, attack.t1074
+// ================================================================== 
+
+GCPAuditLogs
+| where ('gcp.audit.method_name' contains "v" and 'gcp.audit.method_name' contains ".Compute.PacketMirrorings.Get") or ('gcp.audit.method_name' contains "v" and 'gcp.audit.method_name' contains ".Compute.PacketMirrorings.Delete") or ('gcp.audit.method_name' contains "v" and 'gcp.audit.method_name' contains ".Compute.PacketMirrorings.Insert") or ('gcp.audit.method_name' contains "v" and 'gcp.audit.method_name' contains ".Compute.PacketMirrorings.Patch") or ('gcp.audit.method_name' contains "v" and 'gcp.audit.method_name' contains ".Compute.PacketMirrorings.List") or ('gcp.audit.method_name' contains "v" and 'gcp.audit.method_name' contains ".Compute.PacketMirrorings.aggregatedList")

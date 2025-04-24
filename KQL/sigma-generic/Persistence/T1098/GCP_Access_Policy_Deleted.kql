@@ -1,0 +1,12 @@
+// Title: GCP Access Policy Deleted
+// Author: Bryan Lim
+// Date: 2024-01-12
+// Level: medium
+// Description: Detects when an access policy that is applied to a GCP cloud resource is deleted.
+// An adversary would be able to remove access policies to gain access to a GCP cloud resource.
+// This table contains Google Cloud Platform audit logs. To have access to this table in Microsoft Sentinel, ensure that you have the necessary connectors or data connectors set up for GCP audit logs.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1098
+// ================================================================== 
+
+GCPAuditLogs
+| where 'data.protoPayload.authorizationInfo.granted' =~ "true" and ('data.protoPayload.authorizationInfo.permission' in~ ("accesscontextmanager.accessPolicies.delete", "accesscontextmanager.accessPolicies.accessLevels.delete", "accesscontextmanager.accessPolicies.accessZones.delete", "accesscontextmanager.accessPolicies.authorizedOrgsDescs.delete")) and 'data.protoPayload.serviceName' =~ "accesscontextmanager.googleapis.com"

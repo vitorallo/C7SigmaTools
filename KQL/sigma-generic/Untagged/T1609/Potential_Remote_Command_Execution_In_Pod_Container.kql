@@ -1,0 +1,11 @@
+// Title: Potential Remote Command Execution In Pod Container
+// Author: Leo Tsaousis (@laripping)
+// Date: 2024-03-26
+// Level: medium
+// Description: Detects attempts to execute remote commands, within a Pod's container using e.g. the "kubectl exec" command.
+// The KubeEvents table in Microsoft Sentinel contains Kubernetes audit logs. To query this table, ensure that you have the necessary connectors or data sources configured in Sentinel to collect Kubernetes audit logs.
+// Tags: attack.t1609
+// ================================================================== 
+
+KubeEvents
+| where 'objectRef.resource' =~ "pods" and 'objectRef.subresource' =~ "exec" and verb =~ "create"

@@ -1,0 +1,10 @@
+// Title: Suspicious Process Discovery With Get-Process
+// Author: frack113
+// Date: 2022-03-17
+// Level: low
+// Description: Get the processes that are running on the local computer.The SecurityEvent table in Microsoft Sentinel contains logs related to security events on Windows machines. To have this table present, ensure that you have the necessary connectors set up to collect Windows security event logs in Sentinel.
+// Tags: attack.discovery, attack.t1057
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Get-Process"

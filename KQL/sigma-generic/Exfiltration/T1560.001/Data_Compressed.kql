@@ -1,0 +1,10 @@
+// Title: Data Compressed
+// Author: Timur Zinniatullin, oscd.community
+// Date: 2019-10-21
+// Level: low
+// Description: An adversary may compress data (e.g., sensitive documents) that is collected prior to exfiltration in order to make it portable and minimize the amount of data sent over the network.The LinuxAuditLogs table in Microsoft Sentinel contains audit logs from Linux systems. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs.
+// Tags: attack.exfiltration, attack.t1560.001
+// ================================================================== 
+
+LinuxAuditLogs
+| where (a0 =~ "zip" and type =~ "execve") or (a0 =~ "gzip" and a1 =~ "-k" and type =~ "execve") or (a0 =~ "tar" and a1 contains "-c" and type =~ "execve")

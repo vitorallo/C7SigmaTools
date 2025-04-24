@@ -1,0 +1,10 @@
+// Title: Potentially Suspicious File Download From ZIP TLD
+// Author: Florian Roth (Nextron Systems)
+// Date: 2023-05-18
+// Level: high
+// Description: Detects the download of a file with a potentially suspicious extension from a .zip top level domain.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query this table for events related to creating stream hash, ensure that the Windows Security Events data connector is enabled in Sentinel and ingesting data from the relevant Windows machines.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+SecurityEvent
+| where Contents contains ".zip/" and (TargetFilename contains ".bat:Zone" or TargetFilename contains ".dat:Zone" or TargetFilename contains ".dll:Zone" or TargetFilename contains ".doc:Zone" or TargetFilename contains ".docm:Zone" or TargetFilename contains ".exe:Zone" or TargetFilename contains ".hta:Zone" or TargetFilename contains ".pptm:Zone" or TargetFilename contains ".ps1:Zone" or TargetFilename contains ".rar:Zone" or TargetFilename contains ".rtf:Zone" or TargetFilename contains ".sct:Zone" or TargetFilename contains ".vbe:Zone" or TargetFilename contains ".vbs:Zone" or TargetFilename contains ".ws:Zone" or TargetFilename contains ".wsf:Zone" or TargetFilename contains ".xll:Zone" or TargetFilename contains ".xls:Zone" or TargetFilename contains ".xlsm:Zone" or TargetFilename contains ".zip:Zone")

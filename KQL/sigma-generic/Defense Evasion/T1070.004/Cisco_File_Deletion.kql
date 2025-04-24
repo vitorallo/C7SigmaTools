@@ -1,0 +1,10 @@
+// Title: Cisco File Deletion
+// Author: Austin Clark
+// Date: 2019-08-12
+// Level: medium
+// Description: See what files are being deleted from flash file systemsThis table may not be directly available in Microsoft Sentinel. You may need to enable Cisco ASA logs or AAA logs in Sentinel to have this data available for querying.
+// Tags: attack.defense-evasion, attack.impact, attack.t1070.004, attack.t1561.001, attack.t1561.002
+// ================================================================== 
+
+CISCO_AAA_LOG
+| where "erase" or "delete" or "format"

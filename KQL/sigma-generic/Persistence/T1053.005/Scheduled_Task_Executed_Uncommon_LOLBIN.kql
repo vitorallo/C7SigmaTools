@@ -1,0 +1,10 @@
+// Title: Scheduled Task Executed Uncommon LOLBIN
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-12-05
+// Level: medium
+// Description: Detects the execution of Scheduled Tasks where the program being run is located in a suspicious location or where it is an unusual program to be run from a Scheduled TaskThe equivalent table in KQL for Microsoft Sentinel is the Event table. This table contains all the events collected from various sources including Windows logs. To have Windows Task Scheduler events available in the Event table, ensure that the Windows Security Events connector is enabled in Microsoft Sentinel.
+// Tags: attack.persistence, attack.t1053.005
+// ================================================================== 
+
+Event
+| where Path endswith "\\calc.exe" or Path endswith "\\cscript.exe" or Path endswith "\\mshta.exe" or Path endswith "\\mspaint.exe" or Path endswith "\\notepad.exe" or Path endswith "\\regsvr32.exe" or Path endswith "\\wscript.exe"

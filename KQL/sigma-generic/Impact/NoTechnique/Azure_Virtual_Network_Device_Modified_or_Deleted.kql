@@ -1,0 +1,12 @@
+// Title: Azure Virtual Network Device Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-08
+// Level: medium
+// Description: Identifies when a virtual network device is being modified or deleted.
+// This can be a network interface, network virtual appliance, virtual hub, or virtual router.
+// This table contains Azure Activity Logs data. Ensure that Azure Activity Logs are being collected and ingested into Microsoft Sentinel to query this table.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.NETWORK/NETWORKINTERFACES/TAPCONFIGURATIONS/WRITE", "MICROSOFT.NETWORK/NETWORKINTERFACES/TAPCONFIGURATIONS/DELETE", "MICROSOFT.NETWORK/NETWORKINTERFACES/WRITE", "MICROSOFT.NETWORK/NETWORKINTERFACES/JOIN/ACTION", "MICROSOFT.NETWORK/NETWORKINTERFACES/DELETE", "MICROSOFT.NETWORK/NETWORKVIRTUALAPPLIANCES/DELETE", "MICROSOFT.NETWORK/NETWORKVIRTUALAPPLIANCES/WRITE", "MICROSOFT.NETWORK/VIRTUALHUBS/DELETE", "MICROSOFT.NETWORK/VIRTUALHUBS/WRITE", "MICROSOFT.NETWORK/VIRTUALROUTERS/WRITE", "MICROSOFT.NETWORK/VIRTUALROUTERS/DELETE")

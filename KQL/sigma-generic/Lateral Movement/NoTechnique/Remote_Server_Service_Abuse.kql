@@ -1,0 +1,10 @@
+// Title: Remote Server Service Abuse
+// Author: Sagie Dulce, Dekel Paz
+// Date: 2022-01-01
+// Level: high
+// Description: Detects remote RPC calls to possibly abuse remote encryption service via MS-SRVSThis table contains logs related to the RPC Firewall product. Make sure to enable RPC Firewall logging in Sentinel to populate this table.
+// Tags: attack.lateral-movement
+// ================================================================== 
+
+rpc_firewall_logs
+| where EventLog =~ "RPCFW" and InterfaceUuid =~ "4b324fc8-1670-01d3-1278-5a47bf6ee188"

@@ -1,0 +1,6 @@
+// Description: Prior to deploying Macaw ransomware in an organization, the adversary will disable all controlled folders, which will enable them to be encrypted once the ransomware payload is deployed.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where InitiatingProcessFileName =~ 'cmd.exe' 
+| where FileName =~ 'powershell.exe' and ProcessCommandLine has('powershell.exe  -command "Set-MpPreference -EnableControlledFolderAccess Disabled"')

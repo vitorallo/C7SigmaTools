@@ -1,0 +1,10 @@
+// Title: AWS EC2 Startup Shell Script Change
+// Author: faloker
+// Date: 2020-02-12
+// Level: high
+// Description: Detects changes to the EC2 instance startup script. The shell script will be executed as root/SYSTEM every time the specific instances are booted up.The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To have this table present in Sentinel, ensure that the AWS CloudTrail connector is set up and collecting logs from the specified AWS account.
+// Tags: attack.execution, attack.t1059.001, attack.t1059.003, attack.t1059.004
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "ModifyInstanceAttribute" and eventSource =~ "ec2.amazonaws.com" and 'requestParameters.attribute' =~ "userData"

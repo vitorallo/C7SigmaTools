@@ -1,0 +1,10 @@
+// Title: Suspicious SSL Connection
+// Author: frack113
+// Date: 2022-01-23
+// Level: low
+// Description: Adversaries may employ a known encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.command-and-control, attack.t1573
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "System.Net.Security.SslStream" and ScriptBlockText contains "Net.Security.RemoteCertificateValidationCallback" and ScriptBlockText contains ".AuthenticateAsClient"

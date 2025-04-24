@@ -1,0 +1,10 @@
+// Title: Github Push Protection Bypass Detected
+// Author: Muhammad Faisal (@faisalusuf)
+// Date: 2024-03-07
+// Level: low
+// Description: Detects when a user bypasses the push protection on a secret detected by secret scanning.This table contains the audit logs for the Github service. To query this table in Microsoft Sentinel, make sure to have the Github connector installed and properly configured to ingest audit logs.
+// Tags: attack.defense-evasion, attack.t1562.001
+// ================================================================== 
+
+GithubAuditLogs
+| where action contains "secret_scanning_push_protection.bypass"

@@ -1,0 +1,10 @@
+// Title: Windows Defender Exclusions Added
+// Author: Christian Burkard (Nextron Systems)
+// Date: 2021-07-06
+// Level: medium
+// Description: Detects the Setting of Windows Defender ExclusionsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which can include information about Windows Defender (windefend) service events. Make sure to have the necessary connectors or data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1562.001
+// ================================================================== 
+
+SecurityEvent
+| where NewValue contains "\\Microsoft\\Windows Defender\\Exclusions"

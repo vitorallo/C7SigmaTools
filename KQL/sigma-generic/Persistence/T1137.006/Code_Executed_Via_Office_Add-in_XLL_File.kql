@@ -1,0 +1,12 @@
+// Title: Code Executed Via Office Add-in XLL File
+// Author: frack113
+// Date: 2021-12-28
+// Level: high
+// Description: Adversaries may abuse Microsoft Office add-ins to obtain persistence on a compromised system.
+// Office add-ins can be used to add functionality to Office programs
+// This table contains Windows security event logs, including script block logging events. Enable the appropriate data connectors in Microsoft Sentinel to ingest Windows security event logs.
+// Tags: attack.persistence, attack.t1137.006
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "new-object " and ScriptBlockText contains "-ComObject " and ScriptBlockText contains ".application" and ScriptBlockText contains ".RegisterXLL"

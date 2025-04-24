@@ -1,0 +1,10 @@
+// Title: OpenCanary - SSH Login Attempt
+// Author: Security Onion Solutions
+// Date: 2024-03-08
+// Level: high
+// Description: Detects instances where an SSH service on an OpenCanary node has had a login attempt.The OpencanaryLog table in Microsoft Sentinel contains logs related to the Opencanary application. To have this table present in Sentinel, you need to ensure that the Opencanary logs are being collected and sent to Sentinel for ingestion.
+// Tags: attack.initial-access, attack.lateral-movement, attack.persistence, attack.t1133, attack.t1021, attack.t1078
+// ================================================================== 
+
+OpencanaryLog
+| where logtype == 4002

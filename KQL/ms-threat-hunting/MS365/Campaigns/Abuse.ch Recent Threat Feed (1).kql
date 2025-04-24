@@ -1,0 +1,21 @@
+// Description: This query will hunt for files matching the current abuse.ch recent threat feed based on Sha256. Currently the query is set up to analyze the last day worth of events, but this is configurable using the MaxAge variable.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents, DeviceFileEvents, DeviceImageLoadEvents)
+
+let MaxAge = ago(1d);
+let AbuseFeed = toscalar (
+    (externaldata(report:string)
+    [@"https://bazaar.abuse.ch/export/txt/sha256/recent/"]
+    with (format = "txt"))
+    | where report !startswith '#'
+    | summarize make_set(report)
+);
+union (
+    DeviceProcessEvents
+    | where Timestamp > MaxAge and SHA256 in (AbuseFeed)
+), (
+    DeviceFileEvents
+    | where Timestamp > MaxAge and SHA256 in (AbuseFeed)
+), ( 
+    DeviceImageLoadEvents
+    | where Timestamp > MaxAge and SHA256 in (AbuseFeed)
+)

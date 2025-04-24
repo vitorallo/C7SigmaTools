@@ -1,0 +1,10 @@
+// Title: Creation Of An User Account
+// Author: Marie Euler, Pawel Mazur
+// Date: 2020-05-18
+// Level: medium
+// Description: Detects the creation of a new user account. Such accounts may be used for persistence that do not require persistent remote access tools to be deployed on the system.The equivalent table in Microsoft Sentinel for Linux audit logs. Make sure to have the Linux agent installed on the target machines and properly configured to collect audit logs.
+// Tags: attack.t1136.001, attack.persistence
+// ================================================================== 
+
+LinuxAuditLogs
+| where type =~ "ADD_USER" or (exe endswith "/useradd" and type =~ "SYSCALL")

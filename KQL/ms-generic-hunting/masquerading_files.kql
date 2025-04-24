@@ -1,0 +1,16 @@
+// Description: 'Malware writers often use windows system process names like svchost.exe to hide malicious activities. Query searches for execution of process svchost.exe, filtering out execution by well-known SIDs and from legitimate path.'
+// Required Connectors: SecurityEvents (Types: SecurityEvent); WindowsSecurityEvents (Types: SecurityEvent)
+
+SecurityEvent
+| where NewProcessName endswith "\\svchost.exe"
+| where SubjectUserSid !in ("S-1-5-18", "S-1-5-19", "S-1-5-20")
+| where NewProcessName !has ":\\Windows\\System32"
+| where NewProcessName !has ":\\Windows\\Syswow64"
+| summarize minTimeGenerated=min(TimeGenerated), maxTimeGenerated=max(TimeGenerated), count() by Computer, SubjectUserName, NewProcessName, CommandLine, Account
+| project minTimeGenerated , maxTimeGenerated , count_ , Computer , SubjectUserName , NewProcessName , CommandLine, Account
+| extend NTDomain = tostring(split(Account,'\\',0)[0]), Name = tostring(split(Account,'\\',1)[0])
+| extend HostName = tostring(split(Computer, '.', 0)[0]), DnsDomain = tostring(strcat_array(array_slice(split(Computer, '.'), 1, -1), '.'))
+| extend Account_0_Name = Name
+| extend Account_0_NTDomain = NTDomain
+| extend Host_0_HostName = HostName
+| extend Host_0_DnsDomain = DnsDomain

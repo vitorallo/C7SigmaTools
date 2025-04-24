@@ -1,0 +1,10 @@
+// Title: Potential Python DLL SideLoading
+// Author: Swachchhanda Shrawan Poudel
+// Date: 2024-10-06
+// Level: medium
+// Description: Detects potential DLL sideloading of Python DLL files.This table contains information about image loading events on Windows systems. Ensure that the Microsoft-Windows-Sysmon data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1574.002
+// ================================================================== 
+
+ImageLoadEvents
+| where (FolderPath endswith "\\python39.dll" or FolderPath endswith "\\python310.dll" or FolderPath endswith "\\python311.dll" or FolderPath endswith "\\python312.dll") and (not((((FolderPath startswith "C:\\Program Files\\Python3" or FolderPath startswith "C:\\Program Files (x86)\\Python3") or FolderPath contains "\\AppData\\Local\\Programs\\Python\\Python3") or (InitiatingProcessVersionInfoCompanyName =~ "Python Software Foundation" and InitiatingProcessVersionInfoFileDescription =~ "Python" and InitiatingProcessVersionInfoProductName =~ "Python" and Signed =~ "true")))) and (not(((FolderPath contains "\\cpython\\externals\\" or FolderPath contains "\\cpython\\PCbuild\\") or FolderPath startswith "C:\\Program Files\\Microsoft Visual Studio\\")))

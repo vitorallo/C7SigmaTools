@@ -1,0 +1,10 @@
+// Title: Flash Player Update from Suspicious Location
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-10-25
+// Level: high
+// Description: Detects a flashplayer update from an unofficial locationThis table contains proxy logs, which can be queried for information related to web traffic and user activity. Make sure to have the necessary connectors or data sources configured in Sentinel to collect proxy logs.
+// Tags: attack.initial-access, attack.t1189, attack.execution, attack.t1204.002, attack.defense-evasion, attack.t1036.005
+// ================================================================== 
+
+ProxyLog
+| where (''c-uri'' contains "/flash_install.php" or ''c-uri'' endswith "/install_flash_player.exe") and (not('cs-host' endswith ".adobe.com"))

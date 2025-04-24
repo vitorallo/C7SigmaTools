@@ -1,0 +1,10 @@
+// Title: JexBoss Command Sequence
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-08-24
+// Level: high
+// Description: Detects suspicious command sequence that JexBossThis table contains Linux audit logs which can be queried in Microsoft Sentinel. Ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are set up to collect audit logs from these machines.
+// Tags: attack.execution, attack.t1059.004
+// ================================================================== 
+
+LinuxAuditLogs
+| where "bash -c /bin/bash" and "&/dev/tcp/"

@@ -1,0 +1,10 @@
+// Title: DNS Query Request By Regsvr32.EXE
+// Author: Dmitriy Lifanov, oscd.community
+// Date: 2019-10-25
+// Level: medium
+// Description: Detects DNS queries initiated by "Regsvr32.exe"The DnsEvents table in Microsoft Sentinel contains DNS query logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1559.001, attack.defense-evasion, attack.t1218.010
+// ================================================================== 
+
+DnsEvents
+| where InitiatingProcessFolderPath endswith "\\regsvr32.exe"

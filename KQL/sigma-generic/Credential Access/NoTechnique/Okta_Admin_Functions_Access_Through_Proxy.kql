@@ -1,0 +1,10 @@
+// Title: Okta Admin Functions Access Through Proxy
+// Author: Muhammad Faisal @faisalusuf
+// Date: 2023-10-25
+// Level: medium
+// Description: Detects access to Okta admin functions through proxy.This table contains Okta sign-in logs. To have this table present in Microsoft Sentinel, you need to ensure that Okta logs are being ingested into Sentinel. This may require setting up a data connector for Okta logs.
+// Tags: attack.credential-access
+// ================================================================== 
+
+OktaSignInLogs
+| where 'debugContext.debugData.requestUri' contains "admin" and 'securityContext.isProxy' =~ "true"

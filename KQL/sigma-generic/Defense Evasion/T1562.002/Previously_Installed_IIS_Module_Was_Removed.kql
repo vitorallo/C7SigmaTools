@@ -1,0 +1,10 @@
+// Title: Previously Installed IIS Module Was Removed
+// Author: Nasreddine Bencherchali
+// Date: 2024-10-06
+// Level: low
+// Description: Detects the removal of a previously installed IIS module.This table contains IIS configuration data for Windows systems. To have this table present in Microsoft Sentinel, ensure that the necessary data connectors are set up to collect logs from Windows systems with IIS services enabled.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1562.002, attack.t1505.004
+// ================================================================== 
+
+IISConfig
+| where Configuration contains "/system.webServer/modules/remove"

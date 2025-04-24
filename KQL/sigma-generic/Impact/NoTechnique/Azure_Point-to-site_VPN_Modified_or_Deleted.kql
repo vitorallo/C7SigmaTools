@@ -1,0 +1,10 @@
+// Title: Azure Point-to-site VPN Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-08
+// Level: medium
+// Description: Identifies when a Point-to-site VPN is Modified or Deleted.This table contains Azure Activity Logs data, which includes information about operations performed on resources in Azure. To have this table present in Microsoft Sentinel, ensure that you have the Azure Monitor solution deployed and configured to collect Azure Activity Logs.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.NETWORK/P2SVPNGATEWAYS/WRITE", "MICROSOFT.NETWORK/P2SVPNGATEWAYS/DELETE", "MICROSOFT.NETWORK/P2SVPNGATEWAYS/RESET/ACTION", "MICROSOFT.NETWORK/P2SVPNGATEWAYS/GENERATEVPNPROFILE/ACTION", "MICROSOFT.NETWORK/P2SVPNGATEWAYS/DISCONNECTP2SVPNCONNECTIONS/ACTION", "MICROSOFT.NETWORK/P2SVPNGATEWAYS/PROVIDERS/MICROSOFT.INSIGHTS/DIAGNOSTICSETTINGS/WRITE")

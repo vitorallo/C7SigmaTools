@@ -1,0 +1,10 @@
+// Title: Create Volume Shadow Copy with Powershell
+// Author: frack113
+// Date: 2022-01-12
+// Level: high
+// Description: Adversaries may attempt to access or create a copy of the Active Directory domain database in order to steal credential informationThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for Script Block Logging events, you may need to enable Advanced Audit Policy Configuration settings on the Windows machines and ensure that the appropriate security events are being collected and forwarded to Sentinel.
+// Tags: attack.credential-access, attack.t1003.003
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Win32_ShadowCopy" and ScriptBlockText contains ").Create(" and ScriptBlockText contains "ClientAccessible"

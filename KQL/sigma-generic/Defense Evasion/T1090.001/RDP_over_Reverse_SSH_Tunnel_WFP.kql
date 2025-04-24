@@ -1,0 +1,10 @@
+// Title: RDP over Reverse SSH Tunnel WFP
+// Author: Samir Bousseaden
+// Date: 2019-02-16
+// Level: high
+// Description: Detects svchost hosting RDP termsvcs communicating with the loopback addressThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Make sure to have the Microsoft Security Events connector enabled in your Sentinel workspace to populate this table.
+// Tags: attack.defense-evasion, attack.command-and-control, attack.lateral-movement, attack.t1090.001, attack.t1090.002, attack.t1021.001, car.2013-07-002
+// ================================================================== 
+
+SecurityEvent
+| where (((DestAddress in~ ("::1") or DestAddress startswith "127.") and LocalPort == 3389) or (DestPort == 3389 and (SourceAddress in~ ("::1") or SourceAddress startswith "127."))) and (not((FilterOrigin =~ "AppContainer Loopback" or (Application endswith "\\thor.exe" or Application endswith "\\thor64.exe"))))

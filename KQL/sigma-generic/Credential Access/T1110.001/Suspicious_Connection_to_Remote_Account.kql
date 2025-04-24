@@ -1,0 +1,12 @@
+// Title: Suspicious Connection to Remote Account
+// Author: frack113
+// Date: 2021-12-27
+// Level: low
+// Description: Adversaries with no prior knowledge of legitimate credentials within the system or environment may guess passwords to attempt access to accounts.
+// Without knowledge of the password for an account, an adversary may opt to systematically guess the password using a repetitive or iterative mechanism
+// This table contains security-related events, including script block logging events. Enable the appropriate data connectors in Microsoft Sentinel to ingest Windows security events.
+// Tags: attack.credential-access, attack.t1110.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "System.DirectoryServices.Protocols.LdapDirectoryIdentifier" or ScriptBlockText contains "System.Net.NetworkCredential" or ScriptBlockText contains "System.DirectoryServices.Protocols.LdapConnection"

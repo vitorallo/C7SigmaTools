@@ -1,0 +1,10 @@
+// Title: PUA - Advanced IP/Port Scanner Update Check
+// Author: Axel Olsson
+// Date: 2022-08-14
+// Level: medium
+// Description: Detect the update check performed by Advanced IP/Port Scanner utilities.This table contains proxy logs, which can be queried to analyze web traffic and user activity. Make sure to have the necessary connectors or data sources configured in Sentinel to collect and ingest proxy logs.
+// Tags: attack.discovery, attack.t1590
+// ================================================================== 
+
+ProxyLog
+| where (''c-uri-query'' contains "lng=" and ''c-uri-query'' contains "ver=" and ''c-uri-query'' contains "beta=" and ''c-uri-query'' contains "type=" and ''c-uri-query'' contains "rmode=" and ''c-uri-query'' contains "product=") and 'c-uri' contains "/checkupdate.php"

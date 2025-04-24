@@ -1,0 +1,10 @@
+// Title: MSSQL Server Failed Logon
+// Author: Nasreddine Bencherchali (Nextron Systems), j4son
+// Date: 2023-10-11
+// Level: low
+// Description: Detects failed logon attempts from clients to MSSQL server.This table contains security-related events from Windows machines. Make sure to have the Microsoft Security Event Log connector enabled in Sentinel to collect these events.
+// Tags: attack.credential-access, attack.t1110
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name contains "MSSQL"

@@ -1,0 +1,10 @@
+// Title: Modification of ld.so.preload
+// Author: E.M. Anhaus (originally from Atomic Blue Detections, Tony Lambert), oscd.community
+// Date: 2019-10-24
+// Level: high
+// Description: Identifies modification of ld.so.preload for shared object injection. This technique is used by attackers to load arbitrary code into processes.The SecurityEvent table in Microsoft Sentinel contains security-related events and logs. To query auditd logs from Linux systems, you need to ensure that the Linux machines are onboarded to Sentinel and have the necessary data connectors or agents installed to collect and send auditd logs to Sentinel.
+// Tags: attack.defense-evasion, attack.t1574.006
+// ================================================================== 
+
+SecurityEvent
+| where name =~ "/etc/ld.so.preload" and type =~ "PATH"

@@ -1,0 +1,21 @@
+// Description: 'This detection looks for new onmicrosoft domains being added to a tenant. 
+// An attacker who compromises a tenant may register a new onmicrosoft domain in order to masquerade as a service provider for launching phishing campaigns.
+// Domain additions are not a common occurrence and users should validate that the domain was added by a legitimate user, with a legitimate purpose.'
+// Required Connectors: AzureActiveDirectory (Types: AuditLogs)
+
+AuditLogs
+| where AADOperationType == "Add"
+| where Result == "success"
+| where OperationName in ("Add verified domain", "Add unverified domain")
+| extend InitiatedBy = parse_json(InitiatedBy)
+| extend InitiatingUser = tostring(InitiatedBy.user.userPrincipalName)
+| extend InitiatingAadUserId = tostring(InitiatedBy.user.id)
+| extend InitiatingIp = tostring(InitiatedBy.user.ipAddress)
+| extend InitiatingApp = tostring(InitiatedBy.app.displayName)
+| extend InitiatingSPID = tostring(InitiatedBy.app.servicePrincipalId)
+| extend DomainAdded = tostring(TargetResources[0].displayName)
+| where DomainAdded has "onmicrosoft"
+| extend ActionInitiatedBy = case(isnotempty(InitiatingUser), InitiatingUser, strcat(InitiatingApp, " - ", InitiatingSPID))
+| extend UserName = split(InitiatingUser, "@")[0]
+| extend UPNSuffix = split(InitiatingUser, "@")[1]
+| project-reorder TimeGenerated, OperationName, DomainAdded, ActionInitiatedBy, InitiatingIp

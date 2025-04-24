@@ -1,8 +1,0 @@
-# test_table_name_pipeline.yml
-name: Custom Query Table Pipeline
-priority: 1
-transformations:
-- id: mytest
-  type: set_state
-  key: "query_table"
-  val: ["OfficeActivity"]

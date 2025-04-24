@@ -1,0 +1,10 @@
+// Title: Azure Firewall Rule Configuration Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-08
+// Level: medium
+// Description: Identifies when a Firewall Rule Configuration is Modified or Deleted.This table contains Azure activity logs. Ensure that Azure Diagnostics logs are enabled for the Azure service in question to populate this table in Microsoft Sentinel.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.NETWORK/FIREWALLPOLICIES/RULECOLLECTIONGROUPS/WRITE", "MICROSOFT.NETWORK/FIREWALLPOLICIES/RULECOLLECTIONGROUPS/DELETE", "MICROSOFT.NETWORK/FIREWALLPOLICIES/RULEGROUPS/WRITE", "MICROSOFT.NETWORK/FIREWALLPOLICIES/RULEGROUPS/DELETE")

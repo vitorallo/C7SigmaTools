@@ -1,0 +1,10 @@
+// Title: DNS Query To Put.io - DNS Client
+// Author: Omar Khaled (@beacon_exe)
+// Date: 2024-08-23
+// Level: medium
+// Description: Detects DNS queries for subdomains related to "Put.io" sharing website.This table contains DNS client events from the Microsoft-Windows-DNS Client Events/Operational Event Log. Ensure that the Microsoft-Windows-DNS Client Events/Operational Event Log is enabled and collected in order to have this table available in Microsoft Sentinel.
+// Tags: attack.command-and-control
+// ================================================================== 
+
+DnsEvents
+| where QueryName contains "api.put.io" or QueryName contains "upload.put.io"

@@ -1,0 +1,10 @@
+// Title: Google Cloud Kubernetes RoleBinding
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-09
+// Level: medium
+// Description: Detects the creation or patching of potential malicious RoleBinding. This includes RoleBindings and ClusterRoleBinding.This table contains GCP audit logs. To have access to GCP audit logs in Microsoft Sentinel, you need to ensure that the GCP connector is properly configured and sending data to Sentinel.
+// Tags: attack.credential-access
+// ================================================================== 
+
+GCPAuditLogs
+| where ('gcp.audit.method_name' contains "io.k8s.authorization.rbac.v" and 'gcp.audit.method_name' contains ".clusterrolebindings.create") or ('gcp.audit.method_name' contains "io.k8s.authorization.rbac.v" and 'gcp.audit.method_name' contains ".rolebindings.create") or ('gcp.audit.method_name' contains "io.k8s.authorization.rbac.v" and 'gcp.audit.method_name' contains ".clusterrolebindings.patch") or ('gcp.audit.method_name' contains "io.k8s.authorization.rbac.v" and 'gcp.audit.method_name' contains ".rolebindings.patch") or ('gcp.audit.method_name' contains "io.k8s.authorization.rbac.v" and 'gcp.audit.method_name' contains ".clusterrolebindings.update") or ('gcp.audit.method_name' contains "io.k8s.authorization.rbac.v" and 'gcp.audit.method_name' contains ".rolebindings.update") or ('gcp.audit.method_name' contains "io.k8s.authorization.rbac.v" and 'gcp.audit.method_name' contains ".clusterrolebindings.delete") or ('gcp.audit.method_name' contains "io.k8s.authorization.rbac.v" and 'gcp.audit.method_name' contains ".rolebindings.delete")

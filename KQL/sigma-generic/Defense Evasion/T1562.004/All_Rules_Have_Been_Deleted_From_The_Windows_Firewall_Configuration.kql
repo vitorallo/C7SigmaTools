@@ -1,0 +1,10 @@
+// Title: All Rules Have Been Deleted From The Windows Firewall Configuration
+// Author: frack113, Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-17
+// Level: high
+// Description: Detects when a all the rules have been deleted from the Windows Defender Firewall configurationThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which can include firewall events. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1562.004
+// ================================================================== 
+
+SecurityEvent
+| where (not(ModifyingApplication endswith ":\\Windows\\System32\\svchost.exe")) and (not((ModifyingApplication contains ":\\ProgramData\\Microsoft\\Windows Defender\\Platform\\" and ModifyingApplication contains "\\MsMpEng.exe")))

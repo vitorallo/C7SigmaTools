@@ -1,0 +1,7 @@
+// Description: This query helps hunting for Inbox rule changes which forward-redirect email
+// Required Connectors: MicrosoftThreatProtection (Types: CloudAppEvents)
+
+CloudAppEvents
+| where ActionType contains "Set-InboxRule"
+|extend Parameters = tostring((parse_json(RawEventData)).Parameters)
+|where Parameters contains "ForwardTo" or Parameters contains "RedirectTo"

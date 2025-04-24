@@ -1,0 +1,10 @@
+// Title: Important Scheduled Task Deleted/Disabled
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-12-05
+// Level: high
+// Description: Detects when adversaries stop services or processes by deleting or disabling their respective scheduled tasks in order to conduct data destructive activitiesThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Make sure to have the Windows Security Events connector enabled in Sentinel to populate this table.
+// Tags: attack.execution, attack.privilege-escalation, attack.persistence, attack.t1053.005
+// ================================================================== 
+
+SecurityEvent
+| where (TaskName contains "\\Windows\\SystemRestore\\SR" or TaskName contains "\\Windows\\Windows Defender\\" or TaskName contains "\\Windows\\BitLocker" or TaskName contains "\\Windows\\WindowsBackup\\" or TaskName contains "\\Windows\\WindowsUpdate\\" or TaskName contains "\\Windows\\UpdateOrchestrator\\Schedule" or TaskName contains "\\Windows\\ExploitGuard") and (not((SubjectUserName endswith "$" and TaskName contains "\\Windows\\Windows Defender\\")))

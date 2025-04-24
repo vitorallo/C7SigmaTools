@@ -1,0 +1,6 @@
+// Description: Identify dllhost.exe using WMIC to discover additional hosts and associated domain.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where InitiatingProcessFileName =~ "dllhost.exe" and InitiatingProcessCommandLine == "dllhost.exe" 
+| where ProcessCommandLine has "wmic computersystem get domain"

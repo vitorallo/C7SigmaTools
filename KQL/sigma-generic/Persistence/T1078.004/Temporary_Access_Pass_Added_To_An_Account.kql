@@ -1,0 +1,10 @@
+// Title: Temporary Access Pass Added To An Account
+// Author: Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H'
+// Date: 2022-08-10
+// Level: high
+// Description: Detects when a temporary access pass (TAP) is added to an account. TAPs added to priv accounts should be investigatedThis table contains Azure activity logs, including audit logs. Ensure that Azure Diagnostics logs are enabled and streaming to Log Analytics workspace in Sentinel.
+// Tags: attack.persistence, attack.t1078.004
+// ================================================================== 
+
+AzureActivity
+| where Status =~ "Admin registered temporary access pass method for user" and 'properties.message' =~ "Admin registered security info"

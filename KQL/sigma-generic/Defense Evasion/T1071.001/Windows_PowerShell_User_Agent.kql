@@ -1,0 +1,10 @@
+// Title: Windows PowerShell User Agent
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-13
+// Level: medium
+// Description: Detects Windows PowerShell Web AccessThis table contains proxy logs, make sure to have the necessary connectors or data sources configured in Sentinel to collect proxy logs.
+// Tags: attack.defense-evasion, attack.command-and-control, attack.t1071.001
+// ================================================================== 
+
+ProxyLog
+| where 'c-useragent' contains " WindowsPowerShell/"

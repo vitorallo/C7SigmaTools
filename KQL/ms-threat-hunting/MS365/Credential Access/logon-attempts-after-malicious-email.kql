@@ -1,0 +1,14 @@
+// Description: This query finds the 10 latest logons performed by email recipients within 30 minutes after they received known malicious emails. You can use this query to check whether the accounts of the email recipients have been compromised.
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, IdentityLogonEvents)
+
+//Find logons that occurred right after malicious email was received
+let MaliciousEmail=EmailEvents
+| where ThreatTypes has_cs "Malware" 
+| project TimeEmail = Timestamp, Subject, SenderFromAddress, AccountName = tostring(split(RecipientEmailAddress, "@")[0]);
+MaliciousEmail
+| join (
+IdentityLogonEvents
+| project LogonTime = Timestamp, AccountName, DeviceName
+) on AccountName 
+| where (LogonTime - TimeEmail) between (0min.. 30min)
+| take 10

@@ -1,0 +1,14 @@
+// Description: 'Adversaries may circumvent mechanisms designed to control elevated privileges to gain higher-level permissions. The query below generates an output
+// of all users performing an "action" operation regarding an access elevation, where one or more features of the activity deviate from the user,
+// his peers or the tenant profile.'
+// Required Connectors: BehaviorAnalytics (Types: BehaviorAnalytics)
+
+let operations = dynamic(['Create role assignment']);
+BehaviorAnalytics
+| where ActionType in~ (operations)
+| where ActivityInsights has "True"
+| project TimeGenerated, UserName, UserPrincipalName, UsersInsights, ActivityType, ActionType, ActivityInsights, SourceIPAddress, SourceIPLocation, SourceDevice, DevicesInsights
+| extend Name=split(UserPrincipalName, "@")[0], UPNSuffix=split(UserPrincipalName, "@")[1]
+| extend Account_0_Name = Name
+| extend Account_0_UPNSuffix = UPNSuffix
+| extend IP_0_Address = SourceIPAddress

@@ -1,0 +1,10 @@
+// Title: Okta API Token Revoked
+// Author: Austin Songer @austinsonger
+// Date: 2021-09-12
+// Level: medium
+// Description: Detects when a API Token is revoked.This table contains Okta sign-in logs. Ensure that the Okta connector is installed in Microsoft Sentinel to have access to this table.
+// Tags: attack.impact
+// ================================================================== 
+
+OktaSignInLogs
+| where eventtype =~ "system.api_token.revoke"

@@ -1,0 +1,10 @@
+// Title: AWS Glue Development Endpoint Activity
+// Author: Austin Songer @austinsonger
+// Date: 2021-10-03
+// Level: low
+// Description: Detects possible suspicious glue development endpoint activity.The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To query this table, ensure that the AWS CloudTrail connector is set up and collecting logs from the specified AWS account.
+// Tags: attack.privilege-escalation
+// ================================================================== 
+
+CloudTrail
+| where (eventName in~ ("CreateDevEndpoint", "DeleteDevEndpoint", "UpdateDevEndpoint")) and eventSource =~ "glue.amazonaws.com"

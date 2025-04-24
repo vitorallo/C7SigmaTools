@@ -1,0 +1,10 @@
+// Title: Unsigned Module Loaded by ClickOnce Application
+// Author: @SerkinValery
+// Date: 2023-06-08
+// Level: medium
+// Description: Detects unsigned module load by ClickOnce application.The ImageLoadEvents table in Microsoft Sentinel contains information about image loading events on Windows systems. Make sure to have the Windows Security Events data connector enabled in Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1574.002
+// ================================================================== 
+
+ImageLoadEvents
+| where InitiatingProcessFolderPath contains "\\AppData\\Local\\Apps\\2.0\\" and (Signed =~ "false" or SignatureStatus =~ "Expired")

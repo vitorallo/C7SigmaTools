@@ -1,0 +1,10 @@
+// Title: HackTool - Rubeus Execution - ScriptBlock
+// Author: Christian Burkard (Nextron Systems), Florian Roth (Nextron Systems)
+// Date: 2023-04-27
+// Level: high
+// Description: Detects the execution of the hacktool Rubeus using specific command line flagsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.credential-access, attack.t1003, attack.t1558.003, attack.lateral-movement, attack.t1550.003
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "asreproast " or ScriptBlockText contains "dump /service:krbtgt " or ScriptBlockText contains "dump /luid:0x" or ScriptBlockText contains "kerberoast " or ScriptBlockText contains "createnetonly /program:" or ScriptBlockText contains "ptt /ticket:" or ScriptBlockText contains "/impersonateuser:" or ScriptBlockText contains "renew /ticket:" or ScriptBlockText contains "asktgt /user:" or ScriptBlockText contains "harvest /interval:" or ScriptBlockText contains "s4u /user:" or ScriptBlockText contains "s4u /ticket:" or ScriptBlockText contains "hash /password:" or ScriptBlockText contains "golden /aes256:" or ScriptBlockText contains "silver /user:"

@@ -1,0 +1,10 @@
+// Title: BITS Transfer Job Download To Potential Suspicious Folder
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-06-28
+// Level: high
+// Description: Detects new BITS transfer job where the LocalName/Saved file is stored in a potentially suspicious locationThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for logs related to the Windows BITS client service, you can filter on the 'Channel' field for 'Microsoft-Windows-Security-Auditing' and look for events related to the BITS service.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1197
+// ================================================================== 
+
+SecurityEvent
+| where LocalName contains "\\Desktop\\" or LocalName contains "C:\\Users\\Public\\" or LocalName contains "C:\\PerfLogs\\"

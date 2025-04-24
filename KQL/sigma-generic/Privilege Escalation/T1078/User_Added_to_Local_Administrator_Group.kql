@@ -1,0 +1,10 @@
+// Title: User Added to Local Administrator Group
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-14
+// Level: medium
+// Description: Detects the addition of a new member to the local administrator group, which could be legitimate activity or a sign of privilege escalation activityThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Make sure to have the Microsoft Security Events connector enabled in Sentinel to populate this table.
+// Tags: attack.privilege-escalation, attack.t1078, attack.persistence, attack.t1098
+// ================================================================== 
+
+SecurityEvent
+| where (TargetUserName startswith "Administr" or TargetSid =~ "S-1-5-32-544") and (not(SubjectUserName endswith "$"))

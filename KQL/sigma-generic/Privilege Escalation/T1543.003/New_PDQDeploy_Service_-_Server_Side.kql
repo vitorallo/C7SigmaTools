@@ -1,0 +1,12 @@
+// Title: New PDQDeploy Service - Server Side
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-07-22
+// Level: medium
+// Description: Detects a PDQDeploy service installation which indicates that PDQDeploy was installed on the machines.
+// PDQDeploy can be abused by attackers to remotely install packages or execute commands on target machines
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.privilege-escalation, attack.t1543.003
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and (ImagePath contains "PDQDeployService.exe" or (ServiceName in~ ("PDQDeploy", "PDQ Deploy")))

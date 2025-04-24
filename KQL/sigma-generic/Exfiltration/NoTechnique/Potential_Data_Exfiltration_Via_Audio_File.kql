@@ -1,0 +1,10 @@
+// Title: Potential Data Exfiltration Via Audio File
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-16
+// Level: medium
+// Description: Detects potential exfiltration attempt via audio file using PowerShellThis table contains security event logs from Windows machines. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to collect these logs.
+// Tags: attack.exfiltration
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "[System.Math]::" and ScriptBlockText contains "[IO.FileMode]::" and ScriptBlockText contains "BinaryWriter") and (ScriptBlockText contains "0x52" and ScriptBlockText contains "0x49" and ScriptBlockText contains "0x46" and ScriptBlockText contains "0x57" and ScriptBlockText contains "0x41" and ScriptBlockText contains "0x56" and ScriptBlockText contains "0x45" and ScriptBlockText contains "0xAC")

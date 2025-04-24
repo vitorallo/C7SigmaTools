@@ -1,0 +1,6 @@
+// Description: Identify email exfiltration conducted by PowerShell.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where FileName =~ 'powershell.exe' 
+| where ProcessCommandLine has_all('Add-PSSnapin', 'Get-Recipient', '-ExpandProperty', 'EmailAddresses', 'SmtpAddress', '-hidetableheaders')

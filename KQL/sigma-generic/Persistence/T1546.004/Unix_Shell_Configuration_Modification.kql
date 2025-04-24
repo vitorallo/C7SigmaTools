@@ -1,0 +1,10 @@
+// Title: Unix Shell Configuration Modification
+// Author: Peter Matkovski, IAI
+// Date: 2023-03-06
+// Level: medium
+// Description: Detect unix shell configuration modification. Adversaries may establish persistence through executing malicious commands triggered when a new shell is opened.This table contains Linux audit logs. To have this table present in Microsoft Sentinel, ensure that the Linux machines are onboarded to Sentinel and the Linux audit logs are being collected and forwarded to Sentinel.
+// Tags: attack.persistence, attack.t1546.004
+// ================================================================== 
+
+LinuxAuditLogs
+| where (name in~ ("/etc/shells", "/etc/profile", "/etc/bash.bashrc", "/etc/bashrc", "/etc/zsh/zprofile", "/etc/zsh/zshrc", "/etc/zsh/zlogin", "/etc/zsh/zlogout", "/etc/csh.cshrc", "/etc/csh.login", "/root/.bashrc", "/root/.bash_profile", "/root/.profile", "/root/.zshrc", "/root/.zprofile") or name startswith "/etc/profile.d/" or (name contains "/home/" and name contains "/.bashrc") or (name contains "/home/" and name contains "/.zshrc") or (name contains "/home/" and name contains "/.bash_profile") or (name contains "/home/" and name contains "/.zprofile") or (name contains "/home/" and name contains "/.profile") or (name contains "/home/" and name contains "/.bash_login") or (name contains "/home/" and name contains "/.bash_logout") or (name contains "/home/" and name contains "/.zlogin") or (name contains "/home/" and name contains "/.zlogout")) and type =~ "PATH"

@@ -1,0 +1,13 @@
+// Description: Hunting for credential phishing using the "Referral" infrastructure using Defender for Office 365 data
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, EmailUrlInfo)
+
+let EmailAddresses = pack_array
+('zreffertalt.com.com','zreffesral.com.com','kzreffertal.com.com',
+'wzreffertal.com.com','refferal.comq','refferal.net','zreffertal.com.com',
+'zrefferal.com.com','refferasl.com.com','zreffesral.com','zrefsfertal.com.com',
+'irefferal.com','refferasl.co','zrefferal.com');
+EmailEvents
+| where SenderMailFromDomain in (EmailAddresses)
+| extend RecipientDomain = extract("[^@]+$", 0, RecipientEmailAddress)
+| where SenderFromDomain == RecipientDomain
+| join EmailUrlInfo on $left.NetworkMessageId == $right.NetworkMessageId

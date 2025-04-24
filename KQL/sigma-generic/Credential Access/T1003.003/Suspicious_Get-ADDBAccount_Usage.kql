@@ -1,0 +1,10 @@
+// Title: Suspicious Get-ADDBAccount Usage
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-03-16
+// Level: high
+// Description: Detects suspicious invocation of the Get-ADDBAccount script that reads from a ntds.dit file and may be used to get access to credentials without using any credential dumpersThis table contains security-related events from Windows systems. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.credential-access, attack.t1003.003
+// ================================================================== 
+
+SecurityEvent
+| where Payload contains "Get-ADDBAccount" and Payload contains "BootKey " and Payload contains "DatabasePath "

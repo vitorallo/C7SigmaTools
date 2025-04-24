@@ -1,0 +1,10 @@
+// Title: Multifactor Authentication Denied
+// Author: AlertIQ
+// Date: 2022-03-24
+// Level: medium
+// Description: User has indicated they haven't instigated the MFA prompt and could indicate an attacker has the password for the account.The equivalent table in Microsoft Sentinel for Azure signin logs. Make sure to have the Azure Activity Log solution enabled in Sentinel to have access to this table.
+// Tags: attack.initial-access, attack.credential-access, attack.t1078.004, attack.t1110, attack.t1621
+// ================================================================== 
+
+SigninLogs
+| where AuthenticationRequirement =~ "multiFactorAuthentication" and Status contains "MFA Denied"

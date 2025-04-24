@@ -1,0 +1,10 @@
+// Title: Suspicious PowerShell Invocations - Generic
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-12
+// Level: high
+// Description: Detects suspicious PowerShell invocation command parametersThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains " -enc " or ScriptBlockText contains " -EncodedCommand " or ScriptBlockText contains " -ec ") and (ScriptBlockText contains " -w hidden " or ScriptBlockText contains " -window hidden " or ScriptBlockText contains " -windowstyle hidden " or ScriptBlockText contains " -w 1 ") and (ScriptBlockText contains " -noni " or ScriptBlockText contains " -noninteractive ")

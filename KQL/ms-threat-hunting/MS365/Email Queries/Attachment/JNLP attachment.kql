@@ -1,0 +1,5 @@
+// Description: JNLP file extensions are an uncommon file type often used to deliver malware.
+// Required Connectors: MicrosoftThreatProtection (Types: EmailAttachmentInfo)
+
+EmailAttachmentInfo
+| where FileName endswith ".jnlp"

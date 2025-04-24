@@ -1,0 +1,10 @@
+// Title: Automated Collection Command PowerShell
+// Author: frack113
+// Date: 2021-07-28
+// Level: medium
+// Description: Once established within a system or network, an adversary may use automated techniques for collecting internal data.This table contains Windows security event logs, including PowerShell script block logging events. To query for the specific requirement in the sigma rule, you may need to filter on EventID and look for PowerShell script block logs.
+// Tags: attack.collection, attack.t1119
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Get-ChildItem" and ScriptBlockText contains " -Recurse " and ScriptBlockText contains " -Include ") and (ScriptBlockText contains ".doc" or ScriptBlockText contains ".docx" or ScriptBlockText contains ".xls" or ScriptBlockText contains ".xlsx" or ScriptBlockText contains ".ppt" or ScriptBlockText contains ".pptx" or ScriptBlockText contains ".rtf" or ScriptBlockText contains ".pdf" or ScriptBlockText contains ".txt")

@@ -1,0 +1,10 @@
+// Title: OpenCanary - SIP Request
+// Author: Security Onion Solutions
+// Date: 2024-03-08
+// Level: high
+// Description: Detects instances where an SIP service on an OpenCanary node has had a SIP request.The OpencanaryLogs table in Microsoft Sentinel contains logs related to the Opencanary application. To have this table present in Sentinel, you need to ensure that Opencanary logs are being collected and sent to Sentinel for processing.
+// Tags: attack.collection, attack.t1123
+// ================================================================== 
+
+OpencanaryLogs
+| where logtype == 15001

@@ -1,0 +1,10 @@
+// Title: Suspicious OpenSSH Daemon Error
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-06-30
+// Level: medium
+// Description: Detects suspicious SSH / SSHD error messages that indicate a fatal or suspicious error that could be caused by exploiting attemptsThe Syslog table in Microsoft Sentinel contains logs from various sources including Linux systems. Ensure that you have the necessary connectors or data sources configured to collect syslog data from your Linux systems and send it to Sentinel.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+Syslog
+| where "unexpected internal error" or "unknown or unsupported key type" or "invalid certificate signing key" or "invalid elliptic curve value" or "incorrect signature" or "error in libcrypto" or "unexpected bytes remain after decoding" or "fatal: buffer_get_string: bad string" or "Local: crc32 compensation attack" or "bad client public DH value" or "Corrupted MAC on input"

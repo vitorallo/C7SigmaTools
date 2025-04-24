@@ -1,0 +1,10 @@
+// Title: Unusual File Download From File Sharing Websites - File Stream
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-08-24
+// Level: medium
+// Description: Detects the download of suspicious file type from a well-known file and paste sharing domainThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To have this table present, ensure that you have the necessary connectors set up in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.s0139, attack.t1564.004
+// ================================================================== 
+
+SecurityEvent
+| where (Contents contains ".githubusercontent.com" or Contents contains "anonfiles.com" or Contents contains "cdn.discordapp.com" or Contents contains "ddns.net" or Contents contains "dl.dropboxusercontent.com" or Contents contains "ghostbin.co" or Contents contains "glitch.me" or Contents contains "gofile.io" or Contents contains "hastebin.com" or Contents contains "mediafire.com" or Contents contains "mega.nz" or Contents contains "onrender.com" or Contents contains "pages.dev" or Contents contains "paste.ee" or Contents contains "pastebin.com" or Contents contains "pastebin.pl" or Contents contains "pastetext.net" or Contents contains "pixeldrain.com" or Contents contains "privatlab.com" or Contents contains "privatlab.net" or Contents contains "send.exploit.in" or Contents contains "sendspace.com" or Contents contains "storage.googleapis.com" or Contents contains "storjshare.io" or Contents contains "supabase.co" or Contents contains "temp.sh" or Contents contains "transfer.sh" or Contents contains "trycloudflare.com" or Contents contains "ufile.io" or Contents contains "w3spaces.com" or Contents contains "workers.dev") and (TargetFilename contains ".bat:Zone" or TargetFilename contains ".cmd:Zone" or TargetFilename contains ".ps1:Zone")

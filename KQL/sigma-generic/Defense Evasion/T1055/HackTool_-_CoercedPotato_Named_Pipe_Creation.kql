@@ -1,0 +1,10 @@
+// Title: HackTool - CoercedPotato Named Pipe Creation
+// Author: Florian Roth (Nextron Systems)
+// Date: 2023-10-11
+// Level: high
+// Description: Detects the pattern of a pipe name as used by the hack tool CoercedPotatoThis table contains Sysmon events, including Named Pipe Events (Event ID 17 and Event ID 18). To have this table present in Microsoft Sentinel, you need to have Sysmon installed on your Windows endpoints and configured to log Named Pipe Events.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1055
+// ================================================================== 
+
+SysmonEvent
+| where PipeName contains "\\coerced\\"

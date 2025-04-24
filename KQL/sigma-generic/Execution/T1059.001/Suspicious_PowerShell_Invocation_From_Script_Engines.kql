@@ -1,0 +1,10 @@
+// Title: Suspicious PowerShell Invocation From Script Engines
+// Author: Florian Roth (Nextron Systems)
+// Date: 2019-01-16
+// Level: medium
+// Description: Detects suspicious powershell invocations from interpreters or unusual programsThis table contains information about process creation events in the Windows environment. To have this table present in Microsoft Sentinel, ensure that the necessary data connectors are set up to collect process creation logs from Windows machines.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+ProcessCreationEvents
+| where ((FolderPath endswith "\\powershell.exe" or FolderPath endswith "\\pwsh.exe") and (InitiatingProcessFolderPath endswith "\\wscript.exe" or InitiatingProcessFolderPath endswith "\\cscript.exe")) and (not(CurrentDirectory contains "\\Health Service State\\"))

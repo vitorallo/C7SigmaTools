@@ -1,0 +1,10 @@
+// Title: A Rule Has Been Deleted From The Windows Firewall Exception List
+// Author: frack113
+// Date: 2022-02-19
+// Level: medium
+// Description: Detects when a single rules or all of the rules have been deleted from the Windows Defender FirewallThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which can include firewall events. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1562.004
+// ================================================================== 
+
+SecurityEvent
+| where (not((ModifyingApplication =~ "" or (ModifyingApplication startswith "C:\\Program Files (x86)\\" or ModifyingApplication startswith "C:\\Program Files\\" or ModifyingApplication startswith "C:\\Windows\\WinSxS\\") or isnull(ModifyingApplication) or ModifyingApplication =~ "C:\\Windows\\System32\\svchost.exe"))) and (not((ModifyingApplication endswith "\\MsMpEng.exe" and ModifyingApplication startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\")))

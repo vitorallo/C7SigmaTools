@@ -1,0 +1,10 @@
+// Title: Hacktool Ruler
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-05-31
+// Level: high
+// Description: This events that are generated when using the hacktool Ruler by SensepostThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the necessary data connectors and configurations set up in Sentinel to collect and ingest security events from Windows machines.
+// Tags: attack.discovery, attack.execution, attack.t1087, attack.t1114, attack.t1059, attack.t1550.002
+// ================================================================== 
+
+SecurityEvent
+| where Workstation =~ "RULER" or WorkstationName =~ "RULER"

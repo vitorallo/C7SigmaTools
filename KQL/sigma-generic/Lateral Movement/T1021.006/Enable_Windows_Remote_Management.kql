@@ -1,0 +1,10 @@
+// Title: Enable Windows Remote Management
+// Author: frack113
+// Date: 2022-01-07
+// Level: medium
+// Description: Adversaries may use Valid Accounts to interact with remote systems using Windows Remote Management (WinRM). The adversary may then perform actions as the logged-on user.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. To query for Script Block Logging events, you can filter on the EventID field for the specific event ID related to Script Block Logging (e.g., EventID == 4104). Ensure that the necessary data connectors are set up in Sentinel to collect Windows security event logs.
+// Tags: attack.lateral-movement, attack.t1021.006
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Enable-PSRemoting "

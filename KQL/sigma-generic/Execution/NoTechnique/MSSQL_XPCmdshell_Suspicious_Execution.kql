@@ -1,0 +1,10 @@
+// Title: MSSQL XPCmdshell Suspicious Execution
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-07-12
+// Level: high
+// Description: Detects when the MSSQL "xp_cmdshell" stored procedure is used to execute commandsThe SecurityEvent table in Microsoft Sentinel contains security-related events, including application logs. To query for events related to MSSQL audit policy and 'xp_cmdshell', you may need to enable the appropriate data connectors in Sentinel to collect and ingest Windows security logs.
+// Tags: attack.execution
+// ================================================================== 
+
+SecurityEvent
+| where (Data contains "object_name:xp_cmdshell" and Data contains "statement:EXEC") and Provider_Name contains "MSSQL"

@@ -1,0 +1,12 @@
+// Description: This query helps hunting for top outbound recipient domains which are sending inbound emails with threats
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents
+| where EmailDirection == "Outbound"
+| project RecipientDomain = tostring(split(RecipientEmailAddress, "@")[1])
+| summarize count() by RecipientDomain
+| project OutboundCount=count_, RecipientDomain, SenderFromDomain=RecipientDomain
+| join (EmailEvents | where EmailDirection == "Inbound" and isempty(ThreatTypes)==false) on SenderFromDomain
+| summarize max(OutboundCount),count() by SenderFromDomain
+| project SenderFromDomain, OutboundEmails=max_OutboundCount, IncomingEmailsWithThreats=count_
+| sort by OutboundEmails

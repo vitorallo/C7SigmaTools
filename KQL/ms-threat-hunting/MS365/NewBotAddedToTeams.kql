@@ -1,0 +1,20 @@
+// Description: 'This hunting query helps identify new, and potentially unapproved applications or bots being added to Teams.'
+// Required Connectors: Office365 (Types: OfficeActivity (Teams))
+
+let starttime = todatetime('{{StartTimeISO}}');
+let endtime = todatetime('{{EndTimeISO}}');
+let lookback = starttime - 14d;
+let historical_bots = (
+OfficeActivity
+| where TimeGenerated between(lookback..starttime)
+| where OfficeWorkload =~ "MicrosoftTeams"
+| where isnotempty(AddonName)
+| project AddonName);
+OfficeActivity
+| where TimeGenerated between(starttime..endtime)
+| where OfficeWorkload =~ "MicrosoftTeams"
+// Look for add-ins we have never seen before
+| where AddonName in (historical_bots)
+| extend AccountName = tostring(split(UserId, "@")[0]), AccountUPNSuffix = tostring(split(UserId, "@")[1])
+| extend Account_0_Name = AccountName
+| extend Account_0_UPNSuffix = AccountUPNSuffix

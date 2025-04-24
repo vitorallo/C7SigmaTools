@@ -1,0 +1,10 @@
+// Title: Remote Registry Lateral Movement
+// Author: Sagie Dulce, Dekel Paz
+// Date: 2022-01-01
+// Level: high
+// Description: Detects remote RPC calls to modify the registry and possible execute codeThis table contains logs related to the RPC Firewall application. To have this table present in Microsoft Sentinel, ensure that the RPC Firewall logs are being collected and sent to Sentinel for analysis.
+// Tags: attack.lateral-movement, attack.t1112
+// ================================================================== 
+
+rpc_firewall_logs
+| where EventLog =~ "RPCFW" and InterfaceUuid =~ "338cd001-2244-31f1-aaaa-900038001003" and (OpNum in~ ("6", "7", "8", "13", "18", "19", "21", "22", "23", "35"))

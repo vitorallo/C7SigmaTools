@@ -1,0 +1,6 @@
+// Description: Use this query to locate suspicious load image events by rundll32.exe or regsvr32.exe, a behavior associated with IcedId, which can lead to ransomware.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceImageLoadEvents)
+
+DeviceImageLoadEvents 
+| where InitiatingProcessFileName in~ ('rundll32.exe','regsvr32.exe') 
+| where FileName endswith '.txt' or FileName endswith '.pdf'

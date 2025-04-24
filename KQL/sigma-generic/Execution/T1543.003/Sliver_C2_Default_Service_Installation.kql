@@ -1,0 +1,10 @@
+// Title: Sliver C2 Default Service Installation
+// Author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-08-25
+// Level: high
+// Description: Detects known malicious service installation that appear in cases in which a Sliver implants execute the PsExec commandsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.privilege-escalation, attack.t1543.003, attack.t1569.002
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and (ImagePath matches regex "^[a-zA-Z]:\\\\windows\\\\temp\\\\[a-zA-Z0-9]{10}\\.exe" or (ServiceName in~ ("Sliver", "Sliver implant")))

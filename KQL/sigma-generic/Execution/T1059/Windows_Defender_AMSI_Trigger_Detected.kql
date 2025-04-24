@@ -1,0 +1,10 @@
+// Title: Windows Defender AMSI Trigger Detected
+// Author: Bhabesh Raj
+// Date: 2020-09-14
+// Level: high
+// Description: Detects triggering of AMSI by Windows Defender.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which can include information about Windows Defender (windefend) service events. Ensure that the Windows Security Events connector is enabled in Sentinel to collect these logs.
+// Tags: attack.execution, attack.t1059
+// ================================================================== 
+
+SecurityEvent
+| where SourceName =~ "AMSI"

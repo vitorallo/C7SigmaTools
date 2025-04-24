@@ -1,0 +1,10 @@
+// Title: External Remote SMB Logon from Public IP
+// Author: Micah Babinski (@micahbabinski), Zach Mathis (@yamatosecurity)
+// Date: 2023-01-19
+// Level: high
+// Description: Detects successful logon from public IP address via SMB. This can indicate a publicly-exposed SMB port.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the necessary data connectors set up in Sentinel to collect security events from Windows machines.
+// Tags: attack.initial-access, attack.credential-access, attack.t1133, attack.t1078, attack.t1110
+// ================================================================== 
+
+SecurityEvent
+| where LogonType == 3 and (not((IpAddress =~ "-" or (ipv4_is_in_range(IpAddress, "::1/128") or ipv4_is_in_range(IpAddress, "10.0.0.0/8") or ipv4_is_in_range(IpAddress, "127.0.0.0/8") or ipv4_is_in_range(IpAddress, "172.16.0.0/12") or ipv4_is_in_range(IpAddress, "192.168.0.0/16") or ipv4_is_in_range(IpAddress, "169.254.0.0/16") or ipv4_is_in_range(IpAddress, "fc00::/7") or ipv4_is_in_range(IpAddress, "fe80::/10")))))

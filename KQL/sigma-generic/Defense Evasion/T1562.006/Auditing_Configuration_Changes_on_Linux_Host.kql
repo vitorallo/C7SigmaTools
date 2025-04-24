@@ -1,0 +1,10 @@
+// Title: Auditing Configuration Changes on Linux Host
+// Author: Mikhail Larin, oscd.community
+// Date: 2019-10-25
+// Level: high
+// Description: Detect changes in auditd configuration filesThe equivalent table in Microsoft Sentinel for Linux audit logs. Make sure to have the Linux agent installed on the target machines and properly configured to send audit logs to Sentinel.
+// Tags: attack.defense-evasion, attack.t1562.006
+// ================================================================== 
+
+LinuxAudit
+| where (name in~ ("/etc/libaudit.conf") or name startswith "/etc/audit/" or name startswith "/etc/audisp/") and type =~ "PATH"

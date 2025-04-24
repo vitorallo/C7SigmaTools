@@ -1,0 +1,12 @@
+// Title: Remove Account From Domain Admin Group
+// Author: frack113
+// Date: 2021-12-26
+// Level: medium
+// Description: Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users.
+// Accounts may be deleted, locked, or manipulated (ex: changed credentials) to remove access to accounts.
+// This table contains security event logs from Windows machines. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.impact, attack.t1531
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Remove-ADGroupMember" and ScriptBlockText contains "-Identity " and ScriptBlockText contains "-Members "

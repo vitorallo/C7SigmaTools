@@ -1,0 +1,13 @@
+// Description: This query presents statistics on count and percentage of DeviceType out of total inventory
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceInfo)
+
+let TotalDevices = toscalar(DeviceInfo
+| where Timestamp > ago(7d)
+| summarize arg_max(Timestamp, *) by DeviceId
+| summarize dcount(DeviceId));
+DeviceInfo
+| where Timestamp > ago(7d)
+| summarize arg_max(Timestamp, *) by DeviceId
+| summarize DevicesByDeviceType = dcount(DeviceId) by DeviceType
+| extend TotalDevices=TotalDevices
+| extend PercentageOfDeviceType =(DevicesByDeviceType * 100 ) / TotalDevices

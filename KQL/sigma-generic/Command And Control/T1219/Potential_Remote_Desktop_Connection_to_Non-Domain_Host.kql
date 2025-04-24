@@ -1,0 +1,10 @@
+// Title: Potential Remote Desktop Connection to Non-Domain Host
+// Author: James Pemberton
+// Date: 2020-05-22
+// Level: medium
+// Description: Detects logons using NTLM to hosts that are potentially not part of the domain.The SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including Windows logs. To ensure that events from Microsoft-Windows-NTLM/Operational are available in Sentinel, make sure to have the necessary data connectors and log sources configured to collect and ingest these events into the SecurityEvent table.
+// Tags: attack.command-and-control, attack.t1219
+// ================================================================== 
+
+SecurityEvent
+| where TargetName startswith "TERMSRV"

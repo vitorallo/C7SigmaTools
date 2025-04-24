@@ -1,0 +1,15 @@
+// Description: 'Detects when a user has successfully authenticated to another Microsoft Entra ID tenant with an identity in your organization's tenant.
+//   Ref: https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-user-accounts#monitoring-for-failed-unusual-sign-ins'
+// Required Connectors: AzureActiveDirectory (Types: AuditLogs)
+
+SigninLogs
+  | where TimeGenerated between(ago(14d)..ago(1d))
+  | where ResultType == 0
+  | where HomeTenantId != ResourceTenantId
+  | summarize by UserPrincipalName, ResourceTenantId
+  | join kind=rightanti (SigninLogs
+  | where TimeGenerated > ago(1d)
+  | where ResultType == 0
+  | where HomeTenantId != ResourceTenantId
+  | where isnotempty(HomeTenantId) and isnotempty(ResourceTenantId)) on UserPrincipalName, ResourceTenantId
+  | where RiskLevelAggregated != "none"

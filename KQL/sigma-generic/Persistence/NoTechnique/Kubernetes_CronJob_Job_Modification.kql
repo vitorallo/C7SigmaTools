@@ -1,0 +1,13 @@
+// Title: Kubernetes CronJob/Job Modification
+// Author: kelnage
+// Date: 2024-07-11
+// Level: medium
+// Description: Detects when a Kubernetes CronJob or Job is created or modified.
+// A Kubernetes Job creates one or more pods to accomplish a specific task, and a CronJob creates Jobs on a recurring schedule.
+// An adversary can take advantage of this Kubernetes object to schedule Jobs to run containers that execute malicious code within a cluster, allowing them to achieve persistence.
+// The KubeEvents table in Microsoft Sentinel contains Kubernetes audit logs. To have this table present, ensure that the Azure Monitor for containers solution is deployed and configured to collect Kubernetes audit logs.
+// Tags: attack.persistence, attack.privilege-escalation, attack.execution
+// ================================================================== 
+
+KubeEvents
+| where 'objectRef.apiGroup' =~ "batch" and ('objectRef.resource' in~ ("cronjobs", "jobs")) and (verb in~ ("create", "delete", "patch", "replace", "update"))

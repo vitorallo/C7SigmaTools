@@ -1,0 +1,10 @@
+// Title: Windows Firewall Profile Disabled
+// Author: Austin Songer @austinsonger
+// Date: 2021-10-12
+// Level: medium
+// Description: Detects when a user disables the Windows Firewall via a Profile to help evade defense.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which can be queried to find information related to PowerShell script execution. Make sure to have the necessary data connectors and log sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1562.004
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Set-NetFirewallProfile " and ScriptBlockText contains " -Enabled " and ScriptBlockText contains " False") and (ScriptBlockText contains " -All " or ScriptBlockText contains "Public" or ScriptBlockText contains "Domain" or ScriptBlockText contains "Private")

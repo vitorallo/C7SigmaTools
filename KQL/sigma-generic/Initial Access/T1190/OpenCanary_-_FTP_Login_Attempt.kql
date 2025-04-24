@@ -1,0 +1,10 @@
+// Title: OpenCanary - FTP Login Attempt
+// Author: Security Onion Solutions
+// Date: 2024-03-08
+// Level: high
+// Description: Detects instances where an FTP service on an OpenCanary node has had a login attempt.This table contains logs from the Opencanary application. To have this table present in Microsoft Sentinel, ensure that Opencanary logs are being collected and sent to Sentinel for ingestion.
+// Tags: attack.initial-access, attack.exfiltration, attack.t1190, attack.t1021
+// ================================================================== 
+
+OpencanaryLogs
+| where logtype == 2000

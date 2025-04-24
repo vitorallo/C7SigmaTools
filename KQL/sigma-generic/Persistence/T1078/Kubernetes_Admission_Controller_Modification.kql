@@ -1,0 +1,11 @@
+// Title: Kubernetes Admission Controller Modification
+// Author: kelnage
+// Date: 2024-07-11
+// Level: medium
+// Description: Detects when a modification (create, update or replace) action is taken that affects mutating or validating webhook configurations, as they can be used by an adversary to achieve persistence or exfiltrate access credentials.
+// This table contains Kubernetes audit logs. To have this table present in Microsoft Sentinel, ensure that you have the Azure Monitor for containers solution deployed and configured to collect Kubernetes audit logs.
+// Tags: attack.persistence, attack.t1078, attack.credential-access, attack.t1552, attack.t1552.007
+// ================================================================== 
+
+KubeEvents
+| where 'objectRef.apiGroup' =~ "admissionregistration.k8s.io" and ('objectRef.resource' in~ ("mutatingwebhookconfigurations", "validatingwebhookconfigurations")) and (verb in~ ("create", "delete", "patch", "replace", "update"))

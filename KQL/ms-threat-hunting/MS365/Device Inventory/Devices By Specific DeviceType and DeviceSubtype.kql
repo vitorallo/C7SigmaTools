@@ -1,0 +1,9 @@
+// Description: This query finds devices by DeviceType and/or DeviceSubtype
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceInfo)
+
+// Specify the wanted DeviceType and/or DeviceSubtype
+let HuntedDeviceType = "NetworkDevice";
+let HuntedDeviceSubtype = "Router";
+DeviceInfo
+| summarize arg_max(Timestamp, *) by DeviceId
+| where DeviceType == HuntedDeviceType and DeviceSubtype  == HuntedDeviceSubtype

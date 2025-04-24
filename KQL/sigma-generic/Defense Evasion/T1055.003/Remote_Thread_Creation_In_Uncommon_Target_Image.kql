@@ -1,0 +1,10 @@
+// Title: Remote Thread Creation In Uncommon Target Image
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-03-16
+// Level: medium
+// Description: Detects uncommon target processes for remote thread creationThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Make sure to have the Windows Security Events connector enabled in Sentinel to collect these logs.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1055.003
+// ================================================================== 
+
+SecurityEvent
+| where (TargetImage endswith "\\calc.exe" or TargetImage endswith "\\calculator.exe" or TargetImage endswith "\\mspaint.exe" or TargetImage endswith "\\notepad.exe" or TargetImage endswith "\\ping.exe" or TargetImage endswith "\\sethc.exe" or TargetImage endswith "\\spoolsv.exe" or TargetImage endswith "\\wordpad.exe" or TargetImage endswith "\\write.exe") and (not(InitiatingProcessFolderPath =~ "C:\\Windows\\System32\\csrss.exe")) and (not((StartFunction =~ "EtwpNotificationThread" or InitiatingProcessFolderPath contains "unknown process" or (InitiatingProcessFolderPath =~ "C:\\Program Files\\VMware\\VMware Tools\\vmtoolsd.exe" and StartFunction =~ "GetCommandLineW" and (TargetImage in~ ("C:\\Windows\\System32\\notepad.exe", "C:\\Windows\\System32\\spoolsv.exe"))) or (InitiatingProcessFolderPath =~ "C:\\Program Files\\Xerox\\XeroxPrintExperience\\CommonFiles\\XeroxPrintJobEventManagerService.exe" and StartFunction =~ "LoadLibraryW" and TargetImage =~ "C:\\Windows\\System32\\spoolsv.exe"))))

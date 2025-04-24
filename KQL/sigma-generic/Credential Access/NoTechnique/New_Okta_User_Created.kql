@@ -1,0 +1,10 @@
+// Title: New Okta User Created
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-10-25
+// Level: informational
+// Description: Detects new user account creationThis table contains Okta sign-in logs. Ensure that the Okta connector is set up in Microsoft Sentinel to collect data from the Okta service.
+// Tags: attack.credential-access
+// ================================================================== 
+
+OktaSignInLogs
+| where eventtype =~ "user.lifecycle.create"

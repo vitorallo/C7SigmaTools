@@ -1,0 +1,13 @@
+// Description: This query shows information about high confidence phish email that has been released from the Quarantine.
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, CloudAppEvents)
+
+CloudAppEvents 
+| where ActionType == "QuarantineReleaseMessage"
+| project ReleaseTime = Timestamp, ResultStatus = RawEventData.ResultStatus, ActionType, ReleasedBy = tostring(RawEventData.UserId), NetworkMessageId = tostring(RawEventData.NetworkMessageId), ReleaseTo = RawEventData.ReleaseTo
+| join kind=inner (
+  EmailEvents
+  | where todynamic(ConfidenceLevel).Phish == "High"
+  | project-rename EmailTime = Timestamp
+  ) on NetworkMessageId
+| project-away NetworkMessageId1
+| order by ReleaseTime asc

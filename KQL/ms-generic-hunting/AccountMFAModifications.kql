@@ -1,0 +1,12 @@
+// Description: 'Identifies modifications to user's MFA settings. An attacker could use access to modify MFA settings to bypass MFA requirements or maintain persistence.
+// Required Connectors: AzureActiveDirectory (Types: AuditLogs)
+
+AuditLogs
+| where Category =~ "UserManagement" 
+| where OperationName in~ ("Admin registered security info", "Admin updated security info", "Admin deleted security info", "User registered security info", "User changed default security info", "User deleted security info","User registered all required security info","User started security info registration") 
+| extend InitiatorUPN = tolower(tostring(InitiatedBy.user.userPrincipalName))
+| extend FromIP = tostring(InitiatedBy.user.ipAddress) 
+| extend TargetUPN = tostring(TargetResources[0].userPrincipalName)
+| extend InitiatorID = tostring(InitiatedBy.user.id)
+| summarize ModifiedAccounts = make_set(TargetUPN, 100), Start = min(TimeGenerated), End = max(TimeGenerated), Actions = make_set(OperationName, 10) by InitiatorID, InitiatorUPN, FromIP
+| extend InitiatorName = tostring(split(InitiatorUPN, "@")[0]), InitiatorSuffix = tostring(split(InitiatorUPN, "@")[1])

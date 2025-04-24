@@ -1,0 +1,16 @@
+// Description: This query helps reviewing Malware, Phishing, Spam emails caught per day
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents
+| where DetectionMethods != "" 
+| extend detection= parse_json(DetectionMethods) 
+| extend Spam = tostring(detection.Spam) 
+| extend Phish = tostring(detection.Phish) 
+| extend Malware = tostring(detection.Malware) 
+| where Spam != '' or Phish != '' or Malware != '' 
+| extend detection = case( 
+    Malware != "", 'Malware', 
+    Phish != "", 'Phish', 
+    'Spam') 
+| summarize total=count() by detection, bin(Timestamp, 1d) 
+| order by Timestamp asc

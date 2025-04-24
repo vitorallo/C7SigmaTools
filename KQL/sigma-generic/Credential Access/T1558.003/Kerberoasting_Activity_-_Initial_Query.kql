@@ -1,0 +1,13 @@
+// Title: Kerberoasting Activity - Initial Query
+// Author: @kostastsale
+// Date: 2022-01-21
+// Level: medium
+// Description: This rule will collect the data needed to start looking into possible kerberoasting activity.
+// Further analysis or computation within the query is needed focusing on requests from one specific host/IP towards multiple service names within a time period of 5 seconds.
+// You can then set a threshold for the number of requests and time between the requests to turn this into an alert.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the necessary data connectors set up in Sentinel to collect security events from Windows machines.
+// Tags: attack.credential-access, attack.t1558.003
+// ================================================================== 
+
+SecurityEvent
+| where (Status =~ "0x0" and TicketEncryptionType =~ "0x17") and (not(((ServiceName endswith "krbtgt" or ServiceName endswith "$") and TargetUserName contains "$@")))

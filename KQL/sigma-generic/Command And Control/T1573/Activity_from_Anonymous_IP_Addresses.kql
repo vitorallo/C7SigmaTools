@@ -1,0 +1,10 @@
+// Title: Activity from Anonymous IP Addresses
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-23
+// Level: medium
+// Description: Detects when a Microsoft Cloud App Security reported when users were active from an IP address that has been identified as an anonymous proxy IP address.This table contains threat intelligence indicators, including indicators of compromise (IoCs) and threat actor information. To have this table present in Microsoft Sentinel, ensure that Threat Intelligence data connector is enabled and configured to collect data from the 'threat_management' service with 'm365' product.
+// Tags: attack.command-and-control, attack.t1573
+// ================================================================== 
+
+ThreatIntelligenceIndicator
+| where eventName =~ "Activity from anonymous IP addresses" and eventSource =~ "SecurityComplianceCenter" and status =~ "success"

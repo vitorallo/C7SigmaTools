@@ -1,0 +1,5 @@
+// Description: Qakbot operators have been abusing the Craigslist messaging system to send malicious emails. These emails contain non-clickable links to malicious domains impersonating Craigslist, which the user is instructed to manually type into the address bar to access.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceNetworkEvents)
+
+DeviceNetworkEvents
+| where RemoteUrl matches regex @"abuse\.[a-zA-Z]\d{2}-craigslist\.org"

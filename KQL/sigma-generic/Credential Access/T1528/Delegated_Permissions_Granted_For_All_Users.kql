@@ -1,0 +1,10 @@
+// Title: Delegated Permissions Granted For All Users
+// Author: Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'
+// Date: 2022-07-28
+// Level: high
+// Description: Detects when highly privileged delegated permissions are granted on behalf of all usersThe AzureActivity table in Microsoft Sentinel contains audit logs for Azure services. To query this table, ensure that Azure Monitor logs are enabled and the necessary connectors are set up to collect Azure audit logs.
+// Tags: attack.credential-access, attack.t1528
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' =~ "Add delegated permission grant"

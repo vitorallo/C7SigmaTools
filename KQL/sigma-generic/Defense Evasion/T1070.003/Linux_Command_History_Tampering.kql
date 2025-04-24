@@ -1,0 +1,12 @@
+// Title: Linux Command History Tampering
+// Author: Patrick Bareiss
+// Date: 2019-03-24
+// Level: high
+// Description: Detects commands that try to clear or tamper with the Linux command history.
+// This technique is used by threat actors in order to evade defenses and execute commands without them being recorded in files such as "bash_history" or "zsh_history".
+// This table contains Linux audit logs, which can be queried in Microsoft Sentinel. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the Linux audit logs are being collected and forwarded to Sentinel.
+// Tags: attack.defense-evasion, attack.t1070.003
+// ================================================================== 
+
+LinuxAuditLogs
+| where "cat /dev/null >*sh_history" or "cat /dev/zero >*sh_history" or "chattr +i*sh_history" or "echo \"\" >*sh_history" or "empty_bash_history" or "export HISTFILESIZE=0" or "history -c" or "history -w" or "ln -sf /dev/null *sh_history" or "ln -sf /dev/zero *sh_history" or "rm *sh_history" or "shopt -ou history" or "shopt -uo history" or "shred *sh_history" or "truncate -s0 *sh_history"

@@ -1,0 +1,10 @@
+// Title: Protected Storage Service Access
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-08-10
+// Level: high
+// Description: Detects access to a protected_storage service over the network. Potential abuse of DPAPI to extract domain backup keys from Domain ControllersThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that the Windows Security events are being collected and forwarded to Sentinel using the Microsoft Monitoring Agent (MMA) or Azure Log Analytics agent.
+// Tags: attack.lateral-movement, attack.t1021.002
+// ================================================================== 
+
+SecurityEvent
+| where RelativeTargetName =~ "protected_storage" and ShareName contains "IPC"

@@ -1,0 +1,10 @@
+// Title: Anomalous Token
+// Author: Mark Morowczynski '@markmorow'
+// Date: 2023-08-07
+// Level: high
+// Description: Indicates that there are abnormal characteristics in the token such as an unusual token lifetime or a token that is played from an unfamiliar location.The AzureActivity table in Microsoft Sentinel contains logs related to Azure services, including risk detection events. To ensure this table is populated, make sure to have Azure Monitor logs enabled for the Azure service 'riskdetection'.
+// Tags: attack.t1528, attack.credential-access
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "anomalousToken"

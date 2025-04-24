@@ -1,0 +1,10 @@
+// Title: CobaltStrike Named Pipe Pattern Regex
+// Author: Florian Roth (Nextron Systems)
+// Date: 2021-07-30
+// Level: critical
+// Description: Detects the creation of a named pipe matching a pattern used by CobaltStrike Malleable C2 profilesThis table contains Sysmon events, including Named Pipe Events (Event ID 17 and Event ID 18). To query this table, ensure that Sysmon is installed on the Windows machines and logs are being forwarded to Microsoft Sentinel.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1055
+// ================================================================== 
+
+SysmonEvent
+| where PipeName matches regex "\\\\mojo\\.5688\\.8052\\.(?:183894939787088877|35780273329370473)[0-9a-f]{2}" or PipeName matches regex "\\\\wkssvc_?[0-9a-f]{2}" or PipeName matches regex "\\\\ntsvcs[0-9a-f]{2}" or PipeName matches regex "\\\\DserNamePipe[0-9a-f]{2}" or PipeName matches regex "\\\\SearchTextHarvester[0-9a-f]{2}" or PipeName matches regex "\\\\mypipe-(?:f|h)[0-9a-f]{2}" or PipeName matches regex "\\\\windows\\.update\\.manager[0-9a-f]{2,3}" or PipeName matches regex "\\\\ntsvcs_[0-9a-f]{2}" or PipeName matches regex "\\\\scerpc_?[0-9a-f]{2}" or PipeName matches regex "\\\\PGMessagePipe[0-9a-f]{2}" or PipeName matches regex "\\\\MsFteWds[0-9a-f]{2}" or PipeName matches regex "\\\\f4c3[0-9a-f]{2}" or PipeName matches regex "\\\\fullduplex_[0-9a-f]{2}" or PipeName matches regex "\\\\msrpc_[0-9a-f]{4}" or PipeName matches regex "\\\\win\\\\msrpc_[0-9a-f]{2}" or PipeName matches regex "\\\\f53f[0-9a-f]{2}" or PipeName matches regex "\\\\rpc_[0-9a-f]{2}" or PipeName matches regex "\\\\spoolss_[0-9a-f]{2}" or PipeName matches regex "\\\\Winsock2\\\\CatalogChangeListener-[0-9a-f]{3}-0,"

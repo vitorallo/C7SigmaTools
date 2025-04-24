@@ -1,0 +1,10 @@
+// Title: HackTool - Empire UserAgent URI Combo
+// Author: Florian Roth (Nextron Systems)
+// Date: 2020-07-13
+// Level: high
+// Description: Detects user agent and URI paths used by empire agentsThis table contains proxy logs, which can be queried in Microsoft Sentinel. Make sure to have the necessary connectors or data sources configured in Sentinel to collect and ingest proxy logs into this table.
+// Tags: attack.defense-evasion, attack.command-and-control, attack.t1071.001
+// ================================================================== 
+
+ProxyLog
+| where 'c-useragent' =~ "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko" and 'cs-method' =~ "POST" and ('cs-uri' in~ ("/admin/get.php", "/news.php", "/login/process.php"))

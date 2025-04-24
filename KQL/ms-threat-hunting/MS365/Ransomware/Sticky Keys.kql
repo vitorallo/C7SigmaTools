@@ -1,0 +1,5 @@
+// Description: A technique used in numerous ransomware attacks is a Sticky Keys hijack for privilege escalation/persistence. Surface realted alerts with this query.
+// Required Connectors: MicrosoftThreatProtection (Types: AlertInfo)
+
+// Checks for possible hijacking of Sticky Keys feature 
+AlertInfo | where Title == "Sticky Keys binary hijack detected"

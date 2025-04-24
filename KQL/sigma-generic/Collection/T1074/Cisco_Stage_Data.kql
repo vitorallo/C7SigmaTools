@@ -1,0 +1,10 @@
+// Title: Cisco Stage Data
+// Author: Austin Clark
+// Date: 2019-08-12
+// Level: low
+// Description: Various protocols maybe used to put data on the device for exfil or infilThis table contains authentication logs related to Cisco AAA service. To have access to this table in Microsoft Sentinel, ensure that you have the necessary connectors or data sources set up to collect logs from Cisco devices with AAA service enabled.
+// Tags: attack.collection, attack.lateral-movement, attack.command-and-control, attack.exfiltration, attack.t1074, attack.t1105, attack.t1560.001
+// ================================================================== 
+
+Cisco_AAA_AuthenticationLogs
+| where "tftp" or "rcp" or "puts" or "copy" or "configure replace" or "archive tar"

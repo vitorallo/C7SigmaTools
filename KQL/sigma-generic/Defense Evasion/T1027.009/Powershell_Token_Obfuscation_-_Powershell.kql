@@ -1,0 +1,10 @@
+// Title: Powershell Token Obfuscation - Powershell
+// Author: frack113
+// Date: 2022-12-27
+// Level: high
+// Description: Detects TOKEN OBFUSCATION technique from Invoke-ObfuscationThis table contains Windows security event logs, including script block logging events. Enable the appropriate data connectors in Microsoft Sentinel to ingest Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1027.009
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText matches regex "\\w+`(\\w+|-|.)`[\\w+|\\s]" or ScriptBlockText matches regex ""(\\{\\d\\}){2,}"\\s*-f" or ScriptBlockText matches regex "(?i)\\$\\{`?e`?n`?v`?:`?p`?a`?t`?h`?\\}") and (not(((ScriptBlockText contains "it will return true or false instead" or ScriptBlockText contains "The function also prevents `Get-ItemProperty` from failing") or ScriptBlockText contains "${env:path}" or (Path endswith "\\bin\\servicecontrol.ps1" and Path startswith "C:\\Program Files\\Microsoft\\Exchange Server\\" and ScriptBlockText contains "`r`n"))))

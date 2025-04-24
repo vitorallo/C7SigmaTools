@@ -1,0 +1,10 @@
+// Title: Suspicious User-Agents Related To Recon Tools
+// Author: Nasreddine Bencherchali (Nextron Systems), Tim Shelton
+// Date: 2022-07-19
+// Level: medium
+// Description: Detects known suspicious (default) user-agents related to scanning/recon toolsThis table contains web server logs. Ensure that the appropriate connectors are set up in Sentinel to collect web server logs and populate this table.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+WebBrowserInfo
+| where ''cs-user-agent'' contains "Wfuzz/" or ''cs-user-agent'' contains "WPScan v" or ''cs-user-agent'' contains "Recon-ng/v" or ''cs-user-agent'' contains "GIS - AppSec Team - Project Vision"

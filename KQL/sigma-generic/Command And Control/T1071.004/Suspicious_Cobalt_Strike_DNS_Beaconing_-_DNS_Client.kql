@@ -1,0 +1,10 @@
+// Title: Suspicious Cobalt Strike DNS Beaconing - DNS Client
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-16
+// Level: critical
+// Description: Detects a program that invoked suspicious DNS queries known from Cobalt Strike beaconsThis table contains DNS client events from the Microsoft-Windows-DNS Client Events/Operational Event Log. Ensure that the Microsoft-Windows-DNS Client Events/Operational Event Log is enabled and collected in order to have data in this table.
+// Tags: attack.command-and-control, attack.t1071.004
+// ================================================================== 
+
+DnsEvents
+| where (QueryName startswith "aaa.stage." or QueryName startswith "post.1") or QueryName contains ".stage.123456."

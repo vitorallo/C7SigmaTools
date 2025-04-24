@@ -1,0 +1,9 @@
+// Description: In this query, we are looking URL click actions by URL in the last 7 days
+// Required Connectors: MicrosoftThreatProtection (Types: UrlClickEvents)
+
+UrlClickEvents
+| extend UrlBlocked = ActionType has_any("ClickBlocked")
+| extend UrlAllowed = ActionType has_any('ClickAllowed')
+| extend UrlPendingVerdict = ActionType has_any('UrlScanInProgress')
+| extend ErrorPage = ActionType has_any('UrlErrorPage')
+| summarize Blocked = countif(UrlBlocked), Allowed = countif(UrlAllowed), PendingVerdict = countif(UrlPendingVerdict), Error = countif(ErrorPage), ClickedThrough = countif(IsClickedThrough) by Url

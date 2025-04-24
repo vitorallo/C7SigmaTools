@@ -1,0 +1,10 @@
+// Title: LSASS Access Detected via Attack Surface Reduction
+// Author: Markus Neis
+// Date: 2018-08-26
+// Level: high
+// Description: Detects Access to LSASS ProcessThe SecurityEvent table in Microsoft Sentinel contains security-related events and logs from various sources, including Windows security logs. To query for events related to Windows Defender (windefend) and credential stealing prevention, you can filter on the EventID and relevant fields.
+// Tags: attack.credential-access, attack.t1003.001
+// ================================================================== 
+
+SecurityEvent
+| where Path endswith "\\lsass.exe" and (not(((InitiatingProcessFolderPath startswith "C:\\Windows\\System32\\DriverStore\\" or InitiatingProcessFolderPath startswith "C:\\WINDOWS\\Installer\\" or InitiatingProcessFolderPath startswith "C:\\Program Files\\" or InitiatingProcessFolderPath startswith "C:\\Program Files (x86)\\") or (InitiatingProcessFolderPath in~ ("C:\\Windows\\System32\\atiesrxx.exe", "C:\\Windows\\System32\\CompatTelRunner.exe", "C:\\Windows\\System32\\msiexec.exe", "C:\\Windows\\System32\\nvwmi64.exe", "C:\\Windows\\System32\\svchost.exe", "C:\\Windows\\System32\\Taskmgr.exe", "C:\\Windows\\System32\\wbem\\WmiPrvSE.exe", "C:\\Windows\\SysWOW64\\msiexec.exe")) or ((InitiatingProcessFolderPath endswith "\\thor64.exe" or InitiatingProcessFolderPath endswith "\\thor.exe") and InitiatingProcessFolderPath startswith "C:\\Windows\\Temp\\asgard2-agent\\"))))

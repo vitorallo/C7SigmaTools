@@ -1,0 +1,8 @@
+// Description: This query looks for Microsoft Defender Antivirus detections related to EUROPIUM actor
+// Required Connectors: MicrosoftThreatProtection (Types: AlertEvidence)
+
+let europium_sigs = dynamic(["BatRunGoXml", "WprJooblash", "Win32/Eagle!MSR", "Win32/Debitom.A"]);  
+AlertEvidence 
+| where ThreatFamily in~ (europium_sigs) 
+| join AlertInfo on AlertId 
+| project ThreatFamily, AlertId

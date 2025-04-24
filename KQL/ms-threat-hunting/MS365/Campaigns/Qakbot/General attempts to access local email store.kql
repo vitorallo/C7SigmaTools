@@ -1,0 +1,8 @@
+// Description: Use this query to find attempts to access files in the local path containing Outlook emails.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceFileEvents)
+
+DeviceFileEvents
+| where FolderPath hasprefix "EmailStorage"
+| where FolderPath has "Outlook"
+| project FileName, FolderPath, InitiatingProcessFileName,
+InitiatingProcessCommandLine, DeviceId, Timestamp

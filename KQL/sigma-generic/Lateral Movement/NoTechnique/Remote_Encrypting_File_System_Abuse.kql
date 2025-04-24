@@ -1,0 +1,10 @@
+// Title: Remote Encrypting File System Abuse
+// Author: Sagie Dulce, Dekel Paz
+// Date: 2022-01-01
+// Level: high
+// Description: Detects remote RPC calls to possibly abuse remote encryption service via MS-EFSRThis table contains logs related to the RPC Firewall application. Make sure to enable RPC Firewall logging in Sentinel to populate this table.
+// Tags: attack.lateral-movement
+// ================================================================== 
+
+rpc_firewall_logs
+| where EventLog =~ "RPCFW" and (InterfaceUuid in~ ("df1941c5-fe89-4e79-bf10-463657acf44d", "c681d488-d850-11d0-8c52-00c04fd90f7e"))

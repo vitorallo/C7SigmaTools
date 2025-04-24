@@ -1,0 +1,5 @@
+// Description: Identify registry modifications that is indicative of a ransom note tied to DEV-0270.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where InitiatingProcessCommandLine has_all('"reg"', 'add', @'"HKLM\SOFTWARE\Policies\', '/v','/t', 'REG_DWORD', '/d', '/f', 'RecoveryKeyMessage', 'Your drives are Encrypted!', '@')

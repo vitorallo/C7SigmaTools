@@ -1,0 +1,10 @@
+// Title: Ie4uinit Lolbin Use From Invalid Path
+// Author: frack113
+// Date: 2022-05-07
+// Level: medium
+// Description: Detect use of ie4uinit.exe to execute commands from a specially prepared ie4uinit.inf file from a directory other than the usual directoriesThe SecurityEvent table in Microsoft Sentinel contains process creation events for Windows systems. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1218
+// ================================================================== 
+
+SecurityEvent
+| where (FolderPath endswith "\\ie4uinit.exe" or ProcessVersionInfoOriginalFileName =~ "IE4UINIT.EXE") and (not(((CurrentDirectory in~ ("c:\\windows\\system32\\", "c:\\windows\\sysWOW64\\")) or isnull(CurrentDirectory))))

@@ -1,0 +1,29 @@
+// Description: 'Shows SharePoint upload/download volume by IPs with high-risk ASNs. New IPs with volume spikes may be unauthorized and exfiltrating documents.'
+// Required Connectors: AzureActiveDirectory (Types: SigninLogs); Office365 (Types: OfficeActivity (SharePoint))
+
+let starttime = todatetime('{{StartTimeISO}}');
+let endtime = todatetime('{{EndTimeISO}}');
+let lookback = starttime - 14d;
+let BLOCK_THRESHOLD = 1.0;
+let HighBlockRateASNs =
+SigninLogs
+| where TimeGenerated > lookback
+| where isnotempty(AutonomousSystemNumber)
+| summarize make_set(IPAddress), TotalIps = dcount(IPAddress), BlockedSignins= countif(ResultType == "50053"), TotalSignins = count() by AutonomousSystemNumber
+| extend BlockRatio = 1.00 * BlockedSignins/TotalSignins
+| where BlockRatio >= BLOCK_THRESHOLD
+| distinct AutonomousSystemNumber
+;
+let ASNIPs=
+SigninLogs
+| where TimeGenerated > lookback
+| where AutonomousSystemNumber in (HighBlockRateASNs)
+| distinct IPAddress, AutonomousSystemNumber
+;
+OfficeActivity
+| where TimeGenerated between(starttime .. endtime)
+| where  RecordType == "SharePointFileOperation"
+| where Operation in ("FileDownloaded", "FileUploaded")
+| where ClientIP in (ASNIPs)
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), RecentFileActivities = count() by ClientIP
+| extend IP_0_Address = ClientIP

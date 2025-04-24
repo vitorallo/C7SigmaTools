@@ -1,0 +1,12 @@
+// Title: AWS Identity Center Identity Provider Change
+// Author: Michael McIntyre @wtfender
+// Date: 2023-09-27
+// Level: high
+// Description: Detects a change in the AWS Identity Center (FKA AWS SSO) identity provider.
+// A change in identity provider allows an attacker to establish persistent access or escalate privileges via user impersonation.
+// The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To have this table present in Sentinel, you need to ensure that the AWS CloudTrail connector is configured and sending logs to Sentinel.
+// Tags: attack.persistence, attack.t1556
+// ================================================================== 
+
+CloudTrail
+| where (eventName in~ ("AssociateDirectory", "DisableExternalIdPConfigurationForDirectory", "DisassociateDirectory", "EnableExternalIdPConfigurationForDirectory")) and (eventSource in~ ("sso-directory.amazonaws.com", "sso.amazonaws.com"))

@@ -1,0 +1,10 @@
+// Description: In this query, we summarize volume of inbound emails with QR code URLs in last 30 days
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, EmailUrlInfo)
+
+EmailEvents
+| where Timestamp > ago(30d)
+| where EmailDirection == "Inbound"
+| join EmailUrlInfo on NetworkMessageId
+| where UrlLocation == "QRCode"
+| summarize dcount(NetworkMessageId) by bin(Timestamp, 1d)
+| render timechart

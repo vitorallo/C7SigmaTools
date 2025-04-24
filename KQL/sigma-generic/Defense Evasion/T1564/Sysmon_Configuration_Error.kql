@@ -1,0 +1,10 @@
+// Title: Sysmon Configuration Error
+// Author: frack113
+// Date: 2021-06-04
+// Level: high
+// Description: Detects when an adversary is trying to hide it's action from Sysmon logging based on error messagesThe SysmonEvent table in Microsoft Sentinel contains Windows Sysmon events. Ensure that Sysmon is installed on the Windows machines and that the necessary data connectors are set up in Sentinel to collect Sysmon events.
+// Tags: attack.defense-evasion, attack.t1564
+// ================================================================== 
+
+SysmonEvent
+| where (InitiatingProcessVersionInfoFileDescription contains "Failed to open service configuration with error" or InitiatingProcessVersionInfoFileDescription contains "Failed to connect to the driver to update configuration") and (not(((InitiatingProcessVersionInfoFileDescription contains "Failed to open service configuration with error 19" or InitiatingProcessVersionInfoFileDescription contains "Failed to open service configuration with error 93") or (InitiatingProcessVersionInfoFileDescription contains "Failed to open service configuration with error" and InitiatingProcessVersionInfoFileDescription contains "Last error: The media is write protected."))))

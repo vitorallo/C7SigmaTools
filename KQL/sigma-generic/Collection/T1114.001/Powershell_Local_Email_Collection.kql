@@ -1,0 +1,12 @@
+// Title: Powershell Local Email Collection
+// Author: frack113
+// Date: 2021-07-21
+// Level: medium
+// Description: Adversaries may target user email on local systems to collect sensitive information.
+// Files containing email data can be acquired from a users local system, such as Outlook storage or cache files.
+// This table contains security-related events, including PowerShell script execution events. Enable the necessary data connectors in Microsoft Sentinel to ingest Windows security events.
+// Tags: attack.collection, attack.t1114.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Get-Inbox.ps1" or ScriptBlockText contains "Microsoft.Office.Interop.Outlook" or ScriptBlockText contains "Microsoft.Office.Interop.Outlook.olDefaultFolders" or ScriptBlockText contains "-comobject outlook.application"

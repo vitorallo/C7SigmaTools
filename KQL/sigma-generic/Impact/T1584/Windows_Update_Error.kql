@@ -1,0 +1,11 @@
+// Title: Windows Update Error
+// Author: frack113
+// Date: 2021-12-04
+// Level: informational
+// Description: Detects Windows update errors including installation failures and connection issues. Defenders should observe this in case critical update KBs aren't installed.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.impact, attack.resource-development, attack.t1584
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Microsoft-Windows-WindowsUpdateClient"

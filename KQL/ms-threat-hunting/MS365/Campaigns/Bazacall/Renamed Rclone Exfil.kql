@@ -1,0 +1,5 @@
+// Description: Microsoft has observed Bazacall using a renamed version of Rclone for data exfiltration.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where ProcessVersionInfoProductName has "rclone" and not(FileName has "rclone")

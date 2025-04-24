@@ -1,0 +1,10 @@
+// Title: Import PowerShell Modules From Suspicious Directories
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-07-07
+// Level: medium
+// Description: Detects powershell scripts that import modules from suspicious directoriesThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Import-Module \"$Env:Temp\\" or ScriptBlockText contains "Import-Module '$Env:Temp\\" or ScriptBlockText contains "Import-Module $Env:Temp\\" or ScriptBlockText contains "Import-Module \"$Env:Appdata\\" or ScriptBlockText contains "Import-Module '$Env:Appdata\\" or ScriptBlockText contains "Import-Module $Env:Appdata\\" or ScriptBlockText contains "Import-Module C:\\Users\\Public\\" or ScriptBlockText contains "ipmo \"$Env:Temp\\" or ScriptBlockText contains "ipmo '$Env:Temp\\" or ScriptBlockText contains "ipmo $Env:Temp\\" or ScriptBlockText contains "ipmo \"$Env:Appdata\\" or ScriptBlockText contains "ipmo '$Env:Appdata\\" or ScriptBlockText contains "ipmo $Env:Appdata\\" or ScriptBlockText contains "ipmo C:\\Users\\Public\\"

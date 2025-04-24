@@ -1,0 +1,10 @@
+// Title: Disable System Firewall
+// Author: Pawel Mazur
+// Date: 2022-01-22
+// Level: high
+// Description: Detects disabling of system firewalls which could be used by adversaries to bypass controls that limit usage of the network.The LinuxAudit table in Microsoft Sentinel contains audit logs from Linux systems. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs.
+// Tags: attack.t1562.004, attack.defense-evasion
+// ================================================================== 
+
+LinuxAudit
+| where type =~ "SERVICE_STOP" and (unit in~ ("firewalld", "iptables", "ufw"))

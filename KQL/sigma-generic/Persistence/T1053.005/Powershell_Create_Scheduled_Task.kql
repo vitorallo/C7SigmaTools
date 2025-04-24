@@ -1,0 +1,10 @@
+// Title: Powershell Create Scheduled Task
+// Author: frack113
+// Date: 2021-12-28
+// Level: medium
+// Description: Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious codeThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script block logging. Ensure that the Windows Security Events connector is set up in Sentinel to collect these logs.
+// Tags: attack.persistence, attack.t1053.005
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Invoke-CimMethod" and ScriptBlockText contains "-ClassName" and ScriptBlockText contains "PS_ScheduledTask" and ScriptBlockText contains "-NameSpace" and ScriptBlockText contains "Root\\Microsoft\\Windows\\TaskScheduler") or (ScriptBlockText contains "New-ScheduledTaskAction" or ScriptBlockText contains "New-ScheduledTaskTrigger" or ScriptBlockText contains "New-ScheduledTaskPrincipal" or ScriptBlockText contains "New-ScheduledTaskSettingsSet" or ScriptBlockText contains "New-ScheduledTask" or ScriptBlockText contains "Register-ScheduledTask")

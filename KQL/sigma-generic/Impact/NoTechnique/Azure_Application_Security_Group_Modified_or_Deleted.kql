@@ -1,0 +1,10 @@
+// Title: Azure Application Security Group Modified or Deleted
+// Author: Austin Songer
+// Date: 2021-08-16
+// Level: medium
+// Description: Identifies when a application security group is modified or deleted.This table contains Azure activity logs, which can be queried for information related to activities happening within Azure services. To have this table present in Microsoft Sentinel, ensure that Azure Activity Logs are being collected and ingested into Sentinel. This can be achieved by configuring Azure Monitor to send activity logs to Log Analytics workspace associated with Sentinel.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.NETWORK/APPLICATIONSECURITYGROUPS/WRITE", "MICROSOFT.NETWORK/APPLICATIONSECURITYGROUPS/DELETE")

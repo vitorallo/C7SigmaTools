@@ -1,0 +1,10 @@
+// Title: Google Workspace MFA Disabled
+// Author: Austin Songer
+// Date: 2021-08-26
+// Level: medium
+// Description: Detects when multi-factor authentication (MFA) is disabled.This table contains logs related to Google Cloud Platform (GCP) activity, including Google Workspace admin logs. To have this table present in Microsoft Sentinel, ensure that the GCP connector is configured and collecting logs from the Google Workspace admin service.
+// Tags: attack.impact
+// ================================================================== 
+
+GCPActivity
+| where ((eventName in~ ("ENFORCE_STRONG_AUTHENTICATION", "ALLOW_STRONG_AUTHENTICATION")) and eventService =~ "admin.googleapis.com") and new_value =~ "false"

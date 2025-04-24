@@ -1,0 +1,8 @@
+// Description: This query surfaces devices that were discovered by Microsoft Defender for Endpoint and can be onboarded
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceInfo)
+
+// Can Be Onboarded devices
+let CanBeOnboarded = "Can be onboarded";
+DeviceInfo
+| summarize arg_max(Timestamp, *) by DeviceId
+| where OnboardingStatus == CanBeOnboarded

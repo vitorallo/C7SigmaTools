@@ -1,0 +1,10 @@
+// Title: Cisco Denial of Service
+// Author: Austin Clark
+// Date: 2019-08-15
+// Level: medium
+// Description: Detect a system being shutdown or put into different boot modeThis table contains authentication logs for Cisco AAA service. To have this table present in Microsoft Sentinel, ensure that you have the necessary connectors or data sources configured to collect logs from Cisco devices with AAA service enabled.
+// Tags: attack.impact, attack.t1495, attack.t1529, attack.t1565.001
+// ================================================================== 
+
+Cisco_AAA_AuthenticationLogs
+| where "shutdown" or "config-register 0x2100" or "config-register 0x2142"

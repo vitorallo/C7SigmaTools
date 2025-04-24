@@ -1,0 +1,5 @@
+// Description: The pw protected zip attachment -> Word doc delivery method of Bazarloader utilizes Word to create an .hta file and launch it via MSHTA to connect to a malicious domain and pull down the Bazarloader paylaod.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where InitiatingProcessFileName =~ 'WINWORD.EXE' and FileName =~ 'cmd.exe' and ProcessCommandLine has_all('hta')

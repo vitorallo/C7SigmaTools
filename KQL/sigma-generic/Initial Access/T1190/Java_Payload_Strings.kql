@@ -1,0 +1,10 @@
+// Title: Java Payload Strings
+// Author: frack113, Harjot Singh, "@cyb3rjy0t" (update)
+// Date: 2022-06-04
+// Level: high
+// Description: Detects possible Java payloads in web access logsThe WebBrowserStats table in Microsoft Sentinel contains web server logs. To have this table present, ensure that you have the necessary connectors or data sources configured in Sentinel to collect web server logs.
+// Tags: cve.2022-26134, cve.2021-26084, attack.initial-access, attack.t1190
+// ================================================================== 
+
+WebBrowserStats
+| where "%24%7B%28%23a%3D%40" or "${(#a=@" or "%24%7B%40java" or "${@java" or "u0022java" or "%2F%24%7B%23" or "/${#" or "new+java." or "getRuntime().exec(" or "getRuntime%28%29.exec%28"

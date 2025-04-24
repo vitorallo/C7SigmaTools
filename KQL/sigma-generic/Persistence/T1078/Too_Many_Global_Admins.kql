@@ -1,0 +1,10 @@
+// Title: Too Many Global Admins
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-14
+// Level: high
+// Description: Identifies an event where there are there are too many accounts assigned the Global Administrator role.The AzureActivity table in Microsoft Sentinel contains logs related to Azure activity, including Azure PIM (Privileged Identity Management) logs. Ensure that Azure Activity logs are being collected and ingested into Sentinel to query this table.
+// Tags: attack.t1078, attack.persistence, attack.privilege-escalation
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "tooManyGlobalAdminsAssignedToTenantAlertIncident"

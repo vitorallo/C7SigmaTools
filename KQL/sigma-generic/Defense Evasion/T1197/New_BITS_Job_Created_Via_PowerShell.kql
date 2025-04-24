@@ -1,0 +1,10 @@
+// Title: New BITS Job Created Via PowerShell
+// Author: frack113
+// Date: 2022-03-01
+// Level: low
+// Description: Detects the creation of a new bits job by PowerShellThe WindowsUpdate table in Microsoft Sentinel contains information related to Windows Update activities, including BITS client service logs. To ensure this table is present, make sure to have the necessary data connectors or log sources configured in Sentinel to collect Windows Update logs.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1197
+// ================================================================== 
+
+WindowsUpdate
+| where processPath endswith "\\powershell.exe" or processPath endswith "\\pwsh.exe"

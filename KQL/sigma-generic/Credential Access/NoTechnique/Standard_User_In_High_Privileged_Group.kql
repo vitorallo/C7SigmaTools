@@ -1,0 +1,10 @@
+// Title: Standard User In High Privileged Group
+// Author: frack113
+// Date: 2023-01-13
+// Level: medium
+// Description: Detect standard users login that are part of high privileged groups such as the Administrator groupThe SecurityEvent table in Microsoft Sentinel contains security-related events, including events related to the LSA server service. Make sure to enable and collect the Microsoft-Windows-LSA/Operational event log in order to have this table populated with relevant data.
+// Tags: attack.credential-access, attack.privilege-escalation
+// ================================================================== 
+
+SecurityEvent
+| where ((SidList contains "S-1-5-32-544" or SidList contains "-500}" or SidList contains "-518}" or SidList contains "-519}") and TargetUserSid startswith "S-1-5-21-") and (not((TargetUserSid endswith "-500" or TargetUserSid endswith "-518" or TargetUserSid endswith "-519")))

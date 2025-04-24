@@ -1,0 +1,10 @@
+// Title: Wannacry Killswitch Domain
+// Author: Mike Wade
+// Date: 2020-09-16
+// Level: high
+// Description: Detects wannacry killswitch domain dns queriesThis table contains DNS events in Microsoft Sentinel. Ensure that the required connectors are set up to collect DNS logs from your sources.
+// Tags: attack.command-and-control, attack.t1071.001
+// ================================================================== 
+
+DnsEvents
+| where query in~ ("ifferfsodp9ifjaposdfjhgosurijfaewrwergwea.testing", "ifferfsodp9ifjaposdfjhgosurijfaewrwergwea.test", "ifferfsodp9ifjaposdfjhgosurijfaewrwergwea.com", "ayylmaotjhsstasdfasdfasdfasdfasdfasdfasdf.com", "iuqssfsodp9ifjaposdfjhgosurijfaewrwergwea.com")

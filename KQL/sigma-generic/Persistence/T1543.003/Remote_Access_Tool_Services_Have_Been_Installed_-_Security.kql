@@ -1,0 +1,10 @@
+// Title: Remote Access Tool Services Have Been Installed - Security
+// Author: Connor Martin, Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-12-23
+// Level: medium
+// Description: Detects service installation of different remote access tools software. These software are often abused by threat actors to performThis table contains security-related events, including event ID 4697. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1543.003, attack.t1569.002
+// ================================================================== 
+
+SecurityEvent
+| where ServiceName contains "AmmyyAdmin" or ServiceName contains "AnyDesk" or ServiceName contains "Atera" or ServiceName contains "BASupportExpressSrvcUpdater" or ServiceName contains "BASupportExpressStandaloneService" or ServiceName contains "chromoting" or ServiceName contains "GoToAssist" or ServiceName contains "GoToMyPC" or ServiceName contains "jumpcloud" or ServiceName contains "LMIGuardianSvc" or ServiceName contains "LogMeIn" or ServiceName contains "monblanking" or ServiceName contains "Parsec" or ServiceName contains "RManService" or ServiceName contains "RPCPerformanceService" or ServiceName contains "RPCService" or ServiceName contains "SplashtopRemoteService" or ServiceName contains "SSUService" or ServiceName contains "TeamViewer" or ServiceName contains "TightVNC" or ServiceName contains "vncserver" or ServiceName contains "Zoho"

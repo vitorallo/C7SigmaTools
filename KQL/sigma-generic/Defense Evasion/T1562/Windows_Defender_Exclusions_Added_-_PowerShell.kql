@@ -1,0 +1,10 @@
+// Title: Windows Defender Exclusions Added - PowerShell
+// Author: Tim Rauch, Elastic (idea)
+// Date: 2022-09-16
+// Level: medium
+// Description: Detects modifications to the Windows Defender configuration settings using PowerShell to add exclusionsThis table contains logs of PowerShell script block executions. Ensure that the Microsoft Defender for Endpoint data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1562, attack.execution, attack.t1059
+// ================================================================== 
+
+ScriptBlockLogs
+| where (ScriptBlockText contains " -ExclusionPath " or ScriptBlockText contains " -ExclusionExtension " or ScriptBlockText contains " -ExclusionProcess " or ScriptBlockText contains " -ExclusionIpAddress ") and (ScriptBlockText contains "Add-MpPreference " or ScriptBlockText contains "Set-MpPreference ")

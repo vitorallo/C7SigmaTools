@@ -1,0 +1,10 @@
+// Title: CobaltStrike Service Installations - System
+// Author: Florian Roth (Nextron Systems), Wojciech Lesicki
+// Date: 2021-05-26
+// Level: critical
+// Description: Detects known malicious service installs that appear in cases in which a Cobalt Strike beacon elevates privileges or lateral movementThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events are being collected and forwarded to Sentinel for this table to be populated.
+// Tags: attack.execution, attack.privilege-escalation, attack.lateral-movement, attack.t1021.002, attack.t1543.003, attack.t1569.002
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and ((ImagePath contains "ADMIN$" and ImagePath contains ".exe") or (ImagePath contains "%COMSPEC%" and ImagePath contains "start" and ImagePath contains "powershell") or ImagePath contains "powershell -nop -w hidden -encodedcommand" or ImagePath contains "SUVYIChOZXctT2JqZWN0IE5ldC5XZWJjbGllbnQpLkRvd25sb2FkU3RyaW5nKCdodHRwOi8vMTI3LjAuMC4xO" or ImagePath contains "lFWCAoTmV3LU9iamVjdCBOZXQuV2ViY2xpZW50KS5Eb3dubG9hZFN0cmluZygnaHR0cDovLzEyNy4wLjAuMT" or ImagePath contains "JRVggKE5ldy1PYmplY3QgTmV0LldlYmNsaWVudCkuRG93bmxvYWRTdHJpbmcoJ2h0dHA6Ly8xMjcuMC4wLjE6")

@@ -1,0 +1,10 @@
+// Title: Invoke-Obfuscation VAR+ Launcher - PowerShell
+// Author: Jonathan Cheong, oscd.community
+// Date: 2020-10-15
+// Level: high
+// Description: Detects Obfuscated use of Environment Variables to execute PowerShellThis table contains Windows security event logs, including script block logging events. Enable the appropriate data connectors in Microsoft Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1027, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText matches regex "cmd.{0,5}(?:/c|/r)(?:\\s|)"set\\s[a-zA-Z]{3,6}.*(?:\\{\\d\\}){1,}\\\\"\\s+?-f(?:.*\\)){1,}.*""

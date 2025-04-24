@@ -1,0 +1,10 @@
+// Title: PowerShell ICMP Exfiltration
+// Author: Bartlomiej Czyz @bczyz1, oscd.community
+// Date: 2020-10-10
+// Level: medium
+// Description: Detects Exfiltration Over Alternative Protocol - ICMP. Adversaries may steal data by exfiltrating it over an un-encrypted network protocol other than that of the existing command and control channel.This table contains Windows security event logs, including script block logging events. Enable the appropriate data connectors in Microsoft Sentinel to collect Windows security event logs.
+// Tags: attack.exfiltration, attack.t1048.003
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "New-Object" and ScriptBlockText contains "System.Net.NetworkInformation.Ping" and ScriptBlockText contains ".Send("

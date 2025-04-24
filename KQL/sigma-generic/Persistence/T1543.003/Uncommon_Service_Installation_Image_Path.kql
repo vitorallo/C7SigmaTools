@@ -1,0 +1,11 @@
+// Title: Uncommon Service Installation Image Path
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-03-18
+// Level: medium
+// Description: Detects uncommon service installation commands by looking at suspicious or uncommon image path values containing references to encoded powershell commands, temporary paths, etc.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.persistence, attack.privilege-escalation, car.2013-09-005, attack.t1543.003
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and ((ImagePath contains "\\\\.\\pipe" or ImagePath contains "\\Users\\Public\\" or ImagePath contains "\\Windows\\Temp\\") or (ImagePath contains " -e" and (ImagePath contains " aQBlAHgA" or ImagePath contains " aWV4I" or ImagePath contains " IAB" or ImagePath contains " JAB" or ImagePath contains " PAA" or ImagePath contains " SQBFAFgA" or ImagePath contains " SUVYI"))) and (not(ImagePath startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\Definition Updates\\")) and (not(ImagePath startswith "C:\\WINDOWS\\TEMP\\thor10-remote\\thor64.exe"))

@@ -1,0 +1,10 @@
+// Title: Suspicious Invoke-Item From Mount-DiskImage
+// Author: frack113
+// Date: 2022-02-01
+// Level: medium
+// Description: Adversaries may abuse container files such as disk image (.iso, .vhd) file formats to deliver malicious payloads that may not be tagged with MOTW.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Make sure to have the necessary connectors and data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1553.005
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Mount-DiskImage " and ScriptBlockText contains "-ImagePath " and ScriptBlockText contains "Get-Volume" and ScriptBlockText contains ".DriveLetter" and ScriptBlockText contains "invoke-item " and ScriptBlockText contains "):\\"

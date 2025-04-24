@@ -1,0 +1,10 @@
+// Title: Invoke-Obfuscation RUNDLL LAUNCHER - System
+// Author: Timur Zinniatullin, oscd.community
+// Date: 2020-10-18
+// Level: medium
+// Description: Detects Obfuscated Powershell via RUNDLL LAUNCHERThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Make sure to have the Windows Security Events connector enabled in Sentinel to collect these logs.
+// Tags: attack.defense-evasion, attack.t1027, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (ImagePath contains "rundll32.exe" and ImagePath contains "shell32.dll" and ImagePath contains "shellexec_rundll" and ImagePath contains "powershell") and Provider_Name =~ "Service Control Manager"

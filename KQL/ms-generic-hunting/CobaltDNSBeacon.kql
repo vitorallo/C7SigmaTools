@@ -1,0 +1,22 @@
+// Description: 'Cobalt Strike is a famous Pen Test tool that is used by pen testers as well as attackers alike To compromise an environment. 
+//  The query tries to detect suspicious DNS queries known from Cobalt Strike beacons.
+// Required Connectors: DNS (Types: DnsEvents); ASimDnsActivityLogs (Types: DnsEvents); AzureMonitor(VMInsights) (Types: VMConnection)
+
+let badNames = dynamic(["aaa.stage.", "post.1"]);
+(union isfuzzy=true
+(DnsEvents 
+| where Name has_any (badNames)
+| extend Domain = Name, SourceIp = ClientIP, RemoteIP = todynamic(IPAddresses)
+| mvexpand RemoteIP
+| extend RemoteIP = tostring(RemoteIP)),
+(VMConnection
+| where isnotempty(RemoteDnsCanonicalNames) 
+| parse RemoteDnsCanonicalNames with * '["' DNSName '"]' *
+| where DNSName has_any (badNames)
+| extend Domain = DNSName, RemoteIP = RemoteIp
+))
+| summarize StartTimeUtc = min(TimeGenerated), EndTimeUtc = max(TimeGenerated) by Domain, SourceIp, RemoteIP, Computer
+| extend timestamp = StartTimeUtc, HostName = split(Computer, '.', 0)[0], DnsDomain = strcat_array(array_slice(split(Computer, '.'), 1, -1), '.')
+| extend Host_0_HostName = HostName
+| extend Host_0_DnsDomain = DnsDomain
+| extend IP_0_Address = RemoteIP

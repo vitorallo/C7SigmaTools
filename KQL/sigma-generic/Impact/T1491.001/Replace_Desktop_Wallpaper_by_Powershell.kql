@@ -1,0 +1,12 @@
+// Title: Replace Desktop Wallpaper by Powershell
+// Author: frack113
+// Date: 2021-12-26
+// Level: low
+// Description: An adversary may deface systems internal to an organization in an attempt to intimidate or mislead users.
+// This may take the form of modifications to internal websites, or directly to user systems with the replacement of the desktop wallpaper
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script block logging. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.impact, attack.t1491.001
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Get-ItemProperty" and ScriptBlockText contains "Registry::" and ScriptBlockText contains "HKEY_CURRENT_USER\\Control Panel\\Desktop\\" and ScriptBlockText contains "WallPaper") or ScriptBlockText =~ "*SystemParametersInfo(20,0,*,3)*"

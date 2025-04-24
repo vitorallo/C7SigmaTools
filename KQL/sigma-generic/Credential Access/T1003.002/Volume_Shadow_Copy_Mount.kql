@@ -1,0 +1,10 @@
+// Title: Volume Shadow Copy Mount
+// Author: Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)
+// Date: 2020-10-20
+// Level: low
+// Description: Detects volume shadow copy mount via Windows event logThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.credential-access, attack.t1003.002
+// ================================================================== 
+
+SecurityEvent
+| where DeviceName contains "HarddiskVolumeShadowCopy" and Provider_Name =~ "Microsoft-Windows-Ntfs"

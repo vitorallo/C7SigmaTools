@@ -1,0 +1,10 @@
+// Title: NetNTLM Downgrade Attack
+// Author: Florian Roth (Nextron Systems), wagga
+// Date: 2018-03-20
+// Level: high
+// Description: Detects NetNTLM downgrade attackThis table contains security-related events, including audit policy changes and object access events. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to access this table.
+// Tags: attack.defense-evasion, attack.t1562.001, attack.t1112
+// ================================================================== 
+
+SecurityEvent
+| where (RegistryKey contains "\\REGISTRY\\MACHINE\\SYSTEM" and RegistryKey contains "ControlSet" and RegistryKey contains "\\Control\\Lsa") and (ObjectValueName in~ ("LmCompatibilityLevel", "NtlmMinClientSec", "RestrictSendingNTLMTraffic"))

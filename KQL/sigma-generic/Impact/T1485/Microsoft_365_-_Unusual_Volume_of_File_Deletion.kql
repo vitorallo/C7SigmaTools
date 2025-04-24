@@ -1,0 +1,10 @@
+// Title: Microsoft 365 - Unusual Volume of File Deletion
+// Author: austinsonger
+// Date: 2021-08-19
+// Level: medium
+// Description: Detects when a Microsoft Cloud App Security reported a user has deleted a unusual a large volume of files.This table contains threat intelligence indicators, including indicators from Microsoft 365 services. Ensure that Microsoft 365 Defender is enabled and integrated with Sentinel to have this table available for querying.
+// Tags: attack.impact, attack.t1485
+// ================================================================== 
+
+ThreatIntelligenceIndicator
+| where eventName =~ "Unusual volume of file deletion" and eventSource =~ "SecurityComplianceCenter" and status =~ "success"

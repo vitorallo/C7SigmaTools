@@ -1,0 +1,10 @@
+// Title: Symlink Etc Passwd
+// Author: Florian Roth (Nextron Systems)
+// Date: 2019-04-05
+// Level: high
+// Description: Detects suspicious command lines that look as if they would create symbolic links to /etc/passwdThis table contains Linux audit logs, which can be queried in Microsoft Sentinel. Ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are set up to collect Linux audit logs.
+// Tags: attack.t1204.001, attack.execution
+// ================================================================== 
+
+LinuxAuditLogs
+| where "ln -s -f /etc/passwd" or "ln -s /etc/passwd"

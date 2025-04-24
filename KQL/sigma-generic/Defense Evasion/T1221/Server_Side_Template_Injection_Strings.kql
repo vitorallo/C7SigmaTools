@@ -1,0 +1,10 @@
+// Title: Server Side Template Injection Strings
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-06-14
+// Level: high
+// Description: Detects SSTI attempts sent via GET requests in access logsThis table contains web server logs. Ensure that the appropriate connectors are set up in Microsoft Sentinel to collect web server logs and populate this table.
+// Tags: attack.defense-evasion, attack.t1221
+// ================================================================== 
+
+WebBrowserStats
+| where 'cs-method' =~ "GET" and ("={{" or "=%7B%7B" or "=${" or "=$%7B" or "=<%=" or "=%3C%25=" or "=@(" or "freemarker.template.utility.Execute" or ".getClass().forName('javax.script.ScriptEngineManager')" or "T(org.apache.commons.io.IOUtils)") and (not('sc-status' == 404))

@@ -1,0 +1,10 @@
+// Title: Powershell WMI Persistence
+// Author: frack113
+// Date: 2021-08-19
+// Level: medium
+// Description: Adversaries may establish persistence and elevate privileges by executing malicious content triggered by a Windows Management Instrumentation (WMI) event subscription.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.privilege-escalation, attack.t1546.003
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "New-CimInstance " and ScriptBlockText contains "-Namespace root/subscription " and ScriptBlockText contains "-ClassName __EventFilter " and ScriptBlockText contains "-Property ") or (ScriptBlockText contains "New-CimInstance " and ScriptBlockText contains "-Namespace root/subscription " and ScriptBlockText contains "-ClassName CommandLineEventConsumer " and ScriptBlockText contains "-Property ")

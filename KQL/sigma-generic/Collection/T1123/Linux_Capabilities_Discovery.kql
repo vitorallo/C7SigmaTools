@@ -1,0 +1,10 @@
+// Title: Linux Capabilities Discovery
+// Author: Pawel Mazur
+// Date: 2021-11-28
+// Level: low
+// Description: Detects attempts to discover the files with setuid/setgid capability on them. That would allow adversary to escalate their privileges.The equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the Linux agent is configured to send audit logs to Sentinel.
+// Tags: attack.collection, attack.privilege-escalation, attack.t1123, attack.t1548
+// ================================================================== 
+
+LinuxAuditLogs
+| where a0 =~ "getcap" and a1 =~ "-r" and a2 =~ "/" and type =~ "EXECVE"

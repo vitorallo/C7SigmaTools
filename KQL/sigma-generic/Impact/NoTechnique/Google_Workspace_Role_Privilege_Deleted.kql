@@ -1,0 +1,10 @@
+// Title: Google Workspace Role Privilege Deleted
+// Author: Austin Songer
+// Date: 2021-08-24
+// Level: medium
+// Description: Detects when an a role privilege is deleted in Google Workspace.This table corresponds to logs from Google Workspace Admin activity in GCP. To have this table present in Microsoft Sentinel, ensure that the necessary connectors are set up to collect logs from Google Cloud Platform (GCP) and Google Workspace Admin activity.
+// Tags: attack.impact
+// ================================================================== 
+
+google_workspace_admin_CL
+| where eventName =~ "REMOVE_PRIVILEGE" and eventService =~ "admin.googleapis.com"

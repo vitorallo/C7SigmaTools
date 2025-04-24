@@ -1,0 +1,10 @@
+// Title: Ngrok Usage with Remote Desktop Service
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-04-29
+// Level: high
+// Description: Detects cases in which ngrok, a reverse proxy tool, forwards events to the local RDP port, which could be a sign of malicious behaviourThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To query events related to terminal services and local session manager, you can filter on the 'Channel' field for 'Microsoft-Windows-TerminalServices-LocalSessionManager/Operational'. Make sure to have the necessary data connectors and log sources configured in Sentinel to collect Windows security events.
+// Tags: attack.command-and-control, attack.t1090
+// ================================================================== 
+
+SecurityEvent
+| where Address contains "16777216"

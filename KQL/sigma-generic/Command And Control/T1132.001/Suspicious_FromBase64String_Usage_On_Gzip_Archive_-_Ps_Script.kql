@@ -1,0 +1,10 @@
+// Title: Suspicious FromBase64String Usage On Gzip Archive - Ps Script
+// Author: frack113
+// Date: 2022-12-23
+// Level: medium
+// Description: Detects attempts of decoding a base64 Gzip archive in a PowerShell script. This technique is often used as a method to load malicious content into memory afterward.This table contains security-related events, including PowerShell script execution events. To query PowerShell script execution events, filter for EventID 4104.
+// Tags: attack.command-and-control, attack.t1132.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "FromBase64String" and ScriptBlockText contains "MemoryStream" and ScriptBlockText contains "H4sI"

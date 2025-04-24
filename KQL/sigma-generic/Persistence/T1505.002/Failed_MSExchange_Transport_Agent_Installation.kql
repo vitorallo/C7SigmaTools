@@ -1,0 +1,10 @@
+// Title: Failed MSExchange Transport Agent Installation
+// Author: Tobias Michalski (Nextron Systems)
+// Date: 2021-06-08
+// Level: high
+// Description: Detects a failed installation of a Exchange Transport AgentThe OfficeActivity table in Microsoft Sentinel contains logs related to Microsoft Exchange management activities on Windows servers. To query this table, ensure that the Microsoft 365 Defender connector is enabled in Sentinel and that the necessary permissions are set up to collect and ingest these logs.
+// Tags: attack.persistence, attack.t1505.002
+// ================================================================== 
+
+OfficeActivity
+| where Data contains "Install-TransportAgent"

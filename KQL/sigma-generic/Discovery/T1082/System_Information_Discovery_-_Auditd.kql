@@ -1,0 +1,10 @@
+// Title: System Information Discovery - Auditd
+// Author: Pawel Mazur
+// Date: 2021-09-03
+// Level: low
+// Description: Detects System Information Discovery commandsThe equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the Linux audit logs are being collected and parsed correctly.
+// Tags: attack.discovery, attack.t1082
+// ================================================================== 
+
+LinuxAudit
+| where ((name in~ ("/etc/lsb-release", "/etc/redhat-release", "/etc/issue")) and type =~ "PATH") or ((a0 in~ ("uname", "uptime", "lsmod", "hostname", "env")) and type =~ "EXECVE") or (a0 =~ "grep" and (a1 contains "vbox" or a1 contains "vm" or a1 contains "xen" or a1 contains "virtio" or a1 contains "hv") and type =~ "EXECVE") or (a0 =~ "kmod" and a1 =~ "list" and type =~ "EXECVE")

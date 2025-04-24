@@ -1,0 +1,11 @@
+// Description: Looks for suspicious keyword additions to windows registry.
+// Author: Jouni Mikkola
+// References:
+// https://threathunt.blog/registry-hunts/
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceRegistryEvents)
+
+DeviceRegistryEvents
+| where Timestamp > ago(30d)
+| where ActionType has_any ('RegistryValueSet','RegistryKeyCreated')
+| where RegistryValueData has_any('xor','new-item','invoke-expression','iex','sleep','invoke-','System.Net.HttpWebRequest','webclient','iwr','curl')  // Look for common obfuscation techniques or commands used in malicious scripts
+| project Timestamp, DeviceName, RegistryKey, RegistryValueName, RegistryValueData, InitiatingProcessAccountName, InitiatingProcessFileName, InitiatingProcessCommandLine, InitiatingProcessParentFileName  // Project relevant fields for analysis

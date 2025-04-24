@@ -1,0 +1,9 @@
+// Description: Query 1 shows you any network communication happened from endpoints to a specific Remote IP or Remote URL.
+// Ensure to update RemoteIP and RemoteURL variable.
+// For questions @MiladMSFT on Twitter or milad.aslaner@microsoft.com by email.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceNetworkEvents)
+
+DeviceNetworkEvents
+| where RemoteIP == "IP ADDRESS GOES HERE"
+or RemoteUrl endswith "DNS ENTRY GOES HERE"
+| project Timestamp, DeviceName, ActionType, RemoteIP, RemoteUrl, InitiatingProcessFileName, InitiatingProcessCommandLine

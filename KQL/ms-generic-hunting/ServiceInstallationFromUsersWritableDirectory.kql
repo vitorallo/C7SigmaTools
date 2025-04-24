@@ -1,0 +1,11 @@
+// Description: 'This query detects a service installation that is originated from a user writable directory.
+// Ref: https://attack.mitre.org/techniques/T1569/002/'
+// Required Connectors: SecurityEvents (Types: SecurityEvent); WindowsSecurityEvents (Types: SecurityEvent)
+
+// Enter a reference list for writable user paths"
+let WritableUserPaths = dynamic (["\"C:\\Users\\","\"C:\\ProgramData\\"]);
+Event
+| where Source == "Service Control Manager" and EventID == 7045
+| parse EventData with * 'ServiceName">' ServiceName "<" * 'ImagePath">' ImagePath "<" *
+| where ImagePath has_any (WritableUserPaths)
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated) by EventID, Computer, ImagePath, ServiceName, UserName

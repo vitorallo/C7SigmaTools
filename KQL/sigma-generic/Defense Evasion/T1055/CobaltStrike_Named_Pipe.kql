@@ -1,0 +1,10 @@
+// Title: CobaltStrike Named Pipe
+// Author: Florian Roth (Nextron Systems), Wojciech Lesicki
+// Date: 2021-05-25
+// Level: critical
+// Description: Detects the creation of a named pipe as used by CobaltStrikeThis table contains Sysmon events, including Event ID 17 and Event ID 18 which are related to Named Pipe Events. To have this table present in Sentinel, you need to have Sysmon installed on your Windows endpoints and have the appropriate configuration to log Named Pipe Events.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1055
+// ================================================================== 
+
+SysmonEvent
+| where (PipeName contains "\\MSSE-" and PipeName contains "-server") or PipeName startswith "\\interprocess_" or PipeName startswith "\\lsarpc_" or PipeName startswith "\\mojo_" or PipeName startswith "\\msagent_" or PipeName startswith "\\netlogon_" or PipeName startswith "\\postex_" or PipeName startswith "\\samr_" or PipeName startswith "\\srvsvc_" or PipeName startswith "\\status_" or PipeName startswith "\\wkssvc_"

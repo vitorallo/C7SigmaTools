@@ -1,0 +1,10 @@
+// Title: AD Object WriteDAC Access
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-09-12
+// Level: critical
+// Description: Detects WRITE_DAC access to a domain objectThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the necessary data connectors set up to collect security events from Windows machines.
+// Tags: attack.defense-evasion, attack.t1222.001
+// ================================================================== 
+
+SecurityEvent
+| where AccessMask =~ "0x40000" and ObjectServer =~ "DS"

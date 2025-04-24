@@ -1,0 +1,10 @@
+// Title: System and Hardware Information Discovery
+// Author: Ömer Günal, oscd.community
+// Date: 2020-10-08
+// Level: informational
+// Description: Detects system information discovery commandsThe LinuxAudit table in Microsoft Sentinel contains audit logs from Linux systems. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs from the auditd service.
+// Tags: attack.discovery, attack.t1082
+// ================================================================== 
+
+LinuxAudit
+| where (name in~ ("/sys/class/dmi/id/bios_version", "/sys/class/dmi/id/product_name", "/sys/class/dmi/id/chassis_vendor", "/proc/scsi/scsi", "/proc/ide/hd0/model", "/proc/version", "/etc/issue") or (name contains "/etc/" and name contains "version") or (name contains "/etc/" and name contains "release")) and type =~ "PATH"

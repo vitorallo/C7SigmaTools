@@ -1,0 +1,10 @@
+// Title: Potential Persistence Via Security Descriptors - ScriptBlock
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-05
+// Level: high
+// Description: Detects usage of certain functions and keywords that are used to manipulate security descriptors in order to potentially set a backdoor. As seen used in the DAMP project.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events connector is set up and collecting logs from the appropriate sources.
+// Tags: attack.persistence, attack.defense-evasion, attack.privilege-escalation
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "\\Lsa\\JD" or ScriptBlockText contains "\\Lsa\\Skew1" or ScriptBlockText contains "\\Lsa\\Data" or ScriptBlockText contains "\\Lsa\\GBG") and (ScriptBlockText contains "win32_Trustee" and ScriptBlockText contains "win32_Ace" and ScriptBlockText contains ".AccessMask" and ScriptBlockText contains ".AceType" and ScriptBlockText contains ".SetSecurityDescriptor")

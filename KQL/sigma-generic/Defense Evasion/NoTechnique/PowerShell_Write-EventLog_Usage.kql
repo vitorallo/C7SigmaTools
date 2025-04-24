@@ -1,0 +1,10 @@
+// Title: PowerShell Write-EventLog Usage
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-08-16
+// Level: medium
+// Description: Detects usage of the "Write-EventLog" cmdlet with 'RawData' flag. The cmdlet can be levreage to write malicious payloads to the EventLog and then retrieve them later for later useThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script block logging. Ensure that the Windows Security Events connector is set up in Sentinel to collect these logs.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Write-EventLog" and ScriptBlockText contains "-RawData "

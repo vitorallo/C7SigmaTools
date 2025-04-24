@@ -1,0 +1,10 @@
+// Title: Suspicious Access to Sensitive File Extensions
+// Author: Samir Bousseaden
+// Date: 2019-04-03
+// Level: medium
+// Description: Detects known sensitive file extensions accessed on a network shareThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that the Windows Security events are being collected and sent to Sentinel. This can be achieved by installing the Microsoft Monitoring Agent on the Windows machines and configuring the appropriate data connectors in Sentinel.
+// Tags: attack.collection, attack.t1039
+// ================================================================== 
+
+SecurityEvent
+| where RelativeTargetName endswith ".bak" or RelativeTargetName endswith ".dmp" or RelativeTargetName endswith ".edb" or RelativeTargetName endswith ".kirbi" or RelativeTargetName endswith ".msg" or RelativeTargetName endswith ".nsf" or RelativeTargetName endswith ".nst" or RelativeTargetName endswith ".oab" or RelativeTargetName endswith ".ost" or RelativeTargetName endswith ".pst" or RelativeTargetName endswith ".rdp" or RelativeTargetName endswith "\\groups.xml"

@@ -1,0 +1,13 @@
+// Title: Service Registry Permissions Weakness Check
+// Author: frack113
+// Date: 2021-12-30
+// Level: medium
+// Description: Adversaries may execute their own malicious payloads by hijacking the Registry entries used by services.
+// Adversaries may use flaws in the permissions for registry to redirect from the originally specified executable to one that they control, in order to launch their own code at Service start.
+// Windows stores local service configuration information in the Registry under HKLM\SYSTEM\CurrentControlSet\Services
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for Script Block Logging events, you may need to enable the appropriate Windows security auditing settings on the endpoints and ensure that the logs are being forwarded to Sentinel.
+// Tags: attack.persistence, attack.t1574.011, stp.2a
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "get-acl" and ScriptBlockText contains "REGISTRY::HKLM\\SYSTEM\\CurrentControlSet\\Services\\"

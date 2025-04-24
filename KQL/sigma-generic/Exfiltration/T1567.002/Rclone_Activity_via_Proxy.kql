@@ -1,0 +1,10 @@
+// Title: Rclone Activity via Proxy
+// Author: Janantha Marasinghe
+// Date: 2022-10-18
+// Level: medium
+// Description: Detects the use of rclone, a command-line program to manage files on cloud storage, via its default user-agent stringThis table contains proxy logs, which can be queried in Microsoft Sentinel. Make sure to have the necessary connectors or data sources configured in Sentinel to collect proxy logs.
+// Tags: attack.exfiltration, attack.t1567.002
+// ================================================================== 
+
+ProxyLog
+| where 'c-useragent' startswith "rclone/v"

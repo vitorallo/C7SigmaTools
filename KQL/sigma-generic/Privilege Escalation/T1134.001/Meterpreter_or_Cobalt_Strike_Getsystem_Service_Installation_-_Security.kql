@@ -1,0 +1,10 @@
+// Title: Meterpreter or Cobalt Strike Getsystem Service Installation - Security
+// Author: Teymur Kheirkhabarov, Ecco, Florian Roth (Nextron Systems)
+// Date: 2019-10-26
+// Level: high
+// Description: Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting a specific service installationThe SecurityEvent table in Microsoft Sentinel contains security-related events, including event ID 4697. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.privilege-escalation, attack.t1134.001, attack.t1134.002
+// ================================================================== 
+
+SecurityEvent
+| where ((ServiceFileName contains "cmd" or ServiceFileName contains "%COMSPEC%") and (ServiceFileName contains "/c" and ServiceFileName contains "echo" and ServiceFileName contains "\\pipe\\")) or (ServiceFileName contains "rundll32" and ServiceFileName contains ".dll,a" and ServiceFileName contains "/p:") or ServiceFileName startswith "\\\\127.0.0.1\\ADMIN$\\"

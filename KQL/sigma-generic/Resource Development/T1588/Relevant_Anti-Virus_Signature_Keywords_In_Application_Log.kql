@@ -1,0 +1,11 @@
+// Title: Relevant Anti-Virus Signature Keywords In Application Log
+// Author: Florian Roth (Nextron Systems), Arnim Rupp
+// Date: 2017-02-19
+// Level: high
+// Description: Detects potentially highly relevant antivirus events in the application log based on known virus signature names and malware keywords.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To have this table present, ensure that you have the necessary connectors or data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.resource-development, attack.t1588
+// ================================================================== 
+
+SecurityEvent
+| where ("Adfind" or "ASP/BackDoor " or "ATK/" or "Backdoor.ASP" or "Backdoor.Cobalt" or "Backdoor.JSP" or "Backdoor.PHP" or "Blackworm" or "Brutel" or "BruteR" or "Chopper" or "Cobalt" or "COBEACON" or "Cometer" or "CRYPTES" or "Cryptor" or "Destructor" or "DumpCreds" or "Exploit.Script.CVE" or "FastReverseProxy" or "Filecoder" or "GrandCrab " or "HackTool" or "HKTL" or "HTool-" or "/HTool" or ".HTool" or "IISExchgSpawnCMD" or "Impacket" or "JSP/BackDoor " or "Keylogger" or "Koadic" or "Krypt" or "Lazagne" or "Metasploit" or "Meterpreter" or "MeteTool" or "mikatz" or "Mimikatz" or "Mpreter" or "MsfShell" or "Nighthawk" or "Packed.Generic.347" or "PentestPowerShell" or "Phobos" or "PHP/BackDoor " or "Potato" or "PowerSploit" or "PowerSSH" or "PshlSpy" or "PSWTool" or "PWCrack" or "PWDump" or "Ransom" or "Rozena" or "Ryzerlo" or "Sbelt" or "Seatbelt" or "SecurityTool " or "SharpDump" or "Shellcode" or "Sliver" or "Splinter" or "Swrort" or "Tescrypt" or "TeslaCrypt" or "TurtleLoader" or "Valyria" or "Webshell") and (not((("anti_ransomware_service.exe" or "Anti-Ransomware" or "Crack" or "cyber-protect-service.exe" or "encryptor" or "Keygen") or Level == 4 or Provider_Name =~ "Microsoft-Windows-RestartManager")))

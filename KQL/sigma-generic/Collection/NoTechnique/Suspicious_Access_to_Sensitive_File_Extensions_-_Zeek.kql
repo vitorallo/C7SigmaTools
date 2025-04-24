@@ -1,0 +1,10 @@
+// Title: Suspicious Access to Sensitive File Extensions - Zeek
+// Author: Samir Bousseaden, @neu5ron
+// Date: 2020-04-02
+// Level: medium
+// Description: Detects known sensitive file extensions via ZeekThis table contains information about SMB file events in Microsoft Sentinel. To have this table present, ensure that the necessary connectors are set up to collect data from Zeek logs related to SMB file activity.
+// Tags: attack.collection
+// ================================================================== 
+
+SMBFileEvents
+| where name endswith ".pst" or name endswith ".ost" or name endswith ".msg" or name endswith ".nst" or name endswith ".oab" or name endswith ".edb" or name endswith ".nsf" or name endswith ".bak" or name endswith ".dmp" or name endswith ".kirbi" or name endswith "\\groups.xml" or name endswith ".rdp"

@@ -1,0 +1,13 @@
+// Title: Service Registry Key Read Access Request
+// Author: Center for Threat Informed Defense (CTID) Summiting the Pyramid Team
+// Date: 2023-09-28
+// Level: low
+// Description: Detects "read access" requests on the services registry key.
+// Adversaries may execute their own malicious payloads by hijacking the Registry entries used by services.
+// Adversaries may use flaws in the permissions for Registry keys related to services to redirect from the originally specified executable to one that they control, in order to launch their own code when a service starts.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events and logs from Windows systems. To query this table, ensure that you have the necessary connectors and data sources configured in Sentinel to collect Windows security logs.
+// Tags: attack.defense-evasion, attack.persistence, attack.privilege-escalation, attack.t1574.011
+// ================================================================== 
+
+SecurityEvent
+| where AccessList contains "%%1538" and (RegistryKey endswith "\\SYSTEM*" and RegistryKey endswith "ControlSet\\Services*")

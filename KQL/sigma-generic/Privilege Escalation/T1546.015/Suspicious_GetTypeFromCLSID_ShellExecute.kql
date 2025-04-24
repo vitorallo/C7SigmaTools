@@ -1,0 +1,10 @@
+// Title: Suspicious GetTypeFromCLSID ShellExecute
+// Author: frack113
+// Date: 2022-04-02
+// Level: medium
+// Description: Detects suspicious Powershell code that execute COM ObjectsThe SecurityEvent table in Microsoft Sentinel contains logs related to security events on Windows machines. To ensure that Script Block Logging events are present in this table, ensure that the appropriate data connectors are set up in Sentinel to collect Windows security event logs, and that Script Block Logging is enabled on the Windows machines.
+// Tags: attack.privilege-escalation, attack.persistence, attack.t1546.015
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "::GetTypeFromCLSID(" and ScriptBlockText contains ".ShellExecute("

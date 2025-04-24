@@ -1,0 +1,24 @@
+// Description: 'This hunting queries identifies files uploaded to SharePoint via a Teams chat and
+// summarizes users and IP addresses that have accessed these files. This allows for 
+// identification of anomolous file sharing patterns.'
+// Required Connectors: Office365 (Types: OfficeActivity (SharePoint))
+
+OfficeActivity 
+| where RecordType =~ "SharePointFileOperation"
+| where Operation =~ "FileUploaded" 
+| where UserId != "app@sharepoint"
+| where SourceRelativeUrl has "Microsoft Teams Chat Files" 
+| join kind= leftouter ( 
+   OfficeActivity 
+    | where RecordType =~ "SharePointFileOperation"
+    | where Operation =~ "FileDownloaded" or Operation =~ "FileAccessed" 
+    | where UserId != "app@sharepoint"
+    | where SourceRelativeUrl has "Microsoft Teams Chat Files" 
+) on OfficeObjectId 
+| extend userBag = bag_pack(UserId1, ClientIP1) 
+| summarize make_set(UserId1, 10000), make_bag(userBag, 10000) by TimeGenerated, UserId, OfficeObjectId, SourceFileName 
+| extend NumberUsers = array_length(bag_keys(bag_userBag))
+| project timestamp=TimeGenerated, UserId, FileLocation=OfficeObjectId, FileName=SourceFileName, AccessedBy=bag_userBag, NumberOfUsersAccessed=NumberUsers
+| extend AccountName = tostring(split(UserId, "@")[0]), AccountUPNSuffix = tostring(split(UserId, "@")[1])
+| extend Account_0_Name = AccountName
+| extend Account_0_UPNSuffix = AccountUPNSuffix

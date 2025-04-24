@@ -1,0 +1,10 @@
+// Title: Apache Threading Error
+// Author: Florian Roth (Nextron Systems)
+// Date: 2019-01-22
+// Level: medium
+// Description: Detects an issue in apache logs that reports threading related errorsThe ApacheAccess table in Microsoft Sentinel contains access logs for Apache service. To query the error.log file, you may need to install a custom log parser or connector to ingest Apache error logs into Sentinel.
+// Tags: attack.initial-access, attack.lateral-movement, attack.t1190, attack.t1210
+// ================================================================== 
+
+ApacheAccess
+| where "__pthread_tpp_change_priority: Assertion `new_prio == -1 || (new_prio >= fifo_min_prio && new_prio <= fifo_max_prio)"

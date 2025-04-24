@@ -1,0 +1,10 @@
+// Title: Disabled MFA to Bypass Authentication Mechanisms
+// Author: @ionsor
+// Date: 2022-02-08
+// Level: medium
+// Description: Detection for when multi factor authentication has been disabled, which might indicate a malicious activity to bypass authentication mechanisms.This table contains Azure activity logs. Ensure that the Azure Monitor solution is installed in Microsoft Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1556
+// ================================================================== 
+
+AzureActivityLogs
+| where eventName =~ "Disable Strong Authentication." and eventSource =~ "AzureActiveDirectory" and status =~ "success"

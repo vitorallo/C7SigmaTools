@@ -1,0 +1,12 @@
+// Title: ADFS Database Named Pipe Connection By Uncommon Tool
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2021-10-08
+// Level: medium
+// Description: Detects suspicious local connections via a named pipe to the AD FS configuration database (Windows Internal Database).
+// Used to access information such as the AD FS configuration settings which contains sensitive information used to sign SAML tokens.
+// This table contains Sysmon events, including Named Pipe Events (Event ID 17 and Event ID 18). To have this table present in Microsoft Sentinel, you need to have Sysmon installed on your Windows endpoints and configured to log Named Pipe Events.
+// Tags: attack.collection, attack.t1005
+// ================================================================== 
+
+SysmonEvent
+| where PipeName =~ "\\MICROSOFT##WID\\tsql\\query" and (not((InitiatingProcessFolderPath endswith ":\\Windows\\System32\\mmc.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\system32\\svchost.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\System32\\wsmprovhost.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\SysWOW64\\mmc.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\SysWOW64\\wsmprovhost.exe" or InitiatingProcessFolderPath endswith ":\\Windows\\WID\\Binn\\sqlwriter.exe" or InitiatingProcessFolderPath endswith "\\AzureADConnect.exe" or InitiatingProcessFolderPath endswith "\\Microsoft.Identity.Health.Adfs.PshSurrogate.exe" or InitiatingProcessFolderPath endswith "\\Microsoft.IdentityServer.ServiceHost.exe" or InitiatingProcessFolderPath endswith "\\Microsoft.Tri.Sensor.exe" or InitiatingProcessFolderPath endswith "\\sqlservr.exe" or InitiatingProcessFolderPath endswith "\\tssdis.exe")))

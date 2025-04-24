@@ -1,0 +1,10 @@
+// Title: Potential PowerShell Obfuscation Using Character Join
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-09
+// Level: low
+// Description: Detects specific techniques often seen used inside of PowerShell scripts to obfscuate Alias creationThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Make sure to have the necessary connectors and data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.execution, attack.t1027, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "-Alias" and ScriptBlockText contains " -Value (-join("

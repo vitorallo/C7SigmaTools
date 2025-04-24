@@ -1,0 +1,12 @@
+// Title: User Risk and MFA Registration Policy Updated
+// Author: Harjot Singh (@cyb3rjy0t)
+// Date: 2024-08-13
+// Level: high
+// Description: Detects changes and updates to the user risk and MFA registration policy.
+// Attackers can modified the policies to Bypass MFA, weaken security thresholds, facilitate further attacks, maintain persistence.
+// The AzureActivity table in Microsoft Sentinel contains Azure audit logs. Ensure that Azure Monitor logs are being collected and integrated with Sentinel to have access to this table.
+// Tags: attack.persistence
+// ================================================================== 
+
+AzureActivity
+| where Category =~ "Policy" and LoggedByService =~ "AAD Management UX" and OperationName =~ "Update User Risk and MFA Registration Policy"

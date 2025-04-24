@@ -1,0 +1,10 @@
+// Title: Troubleshooting Pack Cmdlet Execution
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-06-21
+// Level: medium
+// Description: Detects execution of "TroubleshootingPack" cmdlets to leverage CVE-2022-30190 or action similar to "msdt" lolbin (as described in LOLBAS)This table contains Windows security event logs, including script block logging events. Ensure that the Windows security events data connector is enabled in Microsoft Sentinel to query this table.
+// Tags: attack.defense-evasion, attack.t1202
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Invoke-TroubleshootingPack" and ScriptBlockText contains "C:\\Windows\\Diagnostics\\System\\PCW" and ScriptBlockText contains "-AnswerFile" and ScriptBlockText contains "-Unattended"

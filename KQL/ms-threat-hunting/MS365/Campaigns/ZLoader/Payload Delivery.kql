@@ -1,0 +1,6 @@
+// Description: ZLoader was delivered in a campaign in summer 2021 via malvertising. This campaign was tweeted about by @MsftSecIntel on twitter.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceNetworkEvents)
+
+DeviceNetworkEvents
+| where InitiatingProcessFileName =~ 'powershell.exe'
+    and InitiatingProcessCommandLine has('Invoke-WebRequest') and InitiatingProcessCommandLine endswith '-OutFile tim.EXE'

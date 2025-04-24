@@ -1,0 +1,10 @@
+// Title: Suspicious PowerShell Mailbox Export to Share - PS
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-10-26
+// Level: critical
+// Description: Detects usage of the powerShell New-MailboxExportRequest Cmdlet to exports a mailbox to a remote or local share, as used in ProxyShell exploitationsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.exfiltration
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "New-MailboxExportRequest" and ScriptBlockText contains " -Mailbox " and ScriptBlockText contains " -FilePath \\\\"

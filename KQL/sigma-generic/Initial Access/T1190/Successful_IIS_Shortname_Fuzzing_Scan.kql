@@ -1,0 +1,10 @@
+// Title: Successful IIS Shortname Fuzzing Scan
+// Author: frack113
+// Date: 2021-10-06
+// Level: medium
+// Description: When IIS uses an old .Net Framework it's possible to enumerate folders with the symbol "~"The WebBrowserStats table in Microsoft Sentinel contains web server logs. To have this table present, ensure that you have the necessary connectors or data sources configured in Sentinel to collect web server logs.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+WebBrowserStats
+| where ('cs-method' in~ ("GET", "OPTIONS")) and 'cs-uri-query' contains "~1" and 'cs-uri-query' endswith "a.aspx" and ('sc-status' in~ ("200", "301"))

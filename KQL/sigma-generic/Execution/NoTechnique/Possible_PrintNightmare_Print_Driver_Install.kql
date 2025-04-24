@@ -1,0 +1,12 @@
+// Title: Possible PrintNightmare Print Driver Install
+// Author: @neu5ron (Nate Guagenti)
+// Date: 2021-08-23
+// Level: medium
+// Description: Detects the remote installation of a print driver which is possible indication of the exploitation of PrintNightmare (CVE-2021-1675).
+// The occurrence of print drivers being installed remotely via RPC functions should be rare, as print drivers are normally installed locally and or through group policy.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including Zeek logs. To have Zeek logs available in Sentinel, you need to configure a data connector to ingest logs from Zeek into Sentinel.
+// Tags: attack.execution, cve.2021-1678, cve.2021-1675, cve.2021-34527
+// ================================================================== 
+
+SecurityEvent
+| where operation in~ ("RpcAsyncInstallPrinterDriverFromPackage", "RpcAsyncAddPrintProcessor", "RpcAddPrintProcessor", "RpcAddPrinterDriverEx", "RpcAddPrinterDriver", "RpcAsyncAddPrinterDriver")

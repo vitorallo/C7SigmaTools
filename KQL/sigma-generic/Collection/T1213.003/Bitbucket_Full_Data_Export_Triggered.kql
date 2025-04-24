@@ -1,0 +1,10 @@
+// Title: Bitbucket Full Data Export Triggered
+// Author: Muhammad Faisal (@faisalusuf)
+// Date: 2024-02-25
+// Level: high
+// Description: Detects when full data export is attempted.This table contains audit logs for various services, including Bitbucket. Make sure to enable the necessary connectors and data sources for Bitbucket in Microsoft Sentinel to have these logs available for querying.
+// Tags: attack.collection, attack.t1213.003
+// ================================================================== 
+
+AuditLogs
+| where 'auditType.action' =~ "Full data export triggered" and 'auditType.category' =~ "Data pipeline"

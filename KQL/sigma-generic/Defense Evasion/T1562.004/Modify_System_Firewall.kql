@@ -1,0 +1,12 @@
+// Title: Modify System Firewall
+// Author: IAI
+// Date: 2023-03-06
+// Level: medium
+// Description: Detects the removal of system firewall rules. Adversaries may only delete or modify a specific system firewall rule to bypass controls limiting network usage or access.
+// Detection rules that match only on the disabling of firewalls will miss this.
+// The LinuxAudit table in Microsoft Sentinel contains audit logs from Linux systems. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs from the auditd service.
+// Tags: attack.t1562.004, attack.defense-evasion
+// ================================================================== 
+
+LinuxAudit
+| where (a0 =~ "iptables" and a1 contains "DROP" and type =~ "EXECVE") or (a0 =~ "firewall-cmd" and a1 contains "remove" and type =~ "EXECVE") or (a0 =~ "ufw" and a1 contains "delete" and type =~ "EXECVE")

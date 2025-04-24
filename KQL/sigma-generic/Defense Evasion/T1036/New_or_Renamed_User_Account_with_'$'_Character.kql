@@ -1,0 +1,11 @@
+// Title: New or Renamed User Account with '$' Character
+// Author: Ilyas Ochkov, oscd.community
+// Date: 2019-10-25
+// Level: medium
+// Description: Detects the creation of a user with the "$" character. This can be used by attackers to hide a user or trick detection systems that lack the parsing mechanisms.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To query this table, ensure that you have the necessary data connectors set up in Sentinel to collect security events from Windows machines.
+// Tags: attack.defense-evasion, attack.t1036
+// ================================================================== 
+
+SecurityEvent
+| where (SamAccountName contains "$" or NewTargetUserName contains "$") and (not(TargetUserName =~ "HomeGroupUser$"))

@@ -1,0 +1,10 @@
+// Title: DHCP Server Error Failed Loading the CallOut DLL
+// Author: Dimitrios Slamaris, @atc_project (fix)
+// Date: 2017-05-15
+// Level: high
+// Description: This rule detects a DHCP server error in which a specified Callout DLL (in registry) could not be loadedThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Make sure to have the Windows Security Events connector enabled in Sentinel to collect these logs.
+// Tags: attack.defense-evasion, attack.t1574.002
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Microsoft-Windows-DHCP-Server"

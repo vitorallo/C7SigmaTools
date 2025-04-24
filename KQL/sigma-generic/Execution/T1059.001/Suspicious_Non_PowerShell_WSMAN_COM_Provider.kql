@@ -1,0 +1,10 @@
+// Title: Suspicious Non PowerShell WSMAN COM Provider
+// Author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+// Date: 2020-06-24
+// Level: medium
+// Description: Detects suspicious use of the WSMAN provider without PowerShell.exe as the host application.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which can include PowerShell activity. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1059.001, attack.lateral-movement, attack.t1021.003
+// ================================================================== 
+
+SecurityEvent
+| where Data contains "ProviderName=WSMan" and (not((Data matches regex "HostId=[a-zA-Z0-9-]{36}\\s+EngineVersion=" or (Data contains "HostApplication=powershell" or Data contains "HostApplication=C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell" or Data contains "HostApplication=C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell" or Data contains "HostApplication=C:/Windows/System32/WindowsPowerShell/v1.0/powershell" or Data contains "HostApplication=C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell"))))

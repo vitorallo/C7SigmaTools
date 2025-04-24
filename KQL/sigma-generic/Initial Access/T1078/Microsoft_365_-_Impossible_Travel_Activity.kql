@@ -1,0 +1,10 @@
+// Title: Microsoft 365 - Impossible Travel Activity
+// Author: Austin Songer @austinsonger
+// Date: 2020-07-06
+// Level: medium
+// Description: Detects when a Microsoft Cloud App Security reported a risky sign-in attempt due to a login associated with an impossible travel.The OfficeActivity table in Microsoft Sentinel contains logs related to Microsoft 365 activity. To ensure this table is populated, make sure to have the Microsoft 365 Defender connector enabled in your Sentinel workspace.
+// Tags: attack.initial-access, attack.t1078
+// ================================================================== 
+
+OfficeActivity
+| where eventName =~ "Impossible travel activity" and eventSource =~ "SecurityComplianceCenter" and status =~ "success"

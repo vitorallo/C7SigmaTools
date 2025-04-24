@@ -1,0 +1,10 @@
+// Title: Powershell Install a DLL in System Directory
+// Author: frack113, Nasreddine Bencherchali (Nextron Systems)
+// Date: 2021-12-27
+// Level: high
+// Description: Uses PowerShell to install/copy a file into a system directory such as "System32" or "SysWOW64"The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.credential-access, attack.t1556.002
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText matches regex "(Copy-Item|cpi) .{2,128} -Destination .{1,32}\\\\Windows\\\\(System32|SysWOW64)"

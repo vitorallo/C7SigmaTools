@@ -1,0 +1,10 @@
+// Title: Query Tor Onion Address - DNS Client
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-02-20
+// Level: high
+// Description: Detects DNS resolution of an .onion address related to Tor routing networksThis table contains DNS client events from the Microsoft-Windows-DNS Client Events/Operational Event Log. Ensure that the Microsoft-Windows-DNS Client Events/Operational Event Log is enabled and collected in order to have data in this table.
+// Tags: attack.command-and-control, attack.t1090.003
+// ================================================================== 
+
+DnsEvents
+| where QueryName contains ".onion"

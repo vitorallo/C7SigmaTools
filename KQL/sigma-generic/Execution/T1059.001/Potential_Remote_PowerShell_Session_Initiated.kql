@@ -1,0 +1,12 @@
+// Title: Potential Remote PowerShell Session Initiated
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-09-12
+// Level: high
+// Description: Detects a process that initiated a network connection over ports 5985 or 5986 from a non-network service account.
+// This could potentially indicates a remote PowerShell connection.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1059.001, attack.lateral-movement, attack.t1021.006
+// ================================================================== 
+
+SecurityEvent
+| where ((RemotePort in~ ("5985", "5986")) and SourceIsIpv6 =~ "false") and (not((((RemoteIP in~ ("::1", "127.0.0.1")) and (LocalIP in~ ("::1", "127.0.0.1"))) or ((InitiatingProcessAccountName contains "NETWORK SERVICE" or InitiatingProcessAccountName contains "NETZWERKDIENST" or InitiatingProcessAccountName contains "SERVICIO DE RED" or InitiatingProcessAccountName contains "SERVIZIO DI RETE") or (InitiatingProcessAccountName contains "SERVICE R" or InitiatingProcessAccountName contains "SEAU"))))) and (not((InitiatingProcessFolderPath in~ ("C:\\Program Files\\Avast Software\\Avast\\AvastSvc.exe", "C:\\Program Files (x86)\\Avast Software\\Avast\\AvastSvc.exe"))))

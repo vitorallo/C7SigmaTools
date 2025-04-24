@@ -1,0 +1,9 @@
+// Description: This query helps hunting for emails from a sender with at least one email in quarantine
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+let SenderWithQuarantine = EmailEvents
+| where LatestDeliveryLocation == "Quarantine"
+| project SenderFromAddress;
+EmailEvents
+| where LatestDeliveryLocation == "Inbox/folder"
+| where SenderFromAddress in (SenderWithQuarantine)

@@ -1,0 +1,10 @@
+// Title: Potential Keylogger Activity
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-04
+// Level: medium
+// Description: Detects PowerShell scripts that contains reference to keystroke capturing functionsThis table contains Windows security event logs, including PowerShell script execution events. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to query this table.
+// Tags: attack.collection, attack.credential-access, attack.t1056.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "[Windows.Input.Keyboard]::IsKeyDown([System.Windows.Input.Key]::"

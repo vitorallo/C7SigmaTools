@@ -1,0 +1,10 @@
+// Title: Primary Refresh Token Access Attempt
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-07
+// Level: high
+// Description: Indicates access attempt to the PRT resource which can be used to move laterally into an organization or perform credential theftThe AzureActivity table in Microsoft Sentinel contains logs related to Azure services, including risk detection events. Ensure that Azure Activity Logs are enabled and ingested into Sentinel to query this table.
+// Tags: attack.t1528, attack.credential-access
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "attemptedPrtAccess"

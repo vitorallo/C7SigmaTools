@@ -1,0 +1,10 @@
+// Title: LOLBIN Execution From Abnormal Drive
+// Author: Christopher Peacock '@securepeacock', SCYTHE '@scythe_io', Angelo Violetti - SEC Consult '@angelo_violetti', Aaron Herman
+// Date: 2022-01-25
+// Level: medium
+// Description: Detects LOLBINs executing from an abnormal or uncommon drive such as a mounted ISO.The SecurityEvent table in Microsoft Sentinel contains process creation events on Windows systems. To query process creation events, filter on EventID 4688 in the SecurityEvent table.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+SecurityEvent
+| where ((FolderPath endswith "\\calc.exe" or FolderPath endswith "\\certutil.exe" or FolderPath endswith "\\cmstp.exe" or FolderPath endswith "\\cscript.exe" or FolderPath endswith "\\installutil.exe" or FolderPath endswith "\\mshta.exe" or FolderPath endswith "\\regsvr32.exe" or FolderPath endswith "\\rundll32.exe" or FolderPath endswith "\\wscript.exe") or (ProcessVersionInfoOriginalFileName in~ ("CALC.EXE", "CertUtil.exe", "CMSTP.EXE", "cscript.exe", "installutil.exe", "MSHTA.EXE", "REGSVR32.EXE", "RUNDLL32.EXE", "wscript.exe"))) and (not((CurrentDirectory contains "C:\\" or CurrentDirectory =~ "" or isnull(CurrentDirectory))))

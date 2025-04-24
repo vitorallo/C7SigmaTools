@@ -1,0 +1,7 @@
+// Description: This query was originally published in the threat analytics report, Sysrv botnet evolution.
+// Sysrv is a Go-based botnet that targets both Windows and Linux servers, and steals resources to mine cryptocurrency.
+// The following query finds instances of Oracle WebLogic being exploited to run a PowerShell script that downloads payloads.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents, DeviceFileEvents)
+
+union DeviceProcessEvents, DeviceFileEvents
+| where InitiatingProcessParentFileName =~ 'wlsvcX64.exe' and InitiatingProcessFileName =~ 'powershell.exe'

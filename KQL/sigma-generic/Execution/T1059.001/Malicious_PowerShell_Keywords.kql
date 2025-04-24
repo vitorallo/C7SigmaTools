@@ -1,0 +1,10 @@
+// Title: Malicious PowerShell Keywords
+// Author: Sean Metcalf (source), Florian Roth (Nextron Systems)
+// Date: 2017-03-05
+// Level: medium
+// Description: Detects keywords from well-known PowerShell exploitation frameworksThis table contains security-related events, including PowerShell script execution events. Make sure to enable the necessary data connectors in Sentinel to collect Windows security event logs.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "AdjustTokenPrivileges" or ScriptBlockText contains "IMAGE_NT_OPTIONAL_HDR64_MAGIC" or ScriptBlockText contains "Metasploit" or ScriptBlockText contains "Microsoft.Win32.UnsafeNativeMethods" or ScriptBlockText contains "Mimikatz" or ScriptBlockText contains "MiniDumpWriteDump" or ScriptBlockText contains "PAGE_EXECUTE_READ" or ScriptBlockText contains "ReadProcessMemory.Invoke" or ScriptBlockText contains "SE_PRIVILEGE_ENABLED" or ScriptBlockText contains "SECURITY_DELEGATION" or ScriptBlockText contains "TOKEN_ADJUST_PRIVILEGES" or ScriptBlockText contains "TOKEN_ALL_ACCESS" or ScriptBlockText contains "TOKEN_ASSIGN_PRIMARY" or ScriptBlockText contains "TOKEN_DUPLICATE" or ScriptBlockText contains "TOKEN_ELEVATION" or ScriptBlockText contains "TOKEN_IMPERSONATE" or ScriptBlockText contains "TOKEN_INFORMATION_CLASS" or ScriptBlockText contains "TOKEN_PRIVILEGES" or ScriptBlockText contains "TOKEN_QUERY"

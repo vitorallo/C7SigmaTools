@@ -1,0 +1,12 @@
+// Title: Potential DLL Sideloading Of KeyScramblerIE.DLL Via KeyScrambler.EXE
+// Author: Swachchhanda Shrawan Poudel
+// Date: 2024-04-15
+// Level: high
+// Description: Detects potential DLL side loading of "KeyScramblerIE.dll" by "KeyScrambler.exe".
+// Various threat actors and malware have been found side loading a masqueraded "KeyScramblerIE.dll" through "KeyScrambler.exe".
+// This table contains information about image loading events on Windows systems. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1574.001, attack.t1574.002
+// ================================================================== 
+
+ImageLoadEvents
+| where (FolderPath endswith "\\KeyScramblerIE.dll" and (InitiatingProcessFolderPath endswith "\\KeyScrambler.exe" or InitiatingProcessFolderPath endswith "\\KeyScramblerLogon.exe")) and (not((((FolderPath contains "C:\\Program Files (x86)\\KeyScrambler\\" or FolderPath contains "C:\\Program Files\\KeyScrambler\\") and (InitiatingProcessFolderPath contains "C:\\Program Files (x86)\\KeyScrambler\\" or InitiatingProcessFolderPath contains "C:\\Program Files\\KeyScrambler\\")) or (Signature =~ "QFX Software Corporation" and SignatureStatus =~ "Valid"))))

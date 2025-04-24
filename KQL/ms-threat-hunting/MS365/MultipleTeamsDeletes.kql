@@ -1,0 +1,19 @@
+// Description: 'This hunting query identifies where multiple Teams have been deleted by a single user in a short timeframe.'
+// Required Connectors: Office365 (Types: OfficeActivity (Teams))
+
+// Adjust this value to change how many Teams should be deleted before including
+let max_delete = 3;
+let deleting_users = (
+OfficeActivity
+| where OfficeWorkload =~ "MicrosoftTeams"
+| where Operation =~ "TeamDeleted"
+| summarize count() by UserId
+| where count_ > max_delete
+| project UserId);
+OfficeActivity
+| where OfficeWorkload =~ "MicrosoftTeams"
+| where Operation =~ "TeamDeleted"
+| where UserId in (deleting_users)
+| extend AccountName = tostring(split(UserId, "@")[0]), AccountUPNSuffix = tostring(split(UserId, "@")[1])
+| extend Account_0_Name = AccountName
+| extend Account_0_UPNSuffix = AccountUPNSuffix

@@ -1,0 +1,10 @@
+// Title: Suspicious Svchost Process Access
+// Author: Tim Burrell
+// Date: 2020-01-02
+// Level: high
+// Description: Detects suspicious access to the "svchost" process such as that used by Invoke-Phantom to kill the thread of the Windows event logging service.The SecurityEvent table in Microsoft Sentinel contains process access logs for Windows systems. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1562.002
+// ================================================================== 
+
+SecurityEvent
+| where (CallTrace contains "UNKNOWN" and GrantedAccess =~ "0x1F3FFF" and TargetImage endswith ":\\Windows\\System32\\svchost.exe") and (not(((CallTrace contains "Microsoft.Build.ni.dll" or CallTrace contains "System.ni.dll") and InitiatingProcessFolderPath contains ":\\Program Files\\Microsoft Visual Studio\\" and InitiatingProcessFolderPath endswith "\\MSBuild\\Current\\Bin\\MSBuild.exe")))

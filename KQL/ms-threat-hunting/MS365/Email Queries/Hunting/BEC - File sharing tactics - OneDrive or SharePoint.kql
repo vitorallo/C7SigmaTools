@@ -1,0 +1,23 @@
+// Description: This query helps hunting for BEC - File sharing tactics - OneDrive or SharePoint
+// Required Connectors: MicrosoftThreatProtection (Types: CloudAppEvents)
+
+let securelinkCreated = CloudAppEvents
+| where ActionType == "SecureLinkCreated"
+| project FileCreatedTime = Timestamp, AccountObjectId, ObjectName;
+let filesCreated = securelinkCreated
+| where isnotempty(ObjectName)
+| distinct tostring(ObjectName);
+CloudAppEvents
+| where ActionType == "AddedToSecureLink"
+| where Application in ("Microsoft SharePoint Online", "Microsoft OneDrive for Business")
+| extend FileShared = tostring(RawEventData.ObjectId)
+| where FileShared in (filesCreated)
+| extend UserSharedWith = tostring(RawEventData.TargetUserOrGroupName)
+| extend TypeofUserSharedWith = RawEventData.TargetUserOrGroupType
+| where TypeofUserSharedWith == "Guest"
+| where isnotempty(FileShared) and isnotempty(UserSharedWith)
+| join kind=inner securelinkCreated on $left.FileShared==$right.ObjectName
+// Secure file created recently (in the last 1day)
+| where (Timestamp - FileCreatedTime) between (1d .. 0h)
+| summarize NumofUsersSharedWith = dcount(UserSharedWith) by FileShared
+| where NumofUsersSharedWith >= 20

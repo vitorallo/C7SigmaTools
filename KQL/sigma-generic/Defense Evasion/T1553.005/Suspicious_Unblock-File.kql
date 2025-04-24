@@ -1,0 +1,10 @@
+// Title: Suspicious Unblock-File
+// Author: frack113
+// Date: 2022-02-01
+// Level: medium
+// Description: Remove the Zone.Identifier alternate data stream which identifies the file as downloaded from the internet.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1553.005
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Unblock-File " and ScriptBlockText contains "-Path "

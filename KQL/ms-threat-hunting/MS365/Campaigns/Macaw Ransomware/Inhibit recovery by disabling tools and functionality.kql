@@ -1,0 +1,8 @@
+// Description: Prior to deploying Macaw ransomware in an organization, the adversary will disable several tools and functions in order to inhibit later recovery efforts.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where ProcessCommandLine has_all ("reg", "add") 
+| where ProcessCommandLine has_any("DisableTaskMgr", "DisableCMD", "DisableRegistryTools", "NoRun") and ProcessCommandLine has "REG_DWORD /d \"1\"" 
+| summarize ProcessCount = dcount(ProcessCommandLine), make_set(ProcessCommandLine) by InitiatingProcessCommandLine, DeviceId, bin(Timestamp, 3m) 
+| where ProcessCount > 2

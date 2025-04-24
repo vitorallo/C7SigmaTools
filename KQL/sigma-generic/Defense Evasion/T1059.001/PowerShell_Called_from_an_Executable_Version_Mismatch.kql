@@ -1,0 +1,10 @@
+// Title: PowerShell Called from an Executable Version Mismatch
+// Author: Sean Metcalf (source), Florian Roth (Nextron Systems)
+// Date: 2017-03-05
+// Level: high
+// Description: Detects PowerShell called from an executable by the version mismatch methodThis table contains Windows security events. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (Data contains "EngineVersion=2." or Data contains "EngineVersion=4." or Data contains "EngineVersion=5.") and Data contains "HostVersion=3."

@@ -1,0 +1,12 @@
+// Title: File Creation Date Changed to Another Year
+// Author: frack113, Florian Roth (Nextron Systems)
+// Date: 2022-08-12
+// Level: high
+// Description: Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system.
+// Note that many processes legitimately change the creation time of a file; it does not necessarily indicate malicious activity.
+// This table contains information about file changes on Windows systems. Make sure to have the Microsoft Defender for Endpoint data connector enabled in Sentinel to access this table.
+// Tags: attack.t1070.006, attack.defense-evasion
+// ================================================================== 
+
+FileEvents
+| where ((PreviousCreationUtcTime startswith "2022" and (not(CreationUtcTime startswith "2022"))) or (PreviousCreationUtcTime startswith "202" and (not(CreationUtcTime startswith "202")))) and (not(((InitiatingProcessFolderPath endswith "\\TiWorker.exe" and InitiatingProcessFolderPath startswith "C:\\WINDOWS\\" and FolderPath endswith ".cab") or ((InitiatingProcessFolderPath in~ ("C:\\Windows\\system32\\ProvTool.exe", "C:\\Windows\\System32\\usocoreworker.exe", "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe")) or FolderPath startswith "C:\\ProgramData\\USOPrivate\\UpdateStore\\" or (FolderPath endswith ".tmp" or FolderPath endswith ".temp")))))

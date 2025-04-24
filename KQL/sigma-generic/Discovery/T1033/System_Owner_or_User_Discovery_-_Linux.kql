@@ -1,0 +1,12 @@
+// Title: System Owner or User Discovery - Linux
+// Author: Timur Zinniatullin, oscd.community
+// Date: 2019-10-21
+// Level: low
+// Description: Detects the execution of host or user discovery utilities such as "whoami", "hostname", "id", etc.
+// Adversaries may use the information from System Owner/User Discovery during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.
+// The equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the Linux agent is configured to send audit logs to Sentinel.
+// Tags: attack.discovery, attack.t1033
+// ================================================================== 
+
+LinuxAuditLogs
+| where (a0 in~ ("hostname", "id", "last", "users", "w", "who", "whoami")) and type =~ "EXECVE"

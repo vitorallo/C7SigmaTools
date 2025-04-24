@@ -1,0 +1,14 @@
+// Title: Winlogon Helper DLL
+// Author: Timur Zinniatullin, oscd.community
+// Date: 2019-10-21
+// Level: medium
+// Description: Winlogon.exe is a Windows component responsible for actions at logon/logoff as well as the secure attention sequence (SAS) triggered by Ctrl-Alt-Delete.
+// Registry entries in HKLM\Software[Wow6432Node]Microsoft\Windows NT\CurrentVersion\Winlogon\ and HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\ are
+// used to manage additional helper programs and functionalities that support Winlogon. Malicious modifications to these Registry keys may cause Winlogon to
+// load and execute malicious DLLs and/or executables.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1547.004
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "CurrentVersion\\Winlogon" and (ScriptBlockText contains "Set-ItemProperty" or ScriptBlockText contains "New-Item")

@@ -1,0 +1,10 @@
+// Title: Steganography Extract Files with Steghide
+// Author: Pawel Mazur
+// Date: 2021-09-11
+// Level: low
+// Description: Detects extraction of files with usage of steghide binary, the adversaries may use this technique to prevent the detection of hidden information.The equivalent table in Microsoft Sentinel for Linux audit logs. Make sure to have the Linux agent installed on the target machines and properly configured to collect audit logs.
+// Tags: attack.defense-evasion, attack.t1027.003
+// ================================================================== 
+
+LinuxAuditLogs
+| where a0 =~ "steghide" and a1 =~ "extract" and a2 =~ "-sf" and (a3 endswith ".jpg" or a3 endswith ".png") and type =~ "EXECVE"

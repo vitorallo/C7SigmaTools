@@ -1,0 +1,10 @@
+// Title: PowerShell ADRecon Execution
+// Author: Bhabesh Raj
+// Date: 2021-07-16
+// Level: high
+// Description: Detects execution of ADRecon.ps1 for AD reconnaissance which has been reported to be actively used by FIN7This table contains Windows security event logs, including PowerShell script block logs. Enable the necessary data connectors in Sentinel to collect Windows security event logs.
+// Tags: attack.discovery, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Function Get-ADRExcelComOb" or ScriptBlockText contains "Get-ADRGPO" or ScriptBlockText contains "Get-ADRDomainController" or ScriptBlockText contains "ADRecon-Report.xlsx"

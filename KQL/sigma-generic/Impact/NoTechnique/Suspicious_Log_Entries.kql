@@ -1,0 +1,10 @@
+// Title: Suspicious Log Entries
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-25
+// Level: medium
+// Description: Detects suspicious log entries in Linux log filesThis table contains Linux audit logs. To have this table present in Microsoft Sentinel, ensure that the Linux machines are onboarded and the necessary data connectors are configured to collect Linux audit logs.
+// Tags: attack.impact
+// ================================================================== 
+
+LinuxAuditLogs
+| where "entered promiscuous mode" or "Deactivating service" or "Oversized packet received from" or "imuxsock begins to drop messages"

@@ -1,0 +1,6 @@
+// Description: Use this query to locate persistence in Startup with HTA files.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceFileEvents)
+
+DeviceFileEvents
+| where FolderPath contains @"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\"
+| where FileName endswith ".hta"

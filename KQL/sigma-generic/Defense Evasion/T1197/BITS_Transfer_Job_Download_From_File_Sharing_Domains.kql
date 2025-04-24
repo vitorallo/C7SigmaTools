@@ -1,0 +1,10 @@
+// Title: BITS Transfer Job Download From File Sharing Domains
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-06-28
+// Level: high
+// Description: Detects BITS transfer job downloading files from a file sharing domain.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which may include logs related to the BITS client service. Ensure that the necessary data connectors are set up in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1197
+// ================================================================== 
+
+SecurityEvent
+| where RemoteName contains ".githubusercontent.com" or RemoteName contains "anonfiles.com" or RemoteName contains "cdn.discordapp.com" or RemoteName contains "ddns.net" or RemoteName contains "dl.dropboxusercontent.com" or RemoteName contains "ghostbin.co" or RemoteName contains "glitch.me" or RemoteName contains "gofile.io" or RemoteName contains "hastebin.com" or RemoteName contains "mediafire.com" or RemoteName contains "mega.nz" or RemoteName contains "onrender.com" or RemoteName contains "pages.dev" or RemoteName contains "paste.ee" or RemoteName contains "pastebin.com" or RemoteName contains "pastebin.pl" or RemoteName contains "pastetext.net" or RemoteName contains "pixeldrain.com" or RemoteName contains "privatlab.com" or RemoteName contains "privatlab.net" or RemoteName contains "send.exploit.in" or RemoteName contains "sendspace.com" or RemoteName contains "storage.googleapis.com" or RemoteName contains "storjshare.io" or RemoteName contains "supabase.co" or RemoteName contains "temp.sh" or RemoteName contains "transfer.sh" or RemoteName contains "trycloudflare.com" or RemoteName contains "ufile.io" or RemoteName contains "w3spaces.com" or RemoteName contains "workers.dev"

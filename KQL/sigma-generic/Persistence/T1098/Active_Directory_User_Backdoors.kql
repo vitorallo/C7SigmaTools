@@ -1,0 +1,10 @@
+// Title: Active Directory User Backdoors
+// Author: @neu5ron
+// Date: 2017-04-13
+// Level: high
+// Description: Detects scenarios where one can control another users or computers account without having to use their credentials.The SecurityEvent table in Microsoft Sentinel contains security-related events, including account management audits, directory service changes audits, and advanced audit policy configurations. Make sure to have the necessary connectors or data sources enabled in Sentinel to collect Windows security event logs.
+// Tags: attack.t1098, attack.persistence
+// ================================================================== 
+
+SecurityEvent
+| where (not(((AllowedToDelegateTo in~ ("", "-")) or isnull(AllowedToDelegateTo)))) or (AttributeLDAPDisplayName =~ "msDS-AllowedToDelegateTo" or (AttributeLDAPDisplayName =~ "servicePrincipalName" and ObjectClass =~ "user") or AttributeLDAPDisplayName =~ "msDS-AllowedToActOnBehalfOfOtherIdentity")

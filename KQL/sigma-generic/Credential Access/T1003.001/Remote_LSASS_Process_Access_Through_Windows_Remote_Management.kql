@@ -1,0 +1,10 @@
+// Title: Remote LSASS Process Access Through Windows Remote Management
+// Author: Patryk Prauze - ING Tech
+// Date: 2019-05-20
+// Level: high
+// Description: Detects remote access to the LSASS process via WinRM. This could be a sign of credential dumping from tools like mimikatz.This table contains information about process creation events in Windows. To access this table in Microsoft Sentinel, ensure that you have the necessary connectors or data sources set up to collect process creation events from Windows machines.
+// Tags: attack.credential-access, attack.execution, attack.t1003.001, attack.t1059.001, attack.lateral-movement, attack.t1021.006, attack.s0002
+// ================================================================== 
+
+ProcessCreationEvents
+| where (InitiatingProcessFolderPath endswith ":\\Windows\\system32\\wsmprovhost.exe" and TargetImage endswith "\\lsass.exe") and (not(GrantedAccess =~ "0x80000000"))

@@ -1,0 +1,10 @@
+// Title: Telegram API Access
+// Author: Florian Roth (Nextron Systems)
+// Date: 2018-06-05
+// Level: medium
+// Description: Detects suspicious requests to Telegram API without the usual Telegram User-AgentThis table contains proxy logs, which can be queried for information related to proxy activity. Make sure to have the necessary connectors or data sources configured in Sentinel to collect proxy logs.
+// Tags: attack.defense-evasion, attack.command-and-control, attack.t1071.001, attack.t1102.002
+// ================================================================== 
+
+ProxyLog
+| where 'cs-host' =~ "api.telegram.org" and (not((''c-useragent'' contains "Telegram" or ''c-useragent'' contains "Bot")))

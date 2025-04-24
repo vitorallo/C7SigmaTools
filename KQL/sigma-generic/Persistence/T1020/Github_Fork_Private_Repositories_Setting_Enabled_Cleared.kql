@@ -1,0 +1,11 @@
+// Title: Github Fork Private Repositories Setting Enabled/Cleared
+// Author: Romain Gaillard (@romain-gaillard)
+// Date: 2024-07-29
+// Level: medium
+// Description: Detects when the policy allowing forks of private and internal repositories is changed (enabled or cleared).
+// This table contains audit logs for the Github service. To query this table in Microsoft Sentinel, make sure to have the Github connector installed and properly configured to ingest audit logs.
+// Tags: attack.persistence, attack.t1020, attack.t1537
+// ================================================================== 
+
+GithubAuditLogs
+| where action in~ ("private_repository_forking.clear", "private_repository_forking.enable")

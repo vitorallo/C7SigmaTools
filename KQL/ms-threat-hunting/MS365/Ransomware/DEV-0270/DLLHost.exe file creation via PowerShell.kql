@@ -1,0 +1,6 @@
+// Description: Identify masqueraded DLLHost.exe file created by PowerShell.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where InitiatingProcessFileName =~ 'powershell.exe' 
+| where InitiatingProcessCommandLine has_all('$file=', 'dllhost.exe', 'Invoke-WebRequest', '-OutFile')

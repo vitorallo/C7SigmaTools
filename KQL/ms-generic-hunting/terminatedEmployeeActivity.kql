@@ -1,0 +1,11 @@
+// Description: 'Shows all users tagged as terminated employees in the Terminated Employees watchlist that had activities after their termination date.'
+// Required Connectors: BehaviorAnalytics (Types: BehaviorAnalytics)
+
+//Consider creating the watchlist named "TerminatedEmployees" having column "User Principal Name" with details of terminated employees
+//If you already have watch list with diffrent name then consider modifying the query
+_GetWatchlist('TerminatedEmployees') 
+| join kind=innerunique (BehaviorAnalytics) 
+  on $left.['User Principal Name'] == $right.UserPrincipalName
+| where TimeGenerated > todatetime(['Termination date'])
+| extend AadUserId = UsersInsights.AccountObjectID
+| extend Account_0_AadUserId = AadUserId

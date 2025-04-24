@@ -1,0 +1,10 @@
+// Title: Suspicious GPO Discovery With Get-GPO
+// Author: frack113
+// Date: 2022-06-04
+// Level: low
+// Description: Detect use of Get-GPO to get one GPO or all the GPOs in a domain.This table contains Windows security event logs, which may include information about script block logging being enabled. Ensure that the Windows Security Events connector is enabled in Microsoft Sentinel to access this table.
+// Tags: attack.discovery, attack.t1615
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Get-GPO"

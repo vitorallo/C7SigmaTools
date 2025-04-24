@@ -1,0 +1,11 @@
+// Description: In this detection, we track emails with suspicious keywords in subjects.
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+let PhishingKeywords = ()
+{pack_array("account", "alert", "bank", "billing", "card", "change", "confirmation","login", "password", "mfa", "authorize", "authenticate", "payment", "urgent", "verify", "blocked");};
+EmailEvents
+| where Timestamp > ago(1d)
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Delivered"
+| where isempty(SenderObjectId)
+| where Subject has_any (PhishingKeywords())

@@ -1,0 +1,10 @@
+// Title: SharpHound Recon Account Discovery
+// Author: Sagie Dulce, Dekel Paz
+// Date: 2022-01-01
+// Level: high
+// Description: Detects remote RPC calls useb by SharpHound to map remote connections and local group membership.This table contains logs related to the RPC Firewall product. To have this table present in Microsoft Sentinel, ensure that the RPC Firewall logs are being collected and sent to Sentinel for analysis.
+// Tags: attack.t1087, attack.discovery
+// ================================================================== 
+
+rpc_firewall_logs
+| where EventLog =~ "RPCFW" and InterfaceUuid =~ "6bffd098-a112-3610-9833-46c3f87e345a" and OpNum == 2

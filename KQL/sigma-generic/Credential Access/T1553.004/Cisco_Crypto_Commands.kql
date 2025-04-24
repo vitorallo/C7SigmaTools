@@ -1,0 +1,10 @@
+// Title: Cisco Crypto Commands
+// Author: Austin Clark
+// Date: 2019-08-12
+// Level: high
+// Description: Show when private keys are being exported from the device, or when new certificates are installedThis table contains logs related to Cisco AAA service. To have access to this table in Microsoft Sentinel, ensure that the necessary connectors or data sources for Cisco devices are configured and sending logs to Sentinel.
+// Tags: attack.credential-access, attack.defense-evasion, attack.t1553.004, attack.t1552.004
+// ================================================================== 
+
+Cisco_AAA_Logs
+| where "crypto pki export" or "crypto pki import" or "crypto pki trustpoint"

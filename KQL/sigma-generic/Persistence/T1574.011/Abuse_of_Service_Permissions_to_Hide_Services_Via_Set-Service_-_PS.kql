@@ -1,0 +1,10 @@
+// Title: Abuse of Service Permissions to Hide Services Via Set-Service - PS
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-10-17
+// Level: high
+// Description: Detects usage of the "Set-Service" powershell cmdlet to configure a new SecurityDescriptor that allows a service to be hidden from other utilities such as "sc.exe", "Get-Service"...etc. (Works only in powershell 7)The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script block logging. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.persistence, attack.defense-evasion, attack.privilege-escalation, attack.t1574.011
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "-SecurityDescriptorSddl " or ScriptBlockText contains "-sd ") and (ScriptBlockText contains "Set-Service " and ScriptBlockText contains "DCLCWPDTSD")

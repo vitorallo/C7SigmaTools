@@ -1,0 +1,12 @@
+// Description: In this detection, we track emails with personalized subjects.
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents
+| where Timestamp > ago(1d)
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Delivered"
+| where isempty(SenderObjectId)
+| extend words = split(Subject," ")
+| project firstWord = tostring(words[0]), secondWord = tostring(words[1]), thirdWord = tostring(words[2]), Subject, SenderFromAddress, RecipientEmailAddress, NetworkMessageId
+| summarize SubjectsCount = dcount(Subject), RecipientsCount = dcount(RecipientEmailAddress), suspiciousEmails = make_set(NetworkMessageId, 10) by firstWord, secondWord, thirdWord, SenderFromAddress
+| where SubjectsCount >= 10

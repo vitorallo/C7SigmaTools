@@ -1,0 +1,10 @@
+// Title: Suspicious History File Operations - Linux
+// Author: Mikhail Larin, oscd.community
+// Date: 2020-10-17
+// Level: medium
+// Description: Detects commandline operations on shell history filesThe LinuxAudit table in Microsoft Sentinel contains audit logs from Linux systems. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs.
+// Tags: attack.credential-access, attack.t1552.003
+// ================================================================== 
+
+LinuxAudit
+| where type =~ "EXECVE" and (".bash_history" or ".zsh_history" or ".zhistory" or ".history" or ".sh_history" or "fish_history")

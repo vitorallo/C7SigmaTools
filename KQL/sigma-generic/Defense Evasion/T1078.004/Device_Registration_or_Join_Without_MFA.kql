@@ -1,0 +1,10 @@
+// Title: Device Registration or Join Without MFA
+// Author: Michael Epping, '@mepples21'
+// Date: 2022-06-28
+// Level: medium
+// Description: Monitor and alert for device registration or join events where MFA was not performed.The equivalent table in Microsoft Sentinel for Azure signin logs. Ensure that the Azure Active Directory connector is set up in Sentinel to collect signin logs.
+// Tags: attack.defense-evasion, attack.t1078.004
+// ================================================================== 
+
+SigninLogs
+| where (ResourceDisplayName =~ "Device Registration Service" and conditionalAccessStatus =~ "success") and (not(AuthenticationRequirement =~ "multiFactorAuthentication"))

@@ -1,0 +1,12 @@
+// Description: This query shows information about email that has been released from the Quarantine in Defender for Office 365.
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, CloudAppEvents)
+
+CloudAppEvents 
+| where ActionType == "QuarantineReleaseMessage"
+| project ReleaseTime = Timestamp, ResultStatus = RawEventData.ResultStatus, ActionType, ReleasedBy = tostring(RawEventData.UserId), NetworkMessageId = tostring(RawEventData.NetworkMessageId), ReleaseTo = RawEventData.ReleaseTo
+| join kind=inner (
+  EmailEvents
+  | project-rename EmailTime = Timestamp
+  ) on NetworkMessageId
+| project-away NetworkMessageId1
+| order by ReleaseTime asc

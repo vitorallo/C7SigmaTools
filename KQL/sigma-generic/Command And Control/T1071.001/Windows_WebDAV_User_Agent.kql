@@ -1,0 +1,10 @@
+// Title: Windows WebDAV User Agent
+// Author: Florian Roth (Nextron Systems)
+// Date: 2018-04-06
+// Level: high
+// Description: Detects WebDav DownloadCradleThis table contains proxy logs. Make sure to have the necessary connectors or data sources configured in Sentinel to collect proxy logs.
+// Tags: attack.command-and-control, attack.t1071.001
+// ================================================================== 
+
+ProxyLog
+| where 'c-useragent' startswith "Microsoft-WebDAV-MiniRedir/" and 'cs-method' =~ "GET"

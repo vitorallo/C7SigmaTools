@@ -1,0 +1,12 @@
+// Title: Security Software Discovery Via Powershell Script
+// Author: frack113, Anish Bogati, Nasreddine Bencherchali (Nextron Systems)
+// Date: 2021-12-16
+// Level: medium
+// Description: Detects calls to "get-process" where the output is piped to a "where-object" filter to search for security solution processes.
+// Adversaries may attempt to get a listing of security software, configurations, defensive tools, and sensors that are installed on a system or in a cloud environment. This may include things such as firewall rules and anti-virus
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which can include information about PowerShell script execution. Make sure to have the necessary connectors and data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.discovery, attack.t1518.001
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "get-process | ?" or ScriptBlockText contains "get-process | where" or ScriptBlockText contains "gps | ?" or ScriptBlockText contains "gps | where") and (ScriptBlockText contains "Company -like" or ScriptBlockText contains "Description -like" or ScriptBlockText contains "Name -like" or ScriptBlockText contains "Path -like" or ScriptBlockText contains "Product -like") and (ScriptBlockText contains "*avira*" or ScriptBlockText contains "*carbonblack*" or ScriptBlockText contains "*cylance*" or ScriptBlockText contains "*defender*" or ScriptBlockText contains "*kaspersky*" or ScriptBlockText contains "*malware*" or ScriptBlockText contains "*sentinel*" or ScriptBlockText contains "*symantec*" or ScriptBlockText contains "*virus*")

@@ -1,0 +1,10 @@
+// Title: Hidden Files and Directories
+// Author: Pawel Mazur
+// Date: 2021-09-06
+// Level: low
+// Description: Detects adversary creating hidden file or directory, by detecting directories or files with . as the first characterThe equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the Linux agent is configured to forward audit logs to Sentinel.
+// Tags: attack.defense-evasion, attack.t1564.001
+// ================================================================== 
+
+LinuxAuditLogs
+| where ((a0 in~ ("mkdir", "touch", "vim", "nano", "vi")) and type =~ "EXECVE") and (a1 contains "/." or a1 startswith "." or a2 contains "/." or a2 startswith ".")

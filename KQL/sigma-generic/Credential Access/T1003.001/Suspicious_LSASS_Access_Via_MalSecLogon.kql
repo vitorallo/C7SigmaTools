@@ -1,0 +1,10 @@
+// Title: Suspicious LSASS Access Via MalSecLogon
+// Author: Samir Bousseaden (original elastic rule), Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-06-29
+// Level: high
+// Description: Detects suspicious access to LSASS handle via a call trace to "seclogon.dll" with a suspicious access right.This table contains information about process creation events in Windows. Ensure that the Microsoft-Windows-Sysmon/Operational log source is enabled in Sentinel to have this table available for querying.
+// Tags: attack.credential-access, attack.t1003.001
+// ================================================================== 
+
+ProcessCreationEvents
+| where CallTrace contains "seclogon.dll" and GrantedAccess =~ "0x14c0" and InitiatingProcessFolderPath endswith "\\svchost.exe" and TargetImage endswith "\\lsass.exe"

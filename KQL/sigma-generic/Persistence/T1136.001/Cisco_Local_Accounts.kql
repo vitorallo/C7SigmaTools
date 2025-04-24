@@ -1,0 +1,10 @@
+// Title: Cisco Local Accounts
+// Author: Austin Clark
+// Date: 2019-08-12
+// Level: high
+// Description: Find local accounts being created or modified as well as remote authentication configurationsThis table contains authentication logs related to Cisco AAA service. To have this table present in Microsoft Sentinel, ensure that you have the necessary connectors or data sources configured to collect logs from Cisco devices with AAA service enabled.
+// Tags: attack.persistence, attack.t1136.001, attack.t1098
+// ================================================================== 
+
+Cisco_AAA_AuthenticationLogs
+| where "username" or "aaa"

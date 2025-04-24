@@ -1,0 +1,10 @@
+// Title: Possible DCSync Attack
+// Author: Sagie Dulce, Dekel Paz
+// Date: 2022-01-01
+// Level: high
+// Description: Detects remote RPC calls to MS-DRSR from non DC hosts, which could indicate DCSync / DCShadow attacks.This table contains logs related to RPC Firewall activity. To have this table present in Microsoft Sentinel, ensure that the RPC Firewall logs are being collected and ingested into Sentinel.
+// Tags: attack.t1033, attack.discovery
+// ================================================================== 
+
+rpc_firewall_logs
+| where (EventLog =~ "RPCFW" and InterfaceUuid =~ "e3514235-4b06-11d1-ab04-00c04fc2dcd2") and (not((OpNum in~ ("0", "1", "12"))))

@@ -1,0 +1,10 @@
+// Title: Windows Webshell Strings
+// Author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+// Date: 2017-02-19
+// Level: high
+// Description: Detects common commands used in Windows webshellsThe WebBrowserStats table in Microsoft Sentinel contains web server logs. Ensure that the necessary connectors are set up to collect web server logs in Sentinel.
+// Tags: attack.persistence, attack.t1505.003
+// ================================================================== 
+
+WebBrowserStats
+| where ("=whoami" or "=net%20user" or "=net+user" or "=net%2Buser" or "=cmd%20/c%" or "=cmd+/c+" or "=cmd%2B/c%" or "=cmd%20/r%" or "=cmd+/r+" or "=cmd%2B/r%" or "=cmd%20/k%" or "=cmd+/k+" or "=cmd%2B/k%" or "=powershell%" or "=powershell+" or "=tasklist%" or "=tasklist+" or "=wmic%" or "=wmic+" or "=ssh%" or "=ssh+" or "=python%" or "=python+" or "=python3%" or "=python3+" or "=ipconfig" or "=wget%" or "=wget+" or "=curl%" or "=curl+" or "=certutil" or "=copy%20%5C%5C" or "=dsquery%" or "=dsquery+" or "=nltest%" or "=nltest+") and 'cs-method' =~ "GET"

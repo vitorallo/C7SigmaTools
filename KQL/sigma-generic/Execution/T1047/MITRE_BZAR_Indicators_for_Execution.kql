@@ -1,0 +1,10 @@
+// Title: MITRE BZAR Indicators for Execution
+// Author: @neu5ron, SOC Prime
+// Date: 2020-03-19
+// Level: medium
+// Description: Windows DCE-RPC functions which indicate an execution techniques on the remote system. All credit for the Zeek mapping of the suspicious endpoint/operation field goes to MITREThis table contains logs related to DCE RPC activity captured by Zeek. To have this table present in Microsoft Sentinel, you need to ensure that Zeek logs are being collected and ingested into Sentinel.
+// Tags: attack.execution, attack.t1047, attack.t1053.002, attack.t1569.002
+// ================================================================== 
+
+ZeekDCE_RPC
+| where (endpoint =~ "JobAdd" and operation =~ "atsvc") or (endpoint =~ "svcctl" and operation =~ "StartServiceW") or (endpoint =~ "ITaskSchedulerService" and operation =~ "SchRpcEnableTask") or (endpoint =~ "ITaskSchedulerService" and operation =~ "SchRpcRegisterTask") or (endpoint =~ "ITaskSchedulerService" and operation =~ "SchRpcRun") or (endpoint =~ "IWbemServices" and operation =~ "ExecMethod") or (endpoint =~ "IWbemServices" and operation =~ "ExecMethodAsync") or (endpoint =~ "svcctl" and operation =~ "CreateServiceA") or (endpoint =~ "svcctl" and operation =~ "CreateServiceW") or (endpoint =~ "svcctl" and operation =~ "StartServiceA")

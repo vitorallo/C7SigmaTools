@@ -1,0 +1,10 @@
+// Title: Google Workspace Granted Domain API Access
+// Author: Austin Songer
+// Date: 2021-08-23
+// Level: medium
+// Description: Detects when an API access service account is granted domain authority.This table corresponds to logs related to Google Workspace Admin activity in Microsoft Sentinel. To have this table present, ensure that the Google Workspace Admin logs are being ingested into Sentinel using the appropriate connectors or data connectors.
+// Tags: attack.persistence, attack.t1098
+// ================================================================== 
+
+GoogleWorkspaceAdmin
+| where eventName =~ "AUTHORIZE_API_CLIENT_ACCESS" and eventService =~ "admin.googleapis.com"

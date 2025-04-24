@@ -1,0 +1,9 @@
+// Description: This query helps reviewing authentication failure count by authentication type. Update the authentication type below as DMARC, DKIM, SPM, CompAuth
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents
+| where Timestamp > ago (30d)
+| project Timestamp, AR=parse_json(AuthenticationDetails), NetworkMessageId, EmailDirection, SenderFromAddress, ThreatTypes, DetectionMethods
+| evaluate bag_unpack(AR)
+| where DMARC == "fail"
+| summarize count() by bin(Timestamp, 1d)

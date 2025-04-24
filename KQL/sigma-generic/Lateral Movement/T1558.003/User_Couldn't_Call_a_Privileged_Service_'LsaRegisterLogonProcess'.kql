@@ -1,0 +1,10 @@
+// Title: User Couldn't Call a Privileged Service 'LsaRegisterLogonProcess'
+// Author: Roberto Rodriguez (source), Ilyas Ochkov (rule), oscd.community
+// Date: 2019-10-24
+// Level: high
+// Description: The 'LsaRegisterLogonProcess' function verifies that the application making the function call is a logon process by checking that it has the SeTcbPrivilege privilege set. Possible Rubeus tries to get a handle to LSA.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that the Windows Security events are being collected and sent to Microsoft Sentinel.
+// Tags: attack.lateral-movement, attack.privilege-escalation, attack.t1558.003
+// ================================================================== 
+
+SecurityEvent
+| where Keywords =~ "0x8010000000000000" and Service =~ "LsaRegisterLogonProcess()"

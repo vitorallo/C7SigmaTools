@@ -1,0 +1,10 @@
+// Title: Bitbucket Unauthorized Full Data Export Triggered
+// Author: Muhammad Faisal (@faisalusuf)
+// Date: 2024-02-25
+// Level: critical
+// Description: Detects when full data export is attempted an unauthorized user.This table contains audit logs for various services, including Bitbucket. Make sure to enable the necessary connectors or data sources to ingest Bitbucket audit logs into Sentinel.
+// Tags: attack.collection, attack.resource-development, attack.t1213.003, attack.t1586
+// ================================================================== 
+
+AuditLogs
+| where 'auditType.action' =~ "Unauthorized full data export triggered" and 'auditType.category' =~ "Data pipeline"

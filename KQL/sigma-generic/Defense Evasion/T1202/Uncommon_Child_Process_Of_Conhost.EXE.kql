@@ -1,0 +1,10 @@
+// Title: Uncommon Child Process Of Conhost.EXE
+// Author: omkar72
+// Date: 2020-10-25
+// Level: medium
+// Description: Detects uncommon "conhost" child processes. This could be a sign of "conhost" usage as a LOLBIN or potential process injection activity.The SecurityEvent table in Microsoft Sentinel contains process creation events for Windows systems. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1202
+// ================================================================== 
+
+SecurityEvent
+| where InitiatingProcessFolderPath endswith "\\conhost.exe" and (not((FolderPath endswith ":\\Windows\\System32\\conhost.exe" or FolderPath =~ "" or isnull(FolderPath)))) and (not(Provider_Name =~ "SystemTraceProvider-Process"))

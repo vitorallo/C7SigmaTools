@@ -1,0 +1,11 @@
+// Title: Renamed Powershell Under Powershell Channel
+// Author: Harish Segar, frack113
+// Date: 2020-06-29
+// Level: low
+// Description: Detects a renamed Powershell execution, which is a common technique used to circumvent security controls and bypass detection logic that's dependent on process names and process paths.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.execution, attack.t1059.001, attack.t1036.003
+// ================================================================== 
+
+SecurityEvent
+| where Data contains "HostName=ConsoleHost" and (not((Data matches regex "HostId=[a-zA-Z0-9-]{36}\\s+EngineVersion=" or (Data contains "HostApplication=powershell" or Data contains "HostApplication=C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell" or Data contains "HostApplication=C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell" or Data contains "HostApplication=C:/Windows/System32/WindowsPowerShell/v1.0/powershell" or Data contains "HostApplication=C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell" or Data contains "HostApplication=C:\\\\WINDOWS\\\\system32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe" or Data contains "HostApplication=C:\\\\WINDOWS\\\\SysWOW64\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe"))))

@@ -1,0 +1,10 @@
+// Title: Download From Suspicious TLD - Whitelist
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-13
+// Level: low
+// Description: Detects executable downloads from suspicious remote systemsThis table contains proxy logs, which can be queried to retrieve relevant information related to proxy activity. Ensure that the necessary connectors are set up in Sentinel to collect data from the proxy log source.
+// Tags: attack.initial-access, attack.t1566, attack.execution, attack.t1203, attack.t1204.002
+// ================================================================== 
+
+ProxyLog
+| where ('c-uri-extension' in~ ("exe", "vbs", "bat", "rar", "ps1", "doc", "docm", "xls", "xlsm", "pptm", "rtf", "hta", "dll", "ws", "wsf", "sct", "zip")) and (not((''cs-host'' endswith ".com" or ''cs-host'' endswith ".org" or ''cs-host'' endswith ".net" or ''cs-host'' endswith ".edu" or ''cs-host'' endswith ".gov" or ''cs-host'' endswith ".uk" or ''cs-host'' endswith ".ca" or ''cs-host'' endswith ".de" or ''cs-host'' endswith ".jp" or ''cs-host'' endswith ".fr" or ''cs-host'' endswith ".au" or ''cs-host'' endswith ".us" or ''cs-host'' endswith ".ch" or ''cs-host'' endswith ".it" or ''cs-host'' endswith ".nl" or ''cs-host'' endswith ".se" or ''cs-host'' endswith ".no" or ''cs-host'' endswith ".es")))

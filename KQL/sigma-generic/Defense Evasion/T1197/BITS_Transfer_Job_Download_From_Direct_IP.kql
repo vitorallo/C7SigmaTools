@@ -1,0 +1,10 @@
+// Title: BITS Transfer Job Download From Direct IP
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-11
+// Level: high
+// Description: Detects a BITS transfer job downloading file(s) from a direct IP address.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which may include logs related to the BITS-Client service. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1197
+// ================================================================== 
+
+SecurityEvent
+| where (RemoteName contains "http://1" or RemoteName contains "http://2" or RemoteName contains "http://3" or RemoteName contains "http://4" or RemoteName contains "http://5" or RemoteName contains "http://6" or RemoteName contains "http://7" or RemoteName contains "http://8" or RemoteName contains "http://9" or RemoteName contains "https://1" or RemoteName contains "https://2" or RemoteName contains "https://3" or RemoteName contains "https://4" or RemoteName contains "https://5" or RemoteName contains "https://6" or RemoteName contains "https://7" or RemoteName contains "https://8" or RemoteName contains "https://9") and (not(((RemoteName contains "://10." or RemoteName contains "://192.168." or RemoteName contains "://172.16." or RemoteName contains "://172.17." or RemoteName contains "://172.18." or RemoteName contains "://172.19." or RemoteName contains "://172.20." or RemoteName contains "://172.21." or RemoteName contains "://172.22." or RemoteName contains "://172.23." or RemoteName contains "://172.24." or RemoteName contains "://172.25." or RemoteName contains "://172.26." or RemoteName contains "://172.27." or RemoteName contains "://172.28." or RemoteName contains "://172.29." or RemoteName contains "://172.30." or RemoteName contains "://172.31." or RemoteName contains "://127." or RemoteName contains "://169.254.") or (RemoteName contains "https://7-" or RemoteName contains "http://7-"))))

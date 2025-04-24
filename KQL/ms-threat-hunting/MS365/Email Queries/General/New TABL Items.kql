@@ -1,0 +1,14 @@
+// Description: This query helps identifying when new items being added to the Tenant/Allow Block List (TABL) in Defender for Office 365.
+// Required Connectors: MicrosoftThreatProtection (Types: CloudAppEvents)
+
+CloudAppEvents
+| where ActionType == "New-TenantAllowBlockListItems"
+| extend Parameters = RawEventData.Parameters
+| mv-apply Parameters on ( 
+  extend Out=bag_pack(tostring(Parameters.Name), Parameters.Value)
+  | summarize Parameters=make_bag(Out)
+  )
+| extend Allow=Parameters.Allow, Block=Parameters.Block, Entry=Parameters.Entries, ExpirationDate=Parameters.ExpirationDate, ListType=Parameters.ListType,ListSubType=Parameters.ListSubType, ModifiedBy=Parameters.ModifiedBy, NoExpiration=Parameters.NoExpiration, SubmissionID=Parameters.SubmissionID, SubmissionUserId=Parameters.SubmissionUserId, Notes=Parameters.Notes
+| extend Action=iff(Allow == "True", "Allow", iff(Block == "True", "Block", "Unknown")), AccountUpn=tostring(coalesce(SubmissionUserId, ModifiedBy))
+| project Timestamp, Action, ListType, ListSubType, Entry, ExpirationDate, NoExpiration, AccountUpn, Notes, SubmissionID, ReportId
+| order by Timestamp desc

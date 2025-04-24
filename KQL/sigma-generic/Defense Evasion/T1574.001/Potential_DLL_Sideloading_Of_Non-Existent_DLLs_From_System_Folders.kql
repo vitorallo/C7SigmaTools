@@ -1,0 +1,12 @@
+// Title: Potential DLL Sideloading Of Non-Existent DLLs From System Folders
+// Author: Nasreddine Bencherchali (Nextron Systems), SBousseaden
+// Date: 2022-12-09
+// Level: high
+// Description: Detects DLL sideloading of system DLLs that are not present on the system by default (at least not in system directories).
+// Usually this technique is used to achieve UAC bypass or privilege escalation.
+// ImageLoadEvents table in Microsoft Sentinel contains information about image loading events on Windows systems. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.persistence, attack.privilege-escalation, attack.t1574.001, attack.t1574.002
+// ================================================================== 
+
+ImageLoadEvents
+| where (FolderPath endswith ":\\Windows\\System32\\TSMSISrv.dll" or FolderPath endswith ":\\Windows\\System32\\TSVIPSrv.dll" or FolderPath endswith ":\\Windows\\System32\\wbem\\wbemcomn.dll" or FolderPath endswith ":\\Windows\\System32\\WLBSCTRL.dll" or FolderPath endswith ":\\Windows\\System32\\wow64log.dll" or FolderPath endswith ":\\Windows\\System32\\WptsExtensions.dll") and (not((Signature =~ "Microsoft Windows" and SignatureStatus =~ "Valid" and Signed =~ "true")))

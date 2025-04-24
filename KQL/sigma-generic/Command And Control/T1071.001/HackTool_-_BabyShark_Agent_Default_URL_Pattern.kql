@@ -1,0 +1,10 @@
+// Title: HackTool - BabyShark Agent Default URL Pattern
+// Author: Florian Roth (Nextron Systems)
+// Date: 2021-06-09
+// Level: critical
+// Description: Detects Baby Shark C2 Framework default communication patternsThis table contains proxy logs, which can be queried in Microsoft Sentinel. Ensure that the necessary connectors are set up to collect proxy logs in Sentinel.
+// Tags: attack.command-and-control, attack.t1071.001
+// ================================================================== 
+
+ProxyLog
+| where 'c-uri' contains "momyshark?key="

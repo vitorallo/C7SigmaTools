@@ -1,0 +1,10 @@
+// Title: DNS Query To Ufile.io
+// Author: yatinwad, TheDFIRReport
+// Date: 2022-06-23
+// Level: low
+// Description: Detects DNS queries to "ufile.io", which was seen abused by malware and threat actors as a method for data exfiltrationThe DnsEvents table in Microsoft Sentinel contains DNS query logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to collect these logs.
+// Tags: attack.exfiltration, attack.t1567.002
+// ================================================================== 
+
+DnsEvents
+| where QueryName contains "ufile.io"

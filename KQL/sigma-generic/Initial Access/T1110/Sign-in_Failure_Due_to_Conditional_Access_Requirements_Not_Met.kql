@@ -1,0 +1,10 @@
+// Title: Sign-in Failure Due to Conditional Access Requirements Not Met
+// Author: Yochana Henderson, '@Yochana-H'
+// Date: 2022-06-01
+// Level: high
+// Description: Define a baseline threshold for failed sign-ins due to Conditional Access failuresThe equivalent table in Microsoft Sentinel for Azure signin logs. Make sure to have the Azure Activity Log connector enabled in Sentinel to have access to this table.
+// Tags: attack.initial-access, attack.credential-access, attack.t1110, attack.t1078.004
+// ================================================================== 
+
+SigninLogs
+| where ResultType == 53003 and Resultdescription =~ "Blocked by Conditional Access"

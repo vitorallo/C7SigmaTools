@@ -1,0 +1,10 @@
+// Title: Webshell Remote Command Execution
+// Author: Ilyas Ochkov, Beyu Denis, oscd.community
+// Date: 2019-10-12
+// Level: critical
+// Description: Detects possible command execution by web application/web shellThe equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the Linux agent is configured to send audit logs to Sentinel.
+// Tags: attack.persistence, attack.t1505.003
+// ================================================================== 
+
+LinuxAuditLogs
+| where key =~ "detect_execve_www" and syscall =~ "execve" and type =~ "SYSCALL"

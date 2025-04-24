@@ -1,0 +1,10 @@
+// Title: Reconnaissance Activity
+// Author: Florian Roth (Nextron Systems), Jack Croock (method), Jonhnathan Ribeiro (improvements), oscd.community
+// Date: 2017-03-07
+// Level: high
+// Description: Detects activity as "net user administrator /domain" and "net group domain admins /domain"This table contains security-related events, including Event ID 4661. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.discovery, attack.t1087.002, attack.t1069.002, attack.s0039
+// ================================================================== 
+
+SecurityEvent
+| where AccessMask =~ "0x2d" and (RegistryKey endswith "-500" or RegistryKey endswith "-512") and RegistryKey startswith "S-1-5-21-"

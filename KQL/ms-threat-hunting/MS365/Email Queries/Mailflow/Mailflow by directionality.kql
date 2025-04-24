@@ -1,0 +1,8 @@
+// Description: This query helps reviewing inbound / outbound / intra-org emails by domain per day
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents 
+| where Timestamp > ago(30d)
+| extend domain = substring(RecipientEmailAddress, indexof(RecipientEmailAddress, "@")+1) 
+| summarize total=count() by EmailDirection, domain, bin(Timestamp, 1d) 
+| order by Timestamp asc

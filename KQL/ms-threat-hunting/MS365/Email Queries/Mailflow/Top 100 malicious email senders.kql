@@ -1,0 +1,8 @@
+// Description: This query helps reviewing top 100 malicious senders
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents
+| where Timestamp > ago(30d)
+| where ThreatTypes has "Phish" or ThreatTypes has "Malware" 
+| summarize total=count() by SenderMailFromAddress 
+| top 100 by total

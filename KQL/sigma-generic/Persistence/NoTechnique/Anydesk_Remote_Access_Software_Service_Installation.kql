@@ -1,0 +1,10 @@
+// Title: Anydesk Remote Access Software Service Installation
+// Author: Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron Systems)
+// Date: 2022-08-11
+// Level: medium
+// Description: Detects the installation of the anydesk software service. Which could be an indication of anydesk abuse if you the software isn't already used.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.persistence
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and ((ServiceName contains "AnyDesk" and ServiceName contains "Service") or ImagePath contains "AnyDesk")

@@ -1,0 +1,10 @@
+// Title: Suspicious Service Installation
+// Author: pH-T (Nextron Systems), Florian Roth (Nextron Systems)
+// Date: 2022-03-18
+// Level: high
+// Description: Detects suspicious service installation commandsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.persistence, attack.privilege-escalation, car.2013-09-005, attack.t1543.003
+// ================================================================== 
+
+SecurityEvent
+| where (ImagePath contains " -nop " or ImagePath contains " -sta " or ImagePath contains " -w hidden " or ImagePath contains ":\\Temp\\" or ImagePath contains ".downloadfile(" or ImagePath contains ".downloadstring(" or ImagePath contains "\\ADMIN$\\" or ImagePath contains "\\Perflogs\\" or ImagePath contains "&&") and Provider_Name =~ "Service Control Manager"

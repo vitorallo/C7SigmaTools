@@ -1,0 +1,10 @@
+// Title: ISO Image Mounted
+// Author: Syed Hasan (@syedhasan009)
+// Date: 2021-05-29
+// Level: medium
+// Description: Detects the mount of an ISO image on an endpointThe SecurityEvent table in Microsoft Sentinel contains security-related events and logs, including information about object access and audit policies. Make sure to have the necessary data connectors and log sources configured in Sentinel to populate this table with relevant data.
+// Tags: attack.initial-access, attack.t1566.001
+// ================================================================== 
+
+SecurityEvent
+| where (RegistryKey startswith "\\Device\\CdRom" and ObjectServer =~ "Security") and (not((RegistryKey in~ ("\\Device\\CdRom0\\autorun.ico", "\\Device\\CdRom0\\setup.exe", "\\Device\\CdRom0\\setup64.exe"))))

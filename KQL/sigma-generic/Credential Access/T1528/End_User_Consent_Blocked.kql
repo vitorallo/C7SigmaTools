@@ -1,0 +1,10 @@
+// Title: End User Consent Blocked
+// Author: Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'
+// Date: 2022-07-10
+// Level: medium
+// Description: Detects when end user consent is blocked due to risk-based consent.This table contains Azure audit logs. Ensure that Azure Monitor logs are enabled and the necessary connectors are set up in Microsoft Sentinel to collect Azure audit logs.
+// Tags: attack.credential-access, attack.t1528
+// ================================================================== 
+
+AzureActivity
+| where failure_status_reason =~ "Microsoft.online.Security.userConsentBlockedForRiskyAppsExceptions"

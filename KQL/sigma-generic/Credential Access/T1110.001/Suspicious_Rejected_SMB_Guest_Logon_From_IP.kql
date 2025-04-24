@@ -1,0 +1,10 @@
+// Title: Suspicious Rejected SMB Guest Logon From IP
+// Author: Florian Roth (Nextron Systems), KevTheHermit, fuzzyf10w
+// Date: 2021-06-30
+// Level: medium
+// Description: Detect Attempt PrintNightmare (CVE-2021-1675) Remote code execution in Windows Spooler ServiceThe SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including Windows security logs. To ensure that events from the 'smbclient-security' service are included in this table, make sure to have the necessary data connectors and log sources configured in Sentinel to collect and ingest these events.
+// Tags: attack.credential-access, attack.t1110.001
+// ================================================================== 
+
+SecurityEvent
+| where ServerName startswith "\\1" and UserName =~ ""

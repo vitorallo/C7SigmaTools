@@ -1,0 +1,10 @@
+// Title: AWS ElastiCache Security Group Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-07-24
+// Level: low
+// Description: Identifies when an ElastiCache security group has been modified or deleted.The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To access this table, make sure to have the AWS CloudTrail connector enabled in your Sentinel workspace.
+// Tags: attack.impact, attack.t1531
+// ================================================================== 
+
+CloudTrail
+| where (eventName in~ ("DeleteCacheSecurityGroup", "AuthorizeCacheSecurityGroupIngress", "RevokeCacheSecurityGroupIngress", "AuthorizeCacheSecurityGroupEgress", "RevokeCacheSecurityGroupEgress")) and eventSource =~ "elasticache.amazonaws.com"

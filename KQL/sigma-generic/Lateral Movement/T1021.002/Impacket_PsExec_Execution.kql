@@ -1,0 +1,10 @@
+// Title: Impacket PsExec Execution
+// Author: Bhabesh Raj
+// Date: 2020-12-14
+// Level: high
+// Description: Detects execution of Impacket's psexec.py.The SecurityEvent table in Microsoft Sentinel contains security-related events, including object access events. To query for the advanced audit policy setting 'Object Access > Audit Detailed File Share', you can filter on the EventID and other relevant fields in the SecurityEvent table. Make sure to have the necessary connectors and data sources configured in Sentinel to collect Windows security logs.
+// Tags: attack.lateral-movement, attack.t1021.002
+// ================================================================== 
+
+SecurityEvent
+| where (RelativeTargetName contains "RemCom_stdin" or RelativeTargetName contains "RemCom_stdout" or RelativeTargetName contains "RemCom_stderr") and ShareName =~ "\\\\*\\IPC$"

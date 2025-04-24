@@ -1,0 +1,10 @@
+// Title: Potential Invoke-Mimikatz PowerShell Script
+// Author: Tim Rauch, Elastic (idea)
+// Date: 2022-09-28
+// Level: high
+// Description: Detects Invoke-Mimikatz PowerShell script and alike. Mimikatz is a credential dumper capable of obtaining plaintext Windows account logins and passwords.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.credential-access, attack.t1003
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "DumpCreds" and ScriptBlockText contains "DumpCerts") or ScriptBlockText contains "sekurlsa::logonpasswords" or (ScriptBlockText contains "crypto::certificates" and ScriptBlockText contains "CERT_SYSTEM_STORE_LOCAL_MACHINE")

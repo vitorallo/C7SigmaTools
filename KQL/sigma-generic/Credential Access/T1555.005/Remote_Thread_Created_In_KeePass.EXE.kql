@@ -1,0 +1,10 @@
+// Title: Remote Thread Created In KeePass.EXE
+// Author: Timon Hackenjos
+// Date: 2022-04-22
+// Level: high
+// Description: Detects remote thread creation in "KeePass.exe" which could indicates potential password dumping activityThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for events related to creating remote threads, you can filter based on the EventID and relevant fields.
+// Tags: attack.credential-access, attack.t1555.005
+// ================================================================== 
+
+SecurityEvent
+| where TargetImage endswith "\\KeePass.exe"

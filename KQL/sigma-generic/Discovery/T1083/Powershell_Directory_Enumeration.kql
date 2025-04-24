@@ -1,0 +1,10 @@
+// Title: Powershell Directory Enumeration
+// Author: frack113
+// Date: 2022-03-17
+// Level: medium
+// Description: Detects technique used by MAZE ransomware to enumerate directories using PowershellThis table contains Windows security event logs, which may include information about script block logging being enabled. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to access this table.
+// Tags: attack.discovery, attack.t1083
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "foreach" and ScriptBlockText contains "Get-ChildItem" and ScriptBlockText contains "-Path " and ScriptBlockText contains "-ErrorAction " and ScriptBlockText contains "SilentlyContinue" and ScriptBlockText contains "Out-File " and ScriptBlockText contains "-append"

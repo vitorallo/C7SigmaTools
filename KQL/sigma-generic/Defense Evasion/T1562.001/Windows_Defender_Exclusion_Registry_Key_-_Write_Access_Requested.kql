@@ -1,0 +1,11 @@
+// Title: Windows Defender Exclusion Registry Key - Write Access Requested
+// Author: @BarryShooshooga, Nasreddine Bencherchali (Nextron Systems)
+// Date: 2019-10-26
+// Level: medium
+// Description: Detects write access requests to the Windows Defender exclusions registry keys. This could be an indication of an attacker trying to request a handle or access the object to write new exclusions in order to bypass security.
+// This table contains security-related events such as logon/logoff, account management, and other security-related activities. Make sure to have the SecurityEvent table available by ingesting security event logs from Windows machines.
+// Tags: attack.defense-evasion, attack.t1562.001
+// ================================================================== 
+
+SecurityEvent
+| where (AccessList contains "%%4417" or AccessList contains "%%4418") and RegistryKey endswith "\\Microsoft\\Windows Defender\\Exclusions*"

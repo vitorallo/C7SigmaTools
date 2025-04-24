@@ -1,0 +1,10 @@
+// Title: Account Created And Deleted Within A Close Time Frame
+// Author: Mark Morowczynski '@markmorow', MikeDuddington, '@dudders1', Tim Shelton
+// Date: 2022-08-11
+// Level: high
+// Description: Detects when an account was created and deleted in a short period of time.The AzureActivity table in Microsoft Sentinel contains Azure audit logs. Make sure to have the Azure Monitor solution installed in Sentinel to access this table.
+// Tags: attack.defense-evasion, attack.t1078
+// ================================================================== 
+
+AzureActivity
+| where Status =~ "Success" and ('properties.message' in~ ("Add user", "Delete user"))

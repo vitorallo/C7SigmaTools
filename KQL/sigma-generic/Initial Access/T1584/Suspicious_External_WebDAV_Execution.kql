@@ -1,0 +1,11 @@
+// Title: Suspicious External WebDAV Execution
+// Author: Ahmed Farouk
+// Date: 2024-05-10
+// Level: high
+// Description: Detects executables launched from external WebDAV shares using the WebDAV Explorer integration, commonly seen in initial access campaigns.
+// This table contains proxy logs, make sure to have the necessary connectors or data sources configured in Sentinel to ingest proxy logs.
+// Tags: attack.initial-access, attack.t1584, attack.t1566
+// ================================================================== 
+
+ProxyLog
+| where ((''c-uri'' endswith ".7z" or ''c-uri'' endswith ".bat" or ''c-uri'' endswith ".dat" or ''c-uri'' endswith ".cmd" or ''c-uri'' endswith ".exe" or ''c-uri'' endswith ".js" or ''c-uri'' endswith ".lnk" or ''c-uri'' endswith ".ps1" or ''c-uri'' endswith ".rar" or ''c-uri'' endswith ".url" or ''c-uri'' endswith ".vbe" or ''c-uri'' endswith ".vbs" or ''c-uri'' endswith ".zip") and ('c-useragent' startswith "Microsoft-WebDAV-MiniRedir/" and 'cs-method' =~ "GET")) and (not((ipv4_is_in_range(dst_ip, "127.0.0.0/8") or ipv4_is_in_range(dst_ip, "10.0.0.0/8") or ipv4_is_in_range(dst_ip, "172.16.0.0/12") or ipv4_is_in_range(dst_ip, "192.168.0.0/16") or ipv4_is_in_range(dst_ip, "169.254.0.0/16") or ipv4_is_in_range(dst_ip, "::1/128") or ipv4_is_in_range(dst_ip, "fe80::/10") or ipv4_is_in_range(dst_ip, "fc00::/7"))))

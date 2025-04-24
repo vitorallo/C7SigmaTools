@@ -1,0 +1,10 @@
+// Title: Possible DC Shadow Attack
+// Author: Ilyas Ochkov, oscd.community, Chakib Gzenayi (@Chak092), Hosni Mribah
+// Date: 2019-10-25
+// Level: medium
+// Description: Detects DCShadow via create new SPNThe SecurityEvent table in Microsoft Sentinel contains security-related events, including the event IDs mentioned in the logsource section. To ensure that these events are collected and available in Sentinel, make sure to have the appropriate data connectors or log sources configured to ingest Windows security event logs.
+// Tags: attack.credential-access, attack.t1207
+// ================================================================== 
+
+SecurityEvent
+| where ServicePrincipalNames contains "GC/" or (AttributeLDAPDisplayName =~ "servicePrincipalName" and AttributeValue startswith "GC/")

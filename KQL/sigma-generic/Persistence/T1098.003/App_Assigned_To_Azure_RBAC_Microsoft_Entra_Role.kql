@@ -1,0 +1,10 @@
+// Title: App Assigned To Azure RBAC/Microsoft Entra Role
+// Author: Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'
+// Date: 2022-07-19
+// Level: medium
+// Description: Detects when an app is assigned Azure AD roles, such as global administrator, or Azure RBAC roles, such as subscription owner.This table contains Azure activity logs, which includes audit logs. Ensure that Azure Diagnostics logs are enabled and streaming to Log Analytics workspace in Sentinel.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1098.003
+// ================================================================== 
+
+AzureActivity
+| where ('properties.message' in~ ("Add member to role", "Add eligible member to role", "Add scoped member to role")) and 'targetResources.type' =~ "Service Principal"

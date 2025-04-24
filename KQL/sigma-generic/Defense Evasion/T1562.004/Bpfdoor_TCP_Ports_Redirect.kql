@@ -1,0 +1,12 @@
+// Title: Bpfdoor TCP Ports Redirect
+// Author: Rafal Piasecki
+// Date: 2022-08-10
+// Level: medium
+// Description: All TCP traffic on particular port from attacker is routed to different port. ex. '/sbin/iptables -t nat -D PREROUTING -p tcp -s 192.168.1.1 --dport 22 -j REDIRECT --to-ports 42392'
+// The traffic looks like encrypted SSH communications going to TCP port 22, but in reality is being directed to the shell port once it hits the iptables rule for the attacker host only.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including audit logs. To have auditd logs from Linux systems available in the SecurityEvent table, you need to ensure that the Linux machines are onboarded to Sentinel and have the necessary data connectors and agents installed to collect and forward auditd logs.
+// Tags: attack.defense-evasion, attack.t1562.004
+// ================================================================== 
+
+SecurityEvent
+| where (a0 endswith "iptables" and a1 =~ "-t" and a2 =~ "nat" and type =~ "EXECVE") and ("--to-ports 42" or "--to-ports 43")

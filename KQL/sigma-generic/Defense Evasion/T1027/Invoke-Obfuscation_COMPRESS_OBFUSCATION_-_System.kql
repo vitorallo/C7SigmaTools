@@ -1,0 +1,10 @@
+// Title: Invoke-Obfuscation COMPRESS OBFUSCATION - System
+// Author: Timur Zinniatullin, oscd.community
+// Date: 2020-10-18
+// Level: medium
+// Description: Detects Obfuscated Powershell via COMPRESS OBFUSCATIONThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query this table, ensure that you have the necessary data connectors set up in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1027, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (ImagePath contains ":system.io.compression.deflatestream" or ImagePath contains "system.io.streamreader") and (ImagePath contains "new-object" and ImagePath contains "text.encoding]::ascii" and ImagePath contains "readtoend") and Provider_Name =~ "Service Control Manager"

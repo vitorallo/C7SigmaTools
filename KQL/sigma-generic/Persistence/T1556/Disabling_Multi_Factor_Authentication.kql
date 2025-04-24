@@ -1,0 +1,10 @@
+// Title: Disabling Multi Factor Authentication
+// Author: Splunk Threat Research Team (original rule), Harjot Singh @cyb3rjy0t (sigma rule)
+// Date: 2023-09-18
+// Level: high
+// Description: Detects disabling of Multi Factor Authentication.OfficeActivity table in Microsoft Sentinel contains audit logs for Microsoft 365 services. Ensure that Microsoft 365 audit logs are being collected and ingested into Sentinel to query this table.
+// Tags: attack.persistence, attack.t1556
+// ================================================================== 
+
+OfficeActivity
+| where Operation contains "Disable Strong Authentication."

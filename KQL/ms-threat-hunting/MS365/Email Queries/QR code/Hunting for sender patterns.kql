@@ -1,0 +1,33 @@
+// Description: In this detection approach, we correlate email from non-prevalent senders in the organization with impersonation intents
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, EmailAttachmentInfo)
+
+let PhishingSenderDisplayNames = ()
+{
+pack_array("IT", "support", "Payroll", "HR", "admin", "2FA", "notification", "sign", "reminder", "consent", "workplace",
+"administrator", "administration", "benefits", "employee", "update", "on behalf");
+};
+let suspiciousEmails = EmailEvents
+| where Timestamp > ago(1d)
+| where isnotempty(RecipientObjectId)
+| where isnotempty(SenderFromAddress)
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Delivered"
+| join kind=inner (EmailAttachmentInfo
+| where Timestamp > ago(1d)
+| where isempty(SenderObjectId)
+| where FileType has_any ("png", "jpg", "jpeg", "bmp", "gif")
+ ) on NetworkMessageId
+| where SenderDisplayName has_any (PhishingSenderDisplayNames())
+| project Timestamp, Subject, FileName, SenderFromDomain, RecipientObjectId, NetworkMessageId;
+let suspiciousSenders = suspiciousEmails | distinct SenderFromDomain;
+let prevalentSenders = materialize(EmailEvents
+| where Timestamp between (ago(7d) .. ago(1d))
+| where isnotempty(RecipientObjectId)
+| where isnotempty(SenderFromAddress)
+| where SenderFromDomain in (suspiciousSenders)
+| where EmailDirection == "Inbound"
+| where DeliveryAction == "Delivered"
+| distinct SenderFromDomain);
+suspiciousEmails
+| where SenderFromDomain !in (prevalentSenders)
+| project Timestamp, Subject, FileName, SenderFromDomain, RecipientObjectId, NetworkMessageId

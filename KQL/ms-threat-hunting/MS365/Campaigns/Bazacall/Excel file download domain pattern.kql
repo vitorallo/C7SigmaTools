@@ -1,0 +1,6 @@
+// Description: BazaCall is a campaign that manipulate users into calling a customer support center, where they are instructed to download an Excel file to unsubscribe from a phony service. When the user opens the Excel file, they are prompted to enable a malicious macro that infects their device with BazaLoader.
+// This query surfaces connections to the distinctive .xyz domains that the BazaCall campaign uses to host malicious Excel files.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceNetworkEvents)
+
+DeviceNetworkEvents
+| where RemoteUrl matches regex @".{14}\.xyz/config\.php"

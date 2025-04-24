@@ -1,0 +1,10 @@
+// Title: Suspicious Commands Linux
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-12-12
+// Level: medium
+// Description: Detects relevant commands often related to malware or hacking activityThe LinuxAudit table in Microsoft Sentinel contains audit logs from Linux systems. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are set up to collect audit logs.
+// Tags: attack.execution, attack.t1059.004
+// ================================================================== 
+
+LinuxAudit
+| where (a0 =~ "chmod" and a1 == 777 and type =~ "EXECVE") or (a0 =~ "chmod" and a1 =~ "u+s" and type =~ "EXECVE") or (a0 =~ "cp" and a1 =~ "/bin/ksh" and type =~ "EXECVE") or (a0 =~ "cp" and a1 =~ "/bin/sh" and type =~ "EXECVE")

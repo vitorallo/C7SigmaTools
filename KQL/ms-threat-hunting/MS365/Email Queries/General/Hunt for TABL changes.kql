@@ -1,0 +1,6 @@
+// Description: This query helps hunting for Tenant allow/block list (TABL) changes in Defender for Office 365
+// Required Connectors: MicrosoftThreatProtection (Types: CloudAppEvents)
+
+CloudAppEvents
+| where ActionType contains "TenantAllowBlockListItems"
+| order by Timestamp desc

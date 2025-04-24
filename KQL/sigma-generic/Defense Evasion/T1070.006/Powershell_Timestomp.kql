@@ -1,0 +1,12 @@
+// Title: Powershell Timestomp
+// Author: frack113
+// Date: 2021-08-03
+// Level: medium
+// Description: Adversaries may modify file time attributes to hide new or changes to existing files.
+// Timestomping is a technique that modifies the timestamps of a file (the modify, access, create, and change times), often to mimic files that are in the same folder.
+// This table contains security-related events, including PowerShell script execution events. Ensure that the required data connectors are enabled to collect Windows security events in Sentinel.
+// Tags: attack.defense-evasion, attack.t1070.006
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains ".CreationTime =" or ScriptBlockText contains ".LastWriteTime =" or ScriptBlockText contains ".LastAccessTime =" or ScriptBlockText contains "[IO.File]::SetCreationTime" or ScriptBlockText contains "[IO.File]::SetLastAccessTime" or ScriptBlockText contains "[IO.File]::SetLastWriteTime"

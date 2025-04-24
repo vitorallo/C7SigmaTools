@@ -1,0 +1,10 @@
+// Title: Azure Key Vault Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-16
+// Level: medium
+// Description: Identifies when a key vault is modified or deleted.This table contains Azure Activity Logs data. To have this table present in Microsoft Sentinel, ensure that Azure Activity Logs are being collected and ingested into Sentinel. This can be achieved by configuring Azure Monitor logs to send activity logs to a Log Analytics workspace connected to Sentinel.
+// Tags: attack.impact, attack.credential-access, attack.t1552, attack.t1552.001
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.KEYVAULT/VAULTS/WRITE", "MICROSOFT.KEYVAULT/VAULTS/DELETE", "MICROSOFT.KEYVAULT/VAULTS/DEPLOY/ACTION", "MICROSOFT.KEYVAULT/VAULTS/ACCESSPOLICIES/WRITE")

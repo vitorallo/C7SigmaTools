@@ -1,0 +1,10 @@
+// Title: Microsoft 365 - User Restricted from Sending Email
+// Author: austinsonger
+// Date: 2021-08-19
+// Level: medium
+// Description: Detects when a Security Compliance Center reported a user who exceeded sending limits of the service policies and because of this has been restricted from sending email.This table contains threat intelligence indicators, including indicators of compromise (IoCs) and threat actor information. To have this table present in Microsoft Sentinel, ensure that Threat Intelligence data connector is enabled and configured to ingest data from the threat_management service with product m365.
+// Tags: attack.initial-access, attack.t1199
+// ================================================================== 
+
+ThreatIntelligenceIndicator
+| where eventName =~ "User restricted from sending email" and eventSource =~ "SecurityComplianceCenter" and status =~ "success"

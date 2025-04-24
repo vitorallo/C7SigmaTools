@@ -1,0 +1,11 @@
+// Description: 'Detects mailbox login from Exchange PowerShell. All accounts can use it by default, but admins can change it. Whitelist benign activities.'
+// Required Connectors: Office365 (Types: OfficeActivity (Exchange))
+
+OfficeActivity
+| where OfficeWorkload == "Exchange" and Operation == "MailboxLogin"
+| where ClientInfoString == "Client=Microsoft.Exchange.Powershell; Microsoft WinRM Client"
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), count() by Operation, OrganizationName, UserType, UserId, MailboxOwnerUPN, Logon_Type, ClientInfoString
+| extend AccountName = iff(UserId contains '@', tostring(split(UserId, '@')[0]), UserId)
+| extend AccountUPNSuffix = iff(UserId contains '@', tostring(split(UserId, '@')[1]), '')
+| extend AccountName = iff(UserId contains '\\', tostring(split(UserId, '\\')[1]), AccountName)
+| extend AccountNTDomain = iff(UserId contains '\\', tostring(split(UserId, '\\')[0]), '')

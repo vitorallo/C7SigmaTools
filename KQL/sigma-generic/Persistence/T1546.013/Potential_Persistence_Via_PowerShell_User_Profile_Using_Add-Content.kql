@@ -1,0 +1,10 @@
+// Title: Potential Persistence Via PowerShell User Profile Using Add-Content
+// Author: frack113, Nasreddine Bencherchali (Nextron Systems)
+// Date: 2021-08-18
+// Level: medium
+// Description: Detects calls to "Add-Content" cmdlet in order to modify the content of the user profile and potentially adding suspicious commands for persistenceThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for Script Block Logging events, you may need to enable the appropriate advanced audit policy settings on the Windows endpoints and ensure that the logs are being forwarded to Sentinel.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1546.013
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Add-Content $profile" and (ScriptBlockText contains "-Value \"IEX " or ScriptBlockText contains "-Value \"Invoke-Expression" or ScriptBlockText contains "-Value \"Invoke-WebRequest" or ScriptBlockText contains "-Value \"Start-Process" or ScriptBlockText contains "-Value 'IEX " or ScriptBlockText contains "-Value 'Invoke-Expression" or ScriptBlockText contains "-Value 'Invoke-WebRequest" or ScriptBlockText contains "-Value 'Start-Process")

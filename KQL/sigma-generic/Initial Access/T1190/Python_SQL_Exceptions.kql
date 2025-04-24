@@ -1,0 +1,10 @@
+// Title: Python SQL Exceptions
+// Author: Thomas Patzke
+// Date: 2017-08-12
+// Level: medium
+// Description: Generic rule for SQL exceptions in Python according to PEP 249This table contains logs related to Python scripts. To have this table present in Microsoft Sentinel, ensure that the appropriate data connectors are set up to collect logs from Python applications.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+PythonScriptLogs
+| where "DataError" or "IntegrityError" or "ProgrammingError" or "OperationalError"

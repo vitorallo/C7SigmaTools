@@ -1,0 +1,10 @@
+// Title: Addition of SID History to Active Directory Object
+// Author: Thomas Patzke, @atc_project (improvements)
+// Date: 2017-02-19
+// Level: medium
+// Description: An attacker can use the SID history attribute to gain additional privileges.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows systems. To have this table present, ensure that the Windows Security events are being collected and forwarded to Sentinel using the Microsoft Monitoring Agent (MMA) or Azure Log Analytics agent.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1134.005
+// ================================================================== 
+
+SecurityEvent
+| where (not((SidHistory in~ ("-", "%%1793")))) and (not(isnull(SidHistory)))

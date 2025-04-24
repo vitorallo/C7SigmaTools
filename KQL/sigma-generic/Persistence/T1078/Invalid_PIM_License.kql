@@ -1,0 +1,10 @@
+// Title: Invalid PIM License
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-14
+// Level: high
+// Description: Identifies when an organization doesn't have the proper license for PIM and is out of compliance.The AzureActivity table in Microsoft Sentinel contains logs related to Azure activity. To have this table present, ensure that Azure Activity logs are being collected and sent to Sentinel.
+// Tags: attack.t1078, attack.persistence, attack.privilege-escalation
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "invalidLicenseAlertIncident"

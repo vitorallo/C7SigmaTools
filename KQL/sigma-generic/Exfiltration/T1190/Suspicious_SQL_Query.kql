@@ -1,0 +1,10 @@
+// Title: Suspicious SQL Query
+// Author: @juju4
+// Date: 2022-12-27
+// Level: medium
+// Description: Detects suspicious SQL query keywrods that are often used during recon, exfiltration or destructive activities. Such as dropping tables and selecting wildcard fieldsThis table contains SQL query logs. Ensure that Azure Diagnostics logs are enabled for the database service in Azure Monitor to have these logs available in Sentinel.
+// Tags: attack.exfiltration, attack.initial-access, attack.privilege-escalation, attack.t1190, attack.t1505.001
+// ================================================================== 
+
+AzureDiagnostics
+| where "drop" or "truncate" or "dump" or "select *"

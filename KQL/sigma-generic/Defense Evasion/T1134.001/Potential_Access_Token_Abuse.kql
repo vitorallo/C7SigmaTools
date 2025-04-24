@@ -1,0 +1,10 @@
+// Title: Potential Access Token Abuse
+// Author: Michaela Adams, Zach Mathis
+// Date: 2022-11-06
+// Level: medium
+// Description: Detects potential token impersonation and theft. Example, when using "DuplicateToken(Ex)" and "ImpersonateLoggedOnUser" with the "LOGON32_LOGON_NEW_CREDENTIALS flag".The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that the Microsoft Sentinel agent is installed on Windows machines and configured to send security events to the Sentinel workspace.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1134.001, stp.4u
+// ================================================================== 
+
+SecurityEvent
+| where AuthenticationPackageName =~ "Negotiate" and ImpersonationLevel =~ "%%1833" and LogonProcessName =~ "Advapi" and LogonType == 9

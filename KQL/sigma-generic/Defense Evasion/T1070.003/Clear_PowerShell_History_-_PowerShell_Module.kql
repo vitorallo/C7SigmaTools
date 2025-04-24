@@ -1,0 +1,10 @@
+// Title: Clear PowerShell History - PowerShell Module
+// Author: Ilyas Ochkov, Jonhnathan Ribeiro, Daniil Yugoslavskiy, oscd.community
+// Date: 2019-10-25
+// Level: medium
+// Description: Detects keywords that could indicate clearing PowerShell historyThis table contains security-related events from Windows machines. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to query this table.
+// Tags: attack.defense-evasion, attack.t1070.003
+// ================================================================== 
+
+SecurityEvent
+| where ((Payload contains "Set-PSReadlineOption" and Payload contains "–HistorySaveStyle" and Payload contains "SaveNothing") or (Payload contains "Set-PSReadlineOption" and Payload contains "-HistorySaveStyle" and Payload contains "SaveNothing")) or ((Payload contains "del" or Payload contains "Remove-Item" or Payload contains "rm") and Payload contains "(Get-PSReadlineOption).HistorySavePath")

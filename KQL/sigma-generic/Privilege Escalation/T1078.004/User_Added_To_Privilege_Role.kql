@@ -1,0 +1,10 @@
+// Title: User Added To Privilege Role
+// Author: Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H'
+// Date: 2022-08-06
+// Level: high
+// Description: Detects when a user is added to a privileged role.This table contains Azure audit logs. Ensure that Azure Monitor logs are enabled and the necessary connectors are set up in Microsoft Sentinel to collect Azure audit logs.
+// Tags: attack.privilege-escalation, attack.defense-evasion, attack.t1078.004
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' in~ ("Add eligible member (permanent)", "Add eligible member (eligible)")

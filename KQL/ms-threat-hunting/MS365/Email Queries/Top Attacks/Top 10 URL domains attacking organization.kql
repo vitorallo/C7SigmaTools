@@ -1,0 +1,13 @@
+// Description: This query helps reviewing list of top 10 URL domains attacking the organization
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, EmailUrlInfo)
+
+EmailEvents 
+| where ThreatTypes != "" 
+| extend detection= parse_json(DetectionMethods) 
+| extend Spam = tostring(detection.Spam) 
+| extend Phish = tostring(detection.Phish) 
+| where (Spam == '["URL malicious reputation"]') or (Phish == '["URL malicious reputation"]') or (Phish == '["URL detonation reputation"]') or (Phish == '["URL detonation"]') 
+| join EmailUrlInfo on NetworkMessageId
+| summarize total=count() by UrlDomain 
+| top 10 by total 
+| render columnchart

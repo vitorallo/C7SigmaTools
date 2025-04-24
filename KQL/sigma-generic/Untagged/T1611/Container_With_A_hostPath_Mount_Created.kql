@@ -1,0 +1,13 @@
+// Title: Container With A hostPath Mount Created
+// Author: Leo Tsaousis (@laripping)
+// Date: 2024-03-26
+// Level: low
+// Description: Detects creation of a container with a hostPath mount.
+// A hostPath volume mounts a directory or a file from the node to the container.
+// Attackers who have permissions to create a new pod in the cluster may create one with a writable hostPath volume and chroot to escape to the underlying node.
+// The KubeEvents table in Microsoft Sentinel contains Kubernetes audit logs. To have this table present, ensure that you have the necessary connectors or data sources configured to collect Kubernetes audit logs.
+// Tags: attack.t1611
+// ================================================================== 
+
+KubeEvents
+| where hostPath startswith "" and 'objectRef.resource' =~ "pods" and verb =~ "create"

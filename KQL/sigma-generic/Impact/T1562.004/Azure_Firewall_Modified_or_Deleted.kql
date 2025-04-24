@@ -1,0 +1,10 @@
+// Title: Azure Firewall Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-08
+// Level: medium
+// Description: Identifies when a firewall is created, modified, or deleted.This table contains Azure Activity Logs data. Ensure that Azure Activity Logs are being collected and ingested into Microsoft Sentinel to query this table.
+// Tags: attack.impact, attack.defense-evasion, attack.t1562.004
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.NETWORK/AZUREFIREWALLS/WRITE", "MICROSOFT.NETWORK/AZUREFIREWALLS/DELETE")

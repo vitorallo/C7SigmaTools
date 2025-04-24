@@ -1,0 +1,10 @@
+// Title: Overwriting the File with Dev Zero or Null
+// Author: Jakob Weinzettl, oscd.community
+// Date: 2019-10-23
+// Level: low
+// Description: Detects overwriting (effectively wiping/deleting) of a file.The LinuxAudit table in Microsoft Sentinel contains audit logs from Linux systems. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs.
+// Tags: attack.impact, attack.t1485
+// ================================================================== 
+
+LinuxAudit
+| where a0 contains "dd" and (a1 contains "if=/dev/null" or a1 contains "if=/dev/zero") and type =~ "EXECVE"

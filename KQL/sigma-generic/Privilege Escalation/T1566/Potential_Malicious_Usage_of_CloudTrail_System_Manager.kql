@@ -1,0 +1,11 @@
+// Title: Potential Malicious Usage of CloudTrail System Manager
+// Author: jamesc-grafana
+// Date: 2024-07-11
+// Level: high
+// Description: Detect when System Manager successfully executes commands against an instance.
+// The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To have this table present in Sentinel, you need to ensure that the AWS CloudTrail connector is properly configured and sending logs to Sentinel.
+// Tags: attack.privilege-escalation, attack.t1566, attack.t1566.002
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "SendCommand" and eventSource =~ "ssm.amazonaws.com" and 'responseElements.command.status' =~ "Success"

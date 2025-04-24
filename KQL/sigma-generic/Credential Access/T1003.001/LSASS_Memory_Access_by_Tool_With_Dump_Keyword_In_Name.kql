@@ -1,0 +1,10 @@
+// Title: LSASS Memory Access by Tool With Dump Keyword In Name
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-02-10
+// Level: high
+// Description: Detects LSASS process access requests from a source process with the "dump" keyword in its image name.This table contains information about process creation events in Windows. To have this table present in Microsoft Sentinel, ensure that you have the necessary data connectors set up to collect process access logs from Windows machines.
+// Tags: attack.credential-access, attack.t1003.001, attack.s0002
+// ================================================================== 
+
+ProcessCreationEvents
+| where (GrantedAccess endswith "10" or GrantedAccess endswith "30" or GrantedAccess endswith "50" or GrantedAccess endswith "70" or GrantedAccess endswith "90" or GrantedAccess endswith "B0" or GrantedAccess endswith "D0" or GrantedAccess endswith "F0" or GrantedAccess endswith "18" or GrantedAccess endswith "38" or GrantedAccess endswith "58" or GrantedAccess endswith "78" or GrantedAccess endswith "98" or GrantedAccess endswith "B8" or GrantedAccess endswith "D8" or GrantedAccess endswith "F8" or GrantedAccess endswith "1A" or GrantedAccess endswith "3A" or GrantedAccess endswith "5A" or GrantedAccess endswith "7A" or GrantedAccess endswith "9A" or GrantedAccess endswith "BA" or GrantedAccess endswith "DA" or GrantedAccess endswith "FA" or GrantedAccess endswith "0x14C2" or GrantedAccess endswith "FF") and InitiatingProcessFolderPath contains "dump" and TargetImage endswith "\\lsass.exe"

@@ -1,0 +1,10 @@
+// Title: Suspicious New-PSDrive to Admin Share
+// Author: frack113
+// Date: 2022-08-13
+// Level: medium
+// Description: Adversaries may use to interact with a remote network share using Server Message Block (SMB). The adversary may then perform actions as the logged-on user.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include events related to script block logging. Ensure that the Windows Security Events connector is enabled in Sentinel to collect these logs.
+// Tags: attack.lateral-movement, attack.t1021.002
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "New-PSDrive" and ScriptBlockText contains "-psprovider " and ScriptBlockText contains "filesystem" and ScriptBlockText contains "-root " and ScriptBlockText contains "\\\\" and ScriptBlockText contains "$"

@@ -1,0 +1,10 @@
+// Title: Lsass Memory Dump via Comsvcs DLL
+// Author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+// Date: 2020-10-20
+// Level: high
+// Description: Detects adversaries leveraging the MiniDump export function from comsvcs.dll via rundll32 to perform a memory dump from lsass.This table contains information about process creation events in Windows. To query this table in Microsoft Sentinel, ensure that you have the necessary data connectors set up to collect process creation events from Windows machines.
+// Tags: attack.credential-access, attack.t1003.001
+// ================================================================== 
+
+ProcessCreationEvents
+| where CallTrace contains "comsvcs.dll" and InitiatingProcessFolderPath endswith "\\rundll32.exe" and TargetImage endswith "\\lsass.exe"

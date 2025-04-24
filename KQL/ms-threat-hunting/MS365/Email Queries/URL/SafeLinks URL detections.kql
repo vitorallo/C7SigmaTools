@@ -1,0 +1,9 @@
+// Description: This query provides insights on the detections done by SafeLinks protection in Defender for Office 365
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents 
+| where DetectionMethods != "" 
+| extend detection= tostring(parse_json(DetectionMethods).Phish) 
+| where detection == '["URL detonation reputation"]' or detection == '["URL detonation"]' 
+| summarize total=count() by bin(Timestamp, 1d) 
+| order by Timestamp asc

@@ -1,0 +1,10 @@
+// Title: Account Tampering - Suspicious Failed Logon Reasons
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-02-19
+// Level: medium
+// Description: This method uses uncommon error codes on failed logons to determine suspicious activity and tampering with accounts that have been disabled or somehow restricted.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the necessary data connectors set up for Windows security logs in Sentinel.
+// Tags: attack.persistence, attack.defense-evasion, attack.privilege-escalation, attack.initial-access, attack.t1078
+// ================================================================== 
+
+SecurityEvent
+| where (Status in~ ("0xC0000072", "0xC000006F", "0xC0000070", "0xC0000413", "0xC000018C", "0xC000015B")) and (not(SubjectUserSid =~ "S-1-0-0"))

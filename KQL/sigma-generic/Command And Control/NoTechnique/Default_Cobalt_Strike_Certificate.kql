@@ -1,0 +1,10 @@
+// Title: Default Cobalt Strike Certificate
+// Author: Bhabesh Raj
+// Date: 2021-06-23
+// Level: high
+// Description: Detects the presence of default Cobalt Strike certificate in the HTTPS trafficThis table contains information about x509 certificates on devices. Ensure that the appropriate connectors are set up to collect data from Zeek logs and map the 'service' field to the 'DeviceCertificateEvents' table in Sentinel.
+// Tags: attack.command-and-control, attack.s0154
+// ================================================================== 
+
+DeviceCertificateEvents
+| where 'certificate.serial' =~ "8BB00EE"

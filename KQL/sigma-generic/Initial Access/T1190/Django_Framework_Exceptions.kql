@@ -1,0 +1,10 @@
+// Title: Django Framework Exceptions
+// Author: Thomas Patzke
+// Date: 2017-08-05
+// Level: medium
+// Description: Detects suspicious Django web application framework exceptions that could indicate exploitation attemptsThis table contains information about HTTP requests made to a Django application. To have this table present in Microsoft Sentinel, ensure that you have the appropriate data connectors set up to collect logs from the Django application server.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+DjangoHttpRequests
+| where "SuspiciousOperation" or "DisallowedHost" or "DisallowedModelAdminLookup" or "DisallowedModelAdminToField" or "DisallowedRedirect" or "InvalidSessionKey" or "RequestDataTooBig" or "SuspiciousFileOperation" or "SuspiciousMultipartForm" or "SuspiciousSession" or "TooManyFieldsSent" or "PermissionDenied"

@@ -1,0 +1,10 @@
+// Title: Possible PetitPotam Coerce Authentication Attempt
+// Author: Mauricio Velazco, Michael Haag
+// Date: 2021-09-02
+// Level: high
+// Description: Detect PetitPotam coerced authentication activity.The SecurityEvent table in Microsoft Sentinel contains security-related events, including detailed file share access events. Make sure to have the necessary data connectors and log sources configured to ingest Windows security event logs into Sentinel.
+// Tags: attack.credential-access, attack.t1187
+// ================================================================== 
+
+SecurityEvent
+| where RelativeTargetName =~ "lsarpc" and ShareName endswith "\\IPC$" and ShareName startswith "\\\\" and SubjectUserName =~ "ANONYMOUS LOGON"

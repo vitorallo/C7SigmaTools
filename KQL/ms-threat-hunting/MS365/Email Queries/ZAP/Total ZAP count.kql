@@ -1,0 +1,7 @@
+// Description: This query helps reviewing count of total ZAP events
+// Required Connectors: MicrosoftThreatProtection (Types: EmailPostDeliveryEvents)
+
+EmailPostDeliveryEvents 
+| where Timestamp > ago(30d) 
+| where ActionType == "Phish ZAP" or ActionType == "Malware ZAP" 
+| count

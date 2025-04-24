@@ -1,0 +1,10 @@
+// Title: MSSQL Disable Audit Settings
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-07-13
+// Level: high
+// Description: Detects when an attacker calls the "ALTER SERVER AUDIT" or "DROP SERVER AUDIT" transaction in order to delete or disable audit logs on the serverThis table contains security-related events, including MSSQL audit policy events. Make sure to have the necessary connectors or data sources configured in Sentinel to collect Windows security events.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+SecurityEvent
+| where (Data contains "statement:ALTER SERVER AUDIT" or Data contains "statement:DROP SERVER AUDIT") and Provider_Name contains "MSSQL"

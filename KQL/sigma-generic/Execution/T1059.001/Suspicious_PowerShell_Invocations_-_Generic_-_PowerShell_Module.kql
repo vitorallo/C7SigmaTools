@@ -1,0 +1,10 @@
+// Title: Suspicious PowerShell Invocations - Generic - PowerShell Module
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-12
+// Level: high
+// Description: Detects suspicious PowerShell invocation command parametersThis table contains security-related events from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to populate this table.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (ContextInfo contains " -enc " or ContextInfo contains " -EncodedCommand " or ContextInfo contains " -ec ") and (ContextInfo contains " -w hidden " or ContextInfo contains " -window hidden " or ContextInfo contains " -windowstyle hidden " or ContextInfo contains " -w 1 ") and (ContextInfo contains " -noni " or ContextInfo contains " -noninteractive ")

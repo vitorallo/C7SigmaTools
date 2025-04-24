@@ -1,0 +1,10 @@
+// Title: Suspicious PowerShell Get Current User
+// Author: frack113
+// Date: 2022-04-04
+// Level: low
+// Description: Detects the use of PowerShell to identify the current logged user.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for Script Block Logging events, you may need to enable Advanced Audit Policy Configuration settings on the Windows machines and ensure that the appropriate events are being collected and forwarded to Sentinel.
+// Tags: attack.discovery, attack.t1033
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "[System.Environment]::UserName" or ScriptBlockText contains "$env:UserName" or ScriptBlockText contains "[System.Security.Principal.WindowsIdentity]::GetCurrent()"

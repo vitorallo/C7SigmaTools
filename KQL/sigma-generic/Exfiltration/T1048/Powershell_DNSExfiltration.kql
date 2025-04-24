@@ -1,0 +1,10 @@
+// Title: Powershell DNSExfiltration
+// Author: frack113
+// Date: 2022-01-07
+// Level: high
+// Description: DNSExfiltrator allows for transferring (exfiltrate) a file over a DNS request covert channelThe SecurityEvent table in Microsoft Sentinel contains information about security-related events on Windows machines. To query for Script Block Logging events, you may need to enable the appropriate data connectors and ensure that the necessary logs are being collected and ingested into Sentinel.
+// Tags: attack.exfiltration, attack.t1048
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Invoke-DNSExfiltrator" or (ScriptBlockText contains " -i " and ScriptBlockText contains " -d " and ScriptBlockText contains " -p " and ScriptBlockText contains " -doh " and ScriptBlockText contains " -t ")

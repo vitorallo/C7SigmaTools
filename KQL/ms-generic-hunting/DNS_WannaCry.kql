@@ -1,0 +1,20 @@
+// Description: 'Displays the client DNS request for any of the known domains linked to WannaCry.
+// These results may indicate a Wannacry/Wannacrypt ransomware infection.
+// Reference: Domain listing from https://pastebin.com/cRUii32E'
+// Required Connectors: DNS (Types: DnsEvents)
+
+let badDomains = dynamic(["agrdwrtj.us", "bctxawdt.us", "cokfqwjmferc.us", "cxbenjiikmhjcerbj.us", "depuisgef.us", "edoknehyvbl.us", 
+"enyeikruptiukjorq.com", "frullndjtkojlu.us", "gcidpiuvamynj.us", "gxrytjoclpvv.us", "hanoluexjqcf.us", "iarirjjrnuornts.us", 
+"ifbjoosjqhaeqjjwaerri.us", "iouenviwrc.us", "kuuelejkfwk.us", "lkbsxkitgxttgaobxu.us", "nnnlafqfnrbynwor.us", "ns768.com", 
+"ofdwcjnko.us", "peuwdchnvn.us", "pvbeqjbqrslnkmashlsxb.us", "pxyhybnyv.us", "qkkftmpy.us", "rkhlkmpfpoqxmlqmkf.us", 
+"ryitsfeogisr.us", "srwcjdfrtnhnjekjerl.us", "thstlufnunxaksr.us", "udrgtaxgdyv.us", "w5q7spejg96n.com", "xmqlcikldft.us", 
+"yobvyjmjbsgdfqnh.us", "yrwgugricfklb.us", "ywpvqhlqnssecpdemq.us"]);
+DnsEvents
+| where Name in~ (badDomains)
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), count() by Computer, ClientIP, WannaCrypt_Related_Domain = Name
+| extend HostName = iff(Computer has '.', substring(Computer,0,indexof(Computer,'.')),Computer)
+| extend DnsDomain = iff(Computer has '.', substring(Computer,indexof(Computer,'.')+1),"")
+| extend DNS_0_DomainName = WannaCrypt_Related_Domain
+| extend IP_0_Address = ClientIP
+| extend Host_0_HostName = HostName
+| extend Host_0_DnsDomain = DnsDomain

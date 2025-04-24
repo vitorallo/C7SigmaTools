@@ -1,0 +1,6 @@
+// Description: In the campaign where Bazarloader is delivered via emails containing pw protected zip attachments, regsvr32.exe is used to launch a malicious payload that is disguised as a JPG file.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceImageLoadEvents)
+
+DeviceImageLoadEvents
+| where InitiatingProcessFileName =~ "regsvr32.exe" and InitiatingProcessCommandLine has ".jpg" and FileName endswith ".jpg"
+| summarize by FileName, SHA256, DeviceId, bin(Timestamp, 1d)

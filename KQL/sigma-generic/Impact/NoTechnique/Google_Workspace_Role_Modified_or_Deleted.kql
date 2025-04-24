@@ -1,0 +1,10 @@
+// Title: Google Workspace Role Modified or Deleted
+// Author: Austin Songer
+// Date: 2021-08-24
+// Level: medium
+// Description: Detects when an a role is modified or deleted in Google Workspace.This table contains logs related to Google Cloud Platform activity. To have this table present in Microsoft Sentinel, you need to ensure that the Google Cloud Platform connector is set up and configured to collect logs from the 'google_workspace.admin' service.
+// Tags: attack.impact
+// ================================================================== 
+
+GCPActivity
+| where (eventName in~ ("DELETE_ROLE", "RENAME_ROLE", "UPDATE_ROLE")) and eventService =~ "admin.googleapis.com"

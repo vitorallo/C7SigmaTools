@@ -1,0 +1,13 @@
+// Title: Clipboard Collection with Xclip Tool - Auditd
+// Author: Pawel Mazur
+// Date: 2021-09-24
+// Level: low
+// Description: Detects attempts to collect data stored in the clipboard from users with the usage of xclip tool.
+// Xclip has to be installed.
+// Highly recommended using rule on servers, due to high usage of clipboard utilities on user workstations.
+// The equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs from the auditd service.
+// Tags: attack.collection, attack.t1115
+// ================================================================== 
+
+LinuxAuditLogs
+| where a0 =~ "xclip" and (a1 in~ ("-selection", "-sel")) and (a2 in~ ("clipboard", "clip")) and a3 =~ "-o" and type =~ "EXECVE"

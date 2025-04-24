@@ -1,0 +1,10 @@
+// Title: Google Workspace User Granted Admin Privileges
+// Author: Austin Songer
+// Date: 2021-08-23
+// Level: medium
+// Description: Detects when an Google Workspace user is granted admin privileges.This table corresponds to logs from Google Workspace Admin activity in GCP. To have this table present in Microsoft Sentinel, ensure that the necessary connectors for GCP and Google Workspace Admin are installed and configured.
+// Tags: attack.persistence, attack.t1098
+// ================================================================== 
+
+google_workspace_admin_CL
+| where (eventName in~ ("GRANT_DELEGATED_ADMIN_PRIVILEGES", "GRANT_ADMIN_PRIVILEGE")) and eventService =~ "admin.googleapis.com"

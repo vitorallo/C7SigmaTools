@@ -1,0 +1,10 @@
+// Title: RDP Login from Localhost
+// Author: Thomas Patzke
+// Date: 2019-01-28
+// Level: high
+// Description: RDP login with localhost source address may be a tunnelled loginThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To query this table, ensure that you have the necessary data connectors set up in Sentinel to collect security events from Windows machines.
+// Tags: attack.lateral-movement, car.2013-07-002, attack.t1021.001
+// ================================================================== 
+
+SecurityEvent
+| where (IpAddress in~ ("::1", "127.0.0.1")) and LogonType == 10

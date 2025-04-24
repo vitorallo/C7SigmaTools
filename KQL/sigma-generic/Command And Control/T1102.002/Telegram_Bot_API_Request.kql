@@ -1,0 +1,10 @@
+// Title: Telegram Bot API Request
+// Author: Florian Roth (Nextron Systems)
+// Date: 2018-06-05
+// Level: medium
+// Description: Detects suspicious DNS queries to api.telegram.org used by Telegram Bots of any kindThis table contains DNS events and can be queried in Microsoft Sentinel. Ensure that DNS events are being collected and sent to Sentinel for this table to be populated.
+// Tags: attack.command-and-control, attack.t1102.002
+// ================================================================== 
+
+DnsEvents
+| where query =~ "api.telegram.org"

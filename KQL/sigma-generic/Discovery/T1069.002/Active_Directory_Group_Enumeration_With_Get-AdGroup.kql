@@ -1,0 +1,10 @@
+// Title: Active Directory Group Enumeration With Get-AdGroup
+// Author: frack113
+// Date: 2022-03-17
+// Level: low
+// Description: Detects usage of the "Get-AdGroup" cmdlet to enumerate Groups within Active DirectoryThis table contains security-related events, including PowerShell script execution events. To query for Script Block Logging events, filter for EventID 4104.
+// Tags: attack.discovery, attack.t1069.002
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Get-AdGroup " and ScriptBlockText contains "-Filter"

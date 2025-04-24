@@ -1,0 +1,10 @@
+// Title: AWS Config Disabling Channel/Recorder
+// Author: vitaliy0x1
+// Date: 2020-01-21
+// Level: high
+// Description: Detects AWS Config Service disablingThe CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To have this table present in Sentinel, you need to ensure that you have the AWS CloudTrail connector configured and collecting logs from your AWS environment.
+// Tags: attack.defense-evasion, attack.t1562.001
+// ================================================================== 
+
+CloudTrail
+| where (eventName in~ ("DeleteDeliveryChannel", "StopConfigurationRecorder")) and eventSource =~ "config.amazonaws.com"

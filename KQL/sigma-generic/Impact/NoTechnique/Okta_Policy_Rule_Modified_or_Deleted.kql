@@ -1,0 +1,10 @@
+// Title: Okta Policy Rule Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-09-12
+// Level: medium
+// Description: Detects when an Policy Rule is Modified or Deleted.This table contains Okta sign-in logs. To have this table present in Microsoft Sentinel, you need to ensure that Okta logs are being forwarded to Sentinel and that the Okta connector is properly configured.
+// Tags: attack.impact
+// ================================================================== 
+
+OktaSignInLogs
+| where eventtype in~ ("policy.rule.update", "policy.rule.delete")

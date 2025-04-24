@@ -1,0 +1,10 @@
+// Title: Suspicious LDAP-Attributes Used
+// Author: xknow @xknow_infosec
+// Date: 2019-03-24
+// Level: high
+// Description: Detects the usage of particular AttributeLDAPDisplayNames, which are known for data exchange via LDAP by the tool LDAPFragger and are additionally not commonly used in companies.The SecurityEvent table in Microsoft Sentinel contains security-related events, including those related to directory service changes. To ensure that events related to the specified event IDs (5136, 5137, 5138, 5139, 5141) are captured, make sure to have the necessary data connectors and log sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.t1001.003, attack.command-and-control
+// ================================================================== 
+
+SecurityEvent
+| where (AttributeLDAPDisplayName in~ ("primaryInternationalISDNNumber", "otherFacsimileTelephoneNumber", "primaryTelexNumber")) and AttributeValue startswith ""

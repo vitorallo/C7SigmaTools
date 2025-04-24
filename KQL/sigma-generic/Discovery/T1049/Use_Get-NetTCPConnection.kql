@@ -1,0 +1,10 @@
+// Title: Use Get-NetTCPConnection
+// Author: frack113
+// Date: 2021-12-10
+// Level: low
+// Description: Adversaries may attempt to get a listing of network connections to or from the compromised system they are currently accessing or from remote systems by querying for information over the network.This table contains security event logs from Windows systems. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.discovery, attack.t1049
+// ================================================================== 
+
+SecurityEvent
+| where Data contains "Get-NetTCPConnection"

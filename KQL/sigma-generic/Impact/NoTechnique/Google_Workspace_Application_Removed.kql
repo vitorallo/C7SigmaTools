@@ -1,0 +1,10 @@
+// Title: Google Workspace Application Removed
+// Author: Austin Songer
+// Date: 2021-08-26
+// Level: medium
+// Description: Detects when an an application is removed from Google Workspace.This table corresponds to logs from Google Workspace Admin activity in GCP. To have this table present in Microsoft Sentinel, ensure that the appropriate connectors for GCP and Google Workspace Admin are configured and collecting logs.
+// Tags: attack.impact
+// ================================================================== 
+
+google_workspace_admin_CL
+| where (eventName in~ ("REMOVE_APPLICATION", "REMOVE_APPLICATION_FROM_WHITELIST")) and eventService =~ "admin.googleapis.com"

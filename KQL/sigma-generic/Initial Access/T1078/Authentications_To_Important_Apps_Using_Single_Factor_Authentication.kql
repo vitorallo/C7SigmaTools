@@ -1,0 +1,10 @@
+// Title: Authentications To Important Apps Using Single Factor Authentication
+// Author: MikeDuddington, '@dudders1'
+// Date: 2022-07-28
+// Level: medium
+// Description: Detect when authentications to important application(s) only required single-factor authenticationThis table contains Azure Active Directory sign-in logs. To have this table present in Microsoft Sentinel, ensure that Azure Active Directory logs are being collected and ingested into Sentinel.
+// Tags: attack.initial-access, attack.t1078
+// ================================================================== 
+
+SigninLogs
+| where AppId =~ "Insert Application ID use OR for multiple" and AuthenticationRequirement =~ "singleFactorAuthentication" and Status =~ "Success"

@@ -1,0 +1,10 @@
+// Title: Invoke-Obfuscation Via Use Rundll32 - System
+// Author: Nikita Nazarov, oscd.community
+// Date: 2020-10-09
+// Level: high
+// Description: Detects Obfuscated Powershell via use Rundll32 in ScriptsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Make sure to have the Windows Security Events connector enabled in Sentinel to collect these logs.
+// Tags: attack.defense-evasion, attack.t1027, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (ImagePath contains "value" or ImagePath contains "invoke" or ImagePath contains "comspec" or ImagePath contains "iex") and (ImagePath contains "&&" and ImagePath contains "rundll32" and ImagePath contains "shell32.dll" and ImagePath contains "shellexec_rundll") and Provider_Name =~ "Service Control Manager"

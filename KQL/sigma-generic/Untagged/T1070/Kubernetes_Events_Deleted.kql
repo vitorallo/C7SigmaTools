@@ -1,0 +1,12 @@
+// Title: Kubernetes Events Deleted
+// Author: Leo Tsaousis (@laripping)
+// Date: 2024-03-26
+// Level: medium
+// Description: Detects when events are deleted in Kubernetes.
+// An adversary may delete Kubernetes events in an attempt to evade detection.
+// The KubeEvents table in Microsoft Sentinel contains Kubernetes audit logs. To have this table present, ensure that you have the necessary connectors or data sources set up to collect Kubernetes audit logs in Sentinel.
+// Tags: attack.t1070
+// ================================================================== 
+
+KubeEvents
+| where 'objectRef.resource' =~ "events" and verb =~ "delete"

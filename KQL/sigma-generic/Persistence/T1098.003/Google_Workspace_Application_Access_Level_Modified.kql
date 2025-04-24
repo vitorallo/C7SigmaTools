@@ -1,0 +1,13 @@
+// Title: Google Workspace Application Access Level Modified
+// Author: Bryan Lim
+// Date: 2024-01-12
+// Level: medium
+// Description: Detects when an access level is changed for a Google workspace application.
+// An access level is part of BeyondCorp Enterprise which is Google Workspace's way of enforcing Zero Trust model.
+// An adversary would be able to remove access levels to gain easier access to Google workspace resources.
+// This table contains logs related to Google Cloud Platform (GCP) activity, including Google Workspace admin logs. To have this table present in Microsoft Sentinel, you need to ensure that GCP logs are being ingested into Sentinel and that the necessary connectors or data connectors are set up to collect and parse the logs.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1098.003
+// ================================================================== 
+
+GCPActivity
+| where eventName =~ "CHANGE_APPLICATION_SETTING" and eventService =~ "admin.googleapis.com" and setting_name startswith "ContextAwareAccess"

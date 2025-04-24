@@ -1,0 +1,10 @@
+// Title: Add Windows Capability Via PowerShell Script
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-22
+// Level: medium
+// Description: Detects usage of the "Add-WindowsCapability" cmdlet to add Windows capabilities. Notable capabilities could be "OpenSSH" and others.The SecurityEvent table in Microsoft Sentinel contains logs related to security events on Windows machines. To ensure that Script Block Logging events are present in this table, ensure that the appropriate data connectors are set up in Sentinel to collect logs from Windows machines with Script Block Logging enabled.
+// Tags: attack.execution
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "-Name OpenSSH." and ScriptBlockText contains "Add-WindowsCapability "

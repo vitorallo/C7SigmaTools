@@ -1,0 +1,10 @@
+// Title: PowerShell PSAttack
+// Author: Sean Metcalf (source), Florian Roth (Nextron Systems)
+// Date: 2017-03-05
+// Level: high
+// Description: Detects the use of PSAttack PowerShell hack toolThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events connector is enabled in Microsoft Sentinel to collect these logs.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "PS ATTACK!!!"

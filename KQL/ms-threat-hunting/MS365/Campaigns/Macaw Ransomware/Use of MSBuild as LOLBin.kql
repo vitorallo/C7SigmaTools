@@ -1,0 +1,6 @@
+// Description: Prior to deploying Macaw ransomware in an organization, the adversary frequently uses MSBuild.exe as a LOLBin to communicate with the C2.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where InitiatingProcessFileName =~ "wmiprvse.exe" 
+| where FileName =~ "msbuild.exe" and ProcessCommandLine has "programdata"

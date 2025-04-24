@@ -1,0 +1,10 @@
+// Title: Google Cloud Re-identifies Sensitive Information
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-15
+// Level: medium
+// Description: Identifies when sensitive information is re-identified in google Cloud.The table name in Microsoft Sentinel for GCP audit logs is GCPAuditLogs. To query this table, ensure that the GCP connector is installed in Sentinel and configured to collect audit logs from the 'gcp.audit' service.
+// Tags: attack.impact, attack.t1565
+// ================================================================== 
+
+GCPAuditLogs
+| where 'gcp.audit.method_name' =~ "projects.content.reidentify"

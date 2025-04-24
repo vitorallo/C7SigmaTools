@@ -1,0 +1,10 @@
+// Title: Shellshock Expression
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-14
+// Level: high
+// Description: Detects shellshock expressions in log filesThis table contains Linux audit logs. To have this table present in Microsoft Sentinel, ensure that the Linux machines are onboarded and configured to send audit logs to Sentinel.
+// Tags: attack.persistence, attack.t1505.003
+// ================================================================== 
+
+LinuxAuditLogs
+| where "(){:;};" or "() {:;};" or "() { :;};" or "() { :; };"

@@ -1,0 +1,7 @@
+// Description: This query helps in determining clickthroughs when email delivered because of detection overrides.
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, UrlClickEvents)
+
+UrlClickEvents 
+| where ThreatTypes has "Phish" 
+| join EmailEvents on NetworkMessageId,  $left.AccountUpn == $right.RecipientEmailAddress 
+| project Timestamp, Url, ActionType, AccountUpn, ReportId, NetworkMessageId, ThreatTypes, IsClickedThrough, DeliveryLocation, OrgLevelAction, UserLevelAction

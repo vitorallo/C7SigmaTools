@@ -1,0 +1,12 @@
+// Title: New AWS Lambda Function URL Configuration Created
+// Author: Ivan Saakov
+// Date: 2024-12-19
+// Level: medium
+// Description: Detects when a user creates a Lambda function URL configuration, which could be used to expose the function to the internet and potentially allow unauthorized access to the function's IAM role for AWS API calls.
+// This could give an adversary access to the privileges associated with the Lambda service role that is attached to that function.
+// The equivalent table in Microsoft Sentinel for AWS CloudTrail logs. Make sure to have the AWS CloudTrail connector enabled in Sentinel to ingest these logs.
+// Tags: attack.initial-access, attack.privilege-escalation
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "CreateFunctionUrlConfig" and eventSource =~ "lambda.amazonaws.com"

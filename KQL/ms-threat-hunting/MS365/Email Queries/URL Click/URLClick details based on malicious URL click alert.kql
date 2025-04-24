@@ -1,0 +1,7 @@
+// Description: In this query, we are looking for Url clicks on emails which are generated the alert-A potentially malicious URL click was detected
+// Required Connectors: MicrosoftThreatProtection (Types: UrlClickEvents, Alertinfo, AlertEvidence)
+
+AlertInfo
+| where Title contains "Potentially malicious" and Timestamp > ago (30d)
+| join kind=inner (AlertEvidence| where EntityType == "MailMessage") on AlertId 
+| join UrlClickEvents on NetworkMessageId

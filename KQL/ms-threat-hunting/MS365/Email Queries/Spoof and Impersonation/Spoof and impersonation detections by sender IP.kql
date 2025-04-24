@@ -1,0 +1,7 @@
+// Description: This query helps reviewing count of spoof and impersonation detections done per sender IP
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents 
+|where Timestamp > ago (30d) and (DetectionMethods contains 'spoof' or DetectionMethods contains "impersonation")  
+| project Timestamp, EmailDirection, SenderFromAddress, AdditionalFields, SenderIPv4 
+| summarize count() by SenderIPv4

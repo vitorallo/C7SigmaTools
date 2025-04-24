@@ -1,0 +1,10 @@
+// Title: Okta User Account Locked Out
+// Author: Austin Songer @austinsonger
+// Date: 2021-09-12
+// Level: medium
+// Description: Detects when an user account is locked out.This table contains Okta sign-in logs. Ensure that the Okta connector is set up in Microsoft Sentinel to collect data from Okta service.
+// Tags: attack.impact, attack.t1531
+// ================================================================== 
+
+OktaSignInLogs
+| where displaymessage =~ "Max sign in attempts exceeded"

@@ -1,0 +1,17 @@
+// Description: This query is looking for regsvr32.exe or rundll32.exe loading DLL images with other extensions than .dll.
+// Joins the data to public network events.
+// References:
+// https://threathunt.blog/running-live-malware-for-threat-hunting-purposes/
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents, DeviceNetworkEvents)
+
+DeviceImageLoadEvents 
+| where Timestamp > ago(30d)
+| where InitiatingProcessFileName has_any ("rundll32.exe","regsvr32.exe")
+| where FileName !endswith ".dll"
+| join (
+DeviceNetworkEvents
+| where Timestamp > ago(30d)
+| where InitiatingProcessFileName has_any ("rundll32.exe","regsvr32.exe")
+| where RemoteIPType == "Public"
+) on InitiatingProcessFileName, InitiatingProcessId, InitiatingProcessCreationTime, InitiatingProcessCommandLine
+| project Timestamp, DeviceName, FileName, FolderPath, SHA1, InitiatingProcessFileName, InitiatingProcessCommandLine, RemoteIP, RemoteUrl, RemotePort, InitiatingProcessParentFileName

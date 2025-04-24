@@ -1,0 +1,10 @@
+// Title: Azure AD Only Single Factor Authentication Required
+// Author: MikeDuddington, '@dudders1'
+// Date: 2022-07-27
+// Level: low
+// Description: Detect when users are authenticating without MFA being required.The equivalent table in Microsoft Sentinel for Azure signin logs. Make sure to have the Azure Activity Log solution enabled in Sentinel to have access to this table.
+// Tags: attack.initial-access, attack.credential-access, attack.t1078.004, attack.t1556.006
+// ================================================================== 
+
+SigninLogs
+| where AuthenticationRequirement =~ "singleFactorAuthentication" and Status =~ "Success"

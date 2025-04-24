@@ -1,0 +1,7 @@
+// Description: In this query, we are looking for Url clicks on emails which get actioned by Zerohour auto purge
+// Required Connectors: MicrosoftThreatProtection (Types: UrlClickEvents, Alertinfo, AlertEvidence)
+
+AlertInfo
+| where Title contains "Email messages containing malicious URL removed after delivery" and Timestamp > ago (7d)
+| join kind=inner (AlertEvidence| where EntityType == "MailMessage") on AlertId 
+| join UrlClickEvents on NetworkMessageId

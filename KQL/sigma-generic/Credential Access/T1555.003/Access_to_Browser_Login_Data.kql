@@ -1,0 +1,13 @@
+// Title: Access to Browser Login Data
+// Author: frack113
+// Date: 2022-01-30
+// Level: medium
+// Description: Adversaries may acquire credentials from web browsers by reading files specific to the target browser.
+// Web browsers commonly save credentials such as website usernames and passwords so that they do not need to be entered manually in the future.
+// Web browsers typically store the credentials in an encrypted format within a credential store.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows security events are being collected and ingested into Sentinel for this table to be available.
+// Tags: attack.credential-access, attack.t1555.003
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Copy-Item" and ScriptBlockText contains "-Destination") and (ScriptBlockText contains "\\Opera Software\\Opera Stable\\Login Data" or ScriptBlockText contains "\\Mozilla\\Firefox\\Profiles" or ScriptBlockText contains "\\Microsoft\\Edge\\User Data\\Default" or ScriptBlockText contains "\\Google\\Chrome\\User Data\\Default\\Login Data" or ScriptBlockText contains "\\Google\\Chrome\\User Data\\Default\\Login Data For Account")

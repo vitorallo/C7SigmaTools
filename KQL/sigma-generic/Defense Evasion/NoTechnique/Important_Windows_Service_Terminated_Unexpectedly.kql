@@ -1,0 +1,10 @@
+// Title: Important Windows Service Terminated Unexpectedly
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-04-14
+// Level: high
+// Description: Detects important or interesting Windows services that got terminated unexpectedly.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events are being collected and ingested into Sentinel for this table to be available.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and (param1 contains "Message Queuing" or (Binary contains "4d0053004d005100" or Binary contains "6d0073006d007100"))

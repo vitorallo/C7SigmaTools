@@ -1,0 +1,10 @@
+// Title: MITRE BZAR Indicators for Persistence
+// Author: @neu5ron, SOC Prime
+// Date: 2020-03-19
+// Level: medium
+// Description: Windows DCE-RPC functions which indicate a persistence techniques on the remote system. All credit for the Zeek mapping of the suspicious endpoint/operation field goes to MITRE.This table corresponds to Zeek logs related to DCE_RPC service. To have this table present in Microsoft Sentinel, you need to ensure that Zeek logs are being collected and ingested into Sentinel.
+// Tags: attack.persistence, attack.t1547.004
+// ================================================================== 
+
+ZeekDCE_RPC
+| where (endpoint =~ "spoolss" and operation =~ "RpcAddMonitor") or (endpoint =~ "spoolss" and operation =~ "RpcAddPrintProcessor") or (endpoint =~ "IRemoteWinspool" and operation =~ "RpcAsyncAddMonitor") or (endpoint =~ "IRemoteWinspool" and operation =~ "RpcAsyncAddPrintProcessor") or (endpoint =~ "ISecLogon" and operation =~ "SeclCreateProcessWithLogonW") or (endpoint =~ "ISecLogon" and operation =~ "SeclCreateProcessWithLogonExW")

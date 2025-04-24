@@ -1,0 +1,6 @@
+// Description: This query helps in reviewing top policies for admin overrides (Allow/Block)
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents  
+| where Timestamp > ago(30d) and OrgLevelPolicy!="" and OrgLevelAction == "Allow"  //"Block"
+| summarize count() by OrgLevelPolicy

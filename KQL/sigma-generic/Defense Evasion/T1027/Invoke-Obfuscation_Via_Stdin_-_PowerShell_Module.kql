@@ -1,0 +1,10 @@
+// Title: Invoke-Obfuscation Via Stdin - PowerShell Module
+// Author: Nikita Nazarov, oscd.community
+// Date: 2020-10-12
+// Level: high
+// Description: Detects Obfuscated Powershell via Stdin in ScriptsThis table contains security event logs from Windows machines. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to query this table.
+// Tags: attack.defense-evasion, attack.t1027, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where Payload matches regex "(?i)(set).*&&\\s?set.*(environment|invoke|\\$?\\{?input).*&&.*""

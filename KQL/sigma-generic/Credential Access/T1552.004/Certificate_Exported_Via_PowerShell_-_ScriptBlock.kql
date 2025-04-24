@@ -1,0 +1,10 @@
+// Title: Certificate Exported Via PowerShell - ScriptBlock
+// Author: Florian Roth (Nextron Systems)
+// Date: 2021-04-23
+// Level: medium
+// Description: Detects calls to cmdlets inside of PowerShell scripts that are used to export certificates from the local certificate store. Threat actors were seen abusing this to steal private keys from compromised machines.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.credential-access, attack.t1552.004
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Export-PfxCertificate" or ScriptBlockText contains "Export-Certificate") and (not(ScriptBlockText contains "CmdletsToExport = @("))

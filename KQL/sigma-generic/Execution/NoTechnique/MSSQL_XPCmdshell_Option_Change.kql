@@ -1,0 +1,11 @@
+// Title: MSSQL XPCmdshell Option Change
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-07-12
+// Level: high
+// Description: Detects when the MSSQL "xp_cmdshell" stored procedure setting is changed.
+// This table contains Windows event logs, which can be queried for application-related events. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.execution
+// ================================================================== 
+
+WindowsEvent
+| where Data contains "xp_cmdshell" and Provider_Name contains "MSSQL"

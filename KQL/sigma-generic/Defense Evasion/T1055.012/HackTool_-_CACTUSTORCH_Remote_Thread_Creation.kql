@@ -1,0 +1,10 @@
+// Title: HackTool - CACTUSTORCH Remote Thread Creation
+// Author: @SBousseaden (detection), Thomas Patzke (rule)
+// Date: 2019-02-01
+// Level: high
+// Description: Detects remote thread creation from CACTUSTORCH as described in references.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for events related to creating remote threads, you can filter on the EventID field and other relevant fields.
+// Tags: attack.defense-evasion, attack.execution, attack.t1055.012, attack.t1059.005, attack.t1059.007, attack.t1218.005
+// ================================================================== 
+
+SecurityEvent
+| where (InitiatingProcessFolderPath endswith "\\System32\\cscript.exe" or InitiatingProcessFolderPath endswith "\\System32\\wscript.exe" or InitiatingProcessFolderPath endswith "\\System32\\mshta.exe" or InitiatingProcessFolderPath endswith "\\winword.exe" or InitiatingProcessFolderPath endswith "\\excel.exe") and isnull(StartModule) and TargetImage contains "\\SysWOW64\\"

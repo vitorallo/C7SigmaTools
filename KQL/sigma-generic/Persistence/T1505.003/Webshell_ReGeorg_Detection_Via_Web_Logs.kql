@@ -1,0 +1,10 @@
+// Title: Webshell ReGeorg Detection Via Web Logs
+// Author: Cian Heasley
+// Date: 2020-08-04
+// Level: high
+// Description: Certain strings in the uri_query field when combined with null referer and null user agent can indicate activity associated with the webshell ReGeorg.This table contains web server logs. Ensure that the necessary connectors are set up to collect web server logs in Microsoft Sentinel.
+// Tags: attack.persistence, attack.t1505.003
+// ================================================================== 
+
+WebBrowserStats
+| where (''cs-uri-query'' contains "cmd=read" or ''cs-uri-query'' contains "connect&target" or ''cs-uri-query'' contains "cmd=connect" or ''cs-uri-query'' contains "cmd=disconnect" or ''cs-uri-query'' contains "cmd=forward") and ('cs-method' =~ "POST" and isnull('cs-referer') and isnull('cs-user-agent'))

@@ -1,0 +1,10 @@
+// Title: Source Code Enumeration Detection by Keyword
+// Author: James Ahearn
+// Date: 2019-06-08
+// Level: medium
+// Description: Detects source code enumeration that use GET requests by keyword searches in URL stringsThe WebBrowserStats table in Microsoft Sentinel contains web server logs. To have this table present, ensure that you have the necessary connectors or data sources configured in Sentinel to collect web server logs.
+// Tags: attack.discovery, attack.t1083
+// ================================================================== 
+
+WebBrowserStats
+| where ".git/"

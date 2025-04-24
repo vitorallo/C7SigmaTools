@@ -1,0 +1,10 @@
+// Title: Service Installation with Suspicious Folder Pattern
+// Author: pH-T (Nextron Systems)
+// Date: 2022-03-18
+// Level: high
+// Description: Detects service installation with suspicious folder patternsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Make sure to have the Windows Security Events connector enabled in Sentinel to collect these logs.
+// Tags: attack.persistence, attack.privilege-escalation, car.2013-09-005, attack.t1543.003
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and (ImagePath matches regex "^[Cc]:\\\\[Pp]rogram[Dd]ata\\\\.{1,9}\\.exe" or ImagePath matches regex "^[Cc]:\\\\.{1,9}\\.exe")

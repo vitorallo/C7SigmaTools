@@ -1,0 +1,14 @@
+// Description: This query provides insights on users who clicked on a suspicious URL
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents, UrlClickEvents)
+
+let UrlClicked = (UrlClickEvents
+| where ActionType == "ClickAllowed" or IsClickedThrough !="0"
+| extend Device_IPv4 = IPAddress
+| project ActionType, Device_IPv4, Url, UrlChain, IPAddress, NetworkMessageId);
+EmailEvents
+| where Timestamp > ago(30d)
+| where isnotempty(ThreatTypes) and EmailDirection == "Inbound"
+| where ThreatTypes has_any ("Malware", "Phish")
+| extend SenderFromAddress_IPv4 = strcat(SenderFromAddress, ", ", SenderIPv4)
+| join kind = inner UrlClicked on NetworkMessageId
+| project Timestamp,NetworkMessageId, Subject, SenderFromAddress_IPv4, RecipientEmailAddress, ThreatTypes, ActionType, Url, UrlChain, Device_IPv4, LatestDeliveryLocation, LatestDeliveryAction, EmailAction, EmailActionPolicy

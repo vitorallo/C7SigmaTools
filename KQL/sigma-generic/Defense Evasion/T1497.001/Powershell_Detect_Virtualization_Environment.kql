@@ -1,0 +1,12 @@
+// Title: Powershell Detect Virtualization Environment
+// Author: frack113, Duc.Le-GTSC
+// Date: 2021-08-03
+// Level: medium
+// Description: Adversaries may employ various system checks to detect and avoid virtualization and analysis environments.
+// This may include changing behaviors based on the results of checks for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox
+// The SecurityEvent table in Microsoft Sentinel contains information about security-related events on Windows machines. To query for Script Block Logging events, you may need to enable Advanced Audit Policy Configuration settings on the Windows machines and ensure that the SecurityEvent table is populated with the necessary data.
+// Tags: attack.defense-evasion, attack.t1497.001
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Get-WmiObject" or ScriptBlockText contains "gwmi") and (ScriptBlockText contains "MSAcpi_ThermalZoneTemperature" or ScriptBlockText contains "Win32_ComputerSystem")

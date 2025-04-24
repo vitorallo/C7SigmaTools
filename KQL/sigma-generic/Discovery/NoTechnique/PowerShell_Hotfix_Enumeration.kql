@@ -1,0 +1,10 @@
+// Title: PowerShell Hotfix Enumeration
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-06-21
+// Level: medium
+// Description: Detects call to "Win32_QuickFixEngineering" in order to enumerate installed hotfixes often used in "enum" scripts by attackersThis table contains Windows security event logs, which may include information about script block logging being enabled. Make sure to have the necessary data connectors set up in Sentinel to collect Windows security event logs.
+// Tags: attack.discovery
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Win32_QuickFixEngineering" and ScriptBlockText contains "HotFixID"

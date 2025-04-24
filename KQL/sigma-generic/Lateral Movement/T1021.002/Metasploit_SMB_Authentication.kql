@@ -1,0 +1,10 @@
+// Title: Metasploit SMB Authentication
+// Author: Chakib Gzenayi (@Chak092), Hosni Mribah
+// Date: 2020-05-06
+// Level: high
+// Description: Alerts on Metasploit host's authentications on the domain.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that the Windows Security events are being collected and forwarded to Sentinel using the Microsoft Monitoring Agent (MMA) or Azure Sentinel agent.
+// Tags: attack.lateral-movement, attack.t1021.002
+// ================================================================== 
+
+SecurityEvent
+| where (AuthenticationPackageName =~ "NTLM" and LogonType == 3 and WorkstationName matches regex "^[A-Za-z0-9]{16}$") or Workstation matches regex "^[A-Za-z0-9]{16}$"

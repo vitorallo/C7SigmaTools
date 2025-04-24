@@ -1,0 +1,38 @@
+// Description: This query identifies when a user clicks a link that opens a browser to navigate to a URL
+// which uses redirection. It then filters out any redirections to URLs in the same DNS namespace
+// as the originating URL. Redirection identification is done based on URL query parameters 
+// outlined in the following article: https://www.bleepingcomputer.com/news/security/snapchat-amex-sites-abused-in-microsoft-365-phishing-attacks/
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceEvents)
+
+DeviceEvents
+| where ActionType == "BrowserLaunchedToOpenUrl"
+| extend ParsedUrl = parse_url(RemoteUrl)
+| extend ParameterKeys = bag_keys(ParsedUrl.['Query Parameters'])
+| mv-apply ParameterKeys to typeof(string) on (
+    where ParameterKeys in~ ('url','redirect','external-link','proxy')
+    | extend ParameterValue = tostring(ParsedUrl.['Query Parameters'].[ParameterKeys])
+    | where ParameterValue startswith "http"
+    | extend RedirectedUrl = url_decode(ParameterValue)
+    | extend ParsedRedirectUrl = parse_url(RedirectedUrl)
+)
+| extend 
+    OriginalDomain = ParsedUrl.Host, 
+    RedirectedDomain = tostring(ParsedRedirectUrl.Host)
+| where 
+    OriginalDomain !~ RedirectedDomain 
+    and OriginalDomain !endswith '.safelinks.protection.outlook.com'
+| extend 
+    oTLD = tostring(split(OriginalDomain, '.')[-1]), 
+    oSLD = tostring(split(OriginalDomain, '.')[-2]),
+    rTLD = tostring(split(RedirectedDomain, '.')[-1]), 
+    rSLD = tostring(split(RedirectedDomain, '.')[-2])
+| extend 
+    OriginalSLD = strcat(oSLD, '.', oTLD), 
+    RedirectedSLD = strcat(rSLD, '.', rTLD)
+| project-reorder 
+    OriginalDomain, 
+    RedirectedDomain, 
+    OriginalSLD, 
+    RedirectedSLD, 
+    RemoteUrl, 
+    RedirectedUrl

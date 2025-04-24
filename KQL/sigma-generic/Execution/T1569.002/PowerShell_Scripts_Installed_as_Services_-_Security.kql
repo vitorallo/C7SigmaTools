@@ -1,0 +1,10 @@
+// Title: PowerShell Scripts Installed as Services - Security
+// Author: oscd.community, Natalia Shornikova
+// Date: 2020-10-06
+// Level: high
+// Description: Detects powershell script installed as a ServiceThis table contains security event logs in Microsoft Sentinel. Make sure to have the necessary connectors and data sources configured to collect Windows security event logs.
+// Tags: attack.execution, attack.t1569.002
+// ================================================================== 
+
+SecurityEvent
+| where ServiceFileName contains "powershell" or ServiceFileName contains "pwsh"

@@ -1,0 +1,10 @@
+// Title: Unsigned Mfdetours.DLL Sideloading
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-08-11
+// Level: high
+// Description: Detects DLL sideloading of unsigned "mfdetours.dll". Executing "mftrace.exe" can be abused to attach to an arbitrary process and force load any DLL named "mfdetours.dll" from the current directory of execution.This table contains information about image loading events on Windows systems. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1574.001, attack.t1574.002
+// ================================================================== 
+
+ImageLoadEvents
+| where FolderPath endswith "\\mfdetours.dll" and (not((FolderPath contains ":\\Program Files (x86)\\Windows Kits\\10\\bin\\" and SignatureStatus =~ "Valid")))

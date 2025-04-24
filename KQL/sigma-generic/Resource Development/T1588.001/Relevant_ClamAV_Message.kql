@@ -1,0 +1,10 @@
+// Title: Relevant ClamAV Message
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-01
+// Level: high
+// Description: Detects relevant ClamAV messagesThis table contains ClamAV audit logs for Linux systems. To have this table present in Microsoft Sentinel, ensure that the ClamAV audit logs are being collected and forwarded to Sentinel for analysis.
+// Tags: attack.resource-development, attack.t1588.001
+// ================================================================== 
+
+ClamAVLinuxAuditLogs
+| where "Trojan*FOUND" or "VirTool*FOUND" or "Webshell*FOUND" or "Rootkit*FOUND" or "Htran*FOUND"

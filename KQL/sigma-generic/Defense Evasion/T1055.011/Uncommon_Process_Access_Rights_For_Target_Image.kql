@@ -1,0 +1,11 @@
+// Title: Uncommon Process Access Rights For Target Image
+// Author: Nasreddine Bencherchali (Nextron Systems), frack113
+// Date: 2024-05-27
+// Level: low
+// Description: Detects process access request to uncommon target images with a "PROCESS_ALL_ACCESS" access mask.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which can be queried for process access events. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.privilege-escalation, attack.t1055.011
+// ================================================================== 
+
+SecurityEvent
+| where GrantedAccess =~ "0x1FFFFF" and (TargetImage endswith "\\calc.exe" or TargetImage endswith "\\calculator.exe" or TargetImage endswith "\\mspaint.exe" or TargetImage endswith "\\notepad.exe" or TargetImage endswith "\\ping.exe" or TargetImage endswith "\\wordpad.exe" or TargetImage endswith "\\write.exe")

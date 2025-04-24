@@ -1,0 +1,12 @@
+// Title: DNS Query Request To OneLaunch Update Service
+// Author: Josh Nickels
+// Date: 2024-02-26
+// Level: low
+// Description: Detects DNS query requests to "update.onelaunch.com". This domain is associated with the OneLaunch adware application.
+// When the OneLaunch application is installed it will attempt to get updates from this domain.
+// The DnsEvents table in Microsoft Sentinel contains DNS query logs. Ensure that the Windows DNS events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.collection, attack.t1056
+// ================================================================== 
+
+DnsEvents
+| where InitiatingProcessFolderPath endswith "\\OneLaunch.exe" and QueryName =~ "update.onelaunch.com"

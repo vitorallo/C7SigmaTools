@@ -1,0 +1,10 @@
+// Title: Sysinternals Tools AppX Versions Execution
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-16
+// Level: low
+// Description: Detects execution of Sysinternals tools via an AppX package. Attackers could install the Sysinternals Suite to get access to tools such as psexec and procdump to avoid detection based on System pathsThe AppLockerEvents table in Microsoft Sentinel contains information related to the AppLocker service on Windows systems. To query this table, ensure that the AppLocker component is enabled on the Windows machines and the necessary logs are being collected and sent to Sentinel.
+// Tags: attack.defense-evasion, attack.execution
+// ================================================================== 
+
+AppLockerEvents
+| where ImageName in~ ("procdump.exe", "psloglist.exe", "psexec.exe", "livekd.exe", "ADExplorer.exe")

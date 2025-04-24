@@ -1,0 +1,10 @@
+// Title: Detected Windows Software Discovery - PowerShell
+// Author: Nikita Nazarov, oscd.community
+// Date: 2020-10-16
+// Level: medium
+// Description: Adversaries may attempt to enumerate software for a variety of reasons, such as figuring out what security measures are present or if the compromised system has a version of software that is vulnerable.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, including PowerShell script block logging events. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.discovery, attack.t1518
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "get-itemProperty" and ScriptBlockText contains "\\software\\" and ScriptBlockText contains "select-object" and ScriptBlockText contains "format-table"

@@ -1,0 +1,10 @@
+// Title: AWS Snapshot Backup Exfiltration
+// Author: Darin Smith
+// Date: 2021-05-17
+// Level: medium
+// Description: Detects the modification of an EC2 snapshot's permissions to enable access from another accountThe CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To have this table present in Sentinel, you need to ensure that the AWS connector is properly configured and collecting CloudTrail logs.
+// Tags: attack.exfiltration, attack.t1537
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "ModifySnapshotAttribute" and eventSource =~ "ec2.amazonaws.com"

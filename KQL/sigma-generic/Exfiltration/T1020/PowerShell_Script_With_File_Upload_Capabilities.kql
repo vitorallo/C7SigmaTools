@@ -1,0 +1,10 @@
+// Title: PowerShell Script With File Upload Capabilities
+// Author: frack113
+// Date: 2022-01-07
+// Level: low
+// Description: Detects PowerShell scripts leveraging the "Invoke-WebRequest" cmdlet to send data via either "PUT" or "POST" method.This table contains security event logs from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to collect these logs.
+// Tags: attack.exfiltration, attack.t1020
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Invoke-WebRequest" or ScriptBlockText contains "iwr ") and (ScriptBlockText contains "-Method Put" or ScriptBlockText contains "-Method Post")

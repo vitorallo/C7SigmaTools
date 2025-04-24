@@ -1,0 +1,10 @@
+// Title: Buffer Overflow Attempts
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-01
+// Level: high
+// Description: Detects buffer overflow attempts in Unix system log filesThis table contains Linux audit logs in Microsoft Sentinel. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the Linux audit logs are being collected and forwarded to Sentinel.
+// Tags: attack.t1068, attack.privilege-escalation
+// ================================================================== 
+
+LinuxAuditLogs
+| where "attempt to execute code on stack by" or "0bin0sh1" or "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" or "stack smashing detected"

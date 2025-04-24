@@ -1,0 +1,10 @@
+// Title: Powershell Suspicious Win32_PnPEntity
+// Author: frack113
+// Date: 2021-08-23
+// Level: low
+// Description: Adversaries may attempt to gather information about attached peripheral devices and components connected to a computer system.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for Script Block Logging events, you can filter on the EventID associated with Script Block Logging (e.g., EventID 4104). Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.discovery, attack.t1120
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Win32_PnPEntity"

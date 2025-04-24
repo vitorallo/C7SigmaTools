@@ -1,0 +1,10 @@
+// Title: Azure Unusual Authentication Interruption
+// Author: Austin Songer @austinsonger
+// Date: 2021-11-26
+// Level: medium
+// Description: Detects when there is a interruption in the authentication process.The equivalent table in Microsoft Sentinel for Azure signin logs. Make sure to have the Azure Activity Log solution enabled in Sentinel to have access to this table.
+// Tags: attack.initial-access, attack.t1078
+// ================================================================== 
+
+SigninLogs
+| where (ResultDescription =~ "Device authentication is required" and ResultType == 50097) or (ResultDescription =~ "DeviceAuthenticationFailed" and ResultType == 50155) or (ResultDescription =~ "ExternalSecurityChallenge - External security challenge was not satisfied" and ResultType == 50158)

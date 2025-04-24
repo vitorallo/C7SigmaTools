@@ -1,0 +1,13 @@
+// Description: This query displays the configuration auditing for 'Safe Attachments for SharePoint, OneDrive, and Microsoft Teams' and 'Safe Documents' in Microsoft Defender for Office 365.
+// Required Connectors: MicrosoftThreatProtection (Types: CloudAppEvents)
+
+CloudAppEvents
+| where Application == "Microsoft Exchange Online"
+| where ActionType == "Set-AtpPolicyForO365"
+| mv-expand ActivityObjects
+| extend Name = tostring(ActivityObjects.Name)
+| extend Value = tostring(ActivityObjects.Value)
+| where Name in ("EnableATPForSPOTeamsODB", "EnableSafeDocs", "AllowSafeDocsOpen")
+| extend packed = pack(Name, Value)
+| summarize PackedInfo = make_bag(packed), ActionType = any(ActionType) by Timestamp, AccountDisplayName
+| evaluate bag_unpack(PackedInfo)

@@ -1,0 +1,10 @@
+// Title: Apache Segmentation Fault
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-02-28
+// Level: high
+// Description: Detects a segmentation fault error message caused by a crashing apache worker processThe ApacheAccess table in Microsoft Sentinel contains access logs for the Apache service. To query the error.log file, you may need to ensure that the Apache service is sending its error logs to a location that is being ingested by Sentinel. You may need to configure custom log collection or use a third-party connector to collect the error logs.
+// Tags: attack.impact, attack.t1499.004
+// ================================================================== 
+
+ApacheAccess
+| where "exit signal Segmentation Fault"

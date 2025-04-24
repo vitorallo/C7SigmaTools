@@ -1,0 +1,10 @@
+// Title: Potential AD User Enumeration From Non-Machine Account
+// Author: Maxime Thiebaut (@0xThiebaut)
+// Date: 2020-03-30
+// Level: medium
+// Description: Detects read access to a domain user from a non-machine accountThe 'AuditLogs' table in Microsoft Sentinel contains audit logs for various activities in the environment. To query for the mentioned requirement, you may need to filter on specific columns like 'OperationName' or 'AdditionalInfo' to find audit logs related to the 'Read all properties' permission on user objects for the 'Everyone' principal.
+// Tags: attack.discovery, attack.t1087.002
+// ================================================================== 
+
+AuditLogs
+| where (AccessMask =~ "*1*" or AccessMask =~ "*3*" or AccessMask =~ "*4*" or AccessMask =~ "*7*" or AccessMask =~ "*9*" or AccessMask =~ "*B*" or AccessMask =~ "*D*" or AccessMask =~ "*F*") and (not((SubjectUserName endswith "$" or SubjectUserName startswith "MSOL_")))

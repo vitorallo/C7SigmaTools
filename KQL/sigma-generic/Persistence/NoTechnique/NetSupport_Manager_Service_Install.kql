@@ -1,0 +1,10 @@
+// Title: NetSupport Manager Service Install
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-10-31
+// Level: medium
+// Description: Detects NetSupport Manager service installation on the target system.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To have this table present, ensure that you have the necessary connectors or data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.persistence
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and (ImagePath contains "\\NetSupport Manager\\client32.exe" or ServiceName =~ "Client32")

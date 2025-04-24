@@ -1,0 +1,10 @@
+// Title: Privileged Account Creation
+// Author: Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H', Tim Shelton
+// Date: 2022-08-11
+// Level: medium
+// Description: Detects when a new admin is created.This table contains Azure audit logs. Make sure to have the Azure Monitor solution installed in Microsoft Sentinel to access this table.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1078.004
+// ================================================================== 
+
+AzureActivity
+| where Status =~ "Success" and (''properties.message'' contains "Add user" and ''properties.message'' contains "Add member to role")

@@ -1,0 +1,10 @@
+// Title: WebDav Put Request
+// Author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+// Date: 2020-05-02
+// Level: low
+// Description: A General detection for WebDav user-agent being used to PUT files on a WebDav network share. This could be an indicator of exfiltration.This table contains HTTP request data captured by Zeek. To query this table in Microsoft Sentinel, ensure that Zeek logs are being collected and ingested into Sentinel.
+// Tags: attack.exfiltration, attack.t1048.003
+// ================================================================== 
+
+ZeekHttpRequests
+| where (method =~ "PUT" and user_agent contains "WebDAV") and (not((ipv4_is_in_range(id.resp_h, "10.0.0.0/8") or ipv4_is_in_range(id.resp_h, "127.0.0.0/8") or ipv4_is_in_range(id.resp_h, "172.16.0.0/12") or ipv4_is_in_range(id.resp_h, "192.168.0.0/16") or ipv4_is_in_range(id.resp_h, "169.254.0.0/16"))))

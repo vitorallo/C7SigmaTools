@@ -1,0 +1,9 @@
+// Description: 'Clients with a high reverse DNS count could be carrying out reconnaissance or discovery activity.'
+// Required Connectors: DNS (Types: DnsEvents)
+
+let threshold = 10;
+DnsEvents
+| where Name has "in-addr.arpa" 
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), NameCount = dcount(Name), Names = make_set(Name,100), EventCount = count() by ClientIP
+| where NameCount > threshold
+| extend IP_0_Address = ClientIP

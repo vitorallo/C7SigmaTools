@@ -1,0 +1,8 @@
+// Description: This query helps reviewing sender IPs sending malicious email of type Malware or Phish
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents 
+| where Timestamp > ago(30d) 
+| where ThreatTypes has "Phish" or ThreatTypes has "Malware"
+| summarize count() by SenderIPv4 //SenderIPv6
+| sort by count_

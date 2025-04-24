@@ -1,0 +1,10 @@
+// Title: App Granted Privileged Delegated Or App Permissions
+// Author: Bailey Bercik '@baileybercik', Mark Morowczynski '@markmorow'
+// Date: 2022-07-28
+// Level: high
+// Description: Detects when administrator grants either application permissions (app roles) or highly privileged delegated permissionsThe AzureActivity table in Microsoft Sentinel contains Azure audit logs. Make sure to have the Azure Monitor solution installed in Sentinel to have access to this table.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1098.003
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' =~ "Add app role assignment to service principal"

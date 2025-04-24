@@ -1,0 +1,6 @@
+// Description: Bazacall uses malicious Excel files to execute payloads on affected devices.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceFileEvents)
+
+DeviceFileEvents
+| where FileOriginUrl has "/cancel.php" and FileOriginReferrerUrl has "/account"
+  or FileOriginUrl has "/download.php" and FileOriginReferrerUrl has "/case"

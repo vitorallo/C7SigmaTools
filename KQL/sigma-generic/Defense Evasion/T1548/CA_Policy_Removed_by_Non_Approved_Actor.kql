@@ -1,0 +1,10 @@
+// Title: CA Policy Removed by Non Approved Actor
+// Author: Corissa Koopmans, '@corissalea'
+// Date: 2022-07-19
+// Level: medium
+// Description: Monitor and alert on conditional access changes where non approved actor removed CA Policy.This table contains Azure activity logs, which includes audit logs. Ensure that Azure Diagnostics logs are enabled for the Azure service in question to populate this table.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1548, attack.t1556
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' =~ "Delete conditional access policy"

@@ -1,0 +1,10 @@
+// Title: RottenPotato Like Attack Pattern
+// Author: @SBousseaden, Florian Roth
+// Date: 2019-11-15
+// Level: high
+// Description: Detects logon events that have characteristics of events generated during an attack with RottenPotato and the likeThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.privilege-escalation, attack.credential-access, attack.t1557.001
+// ================================================================== 
+
+SecurityEvent
+| where (IpAddress in~ ("127.0.0.1", "::1")) and LogonType == 3 and TargetUserName =~ "ANONYMOUS LOGON" and WorkstationName =~ "-"

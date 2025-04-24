@@ -1,0 +1,10 @@
+// Title: Potential AMSI Bypass Script Using NULL Bits
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-04
+// Level: medium
+// Description: Detects usage of special strings/null bits in order to potentially bypass AMSI functionalitiesThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events connector is enabled in Sentinel to collect these logs.
+// Tags: attack.defense-evasion, attack.t1562.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "if(0){{{0}}}' -f $(0 -as [char]) +" or ScriptBlockText contains "#<NULL>"

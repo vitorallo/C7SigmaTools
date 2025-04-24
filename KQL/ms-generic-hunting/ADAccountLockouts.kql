@@ -1,0 +1,7 @@
+// Description: Detects Active Directory account lockouts
+// Required Connectors: SecurityEvents (Types: SecurityEvent)
+
+SecurityEvent
+| where EventID == 4740
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), LockoutsCount = count() by Activity, Account, TargetSid, TargetDomainName, SourceComputerId, SourceDomainController = Computer
+| extend timestamp = StartTime, AccountCustomEntity = Account, HostCustomEntity = TargetDomainName

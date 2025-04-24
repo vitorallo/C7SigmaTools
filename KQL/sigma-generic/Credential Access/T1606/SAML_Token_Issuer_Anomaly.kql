@@ -1,0 +1,10 @@
+// Title: SAML Token Issuer Anomaly
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-03
+// Level: high
+// Description: Indicates the SAML token issuer for the associated SAML token is potentially compromised. The claims included in the token are unusual or match known attacker patternsThis table contains Azure diagnostic logs, which includes logs from various Azure services. To query logs related to risk detection, you may need to filter on the 'ServiceName' field with a value of 'riskdetection'. Ensure that Azure Diagnostics logs are being collected and ingested into Microsoft Sentinel.
+// Tags: attack.t1606, attack.credential-access
+// ================================================================== 
+
+AzureDiagnostics
+| where riskEventType =~ "tokenIssuerAnomaly"

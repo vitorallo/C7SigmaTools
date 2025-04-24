@@ -1,0 +1,13 @@
+// Title: AWS EFS Fileshare Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-15
+// Level: medium
+// Description: Detects when a EFS Fileshare is modified or deleted.
+// You can't delete a file system that is in use.
+// If the file system has any mount targets, the adversary must first delete them, so deletion of a mount will occur before deletion of a fileshare.
+// The equivalent table in Microsoft Sentinel for AWS CloudTrail logs. Make sure to have the AWS CloudTrail connector configured in Sentinel to collect and store these logs.
+// Tags: attack.impact
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "DeleteFileSystem" and eventSource =~ "elasticfilesystem.amazonaws.com"

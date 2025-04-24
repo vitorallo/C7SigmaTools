@@ -1,0 +1,7 @@
+// Description: This query helps getting GeoIP information of emails SenderIPv4 addresses.
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents
+| where geo_info_from_ip_address(SenderIPv4) != ""
+| extend GeoIPInfo = geo_info_from_ip_address(SenderIPv4)
+| extend country = tostring(parse_json(GeoIPInfo).country)

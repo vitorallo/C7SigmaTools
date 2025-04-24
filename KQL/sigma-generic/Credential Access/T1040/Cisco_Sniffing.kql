@@ -1,0 +1,10 @@
+// Title: Cisco Sniffing
+// Author: Austin Clark
+// Date: 2019-08-11
+// Level: medium
+// Description: Show when a monitor or a span/rspan is setup or modifiedThis table contains logs related to Cisco AAA service. Ensure that the necessary connectors or data sources are configured in Sentinel to collect logs from Cisco devices with AAA service enabled.
+// Tags: attack.credential-access, attack.discovery, attack.t1040
+// ================================================================== 
+
+Cisco_AAA_Logs
+| where "monitor capture point" or "set span" or "set rspan"

@@ -1,0 +1,10 @@
+// Title: Ruby on Rails Framework Exceptions
+// Author: Thomas Patzke
+// Date: 2017-08-06
+// Level: medium
+// Description: Detects suspicious Ruby on Rails exceptions that could indicate exploitation attemptsThis table contains Azure resource logs, including application logs. To query logs related to Ruby on Rails applications, you may need to enable Azure Diagnostics for the specific Azure resources hosting the Ruby on Rails application.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+AzureDiagnostics
+| where "ActionController::InvalidAuthenticityToken" or "ActionController::InvalidCrossOriginRequest" or "ActionController::MethodNotAllowed" or "ActionController::BadRequest" or "ActionController::ParameterMissing"

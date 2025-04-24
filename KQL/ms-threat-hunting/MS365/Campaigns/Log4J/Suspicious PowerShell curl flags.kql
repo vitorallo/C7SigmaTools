@@ -1,0 +1,6 @@
+// Description: Microsoft has observed attackers who have gained entry to an environment via the Log4J vulnerability utilizing uncommon PowerShell flags to communicate to command-and-control infrastructure.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where FileName =~ "powershell.exe"
+| where ProcessCommandLine has_all("-met", "POST", "-Body")

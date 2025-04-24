@@ -1,0 +1,14 @@
+// Description: Search for the files that are using a compromised certificate associated with the Nobelium campaign.
+// You can remove the comments to:
+// 1. get the list of devices where there is at least one file signed with the certificate
+// 2. get the list of files signed with the certificate
+// 3. get the list of files signed with the certificate group by Devices
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceFileCertificateInfo, DeviceFileEvents)
+
+DeviceFileCertificateInfo
+| where Signer == 'Solarwinds Worldwide, LLC' and SignerHash == '47d92d49e6f7f296260da1af355f941eb25360c4'
+| join DeviceFileEvents on SHA1
+| distinct DeviceName, FileName, FolderPath, SHA1, SHA256, IsTrusted, IsRootSignerMicrosoft, SignerHash
+//| distinct DeviceName
+//| distinct FileName
+//| summarize mylist = make_list(FileName) by DeviceName

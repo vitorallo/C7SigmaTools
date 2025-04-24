@@ -1,0 +1,10 @@
+// Title: PSExec and WMI Process Creations Block
+// Author: Bhabesh Raj
+// Date: 2020-07-14
+// Level: high
+// Description: Detects blocking of process creations originating from PSExec and WMI commandsThis table contains security-related events from Windows machines. To have this table present in Microsoft Sentinel, ensure that you have the necessary data connectors set up to collect security event logs from Windows machines.
+// Tags: attack.execution, attack.lateral-movement, attack.t1047, attack.t1569.002
+// ================================================================== 
+
+SecurityEvent
+| where InitiatingProcessFolderPath endswith "\\wmiprvse.exe" or InitiatingProcessFolderPath endswith "\\psexesvc.exe"

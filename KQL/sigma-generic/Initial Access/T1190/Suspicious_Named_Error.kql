@@ -1,0 +1,10 @@
+// Title: Suspicious Named Error
+// Author: Florian Roth (Nextron Systems)
+// Date: 2018-02-20
+// Level: high
+// Description: Detects suspicious DNS error messages that indicate a fatal or suspicious error that could be caused by exploiting attemptsThe equivalent table in Microsoft Sentinel for syslog data. Ensure that the Linux machines are onboarded and sending syslog data to Sentinel for this table to be populated.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+Syslog
+| where " dropping source port zero packet from " or " denied AXFR from " or " exiting (due to fatal error)"

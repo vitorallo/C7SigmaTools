@@ -1,0 +1,10 @@
+// Title: Hidden Local User Creation
+// Author: Christian Burkard (Nextron Systems)
+// Date: 2021-05-03
+// Level: high
+// Description: Detects the creation of a local hidden user account which should not happen for event ID 4720.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the Microsoft Monitoring Agent (MMA) installed on your Windows machines and properly configured to send security events to your Sentinel workspace.
+// Tags: attack.persistence, attack.t1136.001
+// ================================================================== 
+
+SecurityEvent
+| where TargetUserName endswith "$" and (not(TargetUserName =~ "HomeGroupUser$"))

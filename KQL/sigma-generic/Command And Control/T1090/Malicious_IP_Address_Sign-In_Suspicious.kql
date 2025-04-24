@@ -1,0 +1,10 @@
+// Title: Malicious IP Address Sign-In Suspicious
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-07
+// Level: high
+// Description: Indicates sign-in from a malicious IP address known to be malicious at time of sign-in.The AzureActivity table in Microsoft Sentinel contains logs related to Azure activity, including risk detection events. To have this table present, ensure that Azure Activity logs are being collected and sent to Sentinel.
+// Tags: attack.t1090, attack.command-and-control
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "suspiciousIPAddress"

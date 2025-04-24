@@ -1,0 +1,10 @@
+// Title: Okta FastPass Phishing Detection
+// Author: Austin Songer @austinsonger
+// Date: 2023-05-07
+// Level: high
+// Description: Detects when Okta FastPass prevents a known phishing site.This table contains Okta sign-in logs. To have this table present in Microsoft Sentinel, you need to ensure that Okta logs are ingested into Sentinel and mapped to the OktaSignInLogs table.
+// Tags: attack.initial-access, attack.t1566
+// ================================================================== 
+
+OktaSignInLogs
+| where eventtype =~ "user.authentication.auth_via_mfa" and 'outcome.reason' =~ "FastPass declined phishing attempt" and 'outcome.result' =~ "FAILURE"

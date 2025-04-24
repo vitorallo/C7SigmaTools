@@ -1,0 +1,10 @@
+// Title: Recon Activity via SASec
+// Author: Sagie Dulce, Dekel Paz
+// Date: 2022-01-01
+// Level: high
+// Description: Detects remote RPC calls to read information about scheduled tasks via SASecThis table contains logs related to the RPC Firewall product. To have this table present in Microsoft Sentinel, ensure that the RPC Firewall product is properly configured and sending logs to Sentinel.
+// Tags: attack.discovery
+// ================================================================== 
+
+rpc_firewall_logs
+| where (EventLog =~ "RPCFW" and InterfaceUuid =~ "378e52b0-c0a9-11cf-822d-00aa0051e40f") and (not((OpNum in~ ("0", "1"))))

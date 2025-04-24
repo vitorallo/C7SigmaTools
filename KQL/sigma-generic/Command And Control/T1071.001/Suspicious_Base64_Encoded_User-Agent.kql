@@ -1,0 +1,10 @@
+// Title: Suspicious Base64 Encoded User-Agent
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-05-04
+// Level: medium
+// Description: Detects suspicious encoded User-Agent strings, as seen used by some malware.This table contains proxy logs. To have this table present in Microsoft Sentinel, ensure that the appropriate data connectors are set up to collect proxy logs.
+// Tags: attack.command-and-control, attack.t1071.001
+// ================================================================== 
+
+ProxyLog
+| where ''c-useragent'' startswith "Q2hyb21l" or ''c-useragent'' startswith "QXBwbGVXZWJLaX" or ''c-useragent'' startswith "RGFsdmlr" or ''c-useragent'' startswith "TW96aWxsY"

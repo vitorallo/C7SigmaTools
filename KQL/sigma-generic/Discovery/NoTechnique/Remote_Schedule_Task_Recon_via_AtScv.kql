@@ -1,0 +1,10 @@
+// Title: Remote Schedule Task Recon via AtScv
+// Author: Sagie Dulce, Dekel Paz
+// Date: 2022-01-01
+// Level: high
+// Description: Detects remote RPC calls to read information about scheduled tasks via AtScvThis table contains logs related to the RPC Firewall product. To have this table present in Microsoft Sentinel, ensure that the RPC Firewall logs are being collected and ingested into Sentinel.
+// Tags: attack.discovery
+// ================================================================== 
+
+rpc_firewall_logs
+| where (EventLog =~ "RPCFW" and InterfaceUuid =~ "1ff70682-0a51-30e8-076d-740be8cee98b") and (not((OpNum in~ ("0", "1"))))

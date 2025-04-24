@@ -1,0 +1,12 @@
+// Title: Potential Privilege Escalation via Local Kerberos Relay over LDAP
+// Author: Elastic, @SBousseaden
+// Date: 2022-04-27
+// Level: high
+// Description: Detects a suspicious local successful logon event where the Logon Package is Kerberos, the remote address is set to localhost, and the target user SID is the built-in local Administrator account.
+// This may indicate an attempt to leverage a Kerberos relay attack variant that can be used to elevate privilege locally from a domain joined limited user to local System privileges.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the necessary data connectors set up to collect security events from Windows machines.
+// Tags: attack.privilege-escalation, attack.credential-access, attack.t1548
+// ================================================================== 
+
+SecurityEvent
+| where (AuthenticationPackageName =~ "Kerberos" and IpAddress =~ "127.0.0.1" and LogonType == 3 and TargetUserSid endswith "-500" and TargetUserSid startswith "S-1-5-21-") and (not(IpPort =~ "0"))

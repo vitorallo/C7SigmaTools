@@ -1,0 +1,6 @@
+// Description: Microsoft has observed attackers who have gained entry to an environment via the Log4J vulnerability utilizing identifiable strings in PowerShell commands.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where FileName =~ "powershell.exe"
+| where ProcessCommandLine has "VMBlastSG"

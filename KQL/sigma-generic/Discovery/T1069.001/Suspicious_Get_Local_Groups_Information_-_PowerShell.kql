@@ -1,0 +1,13 @@
+// Title: Suspicious Get Local Groups Information - PowerShell
+// Author: frack113
+// Date: 2021-12-12
+// Level: low
+// Description: Adversaries may attempt to find local system groups and permission settings.
+// The knowledge of local system permission groups can help adversaries determine which groups exist and which users belong to a particular group.
+// Adversaries may use this information to determine which users have elevated permissions, such as the users found within the local administrators group.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for Script Block Logging events, you can filter on the EventID associated with Script Block Logging events (e.g., EventID 4104). Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.discovery, attack.t1069.001
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "get-localgroup" or ScriptBlockText contains "Get-LocalGroupMember") or (ScriptBlockText contains "Get-WMIObject" and ScriptBlockText contains "Win32_Group")

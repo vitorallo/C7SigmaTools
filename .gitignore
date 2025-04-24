@@ -1,2 +1,6 @@
 .env
 .DS_Store
+plan.txt
+# local sqlite files
+*.sqlite
+*.db

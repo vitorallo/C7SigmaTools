@@ -1,0 +1,25 @@
+// Description: 'This hunting query identifies execution of Impacket tool. Impacket is a popular tool used by attackers for remote service execution,     Kerberos   manipulation and Windows credential dumping.'
+// Required Connectors: SecurityEvents (Types: SecurityEvent); WindowsSecurityEvents (Types: SecurityEvent)
+
+(union isfuzzy=true
+(SecurityEvent
+| where EventID == '5145'
+| where RelativeTargetName has 'SYSTEM32' and RelativeTargetName endswith @".tmp"
+| where ShareName has "\\\\*\\ADMIN$"
+),
+(WindowsEvent
+| where EventID == '5145' 
+| extend RelativeTargetName= tostring(EventData.RelativeTargetName)
+| extend ShareName= tostring(EventData.ShareName)
+| where RelativeTargetName has 'SYSTEM32' and RelativeTargetName endswith @".tmp"
+| where ShareName has "\\\\*\\ADMIN$"
+| extend Account =  strcat(tostring(EventData.SubjectDomainName),"\\", tostring(EventData.SubjectUserName))
+)
+)
+| extend timestamp = TimeGenerated 
+| extend NTDomain = split(Account, '\\', 0)[0], UserName = split(Account, '\\', 1)[0]
+| extend HostName = split(Computer, '.', 0)[0], DnsDomain = strcat_array(array_slice(split(Computer, '.'), 1, -1), '.')
+| extend Account_0_Name = UserName
+| extend Account_0_NTDomain = NTDomain
+| extend Host_0_HostName = HostName
+| extend Host_0_DnsDomain = DnsDomain

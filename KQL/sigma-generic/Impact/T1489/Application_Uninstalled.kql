@@ -1,0 +1,10 @@
+// Title: Application Uninstalled
+// Author: frack113
+// Date: 2022-01-28
+// Level: low
+// Description: An application has been removed. Check if it is critical.The WindowsEvent table in Microsoft Sentinel contains logs related to Windows events, which includes application logs. Ensure that the necessary data connectors are set up in Sentinel to collect Windows event logs.
+// Tags: attack.impact, attack.t1489
+// ================================================================== 
+
+WindowsEvent
+| where Provider_Name =~ "MsiInstaller"

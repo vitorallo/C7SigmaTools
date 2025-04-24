@@ -1,0 +1,6 @@
+// Description: LemonDuck is an actively updated and robust malware primarily known for its botnet and cryptocurrency mining objectives. First discovered in 2019, LemonDuck has since adopted more sophisticated behavior and escalated its operations in 2021. Today, beyond using resources for its traditional bot and mining activities, LemonDuck steals credentials, removes security controls, spreads via emails, moves laterally, and ultimately drops more tools for human-operated activity.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceNetworkEvents)
+
+DeviceNetworkEvents
+| where InitiatingProcessFileName =~ "powershell.exe"
+| where InitiatingProcessCommandLine has_all("Exponent=","FromBase64String","$url+")

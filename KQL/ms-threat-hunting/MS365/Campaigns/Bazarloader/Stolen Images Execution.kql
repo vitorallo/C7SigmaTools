@@ -1,0 +1,5 @@
+// Description: The "Stolen Images" Bazarloader campaign uses fake copyright infingement contact form emails and malicious files pretending to contain "stolen images" to trick users into downloading the malware.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents
+| where FileName =~ "wscript.exe" and ProcessCommandLine has_all("stolen", "images")

@@ -1,0 +1,10 @@
+// Title: Account Disabled or Blocked for Sign in Attempts
+// Author: Yochana Henderson, '@Yochana-H'
+// Date: 2022-06-17
+// Level: medium
+// Description: Detects when an account is disabled or blocked for sign in but tried to log inThe equivalent table in Microsoft Sentinel for Azure signin logs. Ensure that the Azure Activity Log connector is set up in Sentinel to collect these logs.
+// Tags: attack.initial-access, attack.t1078.004
+// ================================================================== 
+
+SigninLogs
+| where ResultDescription =~ "Failure" and ResultType == 50057

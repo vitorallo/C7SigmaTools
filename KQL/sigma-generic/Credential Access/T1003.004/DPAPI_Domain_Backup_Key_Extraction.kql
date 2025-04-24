@@ -1,0 +1,10 @@
+// Title: DPAPI Domain Backup Key Extraction
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-06-20
+// Level: high
+// Description: Detects tools extracting LSA secret DPAPI domain backup key from Domain ControllersThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Make sure to have the Windows Security Events connector enabled in Sentinel to populate this table.
+// Tags: attack.credential-access, attack.t1003.004
+// ================================================================== 
+
+SecurityEvent
+| where AccessMask =~ "0x2" and RegistryKey contains "BCKUPKEY"

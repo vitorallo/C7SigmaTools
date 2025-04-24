@@ -1,0 +1,10 @@
+// Title: New PowerShell Instance Created
+// Author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+// Date: 2019-09-12
+// Level: informational
+// Description: Detects the execution of PowerShell via the creation of a named pipe starting with PSHostThis table contains Sysmon events, including Named Pipe Events (Event ID 17 and Event ID 18). Make sure to have Sysmon installed and configured to log Named Pipe Events in order to query this table.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SysmonEvent
+| where PipeName startswith "\\PSHost"

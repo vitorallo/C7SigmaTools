@@ -1,0 +1,11 @@
+// Title: New Network Route Added
+// Author: jamesc-grafana
+// Date: 2024-07-11
+// Level: medium
+// Description: Detects the addition of a new network route to a route table in AWS.
+// The equivalent table in Microsoft Sentinel for AWS CloudTrail logs. Ensure that the AWS CloudTrail connector is set up in Microsoft Sentinel to collect and store these logs.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "CreateRoute" and eventSource =~ "ec2.amazonaws.com"

@@ -1,0 +1,10 @@
+// Title: AWS Suspicious SAML Activity
+// Author: Austin Songer
+// Date: 2021-09-22
+// Level: medium
+// Description: Identifies when suspicious SAML activity has occurred in AWS. An adversary could gain backdoor access via SAML.The CloudTrail table in Microsoft Sentinel corresponds to AWS CloudTrail logs. To have this table present in Sentinel, you need to ensure that you have configured AWS CloudTrail to send logs to an Azure Storage Account or Event Hub, and then set up a custom connector in Sentinel to ingest these logs.
+// Tags: attack.initial-access, attack.t1078, attack.lateral-movement, attack.t1548, attack.privilege-escalation, attack.t1550, attack.t1550.001
+// ================================================================== 
+
+CloudTrail
+| where (eventName =~ "UpdateSAMLProvider" and eventSource =~ "iam.amazonaws.com") or (eventName =~ "AssumeRoleWithSAML" and eventSource =~ "sts.amazonaws.com")

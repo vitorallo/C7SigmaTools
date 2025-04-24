@@ -1,0 +1,10 @@
+// Title: OpenCanary - SNMP OID Request
+// Author: Security Onion Solutions
+// Date: 2024-03-08
+// Level: high
+// Description: Detects instances where an SNMP service on an OpenCanary node has had an OID request.This table contains logs related to the Opencanary application. To have this table present in Microsoft Sentinel, ensure that the Opencanary logs are being collected and sent to Sentinel for analysis.
+// Tags: attack.discovery, attack.lateral-movement, attack.t1016, attack.t1021
+// ================================================================== 
+
+OpencanaryLogs
+| where logtype == 13001

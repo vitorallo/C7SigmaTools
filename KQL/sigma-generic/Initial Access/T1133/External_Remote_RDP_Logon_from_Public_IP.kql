@@ -1,0 +1,10 @@
+// Title: External Remote RDP Logon from Public IP
+// Author: Micah Babinski (@micahbabinski), Zach Mathis (@yamatosecurity)
+// Date: 2023-01-19
+// Level: medium
+// Description: Detects successful logon from public IP address via RDP. This can indicate a publicly-exposed RDP port.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Make sure to have the Windows Security Events connector enabled in Sentinel to populate this table.
+// Tags: attack.initial-access, attack.credential-access, attack.t1133, attack.t1078, attack.t1110
+// ================================================================== 
+
+SecurityEvent
+| where LogonType == 10 and (not((IpAddress =~ "-" or (ipv4_is_in_range(IpAddress, "::1/128") or ipv4_is_in_range(IpAddress, "10.0.0.0/8") or ipv4_is_in_range(IpAddress, "127.0.0.0/8") or ipv4_is_in_range(IpAddress, "172.16.0.0/12") or ipv4_is_in_range(IpAddress, "192.168.0.0/16") or ipv4_is_in_range(IpAddress, "169.254.0.0/16") or ipv4_is_in_range(IpAddress, "fc00::/7") or ipv4_is_in_range(IpAddress, "fe80::/10")))))

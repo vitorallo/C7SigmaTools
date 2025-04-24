@@ -1,0 +1,13 @@
+// Title: AWS New Lambda Layer Attached
+// Author: Austin Songer
+// Date: 2021-09-23
+// Level: low
+// Description: Detects when a user attached a Lambda layer to an existing Lambda function.
+// A malicious Lambda layer could execute arbitrary code in the context of the function's IAM role.
+// This would give an adversary access to resources that the function has access to.
+// The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To query this table, ensure that the AWS CloudTrail connector is set up in Sentinel and ingesting logs from the specified AWS account.
+// Tags: attack.privilege-escalation
+// ================================================================== 
+
+CloudTrail
+| where eventName startswith "UpdateFunctionConfiguration" and eventSource =~ "lambda.amazonaws.com" and 'requestParameters.layers' startswith ""

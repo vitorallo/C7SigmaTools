@@ -1,0 +1,10 @@
+// Title: Google Cloud SQL Database Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-10-15
+// Level: medium
+// Description: Detect when a Cloud SQL DB has been modified or deleted.This table contains Google Cloud Platform audit logs. To query this table in Microsoft Sentinel, ensure that you have the necessary connectors and configurations set up to collect GCP audit logs.
+// Tags: attack.impact
+// ================================================================== 
+
+GCPAuditLogs
+| where 'gcp.audit.method_name' in~ ("cloudsql.instances.create", "cloudsql.instances.delete", "cloudsql.users.update", "cloudsql.users.delete")

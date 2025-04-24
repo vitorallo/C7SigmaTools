@@ -1,0 +1,10 @@
+// Title: Remote PowerShell Session (PS Classic)
+// Author: Roberto Rodriguez @Cyb3rWard0g
+// Date: 2019-08-10
+// Level: low
+// Description: Detects remote PowerShell sessionsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Make sure to have the Windows Security Events connector enabled in Sentinel to collect these logs.
+// Tags: attack.execution, attack.t1059.001, attack.lateral-movement, attack.t1021.006
+// ================================================================== 
+
+SecurityEvent
+| where Data contains "HostName=ServerRemoteHost" and Data contains "wsmprovhost.exe"

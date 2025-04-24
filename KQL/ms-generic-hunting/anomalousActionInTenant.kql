@@ -1,0 +1,8 @@
+// Description: 'Shows activities that have never been executed in the tenant, performed by a user with high privileges.'
+// Required Connectors: BehaviorAnalytics (Types: BehaviorAnalytics)
+
+BehaviorAnalytics
+| where ActivityInsights.FirstTimeActionPerformedInTenant == True
+| where UsersInsights.BlastRadius =~ 'High'
+| extend AadUserId = UsersInsights.AccountObjectID
+| extend Account_0_AadUserId = AadUserId

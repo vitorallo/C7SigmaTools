@@ -1,0 +1,9 @@
+// Description: This query uncovers seen connected networks
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceNetworkInfo)
+
+// 
+DeviceNetworkInfo
+| summarize arg_max(Timestamp, *) by DeviceId
+| mv-expand todynamic(ConnectedNetworks)
+| where isnotempty( ConnectedNetworks.Name)
+| summarize by NetworkNames = tostring(ConnectedNetworks.Name)

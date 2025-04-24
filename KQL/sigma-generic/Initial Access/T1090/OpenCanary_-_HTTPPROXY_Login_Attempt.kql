@@ -1,0 +1,11 @@
+// Title: OpenCanary - HTTPPROXY Login Attempt
+// Author: Security Onion Solutions
+// Date: 2024-03-08
+// Level: high
+// Description: Detects instances where an HTTPPROXY service on an OpenCanary node has had an attempt to proxy another page.
+// The equivalent table in Microsoft Sentinel for Opencanary logs. Ensure that Opencanary logs are being collected and sent to Sentinel for this table to be populated.
+// Tags: attack.initial-access, attack.defense-evasion, attack.t1090
+// ================================================================== 
+
+OpencanaryLogs
+| where logtype == 7001

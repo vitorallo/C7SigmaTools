@@ -1,0 +1,10 @@
+// Title: Invoke-Obfuscation Via Stdin - Security
+// Author: Nikita Nazarov, oscd.community
+// Date: 2020-10-12
+// Level: high
+// Description: Detects Obfuscated Powershell via Stdin in ScriptsThis table contains security-related events, including event ID 4697. Make sure to have the necessary data connectors and log sources configured in Sentinel to collect Windows security events.
+// Tags: attack.defense-evasion, attack.t1027, attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (ServiceFileName contains "environment" or ServiceFileName contains "invoke" or ServiceFileName contains "${input)") and (ServiceFileName contains "set" and ServiceFileName contains "&&")

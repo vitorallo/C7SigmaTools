@@ -1,0 +1,11 @@
+// Title: HackTool - Evil-WinRm Execution - PowerShell Module
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2024-02-25
+// Level: high
+// Description: Detects the execution of Evil-WinRM via PowerShell Module logs by leveraging the hardcoded strings inside the utility.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.lateral-movement
+// ================================================================== 
+
+SecurityEvent
+| where (ContextInfo contains ":\\Windows\\System32\\wsmprovhost.exe" or ContextInfo contains ":\\Windows\\SysWOW64\\wsmprovhost.exe") and ((Payload contains "value=\"(get-location).path" or (Payload contains "value=\"(get-item" and Payload contains ").length") or Payload contains "Invoke-Binary " or (Payload contains "Donut-Loader -process_id" and Payload contains "-donutfile") or Payload contains "Bypass-4MSI" or (Payload contains "IEX ([System.Text.Encoding]::ASCII.GetString([System.Convert]::FromBase64String($a))).replace('" and Payload contains "','')")) or (Payload contains "$servicios = Get-ItemProperty \"registry::HKLM\\System\\CurrentControlSet\\Services\\\"" and Payload contains "Where-Object {$_.imagepath -notmatch \"system\" -and $_.imagepath -ne $null } | Select-Object pschildname,imagepath") or (Payload contains "$a +=  \\\"$($_.FullName.Replace('\\','/'))/\\\"}else{  $a += \\\"$($_.FullName.Replace('\\', '/'))\\\" }" and Payload contains "$a=@();$"))

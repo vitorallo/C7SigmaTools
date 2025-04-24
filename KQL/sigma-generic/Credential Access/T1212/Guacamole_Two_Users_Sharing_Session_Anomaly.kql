@@ -1,0 +1,10 @@
+// Title: Guacamole Two Users Sharing Session Anomaly
+// Author: Florian Roth (Nextron Systems)
+// Date: 2020-07-03
+// Level: high
+// Description: Detects suspicious session with two users presentThe LinuxAuditLogs table in Microsoft Sentinel contains audit logs from Linux machines. To have this table present, ensure that the Linux machines are onboarded to Sentinel and sending audit logs to the Log Analytics workspace.
+// Tags: attack.credential-access, attack.t1212
+// ================================================================== 
+
+LinuxAuditLogs
+| where "(2 users now present)"

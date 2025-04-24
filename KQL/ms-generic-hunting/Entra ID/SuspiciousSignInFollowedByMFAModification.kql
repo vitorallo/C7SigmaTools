@@ -1,0 +1,21 @@
+// Description: 'This query looks uses Microsoft Sentinel's UEBA features to look for suspicious logons followed by modifications to MFA settings by that user.'
+// Required Connectors: AzureActiveDirectory (Types: AuditLogs); BehaviorAnalytics (Types: BehaviorAnalytics)
+
+let PriorityScore = 9;
+BehaviorAnalytics
+| where ActionType == "Sign-in"
+| where InvestigationPriority > PriorityScore
+| extend UserPrincipalName = tolower(UserPrincipalName)
+| extend LogOnTime = TimeGenerated
+| join kind=inner (AuditLogs
+| where Category =~ "UserManagement" 
+| where OperationName in~ ("Admin registered security info", "Admin updated security info", "Admin deleted security info", "User registered security info", "User changed default security info", "User deleted security info","User registered all required security info","User started security info registration") 
+| extend InitiatorUPN = tolower(tostring(InitiatedBy.user.userPrincipalName))
+| extend InitiatorID = tostring(InitiatedBy.user.id)
+| extend FromIP = tostring(InitiatedBy.user.ipAddress) 
+| extend TargetUPN = tolower(tostring(TargetResources[0].userPrincipalName))
+| extend TargetId = tostring(TargetResources[0].id)
+| extend MFAModTime = TimeGenerated
+| where isnotempty(InitiatorUPN)) on $left.UserPrincipalName == $right.InitiatorUPN
+| where MFAModTime between((LogOnTime-30m)..(LogOnTime+1h))
+| extend InitiatorName = tostring(split(InitiatorUPN, "@")[0]), InitiatorUPNSuffix = tostring(split(InitiatorUPN, "@")[1]), TargetName = tostring(split(TargetUPN, "@")[0]), TargetUPNSuffix = tostring(split(TargetUPN, "@")[1])

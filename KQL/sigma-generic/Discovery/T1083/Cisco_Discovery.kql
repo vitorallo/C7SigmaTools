@@ -1,0 +1,10 @@
+// Title: Cisco Discovery
+// Author: Austin Clark
+// Date: 2019-08-12
+// Level: low
+// Description: Find information about network devices that is not stored in config filesThis table contains logs related to Cisco AAA service. To have access to this table in Microsoft Sentinel, ensure that the necessary connectors or data sources for collecting Cisco logs are configured and sending data to Sentinel.
+// Tags: attack.discovery, attack.t1083, attack.t1201, attack.t1057, attack.t1018, attack.t1082, attack.t1016, attack.t1049, attack.t1033, attack.t1124
+// ================================================================== 
+
+Cisco_AAA_Logs
+| where "dir" or "show arp" or "show cdp" or "show clock" or "show ip interface" or "show ip route" or "show ip sockets" or "show processes" or "show ssh" or "show users" or "show version"

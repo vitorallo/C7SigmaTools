@@ -1,0 +1,10 @@
+// Title: Service Installed By Unusual Client - System
+// Author: Tim Rauch (Nextron Systems), Elastic (idea)
+// Date: 2022-09-15
+// Level: high
+// Description: Detects a service installed by a client which has PID 0 or whose parent has PID 0The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.privilege-escalation, attack.t1543
+// ================================================================== 
+
+SecurityEvent
+| where InitiatingProcessId == 0 and Provider_Name =~ "Service Control Manager"

@@ -1,0 +1,10 @@
+// Title: BITS Transfer Job Downloading File Potential Suspicious Extension
+// Author: frack113
+// Date: 2022-03-01
+// Level: medium
+// Description: Detects new BITS transfer job saving local files with potential suspicious extensionsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which may include logs related to the BITS client service. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.persistence, attack.t1197
+// ================================================================== 
+
+SecurityEvent
+| where (LocalName endswith ".bat" or LocalName endswith ".dll" or LocalName endswith ".exe" or LocalName endswith ".hta" or LocalName endswith ".ps1" or LocalName endswith ".psd1" or LocalName endswith ".sh" or LocalName endswith ".vbe" or LocalName endswith ".vbs") and (not((LocalName contains "\\AppData\\" and RemoteName contains ".com")))

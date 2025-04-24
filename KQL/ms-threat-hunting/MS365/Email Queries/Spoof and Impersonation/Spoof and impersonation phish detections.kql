@@ -1,0 +1,8 @@
+// Description: This query helps reviewing count of phish detections done by spoof detection methods
+// Required Connectors: MicrosoftThreatProtection (Types: EmailEvents)
+
+EmailEvents
+|where Timestamp > ago (30d) and (DetectionMethods contains 'spoof' or DetectionMethods contains "impersonation")
+| project Timestamp, AR=parse_json(ThreatTypes) , DT=parse_json(DetectionMethods), EmailDirection, SenderFromAddress
+| evaluate bag_unpack(DT)
+| summarize count() by tostring(Phish)

@@ -1,0 +1,11 @@
+// Title: Uncommon Outbound Kerberos Connection - Security
+// Author: Ilyas Ochkov, oscd.community
+// Date: 2019-10-24
+// Level: medium
+// Description: Detects uncommon outbound network activity via Kerberos default port indicating possible lateral movement or first stage PrivEsc via delegation.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the Microsoft Sentinel agent installed on the Windows machines and that the Security event logs are being collected and forwarded to Sentinel.
+// Tags: attack.lateral-movement, attack.t1558.003
+// ================================================================== 
+
+SecurityEvent
+| where DestPort == 88 and (not((Application endswith "\\Windows\\System32\\lsass.exe" and (Application startswith "\\device\\harddiskvolume" or Application startswith "C:")))) and (not((((Application endswith "\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe" or Application endswith "\\Program Files\\Google\\Chrome\\Application\\chrome.exe") and (Application startswith "\\device\\harddiskvolume" or Application startswith "C:")) or ((Application endswith "\\Program Files (x86)\\Mozilla Firefox\\firefox.exe" or Application endswith "\\Program Files\\Mozilla Firefox\\firefox.exe") and (Application startswith "\\device\\harddiskvolume" or Application startswith "C:")) or Application endswith "\\tomcat\\bin\\tomcat8.exe")))

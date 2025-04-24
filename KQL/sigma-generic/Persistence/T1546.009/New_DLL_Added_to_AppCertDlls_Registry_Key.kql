@@ -1,0 +1,12 @@
+// Title: New DLL Added to AppCertDlls Registry Key
+// Author: Ilyas Ochkov, oscd.community
+// Date: 2019-10-25
+// Level: medium
+// Description: Dynamic-link libraries (DLLs) that are specified in the AppCertDLLs value in the Registry key can be abused to obtain persistence and privilege escalation
+// by causing a malicious DLL to be loaded and run in the context of separate processes on the computer.
+// This table contains information about registry events in the Windows environment. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1546.009
+// ================================================================== 
+
+RegistryEvents
+| where RegistryKey =~ "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet001\\Control\\Session Manager\\AppCertDlls" or NewName =~ "HKLM\\SYSTEM\\CurentControlSet\\Control\\Session Manager\\AppCertDlls"

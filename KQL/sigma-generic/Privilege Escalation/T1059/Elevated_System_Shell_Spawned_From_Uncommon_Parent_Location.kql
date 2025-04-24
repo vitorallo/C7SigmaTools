@@ -1,0 +1,10 @@
+// Title: Elevated System Shell Spawned From Uncommon Parent Location
+// Author: frack113, Tim Shelton (update fp)
+// Date: 2022-12-05
+// Level: medium
+// Description: Detects when a shell program such as the Windows command prompt or PowerShell is launched with system privileges from a uncommon parent location.The SecurityEvent table in Microsoft Sentinel contains process creation events for Windows systems. Ensure that the Windows Security Events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.privilege-escalation, attack.defense-evasion, attack.execution, attack.t1059
+// ================================================================== 
+
+SecurityEvent
+| where (((FolderPath endswith "\\powershell.exe" or FolderPath endswith "\\powershell_ise.exe" or FolderPath endswith "\\pwsh.exe" or FolderPath endswith "\\cmd.exe") or (ProcessVersionInfoOriginalFileName in~ ("PowerShell.EXE", "powershell_ise.EXE", "pwsh.dll", "Cmd.Exe"))) and (LogonId =~ "0x3e7" and (AccountName contains "AUTHORI" or AccountName contains "AUTORI"))) and (not(((InitiatingProcessFolderPath contains ":\\Program Files (x86)\\" or InitiatingProcessFolderPath contains ":\\Program Files\\" or InitiatingProcessFolderPath contains ":\\ProgramData\\" or InitiatingProcessFolderPath contains ":\\Windows\\System32\\" or InitiatingProcessFolderPath contains ":\\Windows\\SysWOW64\\" or InitiatingProcessFolderPath contains ":\\Windows\\Temp\\" or InitiatingProcessFolderPath contains ":\\Windows\\WinSxS\\") or (InitiatingProcessFolderPath in~ ("", "-")) or isnull(InitiatingProcessFolderPath)))) and (not(((ProcessCommandLine contains ":\\WINDOWS\\system32\\cmd.exe /c \"" and CurrentDirectory contains ":\\WINDOWS\\Temp\\asgard2-agent\\") or (ProcessCommandLine contains ":\\IBM\\SpectrumProtect\\webserver\\scripts\\" and InitiatingProcessFolderPath contains ":\\IBM\\SpectrumProtect\\webserver\\scripts\\") or (FolderPath endswith "\\cmd.exe" and InitiatingProcessFolderPath endswith ":\\ManageEngine\\ADManager Plus\\pgsql\\bin\\postgres.exe"))))

@@ -1,0 +1,10 @@
+// Title: Service Reload or Start - Linux
+// Author: Jakob Weinzettl, oscd.community, CheraghiMilad
+// Date: 2019-09-23
+// Level: low
+// Description: Detects the start, reload or restart of a service.The table containing Linux audit logs in Microsoft Sentinel. Ensure that the Linux machines are onboarded to Sentinel and the Linux agent is configured to send audit logs to Sentinel.
+// Tags: attack.persistence, attack.t1543.002
+// ================================================================== 
+
+LinuxAuditLogs
+| where (a0 contains "systemctl" or a0 contains "service") and (a1 contains "reload" or a1 contains "start") and type =~ "EXECVE"

@@ -1,0 +1,10 @@
+// Title: Cisco Modify Configuration
+// Author: Austin Clark
+// Date: 2019-08-12
+// Level: medium
+// Description: Modifications to a config that will serve an adversary's impacts or persistenceThis table contains authentication logs related to Cisco AAA service. To have this table present in Microsoft Sentinel, ensure that you have the necessary connectors or data sources configured to collect logs from Cisco devices with AAA service enabled.
+// Tags: attack.persistence, attack.impact, attack.t1490, attack.t1505, attack.t1565.002, attack.t1053
+// ================================================================== 
+
+Cisco_AAA_AuthenticationLogs
+| where "ip http server" or "ip https server" or "kron policy-list" or "kron occurrence" or "policy-list" or "access-list" or "ip access-group" or "archive maximum"

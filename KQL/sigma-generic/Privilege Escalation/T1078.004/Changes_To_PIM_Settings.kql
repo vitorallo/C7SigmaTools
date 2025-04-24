@@ -1,0 +1,10 @@
+// Title: Changes To PIM Settings
+// Author: Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H'
+// Date: 2022-08-09
+// Level: high
+// Description: Detects when changes are made to PIM rolesThis table contains Azure activity logs, which include audit logs. Make sure to have the Azure Monitor solution enabled in Microsoft Sentinel to access this table.
+// Tags: attack.privilege-escalation, attack.persistence, attack.t1078.004
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' =~ "Update role setting in PIM"

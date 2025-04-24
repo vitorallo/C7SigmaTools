@@ -1,0 +1,10 @@
+// Title: Unusual File Download from Direct IP Address
+// Author: Nasreddine Bencherchali (Nextron Systems), Florian Roth (Nextron Systems)
+// Date: 2022-09-07
+// Level: high
+// Description: Detects the download of suspicious file type from URLs with IPThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query this table for events related to creating stream hash, ensure that the necessary data connectors for Windows security events are enabled in Sentinel.
+// Tags: attack.defense-evasion, attack.t1564.004
+// ================================================================== 
+
+SecurityEvent
+| where Contents matches regex "http[s]?://[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}" and (TargetFilename contains ".ps1:Zone" or TargetFilename contains ".bat:Zone" or TargetFilename contains ".exe:Zone" or TargetFilename contains ".vbe:Zone" or TargetFilename contains ".vbs:Zone" or TargetFilename contains ".dll:Zone" or TargetFilename contains ".one:Zone" or TargetFilename contains ".cmd:Zone" or TargetFilename contains ".hta:Zone" or TargetFilename contains ".xll:Zone" or TargetFilename contains ".lnk:Zone")

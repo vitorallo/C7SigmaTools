@@ -1,0 +1,10 @@
+// Title: Roles Activated Too Frequently
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-14
+// Level: high
+// Description: Identifies when the same privilege role has multiple activations by the same user.The AzureActivity table in Microsoft Sentinel contains logs related to Azure activity, including Azure PIM (Privileged Identity Management) logs. Ensure that Azure Activity logs are being collected and ingested into Sentinel to query this table.
+// Tags: attack.t1078, attack.persistence, attack.privilege-escalation
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "sequentialActivationRenewalsAlertIncident"

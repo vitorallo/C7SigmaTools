@@ -1,0 +1,10 @@
+// Title: Azure Network Security Configuration Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-08
+// Level: medium
+// Description: Identifies when a network security configuration is modified or deleted.This table contains Azure Activity Logs data. Ensure that Azure Activity Logs are being collected and ingested into Microsoft Sentinel to query this table.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.NETWORK/NETWORKSECURITYGROUPS/WRITE", "MICROSOFT.NETWORK/NETWORKSECURITYGROUPS/DELETE", "MICROSOFT.NETWORK/NETWORKSECURITYGROUPS/SECURITYRULES/WRITE", "MICROSOFT.NETWORK/NETWORKSECURITYGROUPS/SECURITYRULES/DELETE", "MICROSOFT.NETWORK/NETWORKSECURITYGROUPS/JOIN/ACTION", "MICROSOFT.NETWORK/NETWORKSECURITYGROUPS/PROVIDERS/MICROSOFT.INSIGHTS/DIAGNOSTICSETTINGS/WRITE")

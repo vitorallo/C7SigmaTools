@@ -1,0 +1,10 @@
+// Title: HybridConnectionManager Service Running
+// Author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+// Date: 2021-04-12
+// Level: high
+// Description: Rule to detect the Hybrid Connection Manager service running on an endpoint.The SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including Windows logs. To ensure that events from the 'microsoft-servicebus-client' service are captured in the SecurityEvent table, you may need to enable the appropriate Windows logging configurations and ensure that the necessary data connectors are set up in Sentinel.
+// Tags: attack.persistence, attack.t1554
+// ================================================================== 
+
+SecurityEvent
+| where "HybridConnection" or "sb://" or "servicebus.windows.net" or "HybridConnectionManage"

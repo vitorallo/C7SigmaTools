@@ -1,0 +1,10 @@
+// Title: Suspicious Inbox Forwarding Identity Protection
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-03
+// Level: high
+// Description: Indicates suspicious rules such as an inbox rule that forwards a copy of all emails to an external addressThe AzureActivity table in Microsoft Sentinel contains logs related to Azure services, including risk detection events. Ensure that Azure Activity logs are being collected and ingested into Sentinel to query this table.
+// Tags: attack.t1140, attack.defense-evasion
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "suspiciousInboxForwarding"

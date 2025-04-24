@@ -1,0 +1,10 @@
+// Title: Process Execution Error In JVM Based Application
+// Author: Moti Harmats
+// Date: 2023-02-11
+// Level: high
+// Description: Detects process execution related exceptions in JVM based apps, often relates to RCEThis table contains application error logs with LOG_LEVEL=ERROR and above. Make sure to have the appropriate connectors or data sources configured in Sentinel to collect these logs.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+AppEvents
+| where "Cannot run program" or "java.lang.ProcessImpl" or "java.lang.ProcessBuilder"

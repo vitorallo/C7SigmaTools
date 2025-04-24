@@ -1,0 +1,10 @@
+// Title: Modification or Deletion of an AWS RDS Cluster
+// Author: Ivan Saakov
+// Date: 2024-12-06
+// Level: high
+// Description: Detects modifications to an RDS cluster or its deletion, which may indicate potential data exfiltration attempts, unauthorized access, or exposure of sensitive information.The equivalent table in Microsoft Sentinel for AWS CloudTrail logs. Ensure that the AWS CloudTrail connector is set up in Sentinel to collect these logs.
+// Tags: attack.exfiltration, attack.t1020
+// ================================================================== 
+
+CloudTrail
+| where (eventName in~ ("ModifyDBCluster", "DeleteDBCluster")) and eventSource =~ "rds.amazonaws.com"

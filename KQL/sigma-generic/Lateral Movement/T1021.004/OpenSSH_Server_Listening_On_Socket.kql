@@ -1,0 +1,10 @@
+// Title: OpenSSH Server Listening On Socket
+// Author: mdecrevoisier
+// Date: 2022-10-25
+// Level: medium
+// Description: Detects scenarios where an attacker enables the OpenSSH server and server starts to listening on SSH socket.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for logs related to Windows with openssh service, you can filter on the 'product' field for 'windows' and the 'service' field for 'openssh'. Make sure to have the necessary connectors and data connectors set up in Sentinel to collect Windows security event logs.
+// Tags: attack.lateral-movement, attack.t1021.004
+// ================================================================== 
+
+SecurityEvent
+| where payload startswith "Server listening on " and process =~ "sshd"

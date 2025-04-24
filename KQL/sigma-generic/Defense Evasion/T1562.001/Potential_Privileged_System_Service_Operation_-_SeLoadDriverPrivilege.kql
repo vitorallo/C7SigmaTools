@@ -1,0 +1,15 @@
+// Title: Potential Privileged System Service Operation - SeLoadDriverPrivilege
+// Author: xknow (@xknow_infosec), xorxes (@xor_xes)
+// Date: 2019-04-08
+// Level: medium
+// Description: Detects the usage of the 'SeLoadDriverPrivilege' privilege. This privilege is required to load or unload a device driver.
+// With this privilege, the user can dynamically load and unload device drivers or other code in to kernel mode.
+// This user right does not apply to Plug and Play device drivers.
+// If you exclude privileged users/admins and processes, which are allowed to do so, you are maybe left with bad programs trying to load malicious kernel drivers.
+// This will detect Ghost-In-The-Logs (https://github.com/bats3c/Ghost-In-The-Logs) and the usage of Sysinternals and various other tools. So you have to work with a whitelist to find the bad stuff.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Make sure to have the Windows Security Events connector enabled in Sentinel to populate this table.
+// Tags: attack.defense-evasion, attack.t1562.001
+// ================================================================== 
+
+SecurityEvent
+| where (PrivilegeList =~ "SeLoadDriverPrivilege" and Service =~ "-") and (not(((InitiatingProcessFolderPath endswith "\\procexp64.exe" or InitiatingProcessFolderPath endswith "\\procexp.exe" or InitiatingProcessFolderPath endswith "\\procmon64.exe" or InitiatingProcessFolderPath endswith "\\procmon.exe" or InitiatingProcessFolderPath endswith "\\Google\\Chrome\\Application\\chrome.exe" or InitiatingProcessFolderPath endswith "\\AppData\\Local\\Microsoft\\Teams\\current\\Teams.exe") or (InitiatingProcessFolderPath in~ ("C:\\Windows\\System32\\Dism.exe", "C:\\Windows\\System32\\rundll32.exe", "C:\\Windows\\System32\\fltMC.exe", "C:\\Windows\\HelpPane.exe", "C:\\Windows\\System32\\mmc.exe", "C:\\Windows\\System32\\svchost.exe", "C:\\Windows\\System32\\wimserv.exe", "C:\\Windows\\System32\\RuntimeBroker.exe", "C:\\Windows\\System32\\SystemSettingsBroker.exe", "C:\\Windows\\explorer.exe")) or InitiatingProcessFolderPath startswith "C:\\Program Files\\WindowsApps\\Microsoft")))

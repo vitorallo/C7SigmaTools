@@ -1,0 +1,8 @@
+// Description: This query lists Active Directory accounts lockout and unlock events
+// Author: Martin Schvartzman
+// Source Kind: Community
+// Required Connectors: MicrosoftThreatProtection (Types: IdentityDirectoryEvents)
+
+IdentityDirectoryEvents
+| where ActionType == 'Account Unlock changed'
+| extend AccountLockStatus = iif(tobool(parse_json(AdditionalFields)['TO Account Unlock']), 'Locked', 'Unlocked')

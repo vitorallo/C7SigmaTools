@@ -1,0 +1,11 @@
+// Title: GCP Break-glass Container Workload Deployed
+// Author: Bryan Lim
+// Date: 2024-01-12
+// Level: medium
+// Description: Detects the deployment of workloads that are deployed by using the break-glass flag to override Binary Authorization controls.
+// This table contains GCP audit logs. Ensure that the GCP connector is set up in Microsoft Sentinel to collect logs from the GCP service.
+// Tags: attack.defense-evasion, attack.t1548
+// ================================================================== 
+
+GCPAuditLogs
+| where (('data.protoPayload.logName' in~ ("cloudaudit.googleapis.com/activity", "cloudaudit.googleapis.com%2Factivity")) and 'data.protoPayload.methodName' =~ "io.k8s.core.v1.pods.create" and 'data.protoPayload.resource.type' =~ "k8s_cluster") and "image-policy.k8s.io/break-glass"

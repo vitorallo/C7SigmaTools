@@ -1,0 +1,10 @@
+// Title: DNS Query to External Service Interaction Domains
+// Author: Florian Roth (Nextron Systems), Matt Kelly (list of domains)
+// Date: 2022-06-07
+// Level: high
+// Description: Detects suspicious DNS queries to external service interaction domains often used for out-of-band interactions after successful RCEThis table contains DNS events and can be queried in KQL for Microsoft Sentinel. Ensure that DNS events are being collected and ingested into Sentinel for this table to be available.
+// Tags: attack.initial-access, attack.t1190, attack.reconnaissance, attack.t1595.002
+// ================================================================== 
+
+DnsEvents
+| where query contains ".interact.sh" or query contains ".oast.pro" or query contains ".oast.live" or query contains ".oast.site" or query contains ".oast.online" or query contains ".oast.fun" or query contains ".oast.me" or query contains ".burpcollaborator.net" or query contains ".oastify.com" or query contains ".canarytokens.com" or query contains ".requestbin.net" or query contains ".dnslog.cn"

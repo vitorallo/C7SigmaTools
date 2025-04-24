@@ -1,0 +1,10 @@
+// Title: Atera Agent Installation
+// Author: Bhabesh Raj
+// Date: 2021-09-01
+// Level: high
+// Description: Detects successful installation of Atera Remote Monitoring & Management (RMM) agent as recently found to be used by Conti operatorsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security events data connector is enabled in Microsoft Sentinel to have this table available for querying.
+// Tags: attack.t1219
+// ================================================================== 
+
+SecurityEvent
+| where Message contains "AteraAgent" and Provider_Name =~ "MsiInstaller"

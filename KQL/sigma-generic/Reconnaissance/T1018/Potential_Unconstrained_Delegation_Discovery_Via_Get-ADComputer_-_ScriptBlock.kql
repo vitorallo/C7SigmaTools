@@ -1,0 +1,10 @@
+// Title: Potential Unconstrained Delegation Discovery Via Get-ADComputer - ScriptBlock
+// Author: frack113
+// Date: 2025-03-05
+// Level: medium
+// Description: Detects the use of the "Get-ADComputer" cmdlet in order to identify systems which are configured for unconstrained delegation.This table contains security-related events, including PowerShell script execution events. Ensure that the necessary data connectors are set up to collect Windows security event logs in Sentinel.
+// Tags: attack.reconnaissance, attack.discovery, attack.credential-access, attack.t1018, attack.t1558, attack.t1589.002
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "-Properties" and ScriptBlockText contains "TrustedForDelegation") or (ScriptBlockText contains "-Properties" and ScriptBlockText contains "TrustedToAuthForDelegation") or (ScriptBlockText contains "-Properties" and ScriptBlockText contains "msDS-AllowedToDelegateTo") or (ScriptBlockText contains "-Properties" and ScriptBlockText contains "PrincipalsAllowedToDelegateToAccount") or (ScriptBlockText contains "-LDAPFilter" and ScriptBlockText contains "(userAccountControl:1.2.840.113556.1.4.803:=524288)")

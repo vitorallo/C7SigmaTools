@@ -1,0 +1,10 @@
+// Title: Code Injection by ld.so Preload
+// Author: Christian Burkard (Nextron Systems)
+// Date: 2021-05-05
+// Level: high
+// Description: Detects the ld.so preload persistence file. See `man ld.so` for more information.This table contains Linux audit logs. To have this table present in Microsoft Sentinel, ensure that the Linux machines are onboarded and configured to send audit logs to Sentinel.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1574.006
+// ================================================================== 
+
+LinuxAuditLogs
+| where "/etc/ld.so.preload"

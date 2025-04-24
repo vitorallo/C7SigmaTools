@@ -1,0 +1,5 @@
+// Description: This query looks for identity add through exchange PowerShell
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where ProcessCommandLine has_any ("New-Mailbox","Update-RoleGroupMember") and ProcessCommandLine has "HealthMailbox55x2yq"

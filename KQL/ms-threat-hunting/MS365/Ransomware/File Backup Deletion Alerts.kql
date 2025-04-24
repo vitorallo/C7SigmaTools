@@ -1,0 +1,6 @@
+// Description: This query checks alerts related to file backup deletion and enriches with additional alert evidence information
+// Required Connectors: MicrosoftThreatProtection (Types: AlertInfo, AlertEvidence)
+
+AlertInfo
+| where Title == "File backups were deleted"
+| join AlertEvidence on $left.AlertId == $right.AlertId

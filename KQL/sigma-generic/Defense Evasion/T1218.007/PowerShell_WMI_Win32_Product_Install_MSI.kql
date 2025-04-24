@@ -1,0 +1,10 @@
+// Title: PowerShell WMI Win32_Product Install MSI
+// Author: frack113
+// Date: 2022-04-24
+// Level: medium
+// Description: Detects the execution of an MSI file using PowerShell and the WMI Win32_Product classThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.defense-evasion, attack.t1218.007
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Invoke-CimMethod " and ScriptBlockText contains "-ClassName " and ScriptBlockText contains "Win32_Product " and ScriptBlockText contains "-MethodName " and ScriptBlockText contains ".msi"

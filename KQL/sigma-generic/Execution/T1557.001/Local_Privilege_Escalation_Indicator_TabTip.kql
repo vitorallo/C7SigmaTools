@@ -1,0 +1,10 @@
+// Title: Local Privilege Escalation Indicator TabTip
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-10-07
+// Level: high
+// Description: Detects the invocation of TabTip via CLSID as seen when JuicyPotatoNG is used on a system in brute force modeThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1557.001
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Microsoft-Windows-DistributedCOM" and param1 =~ "C:\\Program Files\\Common Files\\microsoft shared\\ink\\TabTip.exe" and param2 == 2147943140 and param3 =~ "{054AAE20-4BEA-4347-8A35-64A533254A9D}"

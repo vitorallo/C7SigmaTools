@@ -1,0 +1,19 @@
+// Description: 'Identifies suspicious child processes of SolarWinds.Orion.Core.BusinessLayer.dll that may be evidence of the SUNBURST backdoor'
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+let excludeProcs = dynamic([@"\SolarWinds\Orion\APM\APMServiceControl.exe", @"\SolarWinds\Orion\ExportToPDFCmd.Exe", @"\SolarWinds.Credentials\SolarWinds.Credentials.Orion.WebApi.exe", @"\SolarWinds\Orion\Topology\SolarWinds.Orion.Topology.Calculator.exe", @"\SolarWinds\Orion\Database-Maint.exe", @"\SolarWinds.Orion.ApiPoller.Service\SolarWinds.Orion.ApiPoller.Service.exe", @"\Windows\SysWOW64\WerFault.exe"]);
+DeviceProcessEvents
+| where InitiatingProcessFileName =~ "solarwinds.businesslayerhost.exe"
+| where not(FolderPath has_any (excludeProcs))
+| extend
+    timestamp = TimeGenerated,
+    AccountCustomEntity = iff(isnotempty(InitiatingProcessAccountUpn), InitiatingProcessAccountUpn, InitiatingProcessAccountName),
+    HostName = tostring(split(DeviceName, '.', 0)[0]), DnsDomain = tostring(strcat_array(array_slice(split(DeviceName, '.'), 1, -1), '.')),
+    AlgorithmCustomEntity = "MD5",FileHashCustomEntity = MD5
+|extend Name = tostring(split(AccountCustomEntity, '@', 0)[0]), UPNSuffix = tostring(split(AccountCustomEntity, '@', 1)[0])    
+| extend Account_0_Name = Name
+| extend Account_0_UPNSuffix = UPNSuffix
+| extend Host_0_HostName = HostName
+| extend Host_0_DnsDomain = DnsDomain 
+| extend FileHash_0_Algorithm = AlgorithmCustomEntity
+| extend FileHash_0_Value = FileHashCustomEntity

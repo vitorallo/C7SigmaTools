@@ -1,0 +1,10 @@
+// Title: Active Directory Computers Enumeration With Get-AdComputer
+// Author: frack113
+// Date: 2022-03-17
+// Level: low
+// Description: Detects usage of the "Get-AdComputer" to enumerate Computers or properties within Active Directory.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the necessary data connectors are set up in Sentinel to collect Windows security event logs.
+// Tags: attack.discovery, attack.t1018, attack.t1087.002
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Get-AdComputer " and (ScriptBlockText contains "-Filter " or ScriptBlockText contains "-LDAPFilter " or ScriptBlockText contains "-Properties ")

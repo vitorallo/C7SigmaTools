@@ -1,0 +1,10 @@
+// Title: OpenCanary - REDIS Action Command Attempt
+// Author: Security Onion Solutions
+// Date: 2024-03-08
+// Level: high
+// Description: Detects instances where a REDIS service on an OpenCanary node has had an action command attempted.The equivalent table in Microsoft Sentinel for Opencanary logs. Ensure that the Opencanary connector is installed in Sentinel to collect logs from the Opencanary product.
+// Tags: attack.credential-access, attack.collection, attack.t1003, attack.t1213
+// ================================================================== 
+
+OpencanaryLogs
+| where logtype == 17001

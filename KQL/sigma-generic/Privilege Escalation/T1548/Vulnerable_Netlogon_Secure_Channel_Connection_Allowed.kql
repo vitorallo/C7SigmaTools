@@ -1,0 +1,10 @@
+// Title: Vulnerable Netlogon Secure Channel Connection Allowed
+// Author: NVISO
+// Date: 2020-09-15
+// Level: high
+// Description: Detects that a vulnerable Netlogon secure channel connection was allowed, which could be an indicator of CVE-2020-1472.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.privilege-escalation, attack.t1548
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "NetLogon"

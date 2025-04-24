@@ -1,0 +1,10 @@
+// Title: Guest Users Invited To Tenant By Non Approved Inviters
+// Author: MikeDuddington, '@dudders1'
+// Date: 2022-07-28
+// Level: medium
+// Description: Detects guest users being invited to tenant by non-approved invitersThis table contains Azure activity logs, which include audit logs. Ensure that Azure Monitor logs are enabled and the necessary connectors are set up in Microsoft Sentinel to collect Azure activity logs.
+// Tags: attack.initial-access, attack.t1078
+// ================================================================== 
+
+AzureActivity
+| where (Category =~ "UserManagement" and OperationName =~ "Invite external user") and (not(InitiatedBy contains "<approved guest inviter use OR for multiple>"))

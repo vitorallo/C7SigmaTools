@@ -1,0 +1,6 @@
+// Description: Look for adding a user to Administrators in remote desktop users via PowerShell.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where InitiatingProcessFileName =~ 'powershell.exe' 
+| where InitiatingProcessCommandLine has_all('$admins=', 'System.Security.Principal.SecurityIdentifier', 'Translate', '-split', 'localgroup', '/add', '$rdp=')

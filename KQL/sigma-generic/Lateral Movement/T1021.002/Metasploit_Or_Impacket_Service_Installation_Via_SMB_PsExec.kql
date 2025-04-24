@@ -1,0 +1,10 @@
+// Title: Metasploit Or Impacket Service Installation Via SMB PsExec
+// Author: Bartlomiej Czyz, Relativity
+// Date: 2021-01-21
+// Level: high
+// Description: Detects usage of Metasploit SMB PsExec (exploit/windows/smb/psexec) and Impacket psexec.py by triggering on specific service installationThis table contains security-related events, including event ID 4697. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to query this table.
+// Tags: attack.lateral-movement, attack.t1021.002, attack.t1570, attack.execution, attack.t1569.002
+// ================================================================== 
+
+SecurityEvent
+| where (ServiceFileName matches regex "^%systemroot%\\\\[a-zA-Z]{8}\\.exe$" and ServiceName matches regex "(^[a-zA-Z]{4}$)|(^[a-zA-Z]{8}$)|(^[a-zA-Z]{16}$)" and ServiceStartType == 3 and ServiceType =~ "0x10") and (not(ServiceName =~ "PSEXESVC"))

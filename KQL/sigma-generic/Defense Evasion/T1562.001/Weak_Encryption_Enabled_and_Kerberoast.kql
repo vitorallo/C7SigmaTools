@@ -1,0 +1,10 @@
+// Title: Weak Encryption Enabled and Kerberoast
+// Author: @neu5ron
+// Date: 2017-07-30
+// Level: high
+// Description: Detects scenario where weak encryption is enabled for a user profile which could be used for hash/password cracking.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the Microsoft Monitoring Agent installed on your Windows machines and properly configured to send security events to Sentinel.
+// Tags: attack.defense-evasion, attack.t1562.001
+// ================================================================== 
+
+SecurityEvent
+| where (((NewUacValue contains "8") or (NewUacValue contains "9") or (NewUacValue contains "A") or (NewUacValue contains "B") or (NewUacValue contains "C") or (NewUacValue contains "D") or (NewUacValue contains "E") or (NewUacValue contains "F")) and (not(((OldUacValue contains "8") or (OldUacValue contains "9") or (OldUacValue contains "A") or (OldUacValue contains "B") or (OldUacValue contains "C") or (OldUacValue contains "D") or (OldUacValue contains "E") or (OldUacValue contains "F"))))) or (((NewUacValue contains "1") or (NewUacValue contains "3") or (NewUacValue contains "5") or (NewUacValue contains "7") or (NewUacValue contains "9") or (NewUacValue contains "B") or (NewUacValue contains "D") or (NewUacValue contains "F")) and (not(((OldUacValue contains "1") or (OldUacValue contains "3") or (OldUacValue contains "5") or (OldUacValue contains "7") or (OldUacValue contains "9") or (OldUacValue contains "B") or (OldUacValue contains "D") or (OldUacValue contains "F"))))) or (((NewUacValue contains "8") or (NewUacValue contains "9") or (NewUacValue contains "A") or (NewUacValue contains "B") or (NewUacValue contains "C") or (NewUacValue contains "D") or (NewUacValue contains "E") or (NewUacValue contains "F")) and (not(((OldUacValue contains "8") or (OldUacValue contains "9") or (OldUacValue contains "A") or (OldUacValue contains "B") or (OldUacValue contains "C") or (OldUacValue contains "D") or (OldUacValue contains "E") or (OldUacValue contains "F")))))

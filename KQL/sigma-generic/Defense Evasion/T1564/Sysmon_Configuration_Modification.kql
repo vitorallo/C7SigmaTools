@@ -1,0 +1,10 @@
+// Title: Sysmon Configuration Modification
+// Author: frack113
+// Date: 2021-06-04
+// Level: high
+// Description: Detects when an attacker tries to hide from Sysmon by disabling or stopping itThe equivalent table in Microsoft Sentinel for sysmon status logs. Ensure that Sysmon is installed on the Windows machines and the appropriate data connectors are set up in Sentinel to collect sysmon logs.
+// Tags: attack.defense-evasion, attack.t1564
+// ================================================================== 
+
+SysmonStatus
+| where ("Sysmon config state changed" or State =~ "Stopped") and (not(State =~ "Started"))

@@ -1,0 +1,10 @@
+// Title: AWS EKS Cluster Created or Deleted
+// Author: Austin Songer
+// Date: 2021-08-16
+// Level: low
+// Description: Identifies when an EKS cluster is created or deleted.The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To have this table present in Sentinel, ensure that the AWS CloudTrail connector is set up and collecting logs from the specified AWS account.
+// Tags: attack.impact, attack.t1485
+// ================================================================== 
+
+CloudTrail
+| where (eventName in~ ("CreateCluster", "DeleteCluster")) and eventSource =~ "eks.amazonaws.com"

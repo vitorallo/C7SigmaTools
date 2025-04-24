@@ -1,0 +1,21 @@
+// Description: 'This hunting queries identifies users who are added to a Teams Channel or Teams chat
+// and within 1 minute of being added upload a file via the chat. This might be
+// an indicator of suspicious activity.'
+// Required Connectors: Office365 (Types: OfficeActivity (Teams))
+
+let threshold = 1m;
+OfficeActivity
+| where OfficeWorkload =~ "MicrosoftTeams"
+| where Operation == "MemberAdded"
+| extend TeamName = iff(isempty(TeamName), Members[0].UPN, TeamName)
+| project TimeGenerated, UploaderID=UserId, TeamName
+| join (
+  OfficeActivity
+  | where RecordType == "SharePointFileOperation"
+  | where SourceRelativeUrl has "Microsoft Teams Chat Files"
+  | where Operation == "FileUploaded"
+  | project UploadTime=TimeGenerated, UploaderID=UserId, FileLocation=OfficeObjectId, FileName=SourceFileName
+  ) on UploaderID
+| where UploadTime > TimeGenerated and UploadTime < TimeGenerated+threshold
+| project-away UploaderID1
+| extend timestamp=TimeGenerated, AccountCustomEntity = UploaderID

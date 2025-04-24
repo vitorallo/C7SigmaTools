@@ -1,0 +1,11 @@
+// Title: Tap Driver Installation - Security
+// Author: Daniil Yugoslavskiy, Ian Davis, oscd.community
+// Date: 2019-10-24
+// Level: low
+// Description: Detects the installation of a well-known TAP driver service. This could be a sign of potential preparation for data exfiltration using tunnelling techniques.
+// This table contains security-related events, including event ID 4697. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.exfiltration, attack.t1048
+// ================================================================== 
+
+SecurityEvent
+| where ServiceFileName contains "tap0901"

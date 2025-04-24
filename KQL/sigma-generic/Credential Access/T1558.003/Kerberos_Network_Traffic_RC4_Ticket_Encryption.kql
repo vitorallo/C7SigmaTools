@@ -1,0 +1,10 @@
+// Title: Kerberos Network Traffic RC4 Ticket Encryption
+// Author: sigma
+// Date: 2020-02-12
+// Level: medium
+// Description: Detects kerberos TGS request using RC4 encryption which may be indicative of kerberoastingThe equivalent table in Microsoft Sentinel for Kerberos events. Ensure that the necessary connectors are set up to collect Zeek logs and Kerberos logs in Sentinel to have this table available for querying.
+// Tags: attack.credential-access, attack.t1558.003
+// ================================================================== 
+
+KerberosEvents
+| where (cipher =~ "rc4-hmac" and request_type =~ "TGS") and (not(service startswith "$"))

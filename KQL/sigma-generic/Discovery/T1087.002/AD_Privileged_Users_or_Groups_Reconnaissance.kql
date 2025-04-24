@@ -1,0 +1,10 @@
+// Title: AD Privileged Users or Groups Reconnaissance
+// Author: Samir Bousseaden
+// Date: 2019-04-03
+// Level: high
+// Description: Detect priv users or groups recon based on 4661 eventid and known privileged users or groups SIDsThis table contains security-related events, including Object Access events. Make sure to have the necessary connectors or data sources configured in Sentinel to collect Windows security logs.
+// Tags: attack.discovery, attack.t1087.002
+// ================================================================== 
+
+SecurityEvent
+| where ((RegistryKey endswith "-512" or RegistryKey endswith "-502" or RegistryKey endswith "-500" or RegistryKey endswith "-505" or RegistryKey endswith "-519" or RegistryKey endswith "-520" or RegistryKey endswith "-544" or RegistryKey endswith "-551" or RegistryKey endswith "-555") or RegistryKey contains "admin") and (not(SubjectUserName endswith "$"))

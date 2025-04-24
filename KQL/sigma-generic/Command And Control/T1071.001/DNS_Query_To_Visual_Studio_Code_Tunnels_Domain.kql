@@ -1,0 +1,11 @@
+// Title: DNS Query To Visual Studio Code Tunnels Domain
+// Author: citron_ninja
+// Date: 2023-10-25
+// Level: medium
+// Description: Detects DNS query requests to Visual Studio Code tunnel domains. Attackers can abuse that feature to establish a reverse shell or persistence on a machine.
+// The DnsEvents table in Microsoft Sentinel contains DNS query logs. Ensure that the Windows DNS events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.command-and-control, attack.t1071.001
+// ================================================================== 
+
+DnsEvents
+| where QueryName endswith ".tunnels.api.visualstudio.com"

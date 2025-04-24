@@ -1,0 +1,10 @@
+// Title: Bitsadmin to Uncommon TLD
+// Author: Florian Roth (Nextron Systems), Tim Shelton
+// Date: 2019-03-07
+// Level: high
+// Description: Detects Bitsadmin connections to domains with uncommon TLDsThis table contains proxy logs. Ensure that the necessary connectors are set up to collect proxy logs in Microsoft Sentinel.
+// Tags: attack.command-and-control, attack.t1071.001, attack.defense-evasion, attack.persistence, attack.t1197, attack.s0190
+// ================================================================== 
+
+ProxyLog
+| where 'c-useragent' startswith "Microsoft BITS/" and (not((''cs-host'' endswith ".com" or ''cs-host'' endswith ".net" or ''cs-host'' endswith ".org" or ''cs-host'' endswith ".scdn.co" or ''cs-host'' endswith ".sfx.ms")))

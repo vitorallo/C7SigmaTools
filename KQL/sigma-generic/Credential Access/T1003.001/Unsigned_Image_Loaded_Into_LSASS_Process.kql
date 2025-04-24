@@ -1,0 +1,10 @@
+// Title: Unsigned Image Loaded Into LSASS Process
+// Author: Teymur Kheirkhabarov, oscd.community
+// Date: 2019-10-22
+// Level: medium
+// Description: Loading unsigned image (DLL, EXE) into LSASS processThis table contains information about image loading events on Windows systems. Ensure that the Microsoft Defender for Endpoint data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.credential-access, attack.t1003.001
+// ================================================================== 
+
+ImageLoadEvents
+| where InitiatingProcessFolderPath endswith "\\lsass.exe" and Signed =~ "false"

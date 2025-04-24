@@ -1,0 +1,10 @@
+// Title: Potential WinAPI Calls Via PowerShell Scripts
+// Author: Nasreddine Bencherchali (Nextron Systems), Nikita Nazarov, oscd.community
+// Date: 2020-10-06
+// Level: high
+// Description: Detects use of WinAPI functions in PowerShell scriptsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query for PowerShell script execution events, you can filter on EventID 4104 which corresponds to Script Block Logging events. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.execution, attack.t1059.001, attack.t1106
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "OpenProcessToken" and ScriptBlockText contains "DuplicateTokenEx" and ScriptBlockText contains "CloseHandle") or (ScriptBlockText contains "VirtualAlloc" and ScriptBlockText contains "OpenProcess" and ScriptBlockText contains "WriteProcessMemory" and ScriptBlockText contains "CreateRemoteThread") or (ScriptBlockText contains "WriteProcessMemory" and ScriptBlockText contains "VirtualAlloc" and ScriptBlockText contains "ReadProcessMemory" and ScriptBlockText contains "VirtualFree") or (ScriptBlockText contains "OpenProcessToken" and ScriptBlockText contains "LookupPrivilegeValue" and ScriptBlockText contains "AdjustTokenPrivileges")

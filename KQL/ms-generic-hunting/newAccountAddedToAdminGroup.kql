@@ -1,0 +1,8 @@
+// Description: 'Account created in the last 7 days that is added to administrators group'
+// Required Connectors: BehaviorAnalytics (Types: IdentityInfo)
+
+let adminGroup = 'Administrators';
+IdentityInfo
+| where AccountCreationTime >= ago(7d)
+| where GroupMembership contains adminGroup
+| extend Account_0_AadUserId = AccountObjectId

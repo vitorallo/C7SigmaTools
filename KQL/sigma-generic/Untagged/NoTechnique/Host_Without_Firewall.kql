@@ -1,0 +1,10 @@
+// Title: Host Without Firewall
+// Author: Alexandr Yampolskyi, SOC Prime
+// Date: 2019-03-19
+// Level: low
+// Description: Host Without Firewall. Alert means not complied. Sigma for Qualys vulnerability scanner. Scan type - Vulnerability Management.This table contains vulnerability scan data from Qualys. To have this table present in Microsoft Sentinel, you need to ensure that the Qualys connector is set up and configured to send data to Sentinel.
+// Tags: N/A
+// ================================================================== 
+
+QualysVulnScan
+| where 'event.category' =~ "Security Policy" and 'host.scan.vuln_name' contains "Firewall Product Not Detected"

@@ -1,0 +1,10 @@
+// Title: Exports Registry Key To an Alternate Data Stream
+// Author: Oddvar Moe, Sander Wiebing, oscd.community
+// Date: 2020-10-07
+// Level: high
+// Description: Exports the target Registry key and hides it in the specified alternate data stream.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To have this table present, ensure that you have the necessary connectors set up in Sentinel to collect Windows security event logs.
+// Tags: attack.defense-evasion, attack.t1564.004
+// ================================================================== 
+
+SecurityEvent
+| where InitiatingProcessFolderPath endswith "\\regedit.exe"

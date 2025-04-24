@@ -1,0 +1,10 @@
+// Description: This query searches for not onboarded devices with a specific prefix
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceInfo)
+
+//
+let Onboarded = "Onboarded";
+let DeviceNamePrefix = "minint";
+DeviceInfo
+| summarize arg_max(Timestamp, *) by DeviceId
+| where OnboardingStatus != "Onboarded"
+| where DeviceName startswith DeviceNamePrefix

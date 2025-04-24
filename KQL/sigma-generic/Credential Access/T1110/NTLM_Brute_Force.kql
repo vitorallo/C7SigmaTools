@@ -1,0 +1,10 @@
+// Title: NTLM Brute Force
+// Author: Jerry Shockley '@jsh0x'
+// Date: 2022-02-02
+// Level: medium
+// Description: Detects common NTLM brute force device namesThe SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including Windows logs. To query NTLM events, you may need to enable the Microsoft-Windows-NTLM/Operational log source in your Sentinel configuration.
+// Tags: attack.credential-access, attack.t1110
+// ================================================================== 
+
+SecurityEvent
+| where WorkstationName in~ ("Rdesktop", "Remmina", "Freerdp", "Windows7", "Windows8", "Windows2012", "Windows2016", "Windows2019")

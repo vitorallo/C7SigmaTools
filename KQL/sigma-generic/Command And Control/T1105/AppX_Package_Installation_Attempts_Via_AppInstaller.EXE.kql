@@ -1,0 +1,11 @@
+// Title: AppX Package Installation Attempts Via AppInstaller.EXE
+// Author: frack113
+// Date: 2021-11-24
+// Level: medium
+// Description: Detects DNS queries made by "AppInstaller.EXE". The AppInstaller is the default handler for the "ms-appinstaller" URI. It attempts to load/install a package from the referenced URL
+// The DnsEvents table in Microsoft Sentinel contains DNS query logs. Ensure that the necessary connectors are set up to collect Windows DNS query logs in order to query this table.
+// Tags: attack.command-and-control, attack.t1105
+// ================================================================== 
+
+DnsEvents
+| where InitiatingProcessFolderPath endswith "\\AppInstaller.exe" and InitiatingProcessFolderPath startswith "C:\\Program Files\\WindowsApps\\Microsoft.DesktopAppInstaller_"

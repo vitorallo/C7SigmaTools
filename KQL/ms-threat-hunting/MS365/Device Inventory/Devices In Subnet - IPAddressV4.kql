@@ -1,0 +1,10 @@
+// Description: This query surfaces devices that are in a specific IPAddressV4 subnet
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceInfo)
+
+// Specify the relevant subnet in IpV4Range
+let IpV4Range = "172.22.138.0/24";
+DeviceNetworkInfo
+| summarize arg_max(Timestamp, *) by DeviceId
+| mv-expand IPAddressEntry=todynamic(IPAddresses)
+| extend IPAddress=tostring(IPAddressEntry.IPAddress)
+| where ipv4_is_in_range(IPAddress, IpV4Range)

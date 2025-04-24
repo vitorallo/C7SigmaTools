@@ -1,0 +1,10 @@
+// Description: This query finds a software by name and/or version
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceTvmSoftwareInventory)
+
+//
+let SearchSoftwareName = "chrome";
+let SoftwareKnownVersion = "10";
+DeviceTvmSoftwareInventory
+// to surface software that the version is not discovered for, remove SoftwareVersion filtering
+| where SoftwareName == SearchSoftwareName
+| where SoftwareVersion startswith SoftwareKnownVersion

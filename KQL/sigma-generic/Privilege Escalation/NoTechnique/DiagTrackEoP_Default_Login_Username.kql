@@ -1,0 +1,10 @@
+// Title: DiagTrackEoP Default Login Username
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-08-03
+// Level: critical
+// Description: Detects the default "UserName" used by the DiagTrackEoP POCThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that the Windows Security events are being collected and forwarded to Sentinel using the Microsoft Monitoring Agent or a SIEM agent.
+// Tags: attack.privilege-escalation
+// ================================================================== 
+
+SecurityEvent
+| where LogonType == 9 and TargetOutboundUserName =~ "thisisnotvaliduser"

@@ -1,0 +1,10 @@
+// Title: OneLogin User Assumed Another User
+// Author: Austin Songer @austinsonger
+// Date: 2021-10-12
+// Level: low
+// Description: Detects when an user assumed another user account.This table contains Onelogin events data. Make sure to have the Onelogin connector enabled in Microsoft Sentinel to collect data from Onelogin service.
+// Tags: attack.impact
+// ================================================================== 
+
+OneloginEvents
+| where event_type_id == 3

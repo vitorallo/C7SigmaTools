@@ -1,0 +1,10 @@
+// Title: PST Export Alert Using eDiscovery Alert
+// Author: Sorina Ionescu
+// Date: 2022-02-08
+// Level: medium
+// Description: Alert on when a user has performed an eDiscovery search or exported a PST file from the search. This PST file usually has sensitive information including email body contentThis table contains information about user and admin activities in Office 365, including eDiscovery searches and exports. Make sure to have the Office 365 data connector enabled in Microsoft Sentinel to access this table.
+// Tags: attack.collection, attack.t1114
+// ================================================================== 
+
+OfficeActivity
+| where eventName =~ "eDiscovery search started or exported" and eventSource =~ "SecurityComplianceCenter" and status =~ "success"

@@ -1,0 +1,10 @@
+// Title: MSSQL Server Failed Logon From External Network
+// Author: j4son
+// Date: 2023-10-11
+// Level: medium
+// Description: Detects failed logon attempts from clients with external network IP to an MSSQL server. This can be a sign of a bruteforce attack.This table contains security-related events from Windows machines. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.credential-access, attack.t1110
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name contains "MSSQL" and (not((Data contains "CLIENT: 10." or Data contains "CLIENT: 172.16." or Data contains "CLIENT: 172.17." or Data contains "CLIENT: 172.18." or Data contains "CLIENT: 172.19." or Data contains "CLIENT: 172.20." or Data contains "CLIENT: 172.21." or Data contains "CLIENT: 172.22." or Data contains "CLIENT: 172.23." or Data contains "CLIENT: 172.24." or Data contains "CLIENT: 172.25." or Data contains "CLIENT: 172.26." or Data contains "CLIENT: 172.27." or Data contains "CLIENT: 172.28." or Data contains "CLIENT: 172.29." or Data contains "CLIENT: 172.30." or Data contains "CLIENT: 172.31." or Data contains "CLIENT: 192.168." or Data contains "CLIENT: 127." or Data contains "CLIENT: 169.254.")))

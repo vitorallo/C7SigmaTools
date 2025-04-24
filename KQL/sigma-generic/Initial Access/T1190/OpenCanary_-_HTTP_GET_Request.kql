@@ -1,0 +1,10 @@
+// Title: OpenCanary - HTTP GET Request
+// Author: Security Onion Solutions
+// Date: 2024-03-08
+// Level: high
+// Description: Detects instances where an HTTP service on an OpenCanary node has received a GET request.The OpencanaryLogs table in Microsoft Sentinel contains logs related to the Opencanary application. To have this table present in Sentinel, you need to ensure that Opencanary logs are being collected and sent to Sentinel for ingestion.
+// Tags: attack.initial-access, attack.t1190
+// ================================================================== 
+
+OpencanaryLogs
+| where logtype == 3000

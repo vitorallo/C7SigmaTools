@@ -1,0 +1,14 @@
+// Title: Potentially Suspicious Self Extraction Directive File Created
+// Author: Joseliyo Sanchez, @Joseliyo_Jstnk
+// Date: 2024-02-05
+// Level: medium
+// Description: Detects the creation of a binary file with the ".sed" extension. The ".sed" extension stand for Self Extraction Directive files.
+// These files are used by the "iexpress.exe" utility in order to create self extracting packages.
+// Attackers were seen abusing this utility and creating PE files with embedded ".sed" entries.
+// Usually ".sed" files are simple ini files and not PE binaries.
+// This table contains information about file events on Windows devices, including executable files being detected. To have this table present in Microsoft Sentinel, ensure that the Microsoft Defender for Endpoint data connector is enabled and configured to collect file events from Windows devices.
+// Tags: attack.defense-evasion, attack.t1218
+// ================================================================== 
+
+DeviceFileEvents
+| where FolderPath endswith ".sed"

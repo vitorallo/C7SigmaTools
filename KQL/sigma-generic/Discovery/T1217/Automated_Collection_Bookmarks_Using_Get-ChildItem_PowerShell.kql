@@ -1,0 +1,13 @@
+// Title: Automated Collection Bookmarks Using Get-ChildItem PowerShell
+// Author: frack113
+// Date: 2021-12-13
+// Level: low
+// Description: Adversaries may enumerate browser bookmarks to learn more about compromised hosts.
+// Browser bookmarks may reveal personal information about users (ex: banking sites, interests, social media, etc.) as well as details about
+// internal network resources such as servers, tools/dashboards, or other related infrastructure.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.discovery, attack.t1217
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Get-ChildItem" and ScriptBlockText contains " -Recurse " and ScriptBlockText contains " -Path " and ScriptBlockText contains " -Filter Bookmarks" and ScriptBlockText contains " -ErrorAction SilentlyContinue" and ScriptBlockText contains " -Force"

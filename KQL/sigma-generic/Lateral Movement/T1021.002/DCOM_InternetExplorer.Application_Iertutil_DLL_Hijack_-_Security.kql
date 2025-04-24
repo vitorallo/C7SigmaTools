@@ -1,0 +1,10 @@
+// Title: DCOM InternetExplorer.Application Iertutil DLL Hijack - Security
+// Author: Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)
+// Date: 2020-10-12
+// Level: high
+// Description: Detects a threat actor creating a file named `iertutil.dll` in the `C:\Program Files\Internet Explorer\` directory over the network for a DCOM InternetExplorer DLL Hijack scenario.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that the Windows Security events are being collected and forwarded to Sentinel using the Microsoft Monitoring Agent (MMA) or Azure Log Analytics agent.
+// Tags: attack.lateral-movement, attack.t1021.002, attack.t1021.003
+// ================================================================== 
+
+SecurityEvent
+| where RelativeTargetName endswith "\\Internet Explorer\\iertutil.dll" and (not(SubjectUserName endswith "$"))

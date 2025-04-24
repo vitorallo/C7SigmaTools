@@ -1,0 +1,10 @@
+// Title: Live Memory Dump Using Powershell
+// Author: Max Altgelt (Nextron Systems)
+// Date: 2021-09-21
+// Level: high
+// Description: Detects usage of a PowerShell command to dump the live memory of a Windows machineThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have access to this table.
+// Tags: attack.t1003
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Get-StorageDiagnosticInfo" and ScriptBlockText contains "-IncludeLiveDump"

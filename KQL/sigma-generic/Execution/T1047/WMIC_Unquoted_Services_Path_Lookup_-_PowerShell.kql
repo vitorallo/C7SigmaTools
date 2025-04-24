@@ -1,0 +1,10 @@
+// Title: WMIC Unquoted Services Path Lookup - PowerShell
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-06-20
+// Level: medium
+// Description: Detects known WMI recon method to look for unquoted service paths, often used by pentest inside of powershell scripts attackers enum scriptsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events connector is enabled in Sentinel to collect these logs.
+// Tags: attack.execution, attack.t1047
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Get-WmiObject " or ScriptBlockText contains "gwmi ") and (ScriptBlockText contains " Win32_Service " and ScriptBlockText contains "Name" and ScriptBlockText contains "DisplayName" and ScriptBlockText contains "PathName" and ScriptBlockText contains "StartMode")

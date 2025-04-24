@@ -1,0 +1,10 @@
+// Title: Suspicious Inbox Forwarding
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-22
+// Level: low
+// Description: Detects when a Microsoft Cloud App Security reported suspicious email forwarding rules, for example, if a user created an inbox rule that forwards a copy of all emails to an external address.This table contains threat intelligence indicators and can be queried to retrieve threat management data related to M365. Ensure that Threat Intelligence data connector is enabled in Microsoft Sentinel to have this table available.
+// Tags: attack.exfiltration, attack.t1020
+// ================================================================== 
+
+ThreatIntelligenceIndicator
+| where eventName =~ "Suspicious inbox forwarding" and eventSource =~ "SecurityComplianceCenter" and status =~ "success"

@@ -1,0 +1,10 @@
+// Title: Audio Capture
+// Author: Pawel Mazur
+// Date: 2021-09-04
+// Level: low
+// Description: Detects attempts to record audio with arecord utilityThe equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs.
+// Tags: attack.collection, attack.t1123
+// ================================================================== 
+
+LinuxAudit
+| where a0 =~ "arecord" and a1 =~ "-vv" and a2 =~ "-fdat" and type =~ "EXECVE"

@@ -1,0 +1,10 @@
+// Title: Moriya Rootkit - System
+// Author: Bhabesh Raj
+// Date: 2021-05-06
+// Level: critical
+// Description: Detects the use of Moriya rootkit as described in the securelist's Operation TunnelSnake reportThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query this table, ensure that you have the necessary connectors set up in Sentinel to collect Windows security event logs.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1543.003
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and ServiceName =~ "ZzNetSvc"

@@ -1,0 +1,22 @@
+// Description: 'User explicitly denies MFA push, indicating that login was not expected and the account's password may be compromised.
+// This rule is deprecated as of July-2024. Alternative rule with similar logic and contex from more data source 
+// is available at https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Microsoft%20Entra%20ID/Analytic%20Rules/MFARejectedbyUser.yaml'
+// Required Connectors: AzureActiveDirectory (Types: SigninLogs); AzureActiveDirectory (Types: AADNonInteractiveUserSignInLogs); MicrosoftThreatProtection (Types: DeviceInfo)
+
+let aadFunc = (tableName: string) {
+    table(tableName)
+    | where ResultType == 500121
+    | where Status has "MFA Denied; user declined the authentication" or Status has "MFA denied; Phone App Reported Fraud"
+    | extend Type = Type, PublicIP = IPAddress
+    | extend
+        Name = tostring(split(UserPrincipalName, '@', 0)[0]),
+        UPNSuffix = tostring(split(UserPrincipalName, '@', 1)[0])
+};
+let aadSignin = aadFunc("SigninLogs");
+let dvcInfo = DeviceInfo
+    | extend SensorHealthState = column_ifexists("SensorHealthState", "")
+    | where OnboardingStatus == "Onboarded" and SensorHealthState == "Active"
+    | project PublicIP, AadDeviceId;
+let aadNonInt = aadFunc("AADNonInteractiveUserSignInLogs");
+union isfuzzy=true aadSignin, aadNonInt
+| join kind=leftouter dvcInfo on PublicIP

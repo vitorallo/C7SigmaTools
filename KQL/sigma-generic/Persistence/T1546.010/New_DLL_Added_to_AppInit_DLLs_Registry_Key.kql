@@ -1,0 +1,10 @@
+// Title: New DLL Added to AppInit_DLLs Registry Key
+// Author: Ilyas Ochkov, oscd.community, Tim Shelton
+// Date: 2019-10-25
+// Level: medium
+// Description: DLLs that are specified in the AppInit_DLLs value in the Registry key HKLM\Software\Microsoft\Windows NT\CurrentVersion\Windows are loaded by user32.dll into every process that loads user32.dllThis table contains information about registry events on Windows systems. Ensure that the Microsoft Defender for Endpoint data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.persistence, attack.t1546.010
+// ================================================================== 
+
+RegistryEvents
+| where ((RegistryKey endswith "\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_Dlls" or RegistryKey endswith "\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_Dlls") or (NewName endswith "\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_Dlls" or NewName endswith "\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\AppInit_Dlls")) and (not(RegistryValueData =~ "(Empty)"))

@@ -1,0 +1,10 @@
+// Title: Suspicious AppX Package Installation Attempt
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-01-11
+// Level: medium
+// Description: Detects an appx package installation with the error code "0x80073cff" which indicates that the package didn't meet the signing requirements and could be suspiciousThis table contains information about installed Appx packages on Windows devices. To have this table present in Microsoft Sentinel, ensure that the Microsoft Defender for Endpoint solution is enabled and collecting data from Windows devices.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+AppxPackageInventory
+| where ErrorCode =~ "0x80073cff"

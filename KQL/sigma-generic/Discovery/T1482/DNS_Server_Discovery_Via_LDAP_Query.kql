@@ -1,0 +1,10 @@
+// Title: DNS Server Discovery Via LDAP Query
+// Author: frack113
+// Date: 2022-08-20
+// Level: low
+// Description: Detects DNS server discovery via LDAP query requests from uncommon applicationsThe DnsEvents table in Microsoft Sentinel contains DNS query logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to collect these logs.
+// Tags: attack.discovery, attack.t1482
+// ================================================================== 
+
+DnsEvents
+| where QueryName startswith "_ldap." and (not(((InitiatingProcessFolderPath contains ":\\ProgramData\\Microsoft\\Windows Defender\\Platform\\" and InitiatingProcessFolderPath endswith "\\MsMpEng.exe") or (InitiatingProcessFolderPath contains ":\\Program Files\\" or InitiatingProcessFolderPath contains ":\\Program Files (x86)\\" or InitiatingProcessFolderPath contains ":\\Windows\\") or isnull(InitiatingProcessFolderPath) or InitiatingProcessFolderPath =~ "<unknown process>"))) and (not((InitiatingProcessFolderPath startswith "C:\\WindowsAzure\\GuestAgent" or (InitiatingProcessFolderPath endswith "\\chrome.exe" or InitiatingProcessFolderPath endswith "\\firefox.exe" or InitiatingProcessFolderPath endswith "\\opera.exe"))))

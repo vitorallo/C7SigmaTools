@@ -1,0 +1,17 @@
+// Description: 'This detection triggers when there is a Signin burst from multiple locations in GitHub (Entra ID SSO).
+//  This detection is based on configurable threshold which can be prone to false positives. To view the anomaly based equivalent of thie detection, please see here https://github.com/Azure/Azure-Sentinel/blob/master/Solutions/Microsoft%20Entra%20ID/Analytic%20Rules/AnomalousUserAppSigninLocationIncrease-detection.yaml. '
+// Required Connectors: AzureActiveDirectory (Types: SigninLogs); AzureActiveDirectory (Types: AADNonInteractiveUserSignInLogs)
+
+let locationThreshold = 1;
+let aadFunc = (tableName:string){
+table(tableName)
+| where AppDisplayName =~ "GitHub.com"
+| where ResultType == 0
+| summarize CountOfLocations = dcount(Location), Locations = make_set(Location,100), BurstStartTime = min(TimeGenerated), BurstEndTime = max(TimeGenerated) by UserPrincipalName, Type
+| where CountOfLocations > locationThreshold
+| extend timestamp = BurstStartTime
+};
+let aadSignin = aadFunc("SigninLogs");
+let aadNonInt = aadFunc("AADNonInteractiveUserSignInLogs");
+union isfuzzy=true aadSignin, aadNonInt
+| extend Name = tostring(split(UserPrincipalName,'@',0)[0]), UPNSuffix = tostring(split(UserPrincipalName,'@',1)[0])

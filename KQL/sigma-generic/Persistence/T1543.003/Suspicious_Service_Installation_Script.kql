@@ -1,0 +1,10 @@
+// Title: Suspicious Service Installation Script
+// Author: pH-T (Nextron Systems)
+// Date: 2022-03-18
+// Level: high
+// Description: Detects suspicious service installation scriptsThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.persistence, attack.privilege-escalation, car.2013-09-005, attack.t1543.003
+// ================================================================== 
+
+SecurityEvent
+| where (ImagePath contains "cscript" or ImagePath contains "mshta" or ImagePath contains "powershell" or ImagePath contains "pwsh" or ImagePath contains "regsvr32" or ImagePath contains "rundll32" or ImagePath contains "wscript") and (ImagePath contains " -c " or ImagePath contains " /c " or ImagePath contains " –c " or ImagePath contains " —c " or ImagePath contains " ―c " or ImagePath contains " -r " or ImagePath contains " /r " or ImagePath contains " –r " or ImagePath contains " —r " or ImagePath contains " ―r " or ImagePath contains " -k " or ImagePath contains " /k " or ImagePath contains " –k " or ImagePath contains " —k " or ImagePath contains " ―k ") and Provider_Name =~ "Service Control Manager"

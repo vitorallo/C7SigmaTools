@@ -1,0 +1,10 @@
+// Title: Nslookup PowerShell Download Cradle
+// Author: Sai Prashanth Pulisetti @pulisettis, Aishwarya Singam
+// Date: 2022-12-10
+// Level: medium
+// Description: Detects a powershell download cradle using nslookup. This cradle uses nslookup to extract payloads from DNS records.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have this table available for querying.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where (Data contains "-q=txt http" or Data contains "-querytype=txt http" or Data contains "-type=txt http") and (Data contains "powershell" and Data contains "nslookup" and Data contains "[1]")

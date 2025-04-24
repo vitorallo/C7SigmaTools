@@ -1,0 +1,10 @@
+// Title: Suspicious Cobalt Strike DNS Beaconing - Sysmon
+// Author: Florian Roth (Nextron Systems)
+// Date: 2021-11-09
+// Level: critical
+// Description: Detects a program that invoked suspicious DNS queries known from Cobalt Strike beaconsThe DnsEvents table in Microsoft Sentinel contains DNS query logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.command-and-control, attack.t1071.004
+// ================================================================== 
+
+DnsEvents
+| where (QueryName startswith "aaa.stage." or QueryName startswith "post.1") or QueryName contains ".stage.123456."

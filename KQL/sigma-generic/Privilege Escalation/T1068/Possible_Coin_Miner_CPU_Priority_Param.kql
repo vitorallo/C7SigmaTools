@@ -1,0 +1,10 @@
+// Title: Possible Coin Miner CPU Priority Param
+// Author: Florian Roth (Nextron Systems)
+// Date: 2021-10-09
+// Level: critical
+// Description: Detects command line parameter very often used with coin minersThe equivalent table in Microsoft Sentinel for Linux audit logs. Make sure to have the Linux agent installed on the target machines and properly configured to send audit logs to Sentinel.
+// Tags: attack.privilege-escalation, attack.t1068
+// ================================================================== 
+
+LinuxAudit
+| where a1 startswith "--cpu-priority" or a2 startswith "--cpu-priority" or a3 startswith "--cpu-priority" or a4 startswith "--cpu-priority" or a5 startswith "--cpu-priority" or a6 startswith "--cpu-priority" or a7 startswith "--cpu-priority"

@@ -1,0 +1,10 @@
+// Title: Bitbucket User Permissions Export Attempt
+// Author: Muhammad Faisal (@faisalusuf)
+// Date: 2024-02-25
+// Level: medium
+// Description: Detects user permission data export attempt.This table contains audit logs for various services, including Bitbucket. Make sure to enable the necessary connectors or data sources for Bitbucket in Microsoft Sentinel to populate this table.
+// Tags: attack.reconnaissance, attack.t1213, attack.t1082, attack.t1591.004
+// ================================================================== 
+
+AuditLogs
+| where ('auditType.action' in~ ("User details export failed", "User details export started", "User details exported")) and 'auditType.category' =~ "Users and groups"

@@ -1,0 +1,12 @@
+// Title: Deployment Deleted From Kubernetes Cluster
+// Author: Leo Tsaousis (@laripping)
+// Date: 2024-03-26
+// Level: low
+// Description: Detects the removal of a deployment from a Kubernetes cluster.
+// This could indicate disruptive activity aiming to impact business operations.
+// The KubeEvents table in Microsoft Sentinel contains Kubernetes audit logs. To have this table present, ensure that you have the necessary connectors or data sources configured in Sentinel to collect Kubernetes audit logs.
+// Tags: attack.t1498
+// ================================================================== 
+
+KubeEvents
+| where 'objectRef.resource' =~ "deployments" and verb =~ "delete"

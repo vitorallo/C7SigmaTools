@@ -1,0 +1,10 @@
+// Title: Logon from a Risky IP Address
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-23
+// Level: medium
+// Description: Detects when a Microsoft Cloud App Security reported when a user signs into your sanctioned apps from a risky IP address.This table contains threat intelligence indicators, including indicators of compromise (IoCs) and threat actor information. To have this table present in Microsoft Sentinel, ensure that Threat Intelligence data connectors are configured and collecting data from the threat management service for M365.
+// Tags: attack.initial-access, attack.t1078
+// ================================================================== 
+
+ThreatIntelligenceIndicator
+| where eventName =~ "Log on from a risky IP address" and eventSource =~ "SecurityComplianceCenter" and status =~ "success"

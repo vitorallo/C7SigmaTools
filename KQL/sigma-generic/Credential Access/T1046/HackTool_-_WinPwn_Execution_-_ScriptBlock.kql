@@ -1,0 +1,11 @@
+// Title: HackTool - WinPwn Execution - ScriptBlock
+// Author: Swachchhanda Shrawan Poudel
+// Date: 2023-12-04
+// Level: high
+// Description: Detects scriptblock text keywords indicative of potential usge of the tool WinPwn. A tool for Windows and Active Directory reconnaissance and exploitation.
+// This table contains logs of PowerShell script block executions. Ensure that the Microsoft Monitoring Agent is installed on the Windows machines and configured to collect PowerShell script block logs.
+// Tags: attack.credential-access, attack.defense-evasion, attack.discovery, attack.execution, attack.privilege-escalation, attack.t1046, attack.t1082, attack.t1106, attack.t1518, attack.t1548.002, attack.t1552.001, attack.t1555, attack.t1555.003
+// ================================================================== 
+
+ScriptBlockLogs
+| where ScriptBlockText contains "Offline_Winpwn" or ScriptBlockText contains "WinPwn " or ScriptBlockText contains "WinPwn.exe" or ScriptBlockText contains "WinPwn.ps1"

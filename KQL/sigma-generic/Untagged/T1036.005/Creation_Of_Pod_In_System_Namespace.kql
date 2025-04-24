@@ -1,0 +1,14 @@
+// Title: Creation Of Pod In System Namespace
+// Author: Leo Tsaousis (@laripping)
+// Date: 2024-03-26
+// Level: medium
+// Description: Detects deployments of pods within the kube-system namespace, which could be intended to imitate system pods.
+// System pods, created by controllers such as Deployments or DaemonSets have random suffixes in their names.
+// Attackers can use this fact and name their backdoor pods as if they were created by these controllers to avoid detection.
+// Deployment of such a backdoor container e.g. named kube-proxy-bv61v, could be attempted in the kube-system namespace alongside the other administrative containers.
+// This table contains Kubernetes audit logs. To have this table present in Sentinel, ensure that you have the necessary connectors or data sources configured to collect Kubernetes audit logs.
+// Tags: attack.t1036.005
+// ================================================================== 
+
+KubeEvents
+| where 'objectRef.namespace' =~ "kube-system" and 'objectRef.resource' =~ "pods" and verb =~ "create"

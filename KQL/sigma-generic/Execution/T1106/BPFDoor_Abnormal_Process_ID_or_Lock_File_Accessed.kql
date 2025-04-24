@@ -1,0 +1,10 @@
+// Title: BPFDoor Abnormal Process ID or Lock File Accessed
+// Author: Rafal Piasecki
+// Date: 2022-08-10
+// Level: high
+// Description: detects BPFDoor .lock and .pid files access in temporary file storage facilityThe SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including audit logs. To ensure that audit logs from Linux auditd are available in the SecurityEvent table, you may need to onboard the necessary data connectors or enable the appropriate data sources in Sentinel.
+// Tags: attack.execution, attack.t1106, attack.t1059
+// ================================================================== 
+
+SecurityEvent
+| where (name in~ ("/var/run/haldrund.pid", "/var/run/xinetd.lock", "/var/run/kdevrund.pid")) and type =~ "PATH"

@@ -1,0 +1,10 @@
+// Title: Pass the Hash Activity 2
+// Author: Dave Kennedy, Jeff Warren (method) / David Vassallo (rule)
+// Date: 2019-06-14
+// Level: medium
+// Description: Detects the attack technique pass the hash which is used to move laterally inside the networkThis table contains security-related events, including event ID 4624 for successful logons. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to query this table.
+// Tags: attack.lateral-movement, attack.t1550.002
+// ================================================================== 
+
+SecurityEvent
+| where ((KeyLength == 0 and LogonProcessName =~ "NtLmSsp" and LogonType == 3 and SubjectUserSid =~ "S-1-0-0") or (LogonProcessName =~ "seclogo" and LogonType == 9)) and (not(TargetUserName =~ "ANONYMOUS LOGON"))

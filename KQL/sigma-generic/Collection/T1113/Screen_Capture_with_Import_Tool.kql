@@ -1,0 +1,13 @@
+// Title: Screen Capture with Import Tool
+// Author: Pawel Mazur
+// Date: 2021-09-21
+// Level: low
+// Description: Detects adversary creating screen capture of a desktop with Import Tool.
+// Highly recommended using rule on servers, due to high usage of screenshot utilities on user workstations.
+// ImageMagick must be installed.
+// The SecurityEvent table in Microsoft Sentinel contains security-related events from various sources, including audit logs. To ensure that auditd logs from Linux systems are available in the SecurityEvent table, you need to onboard the Linux machines to Sentinel and configure the necessary data connectors or agents to collect and forward the auditd logs.
+// Tags: attack.collection, attack.t1113
+// ================================================================== 
+
+SecurityEvent
+| where (a0 =~ "import" and type =~ "EXECVE") and ((a1 =~ "-window" and a2 =~ "root" and (a3 endswith ".png" or a3 endswith ".jpg" or a3 endswith ".jpeg")) or (a1 endswith ".png" or a1 endswith ".jpg" or a1 endswith ".jpeg"))

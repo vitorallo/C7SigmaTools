@@ -1,0 +1,11 @@
+// Title: Publicly Accessible RDP Service
+// Author: Josh Brower @DefensiveDepth
+// Date: 2020-08-22
+// Level: high
+// Description: Detects connections from routable IPs to an RDP listener. Which is indicative of a publicly-accessible RDP service.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which may include RDP related events. To ensure RDP events are captured, make sure to have the necessary data connectors or log sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.lateral-movement, attack.t1021.001
+// ================================================================== 
+
+SecurityEvent
+| where not((ipv4_is_in_range(id.orig_h, "::1/128") or ipv4_is_in_range(id.orig_h, "10.0.0.0/8") or ipv4_is_in_range(id.orig_h, "127.0.0.0/8") or ipv4_is_in_range(id.orig_h, "172.16.0.0/12") or ipv4_is_in_range(id.orig_h, "192.168.0.0/16") or ipv4_is_in_range(id.orig_h, "169.254.0.0/16") or ipv4_is_in_range(id.orig_h, "2620:83:8000::/48") or ipv4_is_in_range(id.orig_h, "fc00::/7") or ipv4_is_in_range(id.orig_h, "fe80::/10")))

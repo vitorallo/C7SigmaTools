@@ -1,0 +1,13 @@
+// Title: Bad Opsec Powershell Code Artifacts
+// Author: ok @securonix invrep_de, oscd.community
+// Date: 2020-10-09
+// Level: critical
+// Description: focuses on trivial artifacts observed in variants of prevalent offensive ps1 payloads, including
+// Cobalt Strike Beacon, PoshC2, Powerview, Letmein, Empire, Powersploit, and other attack payloads
+// that often undergo minimal changes by attackers due to bad opsec.
+// This table contains security-related events from Windows machines. Make sure to have the Windows Security Events connector enabled in Microsoft Sentinel to collect this data.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where Payload contains "$DoIt" or Payload contains "harmj0y" or Payload contains "mattifestation" or Payload contains "_RastaMouse" or Payload contains "tifkin_" or Payload contains "0xdeadbeef"

@@ -1,0 +1,10 @@
+// Title: Azure Application Gateway Modified or Deleted
+// Author: Austin Songer
+// Date: 2021-08-16
+// Level: medium
+// Description: Identifies when a application gateway is modified or deleted.This table contains Azure Activity Logs data. Make sure to have the Azure Monitor solution enabled in Microsoft Sentinel to access this table.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where operationName in~ ("MICROSOFT.NETWORK/APPLICATIONGATEWAYS/WRITE", "MICROSOFT.NETWORK/APPLICATIONGATEWAYS/DELETE")

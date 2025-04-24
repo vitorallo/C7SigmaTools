@@ -1,0 +1,10 @@
+// Title: Screen Capture with Xwd
+// Author: Pawel Mazur
+// Date: 2021-09-13
+// Level: low
+// Description: Detects adversary creating screen capture of a full with xwd. Highly recommended using rule on servers, due high usage of screenshot utilities on user workstationsThe LinuxAudit table in Microsoft Sentinel contains audit logs from Linux systems. To have this table present, ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs.
+// Tags: attack.collection, attack.t1113
+// ================================================================== 
+
+LinuxAudit
+| where (a0 =~ "xwd" and type =~ "EXECVE") and ((a1 =~ "-out" and a2 endswith ".xwd") or (a1 =~ "-root" and a2 =~ "-out" and a3 endswith ".xwd"))

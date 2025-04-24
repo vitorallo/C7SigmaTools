@@ -1,0 +1,10 @@
+// Title: Persistence and Execution at Scale via GPO Scheduled Task
+// Author: Samir Bousseaden
+// Date: 2019-04-03
+// Level: high
+// Description: Detect lateral movement using GPO scheduled task, usually used to deploy ransomware at scaleThe SecurityEvent table in Microsoft Sentinel contains security-related logs, including detailed file share access events. Make sure to have the necessary data connectors and log sources configured in Sentinel to populate this table with the required information.
+// Tags: attack.persistence, attack.lateral-movement, attack.t1053.005
+// ================================================================== 
+
+SecurityEvent
+| where ((AttributeLDAPDisplayName in~ ("gPCMachineExtensionNames", "gPCUserExtensionNames")) and (AttributeValue contains "CAB54552-DEEA-4691-817E-ED4A4D1AFC72" or AttributeValue contains "AADCED64-746C-4633-A97C-D61349046527")) or ((AccessList contains "WriteData" or AccessList contains "%%4417") and RelativeTargetName endswith "ScheduledTasks.xml" and ShareName endswith "\\SYSVOL")

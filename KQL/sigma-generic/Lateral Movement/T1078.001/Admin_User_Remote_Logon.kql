@@ -1,0 +1,10 @@
+// Title: Admin User Remote Logon
+// Author: juju4
+// Date: 2017-10-29
+// Level: low
+// Description: Detect remote login by Administrator user (depending on internal pattern).This table contains security-related events from Windows machines. Ensure that the Windows Security Events data connector is enabled in Microsoft Sentinel to have this table available for querying.
+// Tags: attack.lateral-movement, attack.t1078.001, attack.t1078.002, attack.t1078.003, car.2016-04-005
+// ================================================================== 
+
+SecurityEvent
+| where AuthenticationPackageName =~ "Negotiate" and LogonType == 10 and TargetUserName startswith "Admin"

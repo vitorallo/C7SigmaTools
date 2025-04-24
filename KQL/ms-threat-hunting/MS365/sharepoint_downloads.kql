@@ -1,0 +1,23 @@
+// Description: 'New user agents associated with a clientIP for SharePoint file uploads/downloads.'
+// Required Connectors: Office365 (Types: OfficeActivity (SharePoint))
+
+let starttime = todatetime('{{StartTimeISO}}');
+let endtime = todatetime('{{EndTimeISO}}');
+let lookback = starttime - 14d;
+let historicalUA=
+OfficeActivity
+| where  RecordType == "SharePointFileOperation"
+| where Operation in ("FileDownloaded", "FileUploaded")
+| where TimeGenerated between(lookback..starttime)
+| summarize by ClientIP, UserAgent;
+let recentUA = OfficeActivity
+| where  RecordType == "SharePointFileOperation"
+| where Operation in ("FileDownloaded", "FileUploaded")
+| where TimeGenerated between(starttime..endtime)
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated) by ClientIP, UserAgent;
+recentUA | join kind=leftanti (
+   historicalUA
+) on ClientIP, UserAgent
+// Some OfficeActivity records do not contain ClientIP information - exclude these for fewer results
+| where not(isempty(ClientIP))
+| extend IP_0_Address = ClientIP

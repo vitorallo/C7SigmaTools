@@ -1,0 +1,8 @@
+// Description: Prior to deploying Macaw ransomware in an organization, adversaries wil use Attrib to display file attribute information on multiple drives and all subfolders.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where InitiatingProcessParentFileName endswith "PSEXESVC.exe" 
+| where InitiatingProcessCommandLine has ".bat" 
+| where FileName =~ "cmd.exe" and ProcessCommandLine has_all("-s", "-h", "-r", "-a", "*.*") 
+| take 100

@@ -1,0 +1,12 @@
+// Title: Network Sniffing - Linux
+// Author: Timur Zinniatullin, oscd.community
+// Date: 2019-10-21
+// Level: low
+// Description: Network sniffing refers to using the network interface on a system to monitor or capture information sent over a wired or wireless connection.
+// An adversary may place a network interface into promiscuous mode to passively access data in transit over the network, or use span ports to capture a larger amount of data.
+// The equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the necessary data connectors are configured to collect audit logs.
+// Tags: attack.credential-access, attack.discovery, attack.t1040
+// ================================================================== 
+
+LinuxAudit
+| where (a0 =~ "tcpdump" and a1 =~ "-c" and a3 contains "-i" and type =~ "execve") or (a0 =~ "tshark" and a1 =~ "-c" and a3 =~ "-i" and type =~ "execve")

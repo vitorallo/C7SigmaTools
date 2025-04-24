@@ -1,0 +1,12 @@
+// Title: PowerShell Remote Session Creation
+// Author: frack113
+// Date: 2022-01-06
+// Level: medium
+// Description: Adversaries may abuse PowerShell commands and scripts for execution.
+// PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system
+// The SecurityEvent table in Microsoft Sentinel contains logs related to security events on Windows machines. To ensure that Script Block Logging events are present in this table, make sure to enable Script Block Logging on the Windows machines and configure the necessary data connectors in Sentinel to collect these logs.
+// Tags: attack.execution, attack.t1059.001
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "New-PSSession" and ScriptBlockText contains "-ComputerName "

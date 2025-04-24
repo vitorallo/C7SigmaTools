@@ -1,0 +1,10 @@
+// Title: AWS S3 Bucket Versioning Disable
+// Author: Sean Johnstone | Unit 42
+// Date: 2023-10-28
+// Level: medium
+// Description: Detects when S3 bucket versioning is disabled. Threat actors use this technique during AWS ransomware incidents prior to deleting S3 objects.The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail events. To query this table, ensure that the AWS CloudTrail connector is set up in Sentinel and ingesting logs from the specified AWS account.
+// Tags: attack.impact, attack.t1490
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "PutBucketVersioning" and eventSource =~ "s3.amazonaws.com" and requestParameters contains "Suspended"

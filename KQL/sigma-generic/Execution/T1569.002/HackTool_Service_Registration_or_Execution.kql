@@ -1,0 +1,10 @@
+// Title: HackTool Service Registration or Execution
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-03-21
+// Level: high
+// Description: Detects installation or execution of servicesThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs. Make sure to have the Windows Security Events connector enabled in Sentinel to collect these logs.
+// Tags: attack.execution, attack.t1569.002, attack.s0029
+// ================================================================== 
+
+SecurityEvent
+| where Provider_Name =~ "Service Control Manager" and (ImagePath contains "bypass" or (ServiceName contains "cachedump" or ServiceName contains "DumpSvc" or ServiceName contains "gsecdump" or ServiceName contains "pwdump" or ServiceName contains "UACBypassedService" or ServiceName contains "WCE SERVICE" or ServiceName contains "WCESERVICE" or ServiceName contains "winexesvc"))

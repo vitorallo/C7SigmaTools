@@ -1,0 +1,7 @@
+// Description: 'Identifies accounts that have been locked out by smart lockout policies. Review this results for patterns that might suggest that a password spray is triggering these smart lockout events.
+// Ref : https://docs.microsoft.com/azure/active-directory/fundamentals/security-operations-user-accounts#monitoring-for-failed-unusual-sign-ins'
+// Required Connectors: AzureActiveDirectory (Types: SigninLogs)
+
+SigninLogs
+| where ResultType == 50053
+| extend AccountCustomEntity = UserPrincipalName, IPCustomEntity = IPAddress

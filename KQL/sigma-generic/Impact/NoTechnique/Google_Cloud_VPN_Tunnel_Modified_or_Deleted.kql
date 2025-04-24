@@ -1,0 +1,10 @@
+// Title: Google Cloud VPN Tunnel Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-16
+// Level: medium
+// Description: Identifies when a VPN Tunnel Modified or Deleted in Google Cloud.This table contains GCP audit logs. Ensure that the GCP connector is set up in Microsoft Sentinel to collect and store these logs.
+// Tags: attack.impact
+// ================================================================== 
+
+GCPAuditLogs
+| where 'gcp.audit.method_name' in~ ("compute.vpnTunnels.insert", "compute.vpnTunnels.delete")

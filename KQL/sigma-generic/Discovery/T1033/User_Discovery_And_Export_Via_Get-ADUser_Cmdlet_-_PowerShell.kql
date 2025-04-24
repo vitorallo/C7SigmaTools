@@ -1,0 +1,10 @@
+// Title: User Discovery And Export Via Get-ADUser Cmdlet - PowerShell
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-11-17
+// Level: medium
+// Description: Detects usage of the Get-ADUser cmdlet to collect user information and output it to a fileThe SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script execution. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.discovery, attack.t1033
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains " > " or ScriptBlockText contains " | Select " or ScriptBlockText contains "Out-File" or ScriptBlockText contains "Set-Content" or ScriptBlockText contains "Add-Content") and (ScriptBlockText contains "Get-ADUser " and ScriptBlockText contains " -Filter *")

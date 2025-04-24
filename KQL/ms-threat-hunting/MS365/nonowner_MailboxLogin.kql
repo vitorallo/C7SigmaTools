@@ -1,0 +1,11 @@
+// Description: 'Finds non-owner mailbox access by admin/delegate permissions. Whitelist valid users and check others for unauthorized access.'
+// Required Connectors: Office365 (Types: OfficeActivity (Exchange))
+
+OfficeActivity
+| where OfficeWorkload == "Exchange"
+| where Operation == "MailboxLogin" and Logon_Type != "Owner" 
+| summarize StartTime = min(TimeGenerated), EndTime = max(TimeGenerated), count() by Operation, OrganizationName, UserType, UserId, MailboxOwnerUPN, Logon_Type, ClientIP
+| extend AccountName = tostring(split(UserId, "@")[0]), AccountUPNSuffix = tostring(split(UserId, "@")[1])
+| extend IP_0_Address = ClientIP
+| extend Account_0_Name = AccountName
+| extend Account_0_UPNSuffix = AccountUPNSuffix

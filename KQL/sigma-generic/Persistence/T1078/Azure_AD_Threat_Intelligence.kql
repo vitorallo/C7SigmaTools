@@ -1,0 +1,10 @@
+// Title: Azure AD Threat Intelligence
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-07
+// Level: high
+// Description: Indicates user activity that is unusual for the user or consistent with known attack patterns.The AzureActivity table in Microsoft Sentinel contains logs related to Azure activity, including risk detection events. Ensure that Azure Activity logs are being collected and ingested into Sentinel to query this table.
+// Tags: attack.t1078, attack.persistence, attack.defense-evasion, attack.privilege-escalation, attack.initial-access
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "investigationsThreatIntelligence"

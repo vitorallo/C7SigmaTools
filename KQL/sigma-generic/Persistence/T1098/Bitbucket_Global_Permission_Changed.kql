@@ -1,0 +1,10 @@
+// Title: Bitbucket Global Permission Changed
+// Author: Muhammad Faisal (@faisalusuf)
+// Date: 2024-02-25
+// Level: medium
+// Description: Detects global permissions change activity.This table contains audit logs for various services including Bitbucket. Ensure that the necessary connectors are set up to collect audit logs from Bitbucket service.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1098
+// ================================================================== 
+
+AuditLogs
+| where ('auditType.action' in~ ("Global permission remove request", "Global permission removed", "Global permission granted", "Global permission requested")) and 'auditType.category' =~ "Permissions"

@@ -1,0 +1,10 @@
+// Title: Discovery Using AzureHound
+// Author: Janantha Marasinghe
+// Date: 2022-11-27
+// Level: high
+// Description: Detects AzureHound (A BloodHound data collector for Microsoft Azure) activity via the default User-Agent that is used during its operation after successful authentication.This table contains Azure Active Directory sign-in logs. Ensure that Azure Active Directory logs are being collected and ingested into Microsoft Sentinel to query this table.
+// Tags: attack.discovery, attack.t1087.004, attack.t1526
+// ================================================================== 
+
+SigninLogs
+| where ResultType == 0 and userAgent contains "azurehound"

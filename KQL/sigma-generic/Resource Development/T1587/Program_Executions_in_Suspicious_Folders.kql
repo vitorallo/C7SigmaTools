@@ -1,0 +1,10 @@
+// Title: Program Executions in Suspicious Folders
+// Author: Florian Roth (Nextron Systems)
+// Date: 2018-01-23
+// Level: medium
+// Description: Detects program executions in suspicious non-program folders related to malware or hacking activityThe equivalent table in Microsoft Sentinel for Linux audit logs. Ensure that the Linux machines are onboarded to Sentinel and the Linux agent is configured to send audit logs to Sentinel for this table to be populated.
+// Tags: attack.t1587, attack.t1584, attack.resource-development
+// ================================================================== 
+
+LinuxAudit
+| where (exe startswith "/tmp/" or exe startswith "/var/www/" or (exe contains "/home/" and exe contains "/public_html/") or exe startswith "/usr/local/apache2/" or exe startswith "/usr/local/httpd/" or exe startswith "/var/apache/" or exe startswith "/srv/www/" or exe startswith "/home/httpd/html/" or exe startswith "/srv/http/" or exe startswith "/usr/share/nginx/html/" or exe startswith "/var/lib/pgsql/data/" or exe startswith "/usr/local/mysql/data/" or exe startswith "/var/lib/mysql/" or exe startswith "/var/vsftpd/" or exe startswith "/etc/bind/" or exe startswith "/var/named/") and type =~ "SYSCALL"

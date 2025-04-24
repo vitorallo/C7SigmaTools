@@ -1,0 +1,26 @@
+// Description: 'Organizations are added in the Cross-tenant Access Settings to control communication inbound or outbound for users and applications. This detection notifies when Organization Inbound Collaboration Settings are changed for "Users & Groups" and for "Applications".'
+// Required Connectors: AzureActiveDirectory (Types: AuditLogs)
+
+// In User & Groups and in Applications, the following "AccessType" values in columns PremodifiedInboundSettings and ModifiedInboundSettings are interpreted accordingly
+// When Access Type in premodified inbound settings value was 1 that means that the initial access was allowed. When Access Type in premodified inbound settings value was 2 that means that the initial access was blocked.
+// When Access Type in modified inbound settings value is 1 that means that now access is allowed. When Access Type in modified inbound settings value is 2 that means that now access is blocked.
+AuditLogs
+| where OperationName has "Update a partner cross-tenant access setting"
+| mv-apply TargetResource = TargetResources on
+  (
+      where TargetResource.type =~ "Policy"
+      | extend Properties = TargetResource.modifiedProperties
+  )
+| mv-apply Property = Properties on
+  (
+      where Property.displayName =~ "b2bCollaborationInbound"
+      | extend PremodifiedInboundSettings = trim('"',tostring(Property.oldValue)),
+               ModifiedInboundSettings = trim(@'"',tostring(Property.newValue))
+  )
+| where PremodifiedInboundSettings != ModifiedInboundSettings
+| extend InitiatingAppName = tostring(InitiatedBy.app.displayName)
+| extend InitiatingAppServicePrincipalId = tostring(InitiatedBy.app.servicePrincipalId)
+| extend InitiatingUserPrincipalName = tostring(InitiatedBy.user.userPrincipalName)
+| extend InitiatingAadUserId = tostring(InitiatedBy.user.id)
+| extend InitiatingIpAddress = tostring(iff(isnotempty(InitiatedBy.user.ipAddress), InitiatedBy.user.ipAddress, InitiatedBy.app.ipAddress))
+| extend InitiatingAccountName = tostring(split(InitiatingUserPrincipalName, "@")[0]), InitiatingAccountUPNSuffix = tostring(split(InitiatingUserPrincipalName, "@")[1])

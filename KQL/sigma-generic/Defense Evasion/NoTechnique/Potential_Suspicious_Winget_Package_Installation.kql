@@ -1,0 +1,10 @@
+// Title: Potential Suspicious Winget Package Installation
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2023-04-18
+// Level: high
+// Description: Detects potential suspicious winget package installation from a suspicious source.The SecurityEvent table in Microsoft Sentinel contains Windows security event logs. To query this table for events related to creating stream hashes, you can use the 'SecurityEvent' table and filter on the appropriate event IDs or event descriptions.
+// Tags: attack.defense-evasion, attack.persistence
+// ================================================================== 
+
+SecurityEvent
+| where (Contents contains "://1" or Contents contains "://2" or Contents contains "://3" or Contents contains "://4" or Contents contains "://5" or Contents contains "://6" or Contents contains "://7" or Contents contains "://8" or Contents contains "://9") and Contents startswith "[ZoneTransfer]  ZoneId=3" and TargetFilename contains "\\AppData\\Local\\Temp\\WinGet\\" and TargetFilename endswith ":Zone.Identifier"

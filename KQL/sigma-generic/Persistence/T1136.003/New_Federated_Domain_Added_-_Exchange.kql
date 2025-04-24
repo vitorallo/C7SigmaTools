@@ -1,0 +1,10 @@
+// Title: New Federated Domain Added - Exchange
+// Author: Splunk Threat Research Team (original rule), '@ionsor (rule)'
+// Date: 2022-02-08
+// Level: medium
+// Description: Detects the addition of a new Federated Domain.This table contains Office 365 activity logs, including Exchange logs. Ensure that Office 365 data connector is set up in Microsoft Sentinel to have this table available for querying.
+// Tags: attack.persistence, attack.t1136.003
+// ================================================================== 
+
+OfficeActivity
+| where eventName =~ "Add-FederatedDomain" and eventSource =~ "Exchange" and status =~ "success"

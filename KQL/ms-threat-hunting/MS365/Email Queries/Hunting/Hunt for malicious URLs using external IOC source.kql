@@ -1,0 +1,13 @@
+// Description: This query helps hunt for emails with malicious URLs based on external IOC source
+// Required Connectors: MicrosoftThreatProtection (Types: EmailUrlInfo, EmailEvents)
+
+let url = (externaldata(url: string )
+[@"https://urlhaus.abuse.ch/downloads/text_online/"]
+with (format="txt"))
+| project url;
+url
+| join (EmailUrlInfo
+| where Timestamp > ago(2h) 
+) on $left.url == $right.Url
+|join EmailEvents on NetworkMessageId
+|project Timestamp, NetworkMessageId, Url, UrlLocation, UrlDomain, SenderFromAddress, SenderDisplayName, SenderIPv4, Subject,RecipientEmailAddress, RecipientObjectId, LatestDeliveryAction, ThreatNames, ThreatTypes, DetectionMethods, DeliveryAction,ReportId

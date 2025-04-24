@@ -1,0 +1,10 @@
+// Title: Suspicious Kerberos RC4 Ticket Encryption
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-02-06
+// Level: medium
+// Description: Detects service ticket requests using RC4 encryption typeThe SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. Make sure to have the Windows Security events connector enabled in Sentinel to populate this table.
+// Tags: attack.credential-access, attack.t1558.003
+// ================================================================== 
+
+SecurityEvent
+| where (TicketEncryptionType =~ "0x17" and TicketOptions =~ "0x40810000") and (not(ServiceName endswith "$"))

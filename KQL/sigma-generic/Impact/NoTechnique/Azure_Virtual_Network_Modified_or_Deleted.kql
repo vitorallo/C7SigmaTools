@@ -1,0 +1,10 @@
+// Title: Azure Virtual Network Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-08
+// Level: medium
+// Description: Identifies when a Virtual Network is modified or deleted in Azure.This table contains Azure Activity Logs data. To have this table present in Microsoft Sentinel, ensure that Azure Activity Logs are being collected and ingested into Sentinel. This can be done by configuring the Azure Monitor data connector in Sentinel.
+// Tags: attack.impact
+// ================================================================== 
+
+AzureActivityLogs
+| where (operationName endswith "/WRITE" or operationName endswith "/DELETE") and (operationName startswith "MICROSOFT.NETWORK/VIRTUALNETWORKGATEWAYS/" or operationName startswith "MICROSOFT.NETWORK/VIRTUALNETWORKS/")

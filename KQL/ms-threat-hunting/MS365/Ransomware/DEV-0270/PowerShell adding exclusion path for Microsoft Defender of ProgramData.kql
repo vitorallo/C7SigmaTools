@@ -1,0 +1,5 @@
+// Description: Identify PowerShell creating an exclusion path of ProgramData directory for Microsoft Defender to not monitor.
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceProcessEvents)
+
+DeviceProcessEvents 
+| where FileName =~ "powershell.exe" and ProcessCommandLine has_all("try", "Add-MpPreference", "-ExclusionPath", "ProgramData", "catch")

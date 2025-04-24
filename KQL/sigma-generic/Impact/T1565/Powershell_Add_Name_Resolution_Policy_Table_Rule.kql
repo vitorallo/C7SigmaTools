@@ -1,0 +1,12 @@
+// Title: Powershell Add Name Resolution Policy Table Rule
+// Author: Borna Talebi
+// Date: 2021-09-14
+// Level: high
+// Description: Detects powershell scripts that adds a Name Resolution Policy Table (NRPT) rule for the specified namespace.
+// This will bypass the default DNS server and uses a specified server for answering the query.
+// The SecurityEvent table in Microsoft Sentinel contains Windows security event logs, which would include logs related to PowerShell script block logging. Make sure to have the necessary connectors and data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.impact, attack.t1565
+// ================================================================== 
+
+SecurityEvent
+| where ScriptBlockText contains "Add-DnsClientNrptRule" and ScriptBlockText contains "-Namesp" and ScriptBlockText contains "-NameSe"

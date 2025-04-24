@@ -1,0 +1,10 @@
+// Title: Data Exfiltration to Unsanctioned Apps
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-23
+// Level: medium
+// Description: Detects when a Microsoft Cloud App Security reported when a user or IP address uses an app that is not sanctioned to perform an activity that resembles an attempt to exfiltrate information from your organization.This table contains threat intelligence indicators, including indicators of compromise (IoCs) and indicators of attack (IoAs). To have this table present in Microsoft Sentinel, ensure that the Threat Intelligence data connector is enabled and configured to ingest data from the 'threat_management' service with 'm365' product.
+// Tags: attack.exfiltration, attack.t1537
+// ================================================================== 
+
+ThreatIntelligenceIndicator
+| where eventName =~ "Data exfiltration to unsanctioned apps" and eventSource =~ "SecurityComplianceCenter" and status =~ "success"

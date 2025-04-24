@@ -1,0 +1,10 @@
+// Title: Google Cloud Storage Buckets Modified or Deleted
+// Author: Austin Songer @austinsonger
+// Date: 2021-08-14
+// Level: medium
+// Description: Detects when storage bucket is modified or deleted in Google Cloud.This table contains Google Cloud Platform audit logs. To query this table in Microsoft Sentinel, ensure that the GCP connector is installed and properly configured to collect GCP audit logs.
+// Tags: attack.impact
+// ================================================================== 
+
+GCPAuditLogs
+| where 'gcp.audit.method_name' in~ ("storage.buckets.delete", "storage.buckets.insert", "storage.buckets.update", "storage.buckets.patch")

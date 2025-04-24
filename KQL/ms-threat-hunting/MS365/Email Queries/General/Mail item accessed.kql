@@ -1,0 +1,8 @@
+// Description: This query helps reviewing emails accessed by end users using cloud app events data
+// Required Connectors: MicrosoftThreatProtection (Types: CloudAppEvents)
+
+CloudAppEvents
+| where Timestamp > ago(30d)
+| extend Record= (parse_json(RawEventData)).RecordType
+| where Record == 50
+| take 10

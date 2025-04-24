@@ -1,0 +1,10 @@
+// Title: Bulk Deletion Changes To Privileged Account Permissions
+// Author: Mark Morowczynski '@markmorow', Yochana Henderson, '@Yochana-H'
+// Date: 2022-08-05
+// Level: high
+// Description: Detects when a user is removed from a privileged role. Bulk changes should be investigated.The AzureActivity table in Microsoft Sentinel contains Azure audit logs. Make sure to have the Azure Monitor solution enabled in Sentinel to collect and store these logs.
+// Tags: attack.persistence, attack.t1098
+// ================================================================== 
+
+AzureActivity
+| where 'properties.message' in~ ("Remove eligible member (permanent)", "Remove eligible member (eligible)")

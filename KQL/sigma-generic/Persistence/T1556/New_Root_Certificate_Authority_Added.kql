@@ -1,0 +1,10 @@
+// Title: New Root Certificate Authority Added
+// Author: Harjot Shah Singh, '@cyb3rjy0t'
+// Date: 2024-03-26
+// Level: medium
+// Description: Detects newly added root certificate authority to an AzureAD tenant to support certificate based authentication.This table contains Azure activity logs, including audit logs. Ensure that Azure Monitor logs (formerly known as Log Analytics) is enabled and configured to collect Azure activity logs for the specified Azure product and service.
+// Tags: attack.persistence, attack.privilege-escalation, attack.t1556
+// ================================================================== 
+
+AzureActivity
+| where OperationName =~ "Set Company Information" and 'TargetResources.modifiedProperties.newValue' contains "TrustedCAsForPasswordlessAuth"

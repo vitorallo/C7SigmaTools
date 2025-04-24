@@ -1,0 +1,10 @@
+// Title: Suspicious Scheduled Task Creation
+// Author: Nasreddine Bencherchali (Nextron Systems)
+// Date: 2022-12-05
+// Level: high
+// Description: Detects suspicious scheduled task creation events. Based on attributes such as paths, commands line flags, etc.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To query for Object Access events, you can filter on EventID 4663. To extract the Command field from the embedded XML, you may need to parse the EventData field using Kusto query language functions.
+// Tags: attack.execution, attack.privilege-escalation, attack.persistence, attack.t1053.005
+// ================================================================== 
+
+SecurityEvent
+| where (TaskContent contains "regsvr32" or TaskContent contains "rundll32" or TaskContent contains "cmd.exe</Command>" or TaskContent contains "cmd</Command>" or TaskContent contains "<Arguments>/c " or TaskContent contains "<Arguments>/k " or TaskContent contains "<Arguments>/r " or TaskContent contains "powershell" or TaskContent contains "pwsh" or TaskContent contains "mshta" or TaskContent contains "wscript" or TaskContent contains "cscript" or TaskContent contains "certutil" or TaskContent contains "bitsadmin" or TaskContent contains "bash.exe" or TaskContent contains "bash " or TaskContent contains "scrcons" or TaskContent contains "wmic " or TaskContent contains "wmic.exe" or TaskContent contains "forfiles" or TaskContent contains "scriptrunner" or TaskContent contains "hh.exe") and (TaskContent contains "\\AppData\\Local\\Temp\\" or TaskContent contains "\\AppData\\Roaming\\" or TaskContent contains "\\Users\\Public\\" or TaskContent contains "\\WINDOWS\\Temp\\" or TaskContent contains "C:\\Temp\\" or TaskContent contains "\\Desktop\\" or TaskContent contains "\\Downloads\\" or TaskContent contains "\\Temporary Internet" or TaskContent contains "C:\\ProgramData\\" or TaskContent contains "C:\\Perflogs\\")

@@ -1,0 +1,10 @@
+// Title: DNS Query Tor .Onion Address - Sysmon
+// Author: frack113
+// Date: 2022-02-20
+// Level: high
+// Description: Detects DNS queries to an ".onion" address related to Tor routing networksThe DnsEvents table in Microsoft Sentinel contains DNS query logs. Ensure that the Windows Security Events data connector is enabled in Sentinel to have access to this table.
+// Tags: attack.command-and-control, attack.t1090.003
+// ================================================================== 
+
+DnsEvents
+| where QueryName contains ".onion"

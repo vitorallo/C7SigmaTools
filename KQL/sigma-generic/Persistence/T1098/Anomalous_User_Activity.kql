@@ -1,0 +1,10 @@
+// Title: Anomalous User Activity
+// Author: Mark Morowczynski '@markmorow', Gloria Lee, '@gleeiamglo'
+// Date: 2023-09-03
+// Level: high
+// Description: Indicates that there are anomalous patterns of behavior like suspicious changes to the directory.The AzureActivity table in Microsoft Sentinel contains logs related to Azure services, including risk detection events. Ensure that Azure Activity logs are being collected and ingested into Sentinel to query this table.
+// Tags: attack.t1098, attack.persistence
+// ================================================================== 
+
+AzureActivity
+| where riskEventType =~ "anomalousUserActivity"

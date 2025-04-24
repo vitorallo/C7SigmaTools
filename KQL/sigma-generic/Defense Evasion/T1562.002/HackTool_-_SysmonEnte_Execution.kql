@@ -1,0 +1,10 @@
+// Title: HackTool - SysmonEnte Execution
+// Author: Florian Roth (Nextron Systems)
+// Date: 2022-09-07
+// Level: high
+// Description: Detects the use of SysmonEnte, a tool to attack the integrity of SysmonThis table contains information about process creation events in Windows. To query this table in Microsoft Sentinel, ensure that the Windows Security Events data connector is enabled and collecting process creation events.
+// Tags: attack.defense-evasion, attack.t1562.002
+// ================================================================== 
+
+ProcessCreationEvents
+| where ((GrantedAccess =~ "0x1400" and (TargetImage contains ":\\Windows\\Sysmon.exe" or TargetImage contains ":\\Windows\\Sysmon64.exe")) and (not(((InitiatingProcessFolderPath contains ":\\Program Files (x86)\\" or InitiatingProcessFolderPath contains ":\\Program Files\\" or InitiatingProcessFolderPath contains ":\\Windows\\System32\\" or InitiatingProcessFolderPath contains ":\\Windows\\SysWOW64\\") or (InitiatingProcessFolderPath contains ":\\ProgramData\\Microsoft\\Windows Defender\\Platform\\" and InitiatingProcessFolderPath endswith "\\MsMpEng.exe"))))) or CallTrace =~ "Ente"

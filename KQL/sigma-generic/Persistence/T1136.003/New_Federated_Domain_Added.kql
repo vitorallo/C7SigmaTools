@@ -1,0 +1,10 @@
+// Title: New Federated Domain Added
+// Author: Splunk Threat Research Team (original rule), Harjot Singh @cyb3rjy0t (sigma rule)
+// Date: 2023-09-18
+// Level: medium
+// Description: Detects the addition of a new Federated Domain.The OfficeActivity table in Microsoft Sentinel contains audit logs related to Microsoft 365 services. To have this table present, ensure that the Microsoft 365 Defender connector is set up and collecting data from the audit logs of the M365 service.
+// Tags: attack.persistence, attack.t1136.003
+// ================================================================== 
+
+OfficeActivity
+| where Operation contains "domain" and (Operation contains "add" or Operation contains "new")

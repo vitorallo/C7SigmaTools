@@ -1,0 +1,11 @@
+// Title: Suspicious AddinUtil.EXE CommandLine Execution
+// Author: Nasreddine Bencherchali (Nextron Systems), Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)
+// Date: 2023-09-18
+// Level: high
+// Description: Detects execution of the Add-In deployment cache updating utility (AddInutil.exe) with suspicious Addinroot or Pipelineroot paths. An adversary may execute AddinUtil.exe with uncommon Addinroot/Pipelineroot paths that point to the adversaries Addins.Store payload.
+// This table contains information about process creation events in Microsoft Sentinel. To have this table present, ensure that you have the necessary connectors or data sources configured in Sentinel to collect process creation logs from Windows machines.
+// Tags: attack.defense-evasion, attack.t1218
+// ================================================================== 
+
+ProcessCreationEvents
+| where (FolderPath endswith "\\addinutil.exe" or ProcessVersionInfoOriginalFileName =~ "AddInUtil.exe") and (((ProcessCommandLine contains "-AddInRoot:" or ProcessCommandLine contains "-PipelineRoot:") and (ProcessCommandLine contains "\\AppData\\Local\\Temp\\" or ProcessCommandLine contains "\\Desktop\\" or ProcessCommandLine contains "\\Downloads\\" or ProcessCommandLine contains "\\Users\\Public\\" or ProcessCommandLine contains "\\Windows\\Temp\\")) or ((ProcessCommandLine contains "-AddInRoot:." or ProcessCommandLine contains "-AddInRoot:\".\"" or ProcessCommandLine contains "-PipelineRoot:." or ProcessCommandLine contains "-PipelineRoot:\".\"") and (CurrentDirectory contains "\\AppData\\Local\\Temp\\" or CurrentDirectory contains "\\Desktop\\" or CurrentDirectory contains "\\Downloads\\" or CurrentDirectory contains "\\Users\\Public\\" or CurrentDirectory contains "\\Windows\\Temp\\")))

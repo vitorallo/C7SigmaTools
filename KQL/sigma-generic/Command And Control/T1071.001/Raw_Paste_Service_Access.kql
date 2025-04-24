@@ -1,0 +1,10 @@
+// Title: Raw Paste Service Access
+// Author: Florian Roth (Nextron Systems)
+// Date: 2019-12-05
+// Level: high
+// Description: Detects direct access to raw pastes in different paste services often used by malware in their second stages to download malicious code in encrypted or encoded formThis table contains proxy logs, which can be queried in Microsoft Sentinel. Ensure that the necessary connectors are set up to collect proxy logs in Sentinel.
+// Tags: attack.command-and-control, attack.t1071.001, attack.t1102.001, attack.t1102.003, attack.defense-evasion
+// ================================================================== 
+
+ProxyLog
+| where ''c-uri'' contains ".paste.ee/r/" or ''c-uri'' contains ".pastebin.com/raw/" or ''c-uri'' contains ".hastebin.com/raw/" or ('c-uri' contains ".ghostbin.co/paste/" and 'c-uri' contains "/raw/") or ''c-uri'' contains "pastetext.net/" or ''c-uri'' contains "pastebin.pl/" or ''c-uri'' contains "paste.ee/"

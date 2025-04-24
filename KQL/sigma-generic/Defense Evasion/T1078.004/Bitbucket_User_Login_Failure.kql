@@ -1,0 +1,12 @@
+// Title: Bitbucket User Login Failure
+// Author: Muhammad Faisal (@faisalusuf)
+// Date: 2024-02-25
+// Level: medium
+// Description: Detects user authentication failure events.
+// Please note that this rule can be noisy and it is recommended to use with correlation based on "author.name" field.
+// This table contains audit logs for various services, including Bitbucket. Make sure to enable the necessary connectors and data sources for Bitbucket in Microsoft Sentinel to populate this table.
+// Tags: attack.defense-evasion, attack.credential-access, attack.t1078.004, attack.t1110
+// ================================================================== 
+
+AuditLogs
+| where 'auditType.action' =~ "User login failed" and 'auditType.category' =~ "Authentication"

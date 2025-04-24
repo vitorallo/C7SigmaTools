@@ -1,0 +1,9 @@
+// Description: 'This query identifies modifications to COM registry keys to point to executable files in C:\Windows\System32\spool\drivers\color\'
+// Required Connectors: MicrosoftThreatProtection (Types: DeviceFileEvents)
+
+// PE file dropped in C:\Windows\System32\spool\drivers\color\
+DeviceFileEvents
+| where Timestamp > ago(7d)
+| where ActionType == "FileCreated"
+| where FolderPath has "C:\\Windows\\System32\\spool\\drivers\\color\\"
+| where FileName endswith ".exe" or FileName endswith ".dll"

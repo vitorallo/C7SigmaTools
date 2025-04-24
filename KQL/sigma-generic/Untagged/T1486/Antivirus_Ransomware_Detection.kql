@@ -1,0 +1,12 @@
+// Title: Antivirus Ransomware Detection
+// Author: Florian Roth (Nextron Systems), Arnim Rupp
+// Date: 2022-05-12
+// Level: critical
+// Description: Detects a highly relevant Antivirus alert that reports ransomware.
+// This event must not be ignored just because the AV has blocked the malware but investigate, how it came there in the first place.
+// This table contains antivirus events. Ensure that the antivirus solution is integrated with Microsoft Sentinel to have this table available for querying.
+// Tags: attack.t1486
+// ================================================================== 
+
+AntivirusEvents
+| where Signature contains "BlackWorm" or Signature contains "Chaos" or Signature contains "Cobra" or Signature contains "ContiCrypt" or Signature contains "Crypter" or Signature contains "CRYPTES" or Signature contains "Cryptor" or Signature contains "CylanCrypt" or Signature contains "DelShad" or Signature contains "Destructor" or Signature contains "Filecoder" or Signature contains "GandCrab" or Signature contains "GrandCrab" or Signature contains "Haperlock" or Signature contains "Hiddentear" or Signature contains "HydraCrypt" or Signature contains "Krypt" or Signature contains "Lockbit" or Signature contains "Locker" or Signature contains "Mallox" or Signature contains "Phobos" or Signature contains "Ransom" or Signature contains "Ryuk" or Signature contains "Ryzerlo" or Signature contains "Stopcrypt" or Signature contains "Tescrypt" or Signature contains "TeslaCrypt" or Signature contains "WannaCry" or Signature contains "Xorist"

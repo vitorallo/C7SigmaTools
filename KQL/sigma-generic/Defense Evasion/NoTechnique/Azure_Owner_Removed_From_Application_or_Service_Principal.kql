@@ -1,0 +1,10 @@
+// Title: Azure Owner Removed From Application or Service Principal
+// Author: Austin Songer @austinsonger
+// Date: 2021-09-03
+// Level: medium
+// Description: Identifies when a owner is was removed from a application or service principal in Azure.This table contains Azure activity logs, which can be queried in KQL for Microsoft Sentinel. Ensure that the Azure Activity Logs connector is set up in Sentinel to collect this data.
+// Tags: attack.defense-evasion
+// ================================================================== 
+
+AzureActivityLogs
+| where 'properties.message' in~ ("Remove owner from service principal", "Remove owner from application")

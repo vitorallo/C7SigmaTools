@@ -1,0 +1,7 @@
+// Description: List alerts flagging attempts to delete backup files.
+// Required Connectors: MicrosoftThreatProtection (Types: AlertInfo, AlertEvidence)
+
+AlertInfo
+| where Timestamp > ago(7d) 
+| where Title == "File backups were deleted" 
+| join AlertEvidence on AlertId

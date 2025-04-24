@@ -1,0 +1,10 @@
+// Title: Access To ADMIN$ Network Share
+// Author: Florian Roth (Nextron Systems)
+// Date: 2017-03-04
+// Level: low
+// Description: Detects access to ADMIN$ network shareThe SecurityEvent table in Microsoft Sentinel contains security-related events and logs, including information about object access and file share auditing. Make sure to have the necessary connectors or data sources configured in Sentinel to collect Windows security event logs.
+// Tags: attack.lateral-movement, attack.t1021.002
+// ================================================================== 
+
+SecurityEvent
+| where ShareName =~ "Admin$" and (not(SubjectUserName endswith "$"))

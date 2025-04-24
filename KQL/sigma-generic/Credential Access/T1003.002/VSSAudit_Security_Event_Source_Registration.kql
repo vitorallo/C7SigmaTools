@@ -1,0 +1,10 @@
+// Title: VSSAudit Security Event Source Registration
+// Author: Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)
+// Date: 2020-10-20
+// Level: informational
+// Description: Detects the registration of the security event source VSSAudit. It would usually trigger when volume shadow copy operations happen.The SecurityEvent table in Microsoft Sentinel contains security-related events from Windows machines. To have this table present, ensure that you have the necessary connectors or data sources configured in Sentinel to collect security events from Windows machines.
+// Tags: attack.credential-access, attack.t1003.002
+// ================================================================== 
+
+SecurityEvent
+| where AuditSourceName =~ "VSSAudit"

@@ -1,0 +1,10 @@
+// Title: DNS TXT Answer with Possible Execution Strings
+// Author: Markus Neis
+// Date: 2018-08-08
+// Level: high
+// Description: Detects strings used in command execution in DNS TXT AnswerThis table contains DNS events and can be queried in Kusto Query Language (KQL) in Microsoft Sentinel. Ensure that DNS events are being collected and ingested into Sentinel for this table to be available.
+// Tags: attack.command-and-control, attack.t1071.004
+// ================================================================== 
+
+DnsEvents
+| where (answer contains "IEX" or answer contains "Invoke-Expression" or answer contains "cmd.exe") and record_type =~ "TXT"

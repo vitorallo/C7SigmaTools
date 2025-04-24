@@ -1,0 +1,10 @@
+// Title: Enabled User Right in AD to Control User Objects
+// Author: @neu5ron
+// Date: 2017-07-30
+// Level: high
+// Description: Detects scenario where if a user is assigned the SeEnableDelegationPrivilege right in Active Directory it would allow control of other AD user objects.This table contains security-related events, including audit policy changes and group policy changes. Make sure to have the Windows Security Events data connector enabled in Microsoft Sentinel to access this table.
+// Tags: attack.persistence, attack.t1098
+// ================================================================== 
+
+SecurityEvent
+| where PrivilegeList contains "SeEnableDelegationPrivilege"

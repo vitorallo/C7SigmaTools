@@ -1,0 +1,12 @@
+// Title: AWS SAML Provider Deletion Activity
+// Author: Ivan Saakov
+// Date: 2024-12-19
+// Level: medium
+// Description: Detects the deletion of an AWS SAML provider, potentially indicating malicious intent to disrupt administrative or security team access.
+// An attacker can remove the SAML provider for the information security team or a team of system administrators, to make it difficult for them to work and investigate at the time of the attack and after it.
+// The CloudTrail table in Microsoft Sentinel contains logs related to AWS CloudTrail service. To have this table present, ensure that the AWS CloudTrail connector is configured and sending logs to Sentinel.
+// Tags: attack.t1078.004, attack.privilege-escalation, attack.t1531
+// ================================================================== 
+
+CloudTrail
+| where eventName =~ "DeleteSAMLProvider" and eventSource =~ "iam.amazonaws.com" and status =~ "success"

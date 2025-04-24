@@ -1,0 +1,12 @@
+// Title: Testing Usage of Uncommonly Used Port
+// Author: frack113
+// Date: 2022-01-23
+// Level: medium
+// Description: Adversaries may communicate using a protocol and port paring that are typically not associated.
+// For example, HTTPS over port 8088(Citation: Symantec Elfin Mar 2019) or port 587(Citation: Fortinet Agent Tesla April 2018) as opposed to the traditional port 443.
+// This table contains security-related events, including script block logging events. Make sure to enable the necessary connectors and data sources in Microsoft Sentinel to collect Windows security events.
+// Tags: attack.command-and-control, attack.t1571
+// ================================================================== 
+
+SecurityEvent
+| where (ScriptBlockText contains "Test-NetConnection" and ScriptBlockText contains "-ComputerName " and ScriptBlockText contains "-port ") and (not((ScriptBlockText contains " 443 " or ScriptBlockText contains " 80 ")))
